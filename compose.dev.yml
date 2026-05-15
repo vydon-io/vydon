@@ -37,10 +37,10 @@ services:
       - vydon-network
     volumes:
       - ./frontend:/app/:rw
-      - neosync_app_nodemodules:/app/node_modules
-      - neosync_web_nodemodules:/app/apps/web/node_modules
-      - neosync_sdk_nodemodules:/app/packages/sdk/node_modules
-      - neosync_next_cache:/app/apps/web/.next
+      - vydon_app_nodemodules:/app/node_modules
+      - vydon_web_nodemodules:/app/apps/web/node_modules
+      - vydon_sdk_nodemodules:/app/packages/sdk/node_modules
+      - vydon_next_cache:/app/apps/web/.next
 
   db:
     container_name: vydon-db
@@ -59,7 +59,7 @@ services:
     networks:
       - vydon-network
     volumes:
-      - neosync_pg_data:/var/lib/postgresql/data
+      - vydon_pg_data:/var/lib/postgresql/data
       - ./scripts/pg-init:/docker-entrypoint-initdb.d
 
   api:
@@ -107,9 +107,9 @@ services:
       - ./internal:/workspace/internal:rw
       - ./go.mod:/workspace/go.mod:rw
       - ./go.sum:/workspace/go.sum:rw
-      - neosync_api_tmp:/workspace/tmp
-      - neosync_go_mod_cache:/go/pkg/mod
-      - neosync_backend_build_cache:/root/.cache/go-build
+      - vydon_api_tmp:/workspace/tmp
+      - vydon_go_mod_cache:/go/pkg/mod
+      - vydon_backend_build_cache:/root/.cache/go-build
     restart: on-failure
 
   worker:
@@ -143,9 +143,9 @@ services:
       - ./internal:/workspace/internal:rw
       - ./go.mod:/workspace/go.mod:rw
       - ./go.sum:/workspace/go.sum:rw
-      - neosync_worker_tmp:/workspace/tmp
-      - neosync_go_mod_cache:/go/pkg/mod
-      - neosync_worker_build_cache:/root/.cache/go-build
+      - vydon_worker_tmp:/workspace/tmp
+      - vydon_go_mod_cache:/go/pkg/mod
+      - vydon_worker_build_cache:/root/.cache/go-build
     restart: on-failure
 
   redis:
@@ -157,20 +157,20 @@ services:
     networks:
       - vydon-network
     volumes:
-      - neosync_redis_cache:/data
+      - vydon_redis_cache:/data
 
 volumes:
-  neosync_redis_cache:
-  neosync_pg_data:
-  neosync_api_tmp:
-  neosync_backend_build_cache:
-  neosync_worker_tmp:
-  neosync_worker_build_cache:
-  neosync_go_mod_cache:
-  neosync_app_nodemodules:
-  neosync_web_nodemodules:
-  neosync_sdk_nodemodules:
-  neosync_next_cache:
+  vydon_redis_cache:
+  vydon_pg_data:
+  vydon_api_tmp:
+  vydon_backend_build_cache:
+  vydon_worker_tmp:
+  vydon_worker_build_cache:
+  vydon_go_mod_cache:
+  vydon_app_nodemodules:
+  vydon_web_nodemodules:
+  vydon_sdk_nodemodules:
+  vydon_next_cache:
 
 networks:
   vydon-network:
