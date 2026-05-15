@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/stretchr/testify/require"
 	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	"github.com/vydon-io/vydon/internal/testutil"
 	tcdynamodb "github.com/vydon-io/vydon/internal/testutil/testcontainers/dynamodb"
@@ -12,7 +13,6 @@ import (
 	tcpostgres "github.com/vydon-io/vydon/internal/testutil/testcontainers/postgres"
 	tcredis "github.com/vydon-io/vydon/internal/testutil/testcontainers/redis"
 	tcmssql "github.com/vydon-io/vydon/internal/testutil/testcontainers/sqlserver"
-	"github.com/stretchr/testify/require"
 )
 
 const vydonDbMigrationsPath = "../../../../backend/sql/postgresql/schema"
@@ -236,8 +236,24 @@ func Test_Workflow(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-		sourceConn := tcvydonapi.CreateDynamoDBConnection(ctx, t, connclient, accountId, "dynamo-source", dynamo.Source.URL, dynamo.Source.Credentials)
-		destConn := tcvydonapi.CreateDynamoDBConnection(ctx, t, connclient, accountId, "dynamo-dest", dynamo.Target.URL, dynamo.Target.Credentials)
+		sourceConn := tcvydonapi.CreateDynamoDBConnection(
+			ctx,
+			t,
+			connclient,
+			accountId,
+			"dynamo-source",
+			dynamo.Source.URL,
+			dynamo.Source.Credentials,
+		)
+		destConn := tcvydonapi.CreateDynamoDBConnection(
+			ctx,
+			t,
+			connclient,
+			accountId,
+			"dynamo-dest",
+			dynamo.Target.URL,
+			dynamo.Target.Credentials,
+		)
 
 		t.Run("types", func(t *testing.T) {
 			t.Parallel()

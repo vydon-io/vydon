@@ -11,12 +11,12 @@ import (
 	"github.com/doug-martin/goqu/v9"
 	_ "github.com/doug-martin/goqu/v9/dialect/postgres"
 	_ "github.com/jackc/pgx/v5/stdlib"
+	"github.com/stretchr/testify/require"
 	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
 	postgres "github.com/vydon-io/vydon/backend/pkg/sqlmanager/postgres"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	"github.com/vydon-io/vydon/internal/testutil"
 	tcpostgres "github.com/vydon-io/vydon/internal/testutil/testcontainers/postgres"
-	"github.com/stretchr/testify/require"
 	"golang.org/x/sync/errgroup"
 )
 

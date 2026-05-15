@@ -6,8 +6,8 @@ import (
 
 	"github.com/google/uuid"
 
-	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 )
 
 // +vydonTransformerBuilder:generate:generateUUID

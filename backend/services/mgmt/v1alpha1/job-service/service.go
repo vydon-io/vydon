@@ -6,8 +6,8 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
 	"github.com/vydon-io/vydon/internal/connectiondata"
-	"github.com/vydon-io/vydon/internal/vydondb"
 	clientmanager "github.com/vydon-io/vydon/internal/temporal/clientmanager"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type Service struct {
@@ -44,8 +44,8 @@ type LokiRunLogConfig struct {
 }
 
 type Config struct {
-	IsAuthEnabled  bool
-	IsVydonCloud bool
+	IsAuthEnabled bool
+	IsVydonCloud  bool
 
 	RunLogConfig *RunLogConfig
 }

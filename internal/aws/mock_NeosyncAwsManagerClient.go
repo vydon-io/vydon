@@ -5,8 +5,8 @@ package awsmanager
 import (
 	context "context"
 
-	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	mock "github.com/stretchr/testify/mock"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 
 	s3 "github.com/aws/aws-sdk-go-v2/service/s3"
 )
@@ -64,7 +64,7 @@ type MockVydonAwsManagerClient_GetObject_Call struct {
 //   - s3Client *s3.Client
 //   - region *string
 //   - params *s3.GetObjectInput
-func (_e *MockVydonAwsManagerClient_Expecter) GetObject(ctx interface{}, s3Client interface{}, region interface{}, params interface{}) *MockVydonAwsManagerClient_GetObject_Call {
+func (_e *MockVydonAwsManagerClient_Expecter) GetObject(ctx any, s3Client any, region any, params any) *MockVydonAwsManagerClient_GetObject_Call {
 	return &MockVydonAwsManagerClient_GetObject_Call{Call: _e.mock.On("GetObject", ctx, s3Client, region, params)}
 }
 
@@ -125,7 +125,7 @@ type MockVydonAwsManagerClient_ListObjectsV2_Call struct {
 //   - s3Client *s3.Client
 //   - region *string
 //   - params *s3.ListObjectsV2Input
-func (_e *MockVydonAwsManagerClient_Expecter) ListObjectsV2(ctx interface{}, s3Client interface{}, region interface{}, params interface{}) *MockVydonAwsManagerClient_ListObjectsV2_Call {
+func (_e *MockVydonAwsManagerClient_Expecter) ListObjectsV2(ctx any, s3Client any, region any, params any) *MockVydonAwsManagerClient_ListObjectsV2_Call {
 	return &MockVydonAwsManagerClient_ListObjectsV2_Call{Call: _e.mock.On("ListObjectsV2", ctx, s3Client, region, params)}
 }
 
@@ -184,7 +184,7 @@ type MockVydonAwsManagerClient_NewDynamoDbClient_Call struct {
 // NewDynamoDbClient is a helper method to define mock.On call
 //   - ctx context.Context
 //   - connCfg *mgmtv1alpha1.DynamoDBConnectionConfig
-func (_e *MockVydonAwsManagerClient_Expecter) NewDynamoDbClient(ctx interface{}, connCfg interface{}) *MockVydonAwsManagerClient_NewDynamoDbClient_Call {
+func (_e *MockVydonAwsManagerClient_Expecter) NewDynamoDbClient(ctx any, connCfg any) *MockVydonAwsManagerClient_NewDynamoDbClient_Call {
 	return &MockVydonAwsManagerClient_NewDynamoDbClient_Call{Call: _e.mock.On("NewDynamoDbClient", ctx, connCfg)}
 }
 
@@ -243,7 +243,7 @@ type MockVydonAwsManagerClient_NewS3Client_Call struct {
 // NewS3Client is a helper method to define mock.On call
 //   - ctx context.Context
 //   - config *mgmtv1alpha1.AwsS3ConnectionConfig
-func (_e *MockVydonAwsManagerClient_Expecter) NewS3Client(ctx interface{}, config interface{}) *MockVydonAwsManagerClient_NewS3Client_Call {
+func (_e *MockVydonAwsManagerClient_Expecter) NewS3Client(ctx any, config any) *MockVydonAwsManagerClient_NewS3Client_Call {
 	return &MockVydonAwsManagerClient_NewS3Client_Call{Call: _e.mock.On("NewS3Client", ctx, config)}
 }
 

@@ -8,6 +8,8 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
@@ -28,8 +30,6 @@ import (
 	pg_subsetting "github.com/vydon-io/vydon/internal/testutil/testdata/postgres/subsetting"
 	pg_transformers "github.com/vydon-io/vydon/internal/testutil/testdata/postgres/transformers"
 	pg_uuids "github.com/vydon-io/vydon/internal/testutil/testdata/postgres/uuids"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -335,10 +335,20 @@ func test_postgres_primary_key_transformations(
 	schema := "primary_$key_sdef"
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.Go(func() error {
-		return postgres.Source.RunCreateStmtsInSchema(errctx, testdataFolder, []string{"uuids/create-tables.sql", "humanresources/create-tables.sql"}, schema)
+		return postgres.Source.RunCreateStmtsInSchema(
+			errctx,
+			testdataFolder,
+			[]string{"uuids/create-tables.sql", "humanresources/create-tables.sql"},
+			schema,
+		)
 	})
 	errgrp.Go(func() error {
-		return postgres.Target.RunCreateStmtsInSchema(errctx, testdataFolder, []string{"humanresources/create-tables.sql", "humanresources/create-constraints.sql"}, schema)
+		return postgres.Target.RunCreateStmtsInSchema(
+			errctx,
+			testdataFolder,
+			[]string{"humanresources/create-tables.sql", "humanresources/create-constraints.sql"},
+			schema,
+		)
 	})
 	err := errgrp.Wait()
 	require.NoError(t, err)
@@ -373,7 +383,9 @@ func test_postgres_primary_key_transformations(
 			m.Transformer = &mgmtv1alpha1.JobMappingTransformer{
 				Config: &mgmtv1alpha1.TransformerConfig{
 					Config: &mgmtv1alpha1.TransformerConfig_TransformJavascriptConfig{
-						TransformJavascriptConfig: &mgmtv1alpha1.TransformJavascript{Code: `if (value == 'US') { return 'SU'; } return value;`},
+						TransformJavascriptConfig: &mgmtv1alpha1.TransformJavascript{
+							Code: `if (value == 'US') { return 'SU'; } return value;`,
+						},
 					},
 				},
 			}
@@ -528,10 +540,20 @@ func test_postgres_virtual_foreign_keys(
 	})
 	// only create foreign key constraints in target to test that virtual foreign keys are correct
 	errgrp.Go(func() error {
-		return postgres.Target.RunCreateStmtsInSchema(errctx, testdataFolder, []string{"humanresources/create-tables.sql", "humanresources/create-constraints.sql"}, schema)
+		return postgres.Target.RunCreateStmtsInSchema(
+			errctx,
+			testdataFolder,
+			[]string{"humanresources/create-tables.sql", "humanresources/create-constraints.sql"},
+			schema,
+		)
 	})
 	errgrp.Go(func() error {
-		return postgres.Target.RunCreateStmtsInSchema(errctx, testdataFolder, []string{"humanresources/create-tables.sql", "humanresources/create-constraints.sql"}, subsetSchema)
+		return postgres.Target.RunCreateStmtsInSchema(
+			errctx,
+			testdataFolder,
+			[]string{"humanresources/create-tables.sql", "humanresources/create-constraints.sql"},
+			subsetSchema,
+		)
 	})
 	err := errgrp.Wait()
 	require.NoError(t, err)
@@ -613,7 +635,12 @@ func test_postgres_javascript_transformers(
 	generatorsSchema := "generators"
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.Go(func() error {
-		return postgres.Source.RunCreateStmtsInSchema(errctx, testdataFolder, []string{"transformers/create-tables.sql"}, transformersSchema)
+		return postgres.Source.RunCreateStmtsInSchema(
+			errctx,
+			testdataFolder,
+			[]string{"transformers/create-tables.sql"},
+			transformersSchema,
+		)
 	})
 	errgrp.Go(func() error {
 		return postgres.Source.RunCreateStmtsInSchema(errctx, testdataFolder, []string{"transformers/create-tables.sql"}, generatorsSchema)
@@ -716,17 +743,37 @@ func getJsGeneratorJobmappings(jobmappings []*mgmtv1alpha1.JobMapping) []*mgmtv1
 
 func getJsTransformerJobmappings(jobmappings []*mgmtv1alpha1.JobMapping) []*mgmtv1alpha1.JobMapping {
 	colTransformerMap := map[string]*mgmtv1alpha1.JobMappingTransformer{
-		"e164_phone_number":   getJavascriptTransformerConfig("return vydon.transformE164PhoneNumber(value, { preserveLength: true, maxLength: 20});"),
-		"email":               getJavascriptTransformerConfig("return vydon.transformEmail(value, { preserveLength: true, maxLength: 255});"),
-		"str":                 getJavascriptTransformerConfig("return vydon.transformString(value, { preserveLength: true, maxLength: 30});"),
-		"measurement":         getJavascriptTransformerConfig("return vydon.transformFloat64(value, { randomizationRangeMin: 3.14, randomizationRangeMax: 300.10});"),
-		"int64":               getJavascriptTransformerConfig("return vydon.transformInt64(value, { randomizationRangeMin: 1, randomizationRangeMax: 300});"),
-		"int64_phone_number":  getJavascriptTransformerConfig("return vydon.transformInt64PhoneNumber(value, { preserveLength: true});"),
-		"string_phone_number": getJavascriptTransformerConfig("return vydon.transformStringPhoneNumber(value, { preserveLength: true, maxLength: 200});"),
-		"first_name":          getJavascriptTransformerConfig("return vydon.transformFirstName(value, { preserveLength: true, maxLength: 25});"),
-		"last_name":           getJavascriptTransformerConfig("return vydon.transformLastName(value, { preserveLength: true, maxLength: 25});"),
-		"full_name":           getJavascriptTransformerConfig("return vydon.transformFullName(value, { preserveLength: true, maxLength: 25});"),
-		"character_scramble":  getJavascriptTransformerConfig("return vydon.transformCharacterScramble(value, { preserveLength: false, maxLength: 100});"),
+		"e164_phone_number": getJavascriptTransformerConfig(
+			"return vydon.transformE164PhoneNumber(value, { preserveLength: true, maxLength: 20});",
+		),
+		"email": getJavascriptTransformerConfig(
+			"return vydon.transformEmail(value, { preserveLength: true, maxLength: 255});",
+		),
+		"str": getJavascriptTransformerConfig(
+			"return vydon.transformString(value, { preserveLength: true, maxLength: 30});",
+		),
+		"measurement": getJavascriptTransformerConfig(
+			"return vydon.transformFloat64(value, { randomizationRangeMin: 3.14, randomizationRangeMax: 300.10});",
+		),
+		"int64": getJavascriptTransformerConfig(
+			"return vydon.transformInt64(value, { randomizationRangeMin: 1, randomizationRangeMax: 300});",
+		),
+		"int64_phone_number": getJavascriptTransformerConfig("return vydon.transformInt64PhoneNumber(value, { preserveLength: true});"),
+		"string_phone_number": getJavascriptTransformerConfig(
+			"return vydon.transformStringPhoneNumber(value, { preserveLength: true, maxLength: 200});",
+		),
+		"first_name": getJavascriptTransformerConfig(
+			"return vydon.transformFirstName(value, { preserveLength: true, maxLength: 25});",
+		),
+		"last_name": getJavascriptTransformerConfig(
+			"return vydon.transformLastName(value, { preserveLength: true, maxLength: 25});",
+		),
+		"full_name": getJavascriptTransformerConfig(
+			"return vydon.transformFullName(value, { preserveLength: true, maxLength: 25});",
+		),
+		"character_scramble": getJavascriptTransformerConfig(
+			"return vydon.transformCharacterScramble(value, { preserveLength: false, maxLength: 100});",
+		),
 	}
 	updatedJobmappings := []*mgmtv1alpha1.JobMapping{}
 	for _, jm := range jobmappings {
@@ -1078,7 +1125,12 @@ func test_postgres_small_batch_size(
 ) {
 	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "small_batch"
-	err := postgres.Source.RunCreateStmtsInSchema(ctx, testdataFolder, []string{"uuids/create-tables.sql", "humanresources/create-tables.sql", "humanresources/create-constraints.sql"}, schema)
+	err := postgres.Source.RunCreateStmtsInSchema(
+		ctx,
+		testdataFolder,
+		[]string{"uuids/create-tables.sql", "humanresources/create-tables.sql", "humanresources/create-constraints.sql"},
+		schema,
+	)
 	require.NoError(t, err)
 	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
@@ -1140,16 +1192,106 @@ func test_postgres_small_batch_size(
 	require.NoError(t, err)
 	defer target.Close()
 
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "employees", sqlmanager_shared.PostgresDriver, []string{"employee_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "jobs", sqlmanager_shared.PostgresDriver, []string{"job_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "departments", sqlmanager_shared.PostgresDriver, []string{"department_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "dependents", sqlmanager_shared.PostgresDriver, []string{"dependent_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "countries", sqlmanager_shared.PostgresDriver, []string{"country_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "locations", sqlmanager_shared.PostgresDriver, []string{"location_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "regions", sqlmanager_shared.PostgresDriver, []string{"region_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "referral_codes", sqlmanager_shared.PostgresDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "store_customers", sqlmanager_shared.PostgresDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "store_notifications", sqlmanager_shared.PostgresDriver, []string{"id"})
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"employees",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"employee_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"jobs",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"job_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"departments",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"department_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"dependents",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"dependent_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"countries",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"country_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"locations",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"location_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"regions",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"region_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"referral_codes",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"store_customers",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"store_notifications",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"id"},
+	)
 	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "stores", sqlmanager_shared.PostgresDriver, []string{"id"})
 
 	// tear down
@@ -1226,7 +1368,12 @@ func test_postgres_complex(
 			{schema: "space_mission", table: "training_courses", rowCount: 3, idColumns: []string{"course_id"}},
 			{schema: "space_mission", table: "course_prerequisites", rowCount: 3, idColumns: []string{"prerequisite_id"}},
 			{schema: "space_mission", table: "certifications", rowCount: 3, idColumns: []string{"certification_id"}},
-			{schema: "space_mission", table: "astronaut_certifications", rowCount: 4, idColumns: []string{"astronaut_id", "certification_id"}},
+			{
+				schema:    "space_mission",
+				table:     "astronaut_certifications",
+				rowCount:  4,
+				idColumns: []string{"astronaut_id", "certification_id"},
+			},
 			{schema: "space_mission", table: "certification_requirements", rowCount: 3, idColumns: []string{"requirement_id"}},
 			{schema: "space_mission", table: "mission_logs_extended", rowCount: 3, idColumns: []string{"log_id"}},
 			{schema: "space_mission", table: "communication_channels", rowCount: 3, idColumns: []string{"channel_id"}},
@@ -1247,8 +1394,18 @@ func test_postgres_complex(
 			{schema: "space_mission", table: "mission_parameters", rowCount: 3, idColumns: []string{"parameter_id"}},
 			{schema: "space_mission", table: "skill_groups", rowCount: 6, idColumns: []string{"group_id"}},
 			{schema: "space_mission", table: "capability_skill_groups", rowCount: 8, idColumns: []string{"capability_id", "group_id"}},
-			{schema: "space_mission", table: "mission_required_skill_groups", rowCount: 7, idColumns: []string{"mission_id", "group_id", "role"}},
-			{schema: "space_mission", table: "equipment_compatibility", rowCount: 5, idColumns: []string{"primary_equipment_id", "compatible_equipment_id"}},
+			{
+				schema:    "space_mission",
+				table:     "mission_required_skill_groups",
+				rowCount:  7,
+				idColumns: []string{"mission_id", "group_id", "role"},
+			},
+			{
+				schema:    "space_mission",
+				table:     "equipment_compatibility",
+				rowCount:  5,
+				idColumns: []string{"primary_equipment_id", "compatible_equipment_id"},
+			},
 			{schema: "space_mission", table: "mission_status_history", rowCount: 8, idColumns: []string{"history_id"}},
 			{schema: "space_mission", table: "equipment_status_history", rowCount: 8, idColumns: []string{"history_id"}},
 			{schema: "space_mission", table: "astronaut_role_history", rowCount: 5, idColumns: []string{"history_id"}},
@@ -1424,7 +1581,14 @@ func test_postgres_schema_reconciliation(
 	})
 	destinationId := job.GetDestinations()[0].GetId()
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithPostgresSchemaDrift(), WithMaxIterations(100), WithPageLimit(10000))
+	testworkflow := NewTestDataSyncWorkflowEnv(
+		t,
+		vydonApi,
+		dbManagers,
+		WithPostgresSchemaDrift(),
+		WithMaxIterations(100),
+		WithPageLimit(10000),
+	)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: schema_drift")
@@ -1459,7 +1623,12 @@ func test_postgres_schema_reconciliation(
 	for _, expected := range expectedResults {
 		rowCount, err := postgres.Target.GetTableRowCount(ctx, expected.schema, expected.table)
 		require.NoError(t, err)
-		require.Equalf(t, expected.rowCount, rowCount, fmt.Sprintf("Test: schema_drift Table: %s Truncated: %t", expected.table, shouldTruncate))
+		require.Equalf(
+			t,
+			expected.rowCount,
+			rowCount,
+			fmt.Sprintf("Test: schema_drift Table: %s Truncated: %t", expected.table, shouldTruncate),
+		)
 	}
 	test_schema_reconciliation_run_context(t, ctx, jobclient, job.GetId(), destinationId, accountId)
 
@@ -1472,7 +1641,14 @@ func test_postgres_schema_reconciliation(
 	updatedMappings = append(updatedMappings, pg_schema_init.GetAlteredSyncJobMappings(schema)...)
 	job = updateJobMappings(t, ctx, jobclient, job.GetId(), updatedMappings, job.GetSource())
 
-	testworkflow = NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithPostgresSchemaDrift(), WithMaxIterations(100), WithPageLimit(1000))
+	testworkflow = NewTestDataSyncWorkflowEnv(
+		t,
+		vydonApi,
+		dbManagers,
+		WithPostgresSchemaDrift(),
+		WithMaxIterations(100),
+		WithPageLimit(1000),
+	)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: postgres-schema-reconciliation-run-2")
@@ -1489,15 +1665,96 @@ func test_postgres_schema_reconciliation(
 
 	verify_postgres_schemas(t, ctx, source, target, schema, tables)
 
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "regions", sqlmanager_shared.PostgresDriver, []string{"region_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "employees", sqlmanager_shared.PostgresDriver, []string{"employee_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "dependents", sqlmanager_shared.PostgresDriver, []string{"dependent_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "jobs", sqlmanager_shared.PostgresDriver, []string{"job_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "departments", sqlmanager_shared.PostgresDriver, []string{"department_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "countries", sqlmanager_shared.PostgresDriver, []string{"country_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "locations", sqlmanager_shared.PostgresDriver, []string{"location_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "dummy_table", sqlmanager_shared.PostgresDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "test_table_single_col", sqlmanager_shared.PostgresDriver, []string{"name"})
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"regions",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"region_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"employees",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"employee_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"dependents",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"dependent_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"jobs",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"job_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"departments",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"department_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"countries",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"country_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"locations",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"location_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"dummy_table",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		source,
+		target,
+		schema,
+		"test_table_single_col",
+		sqlmanager_shared.PostgresDriver,
+		[]string{"name"},
+	)
 	testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, schema, "budget", sqlmanager_shared.PostgresDriver, []string{"id"})
 	test_schema_reconciliation_run_context(t, ctx, jobclient, job.GetId(), destinationId, accountId)
 
@@ -1572,7 +1829,11 @@ func verify_postgres_schemas(
 	assert_fingerprints_match_in_source_and_target(t, srcDatatypes.Domains, destDatatypes.Domains, "domains")
 }
 
-func assert_fingerprints_match_in_source_and_target[T schemamanager_shared.FingerprintedType](t *testing.T, source, target []T, label string) {
+func assert_fingerprints_match_in_source_and_target[T schemamanager_shared.FingerprintedType](
+	t *testing.T,
+	source, target []T,
+	label string,
+) {
 	sourceMap := map[string]T{}
 	for _, item := range source {
 		sourceMap[item.GetFingerprint()] = item

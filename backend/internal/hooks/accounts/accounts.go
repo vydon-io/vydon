@@ -21,19 +21,37 @@ type Interface interface {
 	GetAccountHook(ctx context.Context, req *mgmtv1alpha1.GetAccountHookRequest) (*mgmtv1alpha1.GetAccountHookResponse, error)
 	CreateAccountHook(ctx context.Context, req *mgmtv1alpha1.CreateAccountHookRequest) (*mgmtv1alpha1.CreateAccountHookResponse, error)
 	DeleteAccountHook(ctx context.Context, req *mgmtv1alpha1.DeleteAccountHookRequest) (*mgmtv1alpha1.DeleteAccountHookResponse, error)
-	IsAccountHookNameAvailable(ctx context.Context, req *mgmtv1alpha1.IsAccountHookNameAvailableRequest) (*mgmtv1alpha1.IsAccountHookNameAvailableResponse, error)
+	IsAccountHookNameAvailable(
+		ctx context.Context,
+		req *mgmtv1alpha1.IsAccountHookNameAvailableRequest,
+	) (*mgmtv1alpha1.IsAccountHookNameAvailableResponse, error)
 	UpdateAccountHook(ctx context.Context, req *mgmtv1alpha1.UpdateAccountHookRequest) (*mgmtv1alpha1.UpdateAccountHookResponse, error)
-	SetAccountHookEnabled(ctx context.Context, req *mgmtv1alpha1.SetAccountHookEnabledRequest) (*mgmtv1alpha1.SetAccountHookEnabledResponse, error)
-	GetActiveAccountHooksByEvent(ctx context.Context, req *mgmtv1alpha1.GetActiveAccountHooksByEventRequest) (*mgmtv1alpha1.GetActiveAccountHooksByEventResponse, error)
-	GetSlackConnectionUrl(ctx context.Context, req *mgmtv1alpha1.GetSlackConnectionUrlRequest) (*mgmtv1alpha1.GetSlackConnectionUrlResponse, error)
-	HandleSlackOAuthCallback(ctx context.Context, req *mgmtv1alpha1.HandleSlackOAuthCallbackRequest) (*mgmtv1alpha1.HandleSlackOAuthCallbackResponse, error)
-	TestSlackConnection(ctx context.Context, req *mgmtv1alpha1.TestSlackConnectionRequest) (*mgmtv1alpha1.TestSlackConnectionResponse, error)
+	SetAccountHookEnabled(
+		ctx context.Context,
+		req *mgmtv1alpha1.SetAccountHookEnabledRequest,
+	) (*mgmtv1alpha1.SetAccountHookEnabledResponse, error)
+	GetActiveAccountHooksByEvent(
+		ctx context.Context,
+		req *mgmtv1alpha1.GetActiveAccountHooksByEventRequest,
+	) (*mgmtv1alpha1.GetActiveAccountHooksByEventResponse, error)
+	GetSlackConnectionUrl(
+		ctx context.Context,
+		req *mgmtv1alpha1.GetSlackConnectionUrlRequest,
+	) (*mgmtv1alpha1.GetSlackConnectionUrlResponse, error)
+	HandleSlackOAuthCallback(
+		ctx context.Context,
+		req *mgmtv1alpha1.HandleSlackOAuthCallbackRequest,
+	) (*mgmtv1alpha1.HandleSlackOAuthCallbackResponse, error)
+	TestSlackConnection(
+		ctx context.Context,
+		req *mgmtv1alpha1.TestSlackConnectionRequest,
+	) (*mgmtv1alpha1.TestSlackConnectionResponse, error)
 	SendSlackMessage(ctx context.Context, req *mgmtv1alpha1.SendSlackMessageRequest) (*mgmtv1alpha1.SendSlackMessageResponse, error)
 }
 
 type Option func(*Service)
 
-func WithAppBaseUrl(_ string) Option          { return func(_ *Service) {} }
+func WithAppBaseUrl(_ string) Option           { return func(_ *Service) {} }
 func WithSlackClient(_ slack.Interface) Option { return func(_ *Service) {} }
 
 type Service struct{}
@@ -44,39 +62,82 @@ func New(_ *vydondb.VydonDb, _ userdata.Interface, _ ...Option) *Service {
 	return &Service{}
 }
 
-func (s *Service) GetAccountHooks(_ context.Context, _ *mgmtv1alpha1.GetAccountHooksRequest) (*mgmtv1alpha1.GetAccountHooksResponse, error) {
+func (s *Service) GetAccountHooks(
+	_ context.Context,
+	_ *mgmtv1alpha1.GetAccountHooksRequest,
+) (*mgmtv1alpha1.GetAccountHooksResponse, error) {
 	return &mgmtv1alpha1.GetAccountHooksResponse{}, nil
 }
 func (s *Service) GetAccountHook(_ context.Context, _ *mgmtv1alpha1.GetAccountHookRequest) (*mgmtv1alpha1.GetAccountHookResponse, error) {
 	return nil, ErrUnsupported
 }
-func (s *Service) CreateAccountHook(_ context.Context, _ *mgmtv1alpha1.CreateAccountHookRequest) (*mgmtv1alpha1.CreateAccountHookResponse, error) {
+
+func (s *Service) CreateAccountHook(
+	_ context.Context,
+	_ *mgmtv1alpha1.CreateAccountHookRequest,
+) (*mgmtv1alpha1.CreateAccountHookResponse, error) {
 	return nil, ErrUnsupported
 }
-func (s *Service) DeleteAccountHook(_ context.Context, _ *mgmtv1alpha1.DeleteAccountHookRequest) (*mgmtv1alpha1.DeleteAccountHookResponse, error) {
+
+func (s *Service) DeleteAccountHook(
+	_ context.Context,
+	_ *mgmtv1alpha1.DeleteAccountHookRequest,
+) (*mgmtv1alpha1.DeleteAccountHookResponse, error) {
 	return &mgmtv1alpha1.DeleteAccountHookResponse{}, nil
 }
-func (s *Service) IsAccountHookNameAvailable(_ context.Context, _ *mgmtv1alpha1.IsAccountHookNameAvailableRequest) (*mgmtv1alpha1.IsAccountHookNameAvailableResponse, error) {
+
+func (s *Service) IsAccountHookNameAvailable(
+	_ context.Context,
+	_ *mgmtv1alpha1.IsAccountHookNameAvailableRequest,
+) (*mgmtv1alpha1.IsAccountHookNameAvailableResponse, error) {
 	return &mgmtv1alpha1.IsAccountHookNameAvailableResponse{IsAvailable: true}, nil
 }
-func (s *Service) UpdateAccountHook(_ context.Context, _ *mgmtv1alpha1.UpdateAccountHookRequest) (*mgmtv1alpha1.UpdateAccountHookResponse, error) {
+
+func (s *Service) UpdateAccountHook(
+	_ context.Context,
+	_ *mgmtv1alpha1.UpdateAccountHookRequest,
+) (*mgmtv1alpha1.UpdateAccountHookResponse, error) {
 	return nil, ErrUnsupported
 }
-func (s *Service) SetAccountHookEnabled(_ context.Context, _ *mgmtv1alpha1.SetAccountHookEnabledRequest) (*mgmtv1alpha1.SetAccountHookEnabledResponse, error) {
+
+func (s *Service) SetAccountHookEnabled(
+	_ context.Context,
+	_ *mgmtv1alpha1.SetAccountHookEnabledRequest,
+) (*mgmtv1alpha1.SetAccountHookEnabledResponse, error) {
 	return nil, ErrUnsupported
 }
-func (s *Service) GetActiveAccountHooksByEvent(_ context.Context, _ *mgmtv1alpha1.GetActiveAccountHooksByEventRequest) (*mgmtv1alpha1.GetActiveAccountHooksByEventResponse, error) {
+
+func (s *Service) GetActiveAccountHooksByEvent(
+	_ context.Context,
+	_ *mgmtv1alpha1.GetActiveAccountHooksByEventRequest,
+) (*mgmtv1alpha1.GetActiveAccountHooksByEventResponse, error) {
 	return &mgmtv1alpha1.GetActiveAccountHooksByEventResponse{}, nil
 }
-func (s *Service) GetSlackConnectionUrl(_ context.Context, _ *mgmtv1alpha1.GetSlackConnectionUrlRequest) (*mgmtv1alpha1.GetSlackConnectionUrlResponse, error) {
+
+func (s *Service) GetSlackConnectionUrl(
+	_ context.Context,
+	_ *mgmtv1alpha1.GetSlackConnectionUrlRequest,
+) (*mgmtv1alpha1.GetSlackConnectionUrlResponse, error) {
 	return nil, ErrUnsupported
 }
-func (s *Service) HandleSlackOAuthCallback(_ context.Context, _ *mgmtv1alpha1.HandleSlackOAuthCallbackRequest) (*mgmtv1alpha1.HandleSlackOAuthCallbackResponse, error) {
+
+func (s *Service) HandleSlackOAuthCallback(
+	_ context.Context,
+	_ *mgmtv1alpha1.HandleSlackOAuthCallbackRequest,
+) (*mgmtv1alpha1.HandleSlackOAuthCallbackResponse, error) {
 	return nil, ErrUnsupported
 }
-func (s *Service) TestSlackConnection(_ context.Context, _ *mgmtv1alpha1.TestSlackConnectionRequest) (*mgmtv1alpha1.TestSlackConnectionResponse, error) {
+
+func (s *Service) TestSlackConnection(
+	_ context.Context,
+	_ *mgmtv1alpha1.TestSlackConnectionRequest,
+) (*mgmtv1alpha1.TestSlackConnectionResponse, error) {
 	return nil, ErrUnsupported
 }
-func (s *Service) SendSlackMessage(_ context.Context, _ *mgmtv1alpha1.SendSlackMessageRequest) (*mgmtv1alpha1.SendSlackMessageResponse, error) {
+
+func (s *Service) SendSlackMessage(
+	_ context.Context,
+	_ *mgmtv1alpha1.SendSlackMessageRequest,
+) (*mgmtv1alpha1.SendSlackMessageResponse, error) {
 	return nil, ErrUnsupported
 }

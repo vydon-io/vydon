@@ -9,8 +9,8 @@ import (
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
 	"github.com/vydon-io/vydon/internal/apikey"
-	"github.com/vydon-io/vydon/internal/license"
 	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/license"
 	"github.com/vydon-io/vydon/internal/vydondb"
 )
 

@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/vydon-io/vydon/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 func Test_GenerateUsername(t *testing.T) {
@@ -16,7 +16,12 @@ func Test_GenerateUsername(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.IsType(t, "", res, "The expected username should have a valid username")
-	assert.LessOrEqual(t, int64(len(res)), maxLength, fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res))
+	assert.LessOrEqual(
+		t,
+		int64(len(res)),
+		maxLength,
+		fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res),
+	)
 }
 
 func Test_GenerateUsername_Random_Seed(t *testing.T) {
@@ -26,7 +31,12 @@ func Test_GenerateUsername_Random_Seed(t *testing.T) {
 	assert.NoError(t, err, "failed with seed", "seed", seed)
 
 	assert.IsType(t, "", res, "The expected username should have a valid username")
-	assert.LessOrEqual(t, int64(len(res)), maxLength, fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res))
+	assert.LessOrEqual(
+		t,
+		int64(len(res)),
+		maxLength,
+		fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res),
+	)
 }
 
 func Test_GenerateUsernameShort(t *testing.T) {
@@ -35,7 +45,12 @@ func Test_GenerateUsernameShort(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.IsType(t, "", res, "The expected username should have a valid username")
-	assert.LessOrEqual(t, int64(len(res)), int64(3), fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res))
+	assert.LessOrEqual(
+		t,
+		int64(len(res)),
+		int64(3),
+		fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res),
+	)
 }
 
 func Test_UsernamelTransformer(t *testing.T) {

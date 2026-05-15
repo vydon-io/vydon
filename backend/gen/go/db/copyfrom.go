@@ -27,8 +27,8 @@ func (r *iteratorForCreateJobConnectionDestinations) Next() bool {
 	return len(r.rows) > 0
 }
 
-func (r iteratorForCreateJobConnectionDestinations) Values() ([]interface{}, error) {
-	return []interface{}{
+func (r iteratorForCreateJobConnectionDestinations) Values() ([]any, error) {
+	return []any{
 		r.rows[0].JobID,
 		r.rows[0].ConnectionID,
 		r.rows[0].Options,

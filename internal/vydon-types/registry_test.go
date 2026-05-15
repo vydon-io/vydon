@@ -3,8 +3,8 @@ package vydontypes
 import (
 	"testing"
 
-	"github.com/vydon-io/vydon/internal/testutil"
 	"github.com/stretchr/testify/require"
+	"github.com/vydon-io/vydon/internal/testutil"
 )
 
 func Test_TypeRegistry(t *testing.T) {

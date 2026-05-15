@@ -9,9 +9,9 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	vydon_types "github.com/vydon-io/vydon/internal/types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
 
 	"github.com/redpanda-data/benthos/v4/public/service"
 )
@@ -22,11 +22,19 @@ type mockDynamoDB struct {
 	batchFn func(*dynamodb.BatchWriteItemInput) (*dynamodb.BatchWriteItemOutput, error)
 }
 
-func (m *mockDynamoDB) PutItem(ctx context.Context, params *dynamodb.PutItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.PutItemOutput, error) {
+func (m *mockDynamoDB) PutItem(
+	ctx context.Context,
+	params *dynamodb.PutItemInput,
+	optFns ...func(*dynamodb.Options),
+) (*dynamodb.PutItemOutput, error) {
 	return m.fn(params)
 }
 
-func (m *mockDynamoDB) BatchWriteItem(ctx context.Context, params *dynamodb.BatchWriteItemInput, optFns ...func(*dynamodb.Options)) (*dynamodb.BatchWriteItemOutput, error) {
+func (m *mockDynamoDB) BatchWriteItem(
+	ctx context.Context,
+	params *dynamodb.BatchWriteItemInput,
+	optFns ...func(*dynamodb.Options),
+) (*dynamodb.BatchWriteItemOutput, error) {
 	return m.batchFn(params)
 }
 

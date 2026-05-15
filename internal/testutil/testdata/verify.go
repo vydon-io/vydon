@@ -190,5 +190,6 @@ func isJsonType(colType string) bool {
 }
 
 func isJsonArrayType(colType string) bool {
-	return strings.EqualFold(colType, "json[]") || strings.EqualFold(colType, "jsonb[]") || strings.EqualFold(colType, "_json") || strings.EqualFold(colType, "_jsonb")
+	return strings.EqualFold(colType, "json[]") || strings.EqualFold(colType, "jsonb[]") || strings.EqualFold(colType, "_json") ||
+		strings.EqualFold(colType, "_jsonb")
 }

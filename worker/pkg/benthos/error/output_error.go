@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/redpanda-data/benthos/v4/public/service"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 func errorOutputSpec() *service.ConfigSpec {

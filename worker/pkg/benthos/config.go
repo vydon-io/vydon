@@ -31,13 +31,13 @@ type InputConfig struct {
 }
 
 type Inputs struct {
-	PooledSqlRaw          *InputPooledSqlRaw     `json:"pooled_sql_raw,omitempty"          yaml:"pooled_sql_raw,omitempty"`
-	Generate              *Generate              `json:"generate,omitempty"                yaml:"generate,omitempty"`
-	OpenAiGenerate        *OpenAiGenerate        `json:"openai_generate,omitempty"         yaml:"openai_generate,omitempty"`
-	PooledMongoDB         *InputMongoDb          `json:"pooled_mongodb,omitempty"          yaml:"pooled_mongodb,omitempty"`
-	AwsDynamoDB           *InputAwsDynamoDB      `json:"aws_dynamodb,omitempty"            yaml:"aws_dynamodb,omitempty"`
+	PooledSqlRaw        *InputPooledSqlRaw   `json:"pooled_sql_raw,omitempty"        yaml:"pooled_sql_raw,omitempty"`
+	Generate            *Generate            `json:"generate,omitempty"              yaml:"generate,omitempty"`
+	OpenAiGenerate      *OpenAiGenerate      `json:"openai_generate,omitempty"       yaml:"openai_generate,omitempty"`
+	PooledMongoDB       *InputMongoDb        `json:"pooled_mongodb,omitempty"        yaml:"pooled_mongodb,omitempty"`
+	AwsDynamoDB         *InputAwsDynamoDB    `json:"aws_dynamodb,omitempty"          yaml:"aws_dynamodb,omitempty"`
 	VydonConnectionData *VydonConnectionData `json:"vydon_connection_data,omitempty" yaml:"vydon_connection_data,omitempty"`
-	Broker                *InputBrokerConfig     `json:"broker,omitempty"                  yaml:"broker,omitempty"`
+	Broker              *InputBrokerConfig   `json:"broker,omitempty"                yaml:"broker,omitempty"`
 }
 
 type VydonConnectionData struct {
@@ -144,13 +144,13 @@ type PipelineConfig struct {
 }
 
 type ProcessorConfig struct {
-	Mutation                  *string                          `json:"mutation,omitempty"                    yaml:"mutation,omitempty"`
+	Mutation                *string                        `json:"mutation,omitempty"                  yaml:"mutation,omitempty"`
 	VydonJavascript         *VydonJavascriptConfig         `json:"vydon_javascript,omitempty"          yaml:"vydon_javascript,omitempty"`
-	Branch                    *BranchConfig                    `json:"branch,omitempty"                      yaml:"branch,omitempty"`
-	Mapping                   *string                          `json:"mapping,omitempty"                     yaml:"mapping,omitempty"`
-	Redis                     *RedisProcessorConfig            `json:"redis,omitempty"                       yaml:"redis,omitempty"`
-	Error                     *ErrorProcessorConfig            `json:"error,omitempty"                       yaml:"error,omitempty"`
-	Catch                     []*ProcessorConfig               `json:"catch,omitempty"                       yaml:"catch,omitempty"`
+	Branch                  *BranchConfig                  `json:"branch,omitempty"                    yaml:"branch,omitempty"`
+	Mapping                 *string                        `json:"mapping,omitempty"                   yaml:"mapping,omitempty"`
+	Redis                   *RedisProcessorConfig          `json:"redis,omitempty"                     yaml:"redis,omitempty"`
+	Error                   *ErrorProcessorConfig          `json:"error,omitempty"                     yaml:"error,omitempty"`
+	Catch                   []*ProcessorConfig             `json:"catch,omitempty"                     yaml:"catch,omitempty"`
 	VydonDefaultTransformer *VydonDefaultTransformerConfig `json:"vydon_default_transformer,omitempty" yaml:"vydon_default_transformer,omitempty"`
 }
 
@@ -309,8 +309,8 @@ type Batching struct {
 }
 
 type BatchProcessor struct {
-	Archive        *ArchiveProcessor     `json:"archive,omitempty"          yaml:"archive,omitempty"`
-	Compress       *CompressProcessor    `json:"compress,omitempty"         yaml:"compress,omitempty"`
+	Archive      *ArchiveProcessor   `json:"archive,omitempty"        yaml:"archive,omitempty"`
+	Compress     *CompressProcessor  `json:"compress,omitempty"       yaml:"compress,omitempty"`
 	VydonToJson  *VydonToJsonConfig  `json:"vydon_to_json,omitempty"  yaml:"vydon_to_json,omitempty"`
 	VydonToPgx   *VydonToPgxConfig   `json:"vydon_to_pgx,omitempty"   yaml:"vydon_to_pgx,omitempty"`
 	VydonToMysql *VydonToMysqlConfig `json:"vydon_to_mysql,omitempty" yaml:"vydon_to_mysql,omitempty"`

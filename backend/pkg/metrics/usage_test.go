@@ -8,12 +8,12 @@ import (
 	"testing"
 	"time"
 
-	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
-	promapiv1mock "github.com/vydon-io/vydon/internal/mocks/github.com/prometheus/client_golang/api/prometheus/v1"
 	"github.com/prometheus/common/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	promapiv1mock "github.com/vydon-io/vydon/internal/mocks/github.com/prometheus/client_golang/api/prometheus/v1"
 )
 
 func Test_getPromQueryFromMetric(t *testing.T) {

@@ -10,10 +10,10 @@ import (
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 
+	"github.com/spf13/viper"
 	benthosbuilder_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
 	http_client "github.com/vydon-io/vydon/internal/http/client"
 	vydon_redis "github.com/vydon-io/vydon/internal/redis"
-	"github.com/spf13/viper"
 )
 
 const (

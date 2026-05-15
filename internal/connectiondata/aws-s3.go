@@ -24,11 +24,11 @@ import (
 )
 
 type AwsS3ConnectionDataService struct {
-	logger              *slog.Logger
-	awsmanager          aws_manager.VydonAwsManagerClient
+	logger            *slog.Logger
+	awsmanager        aws_manager.VydonAwsManagerClient
 	vydontyperegistry vydontypes.VydonTypeRegistry
-	connection          *mgmtv1alpha1.Connection
-	connconfig          *mgmtv1alpha1.AwsS3ConnectionConfig
+	connection        *mgmtv1alpha1.Connection
+	connconfig        *mgmtv1alpha1.AwsS3ConnectionConfig
 }
 
 func NewAwsS3ConnectionDataService(
@@ -38,11 +38,11 @@ func NewAwsS3ConnectionDataService(
 	connection *mgmtv1alpha1.Connection,
 ) *AwsS3ConnectionDataService {
 	return &AwsS3ConnectionDataService{
-		logger:              logger,
-		awsmanager:          awsmanager,
+		logger:            logger,
+		awsmanager:        awsmanager,
 		vydontyperegistry: vydontyperegistry,
-		connection:          connection,
-		connconfig:          connection.GetConnectionConfig().GetAwsS3Config(),
+		connection:        connection,
+		connconfig:        connection.GetConnectionConfig().GetAwsS3Config(),
 	}
 }
 

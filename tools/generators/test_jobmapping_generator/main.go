@@ -13,8 +13,8 @@ import (
 	"text/template"
 
 	"github.com/antlr4-go/antlr/v4"
-	parser "github.com/vydon-io/go-antlrv4-parser/tsql"
 	pg_query "github.com/pganalyze/pg_query_go/v5"
+	parser "github.com/vydon-io/go-antlrv4-parser/tsql"
 )
 
 type Input struct {

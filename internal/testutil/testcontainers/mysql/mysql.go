@@ -9,11 +9,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/vydon-io/vydon/internal/sshtunnel/connectors/mysqltunconnector"
-	"github.com/vydon-io/vydon/internal/testutil"
 	"github.com/testcontainers/testcontainers-go"
 	testmysql "github.com/testcontainers/testcontainers-go/modules/mysql"
 	"github.com/testcontainers/testcontainers-go/wait"
+	"github.com/vydon-io/vydon/internal/sshtunnel/connectors/mysqltunconnector"
+	"github.com/vydon-io/vydon/internal/testutil"
 	"golang.org/x/sync/errgroup"
 )
 

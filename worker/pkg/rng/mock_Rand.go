@@ -177,7 +177,7 @@ type MockRand_Int63n_Call struct {
 
 // Int63n is a helper method to define mock.On call
 //   - n int64
-func (_e *MockRand_Expecter) Int63n(n interface{}) *MockRand_Int63n_Call {
+func (_e *MockRand_Expecter) Int63n(n any) *MockRand_Int63n_Call {
 	return &MockRand_Int63n_Call{Call: _e.mock.On("Int63n", n)}
 }
 
@@ -223,7 +223,7 @@ type MockRand_Intn_Call struct {
 
 // Intn is a helper method to define mock.On call
 //   - n int
-func (_e *MockRand_Expecter) Intn(n interface{}) *MockRand_Intn_Call {
+func (_e *MockRand_Expecter) Intn(n any) *MockRand_Intn_Call {
 	return &MockRand_Intn_Call{Call: _e.mock.On("Intn", n)}
 }
 

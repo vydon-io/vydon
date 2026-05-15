@@ -7,6 +7,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 	accounts_cmd "github.com/vydon-io/vydon/cli/internal/cmds/vydon/accounts"
 	connections_cmd "github.com/vydon-io/vydon/cli/internal/cmds/vydon/connections"
 	jobs_cmd "github.com/vydon-io/vydon/cli/internal/cmds/vydon/jobs"
@@ -15,13 +17,11 @@ import (
 	version_cmd "github.com/vydon-io/vydon/cli/internal/cmds/vydon/version"
 	whoami_cmd "github.com/vydon-io/vydon/cli/internal/cmds/vydon/whoami"
 	"github.com/vydon-io/vydon/cli/internal/version"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 	"google.golang.org/grpc/metadata"
 )
 
 const (
-	vydonDirName           = ".vydon"
+	vydonDirName             = ".vydon"
 	cliSettingsFileNameNoExt = "config"
 	cliSettingsFileExt       = "yaml"
 
@@ -125,7 +125,7 @@ func initConfig(cfgFilePath string) {
 
 		fullVydonSettingsDir := filepath.Join(home, vydonDirName)
 		vydonConfigDir := os.Getenv("VYDON_CONFIG_DIR") // helpful for tools such as direnv and people who want it somewhere interesting
-		xdgConfigHome := os.Getenv("XDG_CONFIG_HOME")       // linux users expect this to be respected
+		xdgConfigHome := os.Getenv("XDG_CONFIG_HOME")   // linux users expect this to be respected
 
 		viper.AddConfigPath(".")
 		viper.AddConfigPath(fullVydonSettingsDir)

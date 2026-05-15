@@ -19,9 +19,9 @@ type EEInterface interface {
 
 type ValidLicense struct{}
 
-func NewValidLicense() *ValidLicense                 { return &ValidLicense{} }
-func (v *ValidLicense) IsValid() bool                { return true }
-func (v *ValidLicense) ExpiresAt() time.Time         { return time.Time{} }
+func NewValidLicense() *ValidLicense         { return &ValidLicense{} }
+func (v *ValidLicense) IsValid() bool        { return true }
+func (v *ValidLicense) ExpiresAt() time.Time { return time.Time{} }
 
 type EELicense = ValidLicense
 

@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/vydon-io/vydon/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 func Test_GenerateRandomInt(t *testing.T) {

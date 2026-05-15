@@ -9,11 +9,11 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
+	"github.com/stretchr/testify/require"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	integrationtests_test "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	piidetect_table_activities "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/table/activities"
-	"github.com/stretchr/testify/require"
 )
 
 func (s *IntegrationTestSuite) Test_GetJobs_Empty() {
@@ -108,10 +108,23 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 	t.Run("Cloud", func(t *testing.T) {
 		client := s.VydonCloudAuthenticatedLicensedClients.Jobs(integrationtests_test.WithUserId(testAuthUserId))
 		s.setUser(ctx, s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId)))
-		accountId := s.createPersonalAccount(ctx, s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId)))
+		accountId := s.createPersonalAccount(
+			ctx,
+			s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId)),
+		)
 
-		srcconn := s.createPostgresConnection(s.VydonCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId)), accountId, "source", "test")
-		destconn := s.createPostgresConnection(s.VydonCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId)), accountId, "dest", "test2")
+		srcconn := s.createPostgresConnection(
+			s.VydonCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId)),
+			accountId,
+			"source",
+			"test",
+		)
+		destconn := s.createPostgresConnection(
+			s.VydonCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId)),
+			accountId,
+			"dest",
+			"test2",
+		)
 
 		s.MockTemporalForCreateJob("test-id")
 		jobResp, err := client.CreateJob(ctx, connect.NewRequest(&mgmtv1alpha1.CreateJobRequest{
@@ -141,9 +154,18 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 		requireNoErrResp(t, jobResp, err)
 
 		t.Run("GetJobHooks", func(t *testing.T) {
-			createdHook := s.createSqlJobHook(ctx, t, client, "getjobhooks-1", jobResp.Msg.GetJob().GetId(), srcconn.GetId(), true, &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
-				Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
-			})
+			createdHook := s.createSqlJobHook(
+				ctx,
+				t,
+				client,
+				"getjobhooks-1",
+				jobResp.Msg.GetJob().GetId(),
+				srcconn.GetId(),
+				true,
+				&mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+					Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+				},
+			)
 
 			t.Run("ok", func(t *testing.T) {
 				resp, err := client.GetJobHooks(ctx, connect.NewRequest(&mgmtv1alpha1.GetJobHooksRequest{
@@ -156,9 +178,18 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 		})
 
 		t.Run("GetJobHook", func(t *testing.T) {
-			createdHook := s.createSqlJobHook(ctx, t, client, "getjobhook-1", jobResp.Msg.GetJob().GetId(), srcconn.GetId(), true, &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
-				Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
-			})
+			createdHook := s.createSqlJobHook(
+				ctx,
+				t,
+				client,
+				"getjobhook-1",
+				jobResp.Msg.GetJob().GetId(),
+				srcconn.GetId(),
+				true,
+				&mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+					Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+				},
+			)
 
 			t.Run("ok", func(t *testing.T) {
 				resp, err := client.GetJobHook(ctx, connect.NewRequest(&mgmtv1alpha1.GetJobHookRequest{
@@ -192,7 +223,9 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 								Sql: &mgmtv1alpha1.JobHookConfig_JobSqlHook{
 									Query:        "foo",
 									ConnectionId: srcconn.GetId(),
-									Timing:       &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{}},
+									Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+										Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+									},
 								},
 							},
 						},
@@ -214,7 +247,9 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 								Sql: &mgmtv1alpha1.JobHookConfig_JobSqlHook{
 									Query:        "foo",
 									ConnectionId: srcconn.GetId(),
-									Timing:       &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{}},
+									Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+										Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+									},
 								},
 							},
 						},
@@ -236,7 +271,9 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 								Sql: &mgmtv1alpha1.JobHookConfig_JobSqlHook{
 									Query:        "foo",
 									ConnectionId: uuid.NewString(), // job does not have this connection id
-									Timing:       &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{}},
+									Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+										Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+									},
 								},
 							},
 						},
@@ -271,9 +308,18 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 
 		t.Run("DeleteJobHook", func(t *testing.T) {
 			t.Run("ok", func(t *testing.T) {
-				createdHook := s.createSqlJobHook(ctx, t, client, "deletejobhook-1", jobResp.Msg.GetJob().GetId(), srcconn.GetId(), true, &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
-					Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
-				})
+				createdHook := s.createSqlJobHook(
+					ctx,
+					t,
+					client,
+					"deletejobhook-1",
+					jobResp.Msg.GetJob().GetId(),
+					srcconn.GetId(),
+					true,
+					&mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+						Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+					},
+				)
 				resp, err := client.DeleteJobHook(ctx, connect.NewRequest(&mgmtv1alpha1.DeleteJobHookRequest{Id: createdHook.GetId()}))
 				requireNoErrResp(t, resp, err)
 
@@ -297,9 +343,18 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 				require.True(t, resp.Msg.GetIsAvailable())
 			})
 			t.Run("no", func(t *testing.T) {
-				createdHook := s.createSqlJobHook(ctx, t, client, "isjobhooknameavail-2", jobResp.Msg.GetJob().GetId(), srcconn.GetId(), true, &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
-					Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
-				})
+				createdHook := s.createSqlJobHook(
+					ctx,
+					t,
+					client,
+					"isjobhooknameavail-2",
+					jobResp.Msg.GetJob().GetId(),
+					srcconn.GetId(),
+					true,
+					&mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+						Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+					},
+				)
 
 				resp, err := client.IsJobHookNameAvailable(ctx, connect.NewRequest(&mgmtv1alpha1.IsJobHookNameAvailableRequest{
 					JobId: jobResp.Msg.GetJob().GetId(),
@@ -311,9 +366,18 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 		})
 
 		t.Run("SetJobHookEnabled", func(t *testing.T) {
-			createdHook := s.createSqlJobHook(ctx, t, client, "setjobhookenabled-1", jobResp.Msg.GetJob().GetId(), srcconn.GetId(), true, &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
-				Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
-			})
+			createdHook := s.createSqlJobHook(
+				ctx,
+				t,
+				client,
+				"setjobhookenabled-1",
+				jobResp.Msg.GetJob().GetId(),
+				srcconn.GetId(),
+				true,
+				&mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+					Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+				},
+			)
 			require.True(t, createdHook.GetEnabled())
 			resp, err := client.SetJobHookEnabled(ctx, connect.NewRequest(&mgmtv1alpha1.SetJobHookEnabledRequest{
 				Id:      createdHook.GetId(),
@@ -330,9 +394,18 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 		})
 
 		t.Run("UpdateJobHook", func(t *testing.T) {
-			createdHook := s.createSqlJobHook(ctx, t, client, "updatejobhook-1", jobResp.Msg.GetJob().GetId(), srcconn.GetId(), true, &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
-				Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
-			})
+			createdHook := s.createSqlJobHook(
+				ctx,
+				t,
+				client,
+				"updatejobhook-1",
+				jobResp.Msg.GetJob().GetId(),
+				srcconn.GetId(),
+				true,
+				&mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+					Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+				},
+			)
 			resp, err := client.UpdateJobHook(ctx, connect.NewRequest(&mgmtv1alpha1.UpdateJobHookRequest{
 				Id:          createdHook.GetId(),
 				Name:        fmt.Sprintf("%s-updated", createdHook.GetName()),
@@ -365,15 +438,42 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 		})
 
 		t.Run("GetActiveJobHooksByTiming", func(t *testing.T) {
-			createdPreSyncHook := s.createSqlJobHook(ctx, t, client, "getactivejobhooksbytiming-pre", jobResp.Msg.GetJob().GetId(), srcconn.GetId(), true, &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
-				Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
-			})
-			createdPostSyncHook := s.createSqlJobHook(ctx, t, client, "getactivejobhooksbytiming-post", jobResp.Msg.GetJob().GetId(), srcconn.GetId(), true, &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
-				Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PostSync{},
-			})
-			disabledHook := s.createSqlJobHook(ctx, t, client, "getactivejobhooksbytiming-disabled", jobResp.Msg.GetJob().GetId(), srcconn.GetId(), false, &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
-				Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PostSync{},
-			})
+			createdPreSyncHook := s.createSqlJobHook(
+				ctx,
+				t,
+				client,
+				"getactivejobhooksbytiming-pre",
+				jobResp.Msg.GetJob().GetId(),
+				srcconn.GetId(),
+				true,
+				&mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+					Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PreSync{},
+				},
+			)
+			createdPostSyncHook := s.createSqlJobHook(
+				ctx,
+				t,
+				client,
+				"getactivejobhooksbytiming-post",
+				jobResp.Msg.GetJob().GetId(),
+				srcconn.GetId(),
+				true,
+				&mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+					Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PostSync{},
+				},
+			)
+			disabledHook := s.createSqlJobHook(
+				ctx,
+				t,
+				client,
+				"getactivejobhooksbytiming-disabled",
+				jobResp.Msg.GetJob().GetId(),
+				srcconn.GetId(),
+				false,
+				&mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing{
+					Timing: &mgmtv1alpha1.JobHookConfig_JobSqlHook_Timing_PostSync{},
+				},
+			)
 			t.Run("unspecified", func(t *testing.T) {
 				resp, err := client.GetActiveJobHooksByTiming(ctx, connect.NewRequest(&mgmtv1alpha1.GetActiveJobHooksByTimingRequest{
 					JobId:  jobResp.Msg.GetJob().GetId(),
@@ -518,10 +618,11 @@ func (s *IntegrationTestSuite) Test_ValidateSchema() {
 			},
 		}
 
-		resp, err := s.OSSUnauthenticatedLicensedClients.Jobs().ValidateSchema(s.ctx, connect.NewRequest(&mgmtv1alpha1.ValidateSchemaRequest{
-			ConnectionId: destconn.GetId(),
-			Mappings:     Mappings,
-		}))
+		resp, err := s.OSSUnauthenticatedLicensedClients.Jobs().
+			ValidateSchema(s.ctx, connect.NewRequest(&mgmtv1alpha1.ValidateSchemaRequest{
+				ConnectionId: destconn.GetId(),
+				Mappings:     Mappings,
+			}))
 		requireNoErrResp(t, resp, err)
 		require.Len(t, resp.Msg.MissingTables, 2)
 	})
@@ -542,10 +643,11 @@ func (s *IntegrationTestSuite) Test_ValidateSchema() {
 			},
 		}
 
-		resp, err := s.OSSUnauthenticatedLicensedClients.Jobs().ValidateSchema(s.ctx, connect.NewRequest(&mgmtv1alpha1.ValidateSchemaRequest{
-			ConnectionId: destconn.GetId(),
-			Mappings:     Mappings,
-		}))
+		resp, err := s.OSSUnauthenticatedLicensedClients.Jobs().
+			ValidateSchema(s.ctx, connect.NewRequest(&mgmtv1alpha1.ValidateSchemaRequest{
+				ConnectionId: destconn.GetId(),
+				Mappings:     Mappings,
+			}))
 		requireNoErrResp(t, resp, err)
 		require.Len(t, resp.Msg.MissingTables, 0)
 	})
@@ -580,7 +682,9 @@ func (s *IntegrationTestSuite) Test_GetPiiDetectionReport() {
 					DataSampling: &mgmtv1alpha1.JobTypeConfig_JobTypePiiDetect_DataSampling{
 						IsEnabled: true,
 					},
-					TableScanFilter: &mgmtv1alpha1.JobTypeConfig_JobTypePiiDetect_TableScanFilter{Mode: &mgmtv1alpha1.JobTypeConfig_JobTypePiiDetect_TableScanFilter_IncludeAll{}},
+					TableScanFilter: &mgmtv1alpha1.JobTypeConfig_JobTypePiiDetect_TableScanFilter{
+						Mode: &mgmtv1alpha1.JobTypeConfig_JobTypePiiDetect_TableScanFilter_IncludeAll{},
+					},
 				},
 			},
 		},

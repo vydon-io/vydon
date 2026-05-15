@@ -9,9 +9,9 @@ import (
 	"errors"
 	"log/slog"
 
+	"github.com/stretchr/testify/mock"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/internal/piidetect/presidio"
-	"github.com/stretchr/testify/mock"
 )
 
 var ErrUnsupported = errors.New("pii text transformer is not supported in the open-source vydon distribution")

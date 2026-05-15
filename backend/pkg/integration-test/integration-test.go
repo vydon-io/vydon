@@ -8,6 +8,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/mock"
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
 	auth_client "github.com/vydon-io/vydon/backend/internal/auth/client"
@@ -15,14 +16,13 @@ import (
 	"github.com/vydon-io/vydon/internal/authmgmt"
 	"github.com/vydon-io/vydon/internal/billing"
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
-	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
-	ee_slack "github.com/vydon-io/vydon/internal/notifications/slack"
 	neomigrate "github.com/vydon-io/vydon/internal/migrate"
 	promapiv1mock "github.com/vydon-io/vydon/internal/mocks/github.com/prometheus/client_golang/api/prometheus/v1"
+	ee_slack "github.com/vydon-io/vydon/internal/notifications/slack"
+	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
 	clientmanager "github.com/vydon-io/vydon/internal/temporal/clientmanager"
 	"github.com/vydon-io/vydon/internal/testutil"
 	tcpostgres "github.com/vydon-io/vydon/internal/testutil/testcontainers/postgres"
-	"github.com/stretchr/testify/mock"
 	"go.temporal.io/api/common/v1"
 	"go.temporal.io/api/enums/v1"
 	"go.temporal.io/api/workflow/v1"
@@ -50,8 +50,8 @@ type Presidiomocks struct {
 }
 
 type VydonApiTestClient struct {
-	VydonQuerier db_queries.Querier
-	systemQuerier  pg_queries.Querier
+	VydonQuerier  db_queries.Querier
+	systemQuerier pg_queries.Querier
 
 	Pgcontainer   *tcpostgres.PostgresTestContainer
 	migrationsDir string

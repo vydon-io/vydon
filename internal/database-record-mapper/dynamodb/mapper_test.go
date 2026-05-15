@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	vydon_types "github.com/vydon-io/vydon/internal/types"
 	"github.com/stretchr/testify/require"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
 )
 
 func Test_UnmarshalAttributeValueMap(t *testing.T) {
@@ -128,7 +128,11 @@ func Test_ParseAttributeValue(t *testing.T) {
 			ktm := map[string]vydon_types.KeyType{}
 			actual, err := parseAttributeValue(tt.name, tt.input, ktm)
 			require.NoError(t, err)
-			require.True(t, reflect.DeepEqual(actual, tt.expected), fmt.Sprintf("expected %v %v, got %v %v", tt.expected, reflect.TypeOf(tt.expected), actual, reflect.TypeOf(actual)))
+			require.True(
+				t,
+				reflect.DeepEqual(actual, tt.expected),
+				fmt.Sprintf("expected %v %v, got %v %v", tt.expected, reflect.TypeOf(tt.expected), actual, reflect.TypeOf(actual)),
+			)
 		})
 	}
 }

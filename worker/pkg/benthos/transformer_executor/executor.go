@@ -8,10 +8,10 @@ import (
 
 	"github.com/dop251/goja"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
-	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
-	ee_transformer_fns "github.com/vydon-io/vydon/internal/transformers/functions"
 	"github.com/vydon-io/vydon/internal/javascript"
 	javascript_userland "github.com/vydon-io/vydon/internal/javascript/userland"
+	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
+	ee_transformer_fns "github.com/vydon-io/vydon/internal/transformers/functions"
 	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 )
 
@@ -45,10 +45,10 @@ func WithTransformPiiTextConfig(
 ) TransformerExecutorOption {
 	return func(c *TransformerExecutorConfig) {
 		c.transformPiiText = &transformPiiTextConfig{
-			analyze:            analyze,
-			anonymize:          anonymize,
+			analyze:          analyze,
+			anonymize:        anonymize,
 			vydonOperatorApi: vydonOperatorApi,
-			defaultLanguage:    defaultLanguage,
+			defaultLanguage:  defaultLanguage,
 		}
 	}
 }

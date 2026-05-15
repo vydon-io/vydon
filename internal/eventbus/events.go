@@ -6,23 +6,23 @@ package eventbus
 
 type Event struct {
 	Name    string
-	Payload map[string]interface{}
+	Payload map[string]any
 }
 
 func NewEvent_JobRunCreated(jobID, runID, accountID string) *Event {
-	return &Event{Name: "job.run.created", Payload: map[string]interface{}{
+	return &Event{Name: "job.run.created", Payload: map[string]any{
 		"jobId": jobID, "runId": runID, "accountId": accountID,
 	}}
 }
 
 func NewEvent_JobRunSucceeded(jobID, runID, accountID string) *Event {
-	return &Event{Name: "job.run.succeeded", Payload: map[string]interface{}{
+	return &Event{Name: "job.run.succeeded", Payload: map[string]any{
 		"jobId": jobID, "runId": runID, "accountId": accountID,
 	}}
 }
 
 func NewEvent_JobRunFailed(jobID, runID, accountID string) *Event {
-	return &Event{Name: "job.run.failed", Payload: map[string]interface{}{
+	return &Event{Name: "job.run.failed", Payload: map[string]any{
 		"jobId": jobID, "runId": runID, "accountId": accountID,
 	}}
 }

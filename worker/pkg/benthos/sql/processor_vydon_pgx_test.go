@@ -8,10 +8,10 @@ import (
 
 	"github.com/doug-martin/goqu/v9"
 	"github.com/lib/pq"
-	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
-	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/stretchr/testify/require"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 func Test_getValidJson(t *testing.T) {

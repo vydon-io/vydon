@@ -10,6 +10,7 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/stripe/stripe-go/v81"
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
@@ -21,10 +22,9 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/version"
 	"github.com/vydon-io/vydon/internal/apikey"
 	"github.com/vydon-io/vydon/internal/billing"
-	"github.com/vydon-io/vydon/internal/rbac"
 	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/rbac"
 	"github.com/vydon-io/vydon/internal/vydondb"
-	"github.com/stripe/stripe-go/v81"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -950,8 +950,8 @@ func (s *Service) GetSystemInformation(
 		Platform:  versionInfo.Platform,
 		BuildDate: timestamppb.New(builtDate),
 		License: &mgmtv1alpha1.SystemLicense{
-			IsValid:        s.licenseclient.IsValid(),
-			ExpiresAt:      timestamppb.New(s.licenseclient.ExpiresAt()),
+			IsValid:      s.licenseclient.IsValid(),
+			ExpiresAt:    timestamppb.New(s.licenseclient.ExpiresAt()),
 			IsVydonCloud: s.cfg.IsVydonCloud,
 		},
 	}), nil

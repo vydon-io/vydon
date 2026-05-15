@@ -8,6 +8,8 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
@@ -23,8 +25,6 @@ import (
 	mysql_human_resources "github.com/vydon-io/vydon/internal/testutil/testdata/mysql/humanresources"
 	mysql_schemainit "github.com/vydon-io/vydon/internal/testutil/testdata/mysql/schema-init"
 	reconcileschema_activity "github.com/vydon-io/vydon/worker/pkg/workflows/schemainit/activities/reconcile-schema"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -191,9 +191,36 @@ func test_mysql_types(
 		require.Equalf(t, expected.rowCount, rowCount, fmt.Sprintf("Test: mysql_all_types Table: %s", expected.table))
 	}
 
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, alltypesSchema, "all_data_types", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, alltypesSchema, "json_data", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, alltypesSchema, "generated_table", sqlmanager_shared.MysqlDriver, []string{"id"})
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		alltypesSchema,
+		"all_data_types",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		alltypesSchema,
+		"json_data",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		alltypesSchema,
+		"generated_table",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
 
 	// tear down
 	err = cleanupMysqlDatabases(ctx, mysql, []string{alltypesSchema})
@@ -347,7 +374,12 @@ func test_mysql_composite_keys(
 	for _, expected := range expectedResults {
 		rowCount, err := mysql.Target.GetTableRowCount(ctx, schema, expected.table)
 		require.NoError(t, err)
-		require.Equalf(t, expected.rowCount, rowCount, fmt.Sprintf("Test: mysql_composite_keys schema: %s Table: %s", schema, expected.table))
+		require.Equalf(
+			t,
+			expected.rowCount,
+			rowCount,
+			fmt.Sprintf("Test: mysql_composite_keys schema: %s Table: %s", schema, expected.table),
+		)
 	}
 
 	// tear down
@@ -434,7 +466,16 @@ func test_mysql_on_conflict_do_update(
 		require.Equalf(t, expected.rowCount, rowCount, fmt.Sprintf("Test: mysql_human_resources Table: %s", expected.table))
 	}
 
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "regions", sqlmanager_shared.MysqlDriver, []string{"region_id"})
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"regions",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"region_id"},
+	)
 
 	// tear down
 	err = cleanupMysqlDatabases(ctx, mysql, []string{schema})
@@ -453,7 +494,12 @@ func test_mysql_complex(
 	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "complex"
 
-	err := mysql.Source.RunCreateStmtsInDatabase(ctx, mysqlTestdataFolder, []string{"complex/create-tables.sql", "complex/inserts.sql"}, schema)
+	err := mysql.Source.RunCreateStmtsInDatabase(
+		ctx,
+		mysqlTestdataFolder,
+		[]string{"complex/create-tables.sql", "complex/inserts.sql"},
+		schema,
+	)
 	require.NoError(t, err)
 
 	vydonApi.MockTemporalForCreateJob("test-mysql-sync")
@@ -514,26 +560,206 @@ func test_mysql_complex(
 	}
 	test_schema_reconciliation_run_context(t, ctx, jobclient, job.GetId(), job.GetDestinations()[0].GetId(), accountId)
 
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "agency", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "astronaut", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "spacecraft", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "celestial_body", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "launch_site", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "mission", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "mission_crew", sqlmanager_shared.MysqlDriver, []string{"mission_id", "astronaut_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "research_project", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "project_mission", sqlmanager_shared.MysqlDriver, []string{"project_id", "mission_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "mission_log", sqlmanager_shared.MysqlDriver, []string{"log_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "observatory", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "telescope", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "instrument", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "observation_session", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "data_set", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "research_paper", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "paper_citation", sqlmanager_shared.MysqlDriver, []string{"citing_paper_id", "cited_paper_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "grant", sqlmanager_shared.MysqlDriver, []string{"id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "grant_research_project", sqlmanager_shared.MysqlDriver, []string{"grant_id", "research_project_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "instrument_usage", sqlmanager_shared.MysqlDriver, []string{"id"})
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"agency",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"astronaut",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"spacecraft",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"celestial_body",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"launch_site",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"mission",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"mission_crew",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"mission_id", "astronaut_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"research_project",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"project_mission",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"project_id", "mission_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"mission_log",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"log_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"observatory",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"telescope",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"instrument",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"observation_session",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"data_set",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"research_paper",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"paper_citation",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"citing_paper_id", "cited_paper_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"grant",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"grant_research_project",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"grant_id", "research_project_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"instrument_usage",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"id"},
+	)
 
 	// tear down
 	err = cleanupMysqlDatabases(ctx, mysql, []string{schema})
@@ -653,7 +879,16 @@ func test_mysql_schema_reconciliation(
 	test_mysql_schema_reconciliation_column_values(t, ctx, mysql, schema)
 	t.Logf("finished verifying destination data after alter statements")
 
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "emails", sqlmanager_shared.MysqlDriver, []string{"email_identity"})
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"emails",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"email_identity"},
+	)
 
 	test_mysql_schema_reconciliation_compare_schemas(t, ctx, mysql, schema, tables)
 	test_schema_reconciliation_run_context(t, ctx, jobclient, job.GetId(), destinationId, accountId)
@@ -748,21 +983,156 @@ func test_mysql_schema_reconciliation_column_values(
 	mysql *tcmysql.MysqlTestSyncContainer,
 	schema string,
 ) {
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "regions", sqlmanager_shared.MysqlDriver, []string{"region_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "employees", sqlmanager_shared.MysqlDriver, []string{"employee_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "dependents", sqlmanager_shared.MysqlDriver, []string{"dependent_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "jobs", sqlmanager_shared.MysqlDriver, []string{"job_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "departments", sqlmanager_shared.MysqlDriver, []string{"department_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "countries", sqlmanager_shared.MysqlDriver, []string{"country_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "locations", sqlmanager_shared.MysqlDriver, []string{"location_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "grandparent", sqlmanager_shared.MysqlDriver, []string{"gp_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "parent", sqlmanager_shared.MysqlDriver, []string{"p_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "child", sqlmanager_shared.MysqlDriver, []string{"c_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "multi_col_parent", sqlmanager_shared.MysqlDriver, []string{"mcp_a", "mcp_b"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "multi_col_child", sqlmanager_shared.MysqlDriver, []string{"mc_child_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "cyclic_table", sqlmanager_shared.MysqlDriver, []string{"cycle_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "plants", sqlmanager_shared.MysqlDriver, []string{"plant_id"})
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, schema, "test_table_single_col", sqlmanager_shared.MysqlDriver, []string{"name"})
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"regions",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"region_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"employees",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"employee_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"dependents",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"dependent_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"jobs",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"job_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"departments",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"department_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"countries",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"country_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"locations",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"location_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"grandparent",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"gp_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"parent",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"p_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"child",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"c_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"multi_col_parent",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"mcp_a", "mcp_b"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"multi_col_child",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"mc_child_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"cyclic_table",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"cycle_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"plants",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"plant_id"},
+	)
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mysql.Source.DB,
+		mysql.Target.DB,
+		schema,
+		"test_table_single_col",
+		sqlmanager_shared.MysqlDriver,
+		[]string{"name"},
+	)
 }
 
 func cleanupMysqlDatabases(ctx context.Context, mysql *tcmysql.MysqlTestSyncContainer, databases []string) error {

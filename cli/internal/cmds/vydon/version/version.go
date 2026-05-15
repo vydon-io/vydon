@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/vydon-io/vydon/cli/internal/version"
 	"github.com/spf13/cobra"
+	"github.com/vydon-io/vydon/cli/internal/version"
 	"gopkg.in/yaml.v3"
 )
 

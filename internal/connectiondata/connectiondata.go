@@ -67,13 +67,13 @@ type ConnectionDataBuilder interface {
 }
 
 type DefaultConnectionDataBuilder struct {
-	sqlconnector        sqlconnect.SqlConnector
-	sqlmanager          sql_manager.SqlManagerClient
-	pgquerier           pg_queries.Querier
-	mysqlquerier        mysql_queries.Querier
-	awsmanager          aws_manager.VydonAwsManagerClient
-	gcpmanager          vydon_gcp.ManagerInterface
-	mongoconnector      mongoconnect.Interface
+	sqlconnector      sqlconnect.SqlConnector
+	sqlmanager        sql_manager.SqlManagerClient
+	pgquerier         pg_queries.Querier
+	mysqlquerier      mysql_queries.Querier
+	awsmanager        aws_manager.VydonAwsManagerClient
+	gcpmanager        vydon_gcp.ManagerInterface
+	mongoconnector    mongoconnect.Interface
 	vydontyperegistry vydontypes.VydonTypeRegistry
 }
 
@@ -88,13 +88,13 @@ func NewConnectionDataBuilder(
 	vydontyperegistry vydontypes.VydonTypeRegistry,
 ) ConnectionDataBuilder {
 	return &DefaultConnectionDataBuilder{
-		sqlconnector:        sqlconnector,
-		sqlmanager:          sqlmanager,
-		pgquerier:           pgquerier,
-		mysqlquerier:        mysqlquerier,
-		awsmanager:          awsmanager,
-		gcpmanager:          gcpmanager,
-		mongoconnector:      mongoconnector,
+		sqlconnector:      sqlconnector,
+		sqlmanager:        sqlmanager,
+		pgquerier:         pgquerier,
+		mysqlquerier:      mysqlquerier,
+		awsmanager:        awsmanager,
+		gcpmanager:        gcpmanager,
+		mongoconnector:    mongoconnector,
 		vydontyperegistry: vydontyperegistry,
 	}
 }

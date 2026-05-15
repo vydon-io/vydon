@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	vydon_types "github.com/vydon-io/vydon/internal/types"
 	"github.com/stretchr/testify/require"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
 )
 
 func Test_UnmarshalDynamoDBItem(t *testing.T) {
@@ -68,8 +68,22 @@ func Test_ParseDynamoDBAttributeValue(t *testing.T) {
 		{"Number", "NumKey", map[string]any{"N": "123"}, map[string]vydon_types.KeyType{}, int64(123), 0},
 		{"Boolean", "BoolKey", map[string]any{"BOOL": true}, map[string]vydon_types.KeyType{}, true, 0},
 		{"Null", "NullKey", map[string]any{"NULL": true}, map[string]vydon_types.KeyType{}, nil, 0},
-		{"StringSet", "SSKey", map[string]any{"SS": []any{"a", "b"}}, map[string]vydon_types.KeyType{}, []string{"a", "b"}, vydon_types.StringSet},
-		{"NumberSet", "NSKey", map[string]any{"NS": []any{"1", "2"}}, map[string]vydon_types.KeyType{}, []any{int64(1), int64(2)}, vydon_types.NumberSet},
+		{
+			"StringSet",
+			"SSKey",
+			map[string]any{"SS": []any{"a", "b"}},
+			map[string]vydon_types.KeyType{},
+			[]string{"a", "b"},
+			vydon_types.StringSet,
+		},
+		{
+			"NumberSet",
+			"NSKey",
+			map[string]any{"NS": []any{"1", "2"}},
+			map[string]vydon_types.KeyType{},
+			[]any{int64(1), int64(2)},
+			vydon_types.NumberSet,
+		},
 	}
 
 	for _, tt := range tests {
@@ -77,7 +91,12 @@ func Test_ParseDynamoDBAttributeValue(t *testing.T) {
 			got := parseDynamoDBAttributeValue(tt.key, tt.value, tt.keyTypeMap)
 			require.Equalf(t, tt.want, got, fmt.Sprintf("ParseDynamoDBAttributeValue() = %v, want %v", got, tt.want))
 			if gotKeyType, ok := tt.keyTypeMap[tt.key]; ok {
-				require.Equalf(t, tt.wantKeyType, gotKeyType, fmt.Sprintf("ParseDynamoDBAttributeValue() key type = %v, want %v", gotKeyType, tt.wantKeyType))
+				require.Equalf(
+					t,
+					tt.wantKeyType,
+					gotKeyType,
+					fmt.Sprintf("ParseDynamoDBAttributeValue() key type = %v, want %v", gotKeyType, tt.wantKeyType),
+				)
 			}
 		})
 	}

@@ -11,6 +11,7 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
+	"github.com/spf13/cobra"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
@@ -28,14 +29,13 @@ import (
 	pool_sql_provider "github.com/vydon-io/vydon/internal/connection-manager/pool/providers/sql"
 	"github.com/vydon-io/vydon/internal/connection-manager/providers/sqlprovider"
 	"github.com/vydon-io/vydon/internal/runconfigs"
-	"github.com/spf13/cobra"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
 
+	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	benthos_environment "github.com/vydon-io/vydon/worker/pkg/benthos/environment"
 	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
 	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
-	"github.com/redpanda-data/benthos/v4/public/bloblang"
 
 	_ "github.com/vydon-io/vydon/internal/benthos/imports"
 

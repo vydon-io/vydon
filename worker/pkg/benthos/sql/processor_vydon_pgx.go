@@ -10,10 +10,10 @@ import (
 
 	"github.com/doug-martin/goqu/v9"
 	"github.com/lib/pq"
+	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/vydon-io/vydon/internal/gotypeutil"
 	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
-	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
 func vydonToPgxProcessorConfig() *service.ConfigSpec {

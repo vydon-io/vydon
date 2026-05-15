@@ -13,8 +13,8 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/dtomaps"
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
-	"github.com/vydon-io/vydon/internal/rbac"
 	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/rbac"
 	"github.com/vydon-io/vydon/internal/vydondb"
 )
 

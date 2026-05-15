@@ -11,9 +11,9 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
+	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/vydon-io/vydon/cli/internal/output"
 	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
-	"github.com/redpanda-data/benthos/v4/public/service"
 
 	"github.com/charmbracelet/bubbles/spinner"
 	tea "github.com/charmbracelet/bubbletea"

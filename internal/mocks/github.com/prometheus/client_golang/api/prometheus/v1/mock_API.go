@@ -61,7 +61,7 @@ type MockAPI_AlertManagers_Call struct {
 
 // AlertManagers is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) AlertManagers(ctx interface{}) *MockAPI_AlertManagers_Call {
+func (_e *MockAPI_Expecter) AlertManagers(ctx any) *MockAPI_AlertManagers_Call {
 	return &MockAPI_AlertManagers_Call{Call: _e.mock.On("AlertManagers", ctx)}
 }
 
@@ -117,7 +117,7 @@ type MockAPI_Alerts_Call struct {
 
 // Alerts is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) Alerts(ctx interface{}) *MockAPI_Alerts_Call {
+func (_e *MockAPI_Expecter) Alerts(ctx any) *MockAPI_Alerts_Call {
 	return &MockAPI_Alerts_Call{Call: _e.mock.On("Alerts", ctx)}
 }
 
@@ -173,7 +173,7 @@ type MockAPI_Buildinfo_Call struct {
 
 // Buildinfo is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) Buildinfo(ctx interface{}) *MockAPI_Buildinfo_Call {
+func (_e *MockAPI_Expecter) Buildinfo(ctx any) *MockAPI_Buildinfo_Call {
 	return &MockAPI_Buildinfo_Call{Call: _e.mock.On("Buildinfo", ctx)}
 }
 
@@ -219,7 +219,7 @@ type MockAPI_CleanTombstones_Call struct {
 
 // CleanTombstones is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) CleanTombstones(ctx interface{}) *MockAPI_CleanTombstones_Call {
+func (_e *MockAPI_Expecter) CleanTombstones(ctx any) *MockAPI_CleanTombstones_Call {
 	return &MockAPI_CleanTombstones_Call{Call: _e.mock.On("CleanTombstones", ctx)}
 }
 
@@ -275,7 +275,7 @@ type MockAPI_Config_Call struct {
 
 // Config is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) Config(ctx interface{}) *MockAPI_Config_Call {
+func (_e *MockAPI_Expecter) Config(ctx any) *MockAPI_Config_Call {
 	return &MockAPI_Config_Call{Call: _e.mock.On("Config", ctx)}
 }
 
@@ -324,7 +324,7 @@ type MockAPI_DeleteSeries_Call struct {
 //   - matches []string
 //   - startTime time.Time
 //   - endTime time.Time
-func (_e *MockAPI_Expecter) DeleteSeries(ctx interface{}, matches interface{}, startTime interface{}, endTime interface{}) *MockAPI_DeleteSeries_Call {
+func (_e *MockAPI_Expecter) DeleteSeries(ctx any, matches any, startTime any, endTime any) *MockAPI_DeleteSeries_Call {
 	return &MockAPI_DeleteSeries_Call{Call: _e.mock.On("DeleteSeries", ctx, matches, startTime, endTime)}
 }
 
@@ -382,7 +382,7 @@ type MockAPI_Flags_Call struct {
 
 // Flags is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) Flags(ctx interface{}) *MockAPI_Flags_Call {
+func (_e *MockAPI_Expecter) Flags(ctx any) *MockAPI_Flags_Call {
 	return &MockAPI_Flags_Call{Call: _e.mock.On("Flags", ctx)}
 }
 
@@ -405,11 +405,11 @@ func (_c *MockAPI_Flags_Call) RunAndReturn(run func(context.Context) (v1.FlagsRe
 
 // LabelNames provides a mock function with given fields: ctx, matches, startTime, endTime, opts
 func (_m *MockAPI) LabelNames(ctx context.Context, matches []string, startTime time.Time, endTime time.Time, opts ...v1.Option) ([]string, v1.Warnings, error) {
-	_va := make([]interface{}, len(opts))
+	_va := make([]any, len(opts))
 	for _i := range opts {
 		_va[_i] = opts[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, matches, startTime, endTime)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -460,9 +460,9 @@ type MockAPI_LabelNames_Call struct {
 //   - startTime time.Time
 //   - endTime time.Time
 //   - opts ...v1.Option
-func (_e *MockAPI_Expecter) LabelNames(ctx interface{}, matches interface{}, startTime interface{}, endTime interface{}, opts ...interface{}) *MockAPI_LabelNames_Call {
+func (_e *MockAPI_Expecter) LabelNames(ctx any, matches any, startTime any, endTime any, opts ...any) *MockAPI_LabelNames_Call {
 	return &MockAPI_LabelNames_Call{Call: _e.mock.On("LabelNames",
-		append([]interface{}{ctx, matches, startTime, endTime}, opts...)...)}
+		append([]any{ctx, matches, startTime, endTime}, opts...)...)}
 }
 
 func (_c *MockAPI_LabelNames_Call) Run(run func(ctx context.Context, matches []string, startTime time.Time, endTime time.Time, opts ...v1.Option)) *MockAPI_LabelNames_Call {
@@ -490,11 +490,11 @@ func (_c *MockAPI_LabelNames_Call) RunAndReturn(run func(context.Context, []stri
 
 // LabelValues provides a mock function with given fields: ctx, label, matches, startTime, endTime, opts
 func (_m *MockAPI) LabelValues(ctx context.Context, label string, matches []string, startTime time.Time, endTime time.Time, opts ...v1.Option) (model.LabelValues, v1.Warnings, error) {
-	_va := make([]interface{}, len(opts))
+	_va := make([]any, len(opts))
 	for _i := range opts {
 		_va[_i] = opts[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, label, matches, startTime, endTime)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -546,9 +546,9 @@ type MockAPI_LabelValues_Call struct {
 //   - startTime time.Time
 //   - endTime time.Time
 //   - opts ...v1.Option
-func (_e *MockAPI_Expecter) LabelValues(ctx interface{}, label interface{}, matches interface{}, startTime interface{}, endTime interface{}, opts ...interface{}) *MockAPI_LabelValues_Call {
+func (_e *MockAPI_Expecter) LabelValues(ctx any, label any, matches any, startTime any, endTime any, opts ...any) *MockAPI_LabelValues_Call {
 	return &MockAPI_LabelValues_Call{Call: _e.mock.On("LabelValues",
-		append([]interface{}{ctx, label, matches, startTime, endTime}, opts...)...)}
+		append([]any{ctx, label, matches, startTime, endTime}, opts...)...)}
 }
 
 func (_c *MockAPI_LabelValues_Call) Run(run func(ctx context.Context, label string, matches []string, startTime time.Time, endTime time.Time, opts ...v1.Option)) *MockAPI_LabelValues_Call {
@@ -613,7 +613,7 @@ type MockAPI_Metadata_Call struct {
 //   - ctx context.Context
 //   - metric string
 //   - limit string
-func (_e *MockAPI_Expecter) Metadata(ctx interface{}, metric interface{}, limit interface{}) *MockAPI_Metadata_Call {
+func (_e *MockAPI_Expecter) Metadata(ctx any, metric any, limit any) *MockAPI_Metadata_Call {
 	return &MockAPI_Metadata_Call{Call: _e.mock.On("Metadata", ctx, metric, limit)}
 }
 
@@ -636,11 +636,11 @@ func (_c *MockAPI_Metadata_Call) RunAndReturn(run func(context.Context, string, 
 
 // Query provides a mock function with given fields: ctx, query, ts, opts
 func (_m *MockAPI) Query(ctx context.Context, query string, ts time.Time, opts ...v1.Option) (model.Value, v1.Warnings, error) {
-	_va := make([]interface{}, len(opts))
+	_va := make([]any, len(opts))
 	for _i := range opts {
 		_va[_i] = opts[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, query, ts)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -690,9 +690,9 @@ type MockAPI_Query_Call struct {
 //   - query string
 //   - ts time.Time
 //   - opts ...v1.Option
-func (_e *MockAPI_Expecter) Query(ctx interface{}, query interface{}, ts interface{}, opts ...interface{}) *MockAPI_Query_Call {
+func (_e *MockAPI_Expecter) Query(ctx any, query any, ts any, opts ...any) *MockAPI_Query_Call {
 	return &MockAPI_Query_Call{Call: _e.mock.On("Query",
-		append([]interface{}{ctx, query, ts}, opts...)...)}
+		append([]any{ctx, query, ts}, opts...)...)}
 }
 
 func (_c *MockAPI_Query_Call) Run(run func(ctx context.Context, query string, ts time.Time, opts ...v1.Option)) *MockAPI_Query_Call {
@@ -758,7 +758,7 @@ type MockAPI_QueryExemplars_Call struct {
 //   - query string
 //   - startTime time.Time
 //   - endTime time.Time
-func (_e *MockAPI_Expecter) QueryExemplars(ctx interface{}, query interface{}, startTime interface{}, endTime interface{}) *MockAPI_QueryExemplars_Call {
+func (_e *MockAPI_Expecter) QueryExemplars(ctx any, query any, startTime any, endTime any) *MockAPI_QueryExemplars_Call {
 	return &MockAPI_QueryExemplars_Call{Call: _e.mock.On("QueryExemplars", ctx, query, startTime, endTime)}
 }
 
@@ -781,11 +781,11 @@ func (_c *MockAPI_QueryExemplars_Call) RunAndReturn(run func(context.Context, st
 
 // QueryRange provides a mock function with given fields: ctx, query, r, opts
 func (_m *MockAPI) QueryRange(ctx context.Context, query string, r v1.Range, opts ...v1.Option) (model.Value, v1.Warnings, error) {
-	_va := make([]interface{}, len(opts))
+	_va := make([]any, len(opts))
 	for _i := range opts {
 		_va[_i] = opts[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, query, r)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -835,9 +835,9 @@ type MockAPI_QueryRange_Call struct {
 //   - query string
 //   - r v1.Range
 //   - opts ...v1.Option
-func (_e *MockAPI_Expecter) QueryRange(ctx interface{}, query interface{}, r interface{}, opts ...interface{}) *MockAPI_QueryRange_Call {
+func (_e *MockAPI_Expecter) QueryRange(ctx any, query any, r any, opts ...any) *MockAPI_QueryRange_Call {
 	return &MockAPI_QueryRange_Call{Call: _e.mock.On("QueryRange",
-		append([]interface{}{ctx, query, r}, opts...)...)}
+		append([]any{ctx, query, r}, opts...)...)}
 }
 
 func (_c *MockAPI_QueryRange_Call) Run(run func(ctx context.Context, query string, r v1.Range, opts ...v1.Option)) *MockAPI_QueryRange_Call {
@@ -898,7 +898,7 @@ type MockAPI_Rules_Call struct {
 
 // Rules is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) Rules(ctx interface{}) *MockAPI_Rules_Call {
+func (_e *MockAPI_Expecter) Rules(ctx any) *MockAPI_Rules_Call {
 	return &MockAPI_Rules_Call{Call: _e.mock.On("Rules", ctx)}
 }
 
@@ -954,7 +954,7 @@ type MockAPI_Runtimeinfo_Call struct {
 
 // Runtimeinfo is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) Runtimeinfo(ctx interface{}) *MockAPI_Runtimeinfo_Call {
+func (_e *MockAPI_Expecter) Runtimeinfo(ctx any) *MockAPI_Runtimeinfo_Call {
 	return &MockAPI_Runtimeinfo_Call{Call: _e.mock.On("Runtimeinfo", ctx)}
 }
 
@@ -977,11 +977,11 @@ func (_c *MockAPI_Runtimeinfo_Call) RunAndReturn(run func(context.Context) (v1.R
 
 // Series provides a mock function with given fields: ctx, matches, startTime, endTime, opts
 func (_m *MockAPI) Series(ctx context.Context, matches []string, startTime time.Time, endTime time.Time, opts ...v1.Option) ([]model.LabelSet, v1.Warnings, error) {
-	_va := make([]interface{}, len(opts))
+	_va := make([]any, len(opts))
 	for _i := range opts {
 		_va[_i] = opts[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, matches, startTime, endTime)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -1032,9 +1032,9 @@ type MockAPI_Series_Call struct {
 //   - startTime time.Time
 //   - endTime time.Time
 //   - opts ...v1.Option
-func (_e *MockAPI_Expecter) Series(ctx interface{}, matches interface{}, startTime interface{}, endTime interface{}, opts ...interface{}) *MockAPI_Series_Call {
+func (_e *MockAPI_Expecter) Series(ctx any, matches any, startTime any, endTime any, opts ...any) *MockAPI_Series_Call {
 	return &MockAPI_Series_Call{Call: _e.mock.On("Series",
-		append([]interface{}{ctx, matches, startTime, endTime}, opts...)...)}
+		append([]any{ctx, matches, startTime, endTime}, opts...)...)}
 }
 
 func (_c *MockAPI_Series_Call) Run(run func(ctx context.Context, matches []string, startTime time.Time, endTime time.Time, opts ...v1.Option)) *MockAPI_Series_Call {
@@ -1096,7 +1096,7 @@ type MockAPI_Snapshot_Call struct {
 // Snapshot is a helper method to define mock.On call
 //   - ctx context.Context
 //   - skipHead bool
-func (_e *MockAPI_Expecter) Snapshot(ctx interface{}, skipHead interface{}) *MockAPI_Snapshot_Call {
+func (_e *MockAPI_Expecter) Snapshot(ctx any, skipHead any) *MockAPI_Snapshot_Call {
 	return &MockAPI_Snapshot_Call{Call: _e.mock.On("Snapshot", ctx, skipHead)}
 }
 
@@ -1119,11 +1119,11 @@ func (_c *MockAPI_Snapshot_Call) RunAndReturn(run func(context.Context, bool) (v
 
 // TSDB provides a mock function with given fields: ctx, opts
 func (_m *MockAPI) TSDB(ctx context.Context, opts ...v1.Option) (v1.TSDBResult, error) {
-	_va := make([]interface{}, len(opts))
+	_va := make([]any, len(opts))
 	for _i := range opts {
 		_va[_i] = opts[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -1160,9 +1160,9 @@ type MockAPI_TSDB_Call struct {
 // TSDB is a helper method to define mock.On call
 //   - ctx context.Context
 //   - opts ...v1.Option
-func (_e *MockAPI_Expecter) TSDB(ctx interface{}, opts ...interface{}) *MockAPI_TSDB_Call {
+func (_e *MockAPI_Expecter) TSDB(ctx any, opts ...any) *MockAPI_TSDB_Call {
 	return &MockAPI_TSDB_Call{Call: _e.mock.On("TSDB",
-		append([]interface{}{ctx}, opts...)...)}
+		append([]any{ctx}, opts...)...)}
 }
 
 func (_c *MockAPI_TSDB_Call) Run(run func(ctx context.Context, opts ...v1.Option)) *MockAPI_TSDB_Call {
@@ -1223,7 +1223,7 @@ type MockAPI_Targets_Call struct {
 
 // Targets is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) Targets(ctx interface{}) *MockAPI_Targets_Call {
+func (_e *MockAPI_Expecter) Targets(ctx any) *MockAPI_Targets_Call {
 	return &MockAPI_Targets_Call{Call: _e.mock.On("Targets", ctx)}
 }
 
@@ -1284,7 +1284,7 @@ type MockAPI_TargetsMetadata_Call struct {
 //   - matchTarget string
 //   - metric string
 //   - limit string
-func (_e *MockAPI_Expecter) TargetsMetadata(ctx interface{}, matchTarget interface{}, metric interface{}, limit interface{}) *MockAPI_TargetsMetadata_Call {
+func (_e *MockAPI_Expecter) TargetsMetadata(ctx any, matchTarget any, metric any, limit any) *MockAPI_TargetsMetadata_Call {
 	return &MockAPI_TargetsMetadata_Call{Call: _e.mock.On("TargetsMetadata", ctx, matchTarget, metric, limit)}
 }
 
@@ -1340,7 +1340,7 @@ type MockAPI_WalReplay_Call struct {
 
 // WalReplay is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockAPI_Expecter) WalReplay(ctx interface{}) *MockAPI_WalReplay_Call {
+func (_e *MockAPI_Expecter) WalReplay(ctx any) *MockAPI_WalReplay_Call {
 	return &MockAPI_WalReplay_Call{Call: _e.mock.On("WalReplay", ctx)}
 }
 

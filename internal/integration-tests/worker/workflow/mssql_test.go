@@ -8,6 +8,8 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
@@ -16,8 +18,6 @@ import (
 	testutil_testdata "github.com/vydon-io/vydon/internal/testutil/testdata"
 	mssql_alltypes "github.com/vydon-io/vydon/internal/testutil/testdata/mssql/alltypes"
 	mssql_commerce "github.com/vydon-io/vydon/internal/testutil/testdata/mssql/commerce"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -159,7 +159,16 @@ func test_mssql_types(
 		require.Equalf(t, expected.rowCount, rowCount, fmt.Sprintf("Test: mssql_all_types Table: %s", expected.table))
 	}
 
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mssql.Source.DB, mssql.Target.DB, schema, "alldatatypes", sqlmanager_shared.MssqlDriver, []string{"id"})
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mssql.Source.DB,
+		mssql.Target.DB,
+		schema,
+		"alldatatypes",
+		sqlmanager_shared.MssqlDriver,
+		[]string{"id"},
+	)
 
 	// TODO: Tear down, fix schema dropping issue. No way to force drop schemas in MSSQL.
 	// err = mssql.Source.DropSchemas(ctx, []string{schema})
@@ -423,7 +432,13 @@ func getDefaultTransformerConfig() *mgmtv1alpha1.JobMappingTransformer {
 	}
 }
 
-func createCommerceTables(ctx context.Context, mssql *tcmssql.MssqlTestContainer, folder *string, files []string, schemaSuffix string) error {
+func createCommerceTables(
+	ctx context.Context,
+	mssql *tcmssql.MssqlTestContainer,
+	folder *string,
+	files []string,
+	schemaSuffix string,
+) error {
 	for _, file := range files {
 		filePath := file
 		if folder != nil && *folder != "" {

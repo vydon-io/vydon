@@ -9,11 +9,11 @@ import (
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+	"github.com/redpanda-data/benthos/v4/public/service"
 	awsmanager "github.com/vydon-io/vydon/internal/aws"
 	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper/builder"
 	dynamodbmapper "github.com/vydon-io/vydon/internal/database-record-mapper/dynamodb"
 	vydon_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
-	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
 func dynamoInputConfigSpec() *service.ConfigSpec {

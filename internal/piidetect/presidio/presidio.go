@@ -26,26 +26,29 @@ func NewClientWithResponses(_ string, _ ...ClientOption) (*ClientWithResponses, 
 }
 
 type AnalyzeInterface interface {
-	PostAnalyzeWithResponse(ctx context.Context, body interface{}) (*PostAnalyzeResponse, error)
+	PostAnalyzeWithResponse(ctx context.Context, body any) (*PostAnalyzeResponse, error)
 }
 
 type AnonymizeInterface interface {
-	PostAnonymizeWithResponse(ctx context.Context, body interface{}) (*PostAnonymizeResponse, error)
+	PostAnonymizeWithResponse(ctx context.Context, body any) (*PostAnonymizeResponse, error)
 }
 
 type EntityInterface interface {
 	GetSupportedentitiesWithResponse(ctx context.Context, params *GetSupportedentitiesParams) (*GetSupportedentitiesResponse, error)
 }
 
-func (c *ClientWithResponses) PostAnalyzeWithResponse(_ context.Context, _ interface{}) (*PostAnalyzeResponse, error) {
+func (c *ClientWithResponses) PostAnalyzeWithResponse(_ context.Context, _ any) (*PostAnalyzeResponse, error) {
 	return nil, ErrUnsupported
 }
 
-func (c *ClientWithResponses) PostAnonymizeWithResponse(_ context.Context, _ interface{}) (*PostAnonymizeResponse, error) {
+func (c *ClientWithResponses) PostAnonymizeWithResponse(_ context.Context, _ any) (*PostAnonymizeResponse, error) {
 	return nil, ErrUnsupported
 }
 
-func (c *ClientWithResponses) GetSupportedentitiesWithResponse(_ context.Context, _ *GetSupportedentitiesParams) (*GetSupportedentitiesResponse, error) {
+func (c *ClientWithResponses) GetSupportedentitiesWithResponse(
+	_ context.Context,
+	_ *GetSupportedentitiesParams,
+) (*GetSupportedentitiesResponse, error) {
 	return nil, ErrUnsupported
 }
 
@@ -54,8 +57,8 @@ type GetSupportedentitiesParams struct {
 }
 
 type GetSupportedentitiesResponse struct {
-	JSON200    *[]string
-	Body       []byte
+	JSON200      *[]string
+	Body         []byte
 	HTTPResponse *http.Response
 }
 

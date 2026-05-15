@@ -5,9 +5,9 @@ import (
 	"time"
 
 	mssql "github.com/microsoft/go-mssqldb"
-	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 func Test_parseRowValues(t *testing.T) {

@@ -24,7 +24,7 @@ const (
 
 	TemporalWorkflowIdEnvKey = "TEMPORAL_WORKFLOW_ID"
 	TemporalRunIdEnvKey      = "TEMPORAL_ENV_ID"
-	VydonDateEnvKey        = "VYDON_DATE"
+	VydonDateEnvKey          = "VYDON_DATE"
 )
 
 func NewEqLabel(key, value string) MetricLabel {

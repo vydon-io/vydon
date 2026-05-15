@@ -1,6 +1,7 @@
 package tablesync_workflow_register
 
 import (
+	"github.com/redis/go-redis/v9"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	benthosstream "github.com/vydon-io/vydon/internal/benthos-stream"
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
@@ -8,7 +9,6 @@ import (
 	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
 	sync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/activities/sync"
 	tablesync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/workflow"
-	"github.com/redis/go-redis/v9"
 	"go.opentelemetry.io/otel/metric"
 	"go.temporal.io/sdk/client"
 )

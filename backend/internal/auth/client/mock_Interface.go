@@ -56,7 +56,7 @@ type MockInterface_GetAuthorizationEndpoint_Call struct {
 
 // GetAuthorizationEndpoint is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockInterface_Expecter) GetAuthorizationEndpoint(ctx interface{}) *MockInterface_GetAuthorizationEndpoint_Call {
+func (_e *MockInterface_Expecter) GetAuthorizationEndpoint(ctx any) *MockInterface_GetAuthorizationEndpoint_Call {
 	return &MockInterface_GetAuthorizationEndpoint_Call{Call: _e.mock.On("GetAuthorizationEndpoint", ctx)}
 }
 
@@ -116,7 +116,7 @@ type MockInterface_GetRefreshedAccessToken_Call struct {
 //   - ctx context.Context
 //   - clientId string
 //   - refreshToken string
-func (_e *MockInterface_Expecter) GetRefreshedAccessToken(ctx interface{}, clientId interface{}, refreshToken interface{}) *MockInterface_GetRefreshedAccessToken_Call {
+func (_e *MockInterface_Expecter) GetRefreshedAccessToken(ctx any, clientId any, refreshToken any) *MockInterface_GetRefreshedAccessToken_Call {
 	return &MockInterface_GetRefreshedAccessToken_Call{Call: _e.mock.On("GetRefreshedAccessToken", ctx, clientId, refreshToken)}
 }
 
@@ -172,7 +172,7 @@ type MockInterface_GetTokenEndpoint_Call struct {
 
 // GetTokenEndpoint is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockInterface_Expecter) GetTokenEndpoint(ctx interface{}) *MockInterface_GetTokenEndpoint_Call {
+func (_e *MockInterface_Expecter) GetTokenEndpoint(ctx any) *MockInterface_GetTokenEndpoint_Call {
 	return &MockInterface_GetTokenEndpoint_Call{Call: _e.mock.On("GetTokenEndpoint", ctx)}
 }
 
@@ -233,7 +233,7 @@ type MockInterface_GetTokenResponse_Call struct {
 //   - clientId string
 //   - code string
 //   - redirecturi string
-func (_e *MockInterface_Expecter) GetTokenResponse(ctx interface{}, clientId interface{}, code interface{}, redirecturi interface{}) *MockInterface_GetTokenResponse_Call {
+func (_e *MockInterface_Expecter) GetTokenResponse(ctx any, clientId any, code any, redirecturi any) *MockInterface_GetTokenResponse_Call {
 	return &MockInterface_GetTokenResponse_Call{Call: _e.mock.On("GetTokenResponse", ctx, clientId, code, redirecturi)}
 }
 
@@ -292,7 +292,7 @@ type MockInterface_GetUserInfo_Call struct {
 // GetUserInfo is a helper method to define mock.On call
 //   - ctx context.Context
 //   - accessToken string
-func (_e *MockInterface_Expecter) GetUserInfo(ctx interface{}, accessToken interface{}) *MockInterface_GetUserInfo_Call {
+func (_e *MockInterface_Expecter) GetUserInfo(ctx any, accessToken any) *MockInterface_GetUserInfo_Call {
 	return &MockInterface_GetUserInfo_Call{Call: _e.mock.On("GetUserInfo", ctx, accessToken)}
 }
 

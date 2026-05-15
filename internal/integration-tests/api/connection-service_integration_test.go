@@ -5,9 +5,9 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
+	"github.com/stretchr/testify/require"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	integrationtests_test "github.com/vydon-io/vydon/backend/pkg/integration-test"
-	"github.com/stretchr/testify/require"
 )
 
 func (s *IntegrationTestSuite) Test_ConnectionService_IsConnectionNameAvailable_Available() {

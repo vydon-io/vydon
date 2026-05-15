@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 	"github.com/stretchr/testify/require"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 func Test_parsePgRowValues(t *testing.T) {

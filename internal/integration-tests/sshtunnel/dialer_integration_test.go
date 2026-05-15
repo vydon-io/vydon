@@ -11,6 +11,7 @@ import (
 
 	"github.com/cenkalti/backoff/v5"
 	gssh "github.com/gliderlabs/ssh"
+	"github.com/stretchr/testify/require"
 	"github.com/vydon-io/vydon/internal/sshtunnel"
 	"github.com/vydon-io/vydon/internal/sshtunnel/connectors/mssqltunconnector"
 	"github.com/vydon-io/vydon/internal/sshtunnel/connectors/mysqltunconnector"
@@ -19,7 +20,6 @@ import (
 	tcmysql "github.com/vydon-io/vydon/internal/testutil/testcontainers/mysql"
 	tcpostgres "github.com/vydon-io/vydon/internal/testutil/testcontainers/postgres"
 	testcontainers_sqlserver "github.com/vydon-io/vydon/internal/testutil/testcontainers/sqlserver"
-	"github.com/stretchr/testify/require"
 	"golang.org/x/crypto/ssh"
 )
 
@@ -561,14 +561,18 @@ func newSshForwardServer(t testing.TB, addr string) *gssh.Server {
 		Handler: gssh.Handler(func(s gssh.Session) {
 			select {}
 		}),
-		LocalPortForwardingCallback: gssh.LocalPortForwardingCallback(func(ctx gssh.Context, destinationHost string, destinationPort uint32) bool {
-			t.Logf("Accepted forward %s:%d\n", destinationHost, destinationPort)
-			return true
-		}),
-		ReversePortForwardingCallback: gssh.ReversePortForwardingCallback(func(ctx gssh.Context, destinationHost string, destinationPort uint32) bool {
-			t.Logf("attempt to bind %s:%d granted\n", destinationHost, destinationPort)
-			return true
-		}),
+		LocalPortForwardingCallback: gssh.LocalPortForwardingCallback(
+			func(ctx gssh.Context, destinationHost string, destinationPort uint32) bool {
+				t.Logf("Accepted forward %s:%d\n", destinationHost, destinationPort)
+				return true
+			},
+		),
+		ReversePortForwardingCallback: gssh.ReversePortForwardingCallback(
+			func(ctx gssh.Context, destinationHost string, destinationPort uint32) bool {
+				t.Logf("attempt to bind %s:%d granted\n", destinationHost, destinationPort)
+				return true
+			},
+		),
 		RequestHandlers: map[string]gssh.RequestHandler{
 			"tcpip-forward":        forwardHandler.HandleSSHRequest,
 			"cancel-tcpip-forward": forwardHandler.HandleSSHRequest,

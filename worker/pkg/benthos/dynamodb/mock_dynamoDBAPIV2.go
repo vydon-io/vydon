@@ -24,11 +24,11 @@ func (_m *MockdynamoDBAPIV2) EXPECT() *MockdynamoDBAPIV2_Expecter {
 
 // DescribeTable provides a mock function with given fields: ctx, params, optFns
 func (_m *MockdynamoDBAPIV2) DescribeTable(ctx context.Context, params *dynamodb.DescribeTableInput, optFns ...func(*dynamodb.Options)) (*dynamodb.DescribeTableOutput, error) {
-	_va := make([]interface{}, len(optFns))
+	_va := make([]any, len(optFns))
 	for _i := range optFns {
 		_va[_i] = optFns[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -68,9 +68,9 @@ type MockdynamoDBAPIV2_DescribeTable_Call struct {
 //   - ctx context.Context
 //   - params *dynamodb.DescribeTableInput
 //   - optFns ...func(*dynamodb.Options)
-func (_e *MockdynamoDBAPIV2_Expecter) DescribeTable(ctx interface{}, params interface{}, optFns ...interface{}) *MockdynamoDBAPIV2_DescribeTable_Call {
+func (_e *MockdynamoDBAPIV2_Expecter) DescribeTable(ctx any, params any, optFns ...any) *MockdynamoDBAPIV2_DescribeTable_Call {
 	return &MockdynamoDBAPIV2_DescribeTable_Call{Call: _e.mock.On("DescribeTable",
-		append([]interface{}{ctx, params}, optFns...)...)}
+		append([]any{ctx, params}, optFns...)...)}
 }
 
 func (_c *MockdynamoDBAPIV2_DescribeTable_Call) Run(run func(ctx context.Context, params *dynamodb.DescribeTableInput, optFns ...func(*dynamodb.Options))) *MockdynamoDBAPIV2_DescribeTable_Call {
@@ -98,11 +98,11 @@ func (_c *MockdynamoDBAPIV2_DescribeTable_Call) RunAndReturn(run func(context.Co
 
 // ExecuteStatement provides a mock function with given fields: ctx, params, optFns
 func (_m *MockdynamoDBAPIV2) ExecuteStatement(ctx context.Context, params *dynamodb.ExecuteStatementInput, optFns ...func(*dynamodb.Options)) (*dynamodb.ExecuteStatementOutput, error) {
-	_va := make([]interface{}, len(optFns))
+	_va := make([]any, len(optFns))
 	for _i := range optFns {
 		_va[_i] = optFns[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -142,9 +142,9 @@ type MockdynamoDBAPIV2_ExecuteStatement_Call struct {
 //   - ctx context.Context
 //   - params *dynamodb.ExecuteStatementInput
 //   - optFns ...func(*dynamodb.Options)
-func (_e *MockdynamoDBAPIV2_Expecter) ExecuteStatement(ctx interface{}, params interface{}, optFns ...interface{}) *MockdynamoDBAPIV2_ExecuteStatement_Call {
+func (_e *MockdynamoDBAPIV2_Expecter) ExecuteStatement(ctx any, params any, optFns ...any) *MockdynamoDBAPIV2_ExecuteStatement_Call {
 	return &MockdynamoDBAPIV2_ExecuteStatement_Call{Call: _e.mock.On("ExecuteStatement",
-		append([]interface{}{ctx, params}, optFns...)...)}
+		append([]any{ctx, params}, optFns...)...)}
 }
 
 func (_c *MockdynamoDBAPIV2_ExecuteStatement_Call) Run(run func(ctx context.Context, params *dynamodb.ExecuteStatementInput, optFns ...func(*dynamodb.Options))) *MockdynamoDBAPIV2_ExecuteStatement_Call {

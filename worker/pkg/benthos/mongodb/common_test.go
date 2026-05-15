@@ -4,8 +4,8 @@ import (
 	"math/big"
 	"testing"
 
-	vydon_types "github.com/vydon-io/vydon/internal/types"
 	"github.com/stretchr/testify/require"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )

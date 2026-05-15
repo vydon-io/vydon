@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/vydon-io/vydon/worker/pkg/rng"
 	"github.com/stretchr/testify/require"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 func Test_GenerateRandomStringWithDefinedLength(t *testing.T) {
@@ -46,8 +46,24 @@ func Test_GenerateRandomStringBounds(t *testing.T) {
 			output, err := GenerateRandomStringWithInclusiveBounds(rng.New(time.Now().UnixNano()), tc.min, tc.max)
 			require.NoError(t, err)
 			length := int64(len(output))
-			require.GreaterOrEqual(t, length, tc.min, "%d>=%d was not true. output should be greater than or equal to the min. output: %s", length, tc.min, output)
-			require.LessOrEqual(t, length, tc.max, "%d<=%d was not true. output should be less than or equal to the max. output: %s", length, tc.max, output)
+			require.GreaterOrEqual(
+				t,
+				length,
+				tc.min,
+				"%d>=%d was not true. output should be greater than or equal to the min. output: %s",
+				length,
+				tc.min,
+				output,
+			)
+			require.LessOrEqual(
+				t,
+				length,
+				tc.max,
+				"%d<=%d was not true. output should be less than or equal to the max. output: %s",
+				length,
+				tc.max,
+				output,
+			)
 		})
 	}
 }

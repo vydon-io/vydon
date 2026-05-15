@@ -7,12 +7,12 @@ import (
 	"testing"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/stretchr/testify/require"
 	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 	mysql "github.com/vydon-io/vydon/backend/pkg/sqlmanager/mysql"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	"github.com/vydon-io/vydon/internal/testutil"
 	tcmysql "github.com/vydon-io/vydon/internal/testutil/testcontainers/mysql"
-	"github.com/stretchr/testify/require"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -371,7 +371,10 @@ func Test_MysqlManager(t *testing.T) {
 		t.Parallel()
 		schema := "sqlmanagermysql3"
 
-		statements, err := manager.GetSchemaInitStatements(context.Background(), []*sqlmanager_shared.SchemaTable{{Schema: schema, Table: "custom_table"}})
+		statements, err := manager.GetSchemaInitStatements(
+			context.Background(),
+			[]*sqlmanager_shared.SchemaTable{{Schema: schema, Table: "custom_table"}},
+		)
 		require.NoError(t, err)
 		require.NotEmpty(t, statements)
 	})
@@ -380,7 +383,10 @@ func Test_MysqlManager(t *testing.T) {
 		t.Parallel()
 		schema := "sqlmanagermysql3"
 
-		triggers, err := manager.GetSchemaTableTriggers(context.Background(), []*sqlmanager_shared.SchemaTable{{Schema: schema, Table: "employee_log"}})
+		triggers, err := manager.GetSchemaTableTriggers(
+			context.Background(),
+			[]*sqlmanager_shared.SchemaTable{{Schema: schema, Table: "employee_log"}},
+		)
 		require.NoError(t, err)
 		require.NotEmpty(t, triggers)
 	})
@@ -389,7 +395,10 @@ func Test_MysqlManager(t *testing.T) {
 		t.Parallel()
 		schema := "sqlmanagermysql3"
 
-		resp, err := manager.GetSchemaTableDataTypes(context.Background(), []*sqlmanager_shared.SchemaTable{{Schema: schema, Table: "custom_table"}})
+		resp, err := manager.GetSchemaTableDataTypes(
+			context.Background(),
+			[]*sqlmanager_shared.SchemaTable{{Schema: schema, Table: "custom_table"}},
+		)
 		require.NoError(t, err)
 		require.NotNil(t, resp)
 		require.NotEmptyf(t, resp.GetStatements(), "statements")

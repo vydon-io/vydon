@@ -59,7 +59,7 @@ type MockConfigProvider_GetConfig_Call struct {
 // GetConfig is a helper method to define mock.On call
 //   - ctx context.Context
 //   - accountID string
-func (_e *MockConfigProvider_Expecter) GetConfig(ctx interface{}, accountID interface{}) *MockConfigProvider_GetConfig_Call {
+func (_e *MockConfigProvider_Expecter) GetConfig(ctx any, accountID any) *MockConfigProvider_GetConfig_Call {
 	return &MockConfigProvider_GetConfig_Call{Call: _e.mock.On("GetConfig", ctx, accountID)}
 }
 

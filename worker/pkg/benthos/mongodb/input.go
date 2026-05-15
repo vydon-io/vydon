@@ -10,10 +10,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo/readpref"
 
+	"github.com/redpanda-data/benthos/v4/public/service"
 	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper/builder"
 	mongodbmapper "github.com/vydon-io/vydon/internal/database-record-mapper/mongodb"
 	vydon_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
-	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
 // mongodb input component allowed operations.

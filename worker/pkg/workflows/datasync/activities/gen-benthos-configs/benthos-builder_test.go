@@ -3,13 +3,13 @@ package genbenthosconfigs_activity
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	sqlmanager_mssql "github.com/vydon-io/vydon/backend/pkg/sqlmanager/mssql"
 	sqlmanager_postgres "github.com/vydon-io/vydon/backend/pkg/sqlmanager/postgres"
 	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
 	runconfigs "github.com/vydon-io/vydon/internal/runconfigs"
 	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
-	"github.com/stretchr/testify/require"
 
 	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )

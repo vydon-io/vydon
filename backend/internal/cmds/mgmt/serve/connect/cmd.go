@@ -25,8 +25,8 @@ import (
 	"github.com/vydon-io/vydon/internal/connectrpc/validate"
 	sym_encrypt "github.com/vydon-io/vydon/internal/encrypt/sym"
 	http_client "github.com/vydon-io/vydon/internal/http/client"
-	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 	pyroscope_env "github.com/vydon-io/vydon/internal/pyroscope"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/stdout/stdoutmetric"
@@ -68,17 +68,17 @@ import (
 	"github.com/vydon-io/vydon/internal/authmgmt/keycloak"
 	awsmanager "github.com/vydon-io/vydon/internal/aws"
 	"github.com/vydon-io/vydon/internal/billing"
-	"github.com/vydon-io/vydon/internal/connectiondata"
 	cloudlicense "github.com/vydon-io/vydon/internal/cloudlicense"
+	"github.com/vydon-io/vydon/internal/connectiondata"
+	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
 	"github.com/vydon-io/vydon/internal/license"
+	neomigrate "github.com/vydon-io/vydon/internal/migrate"
+	ee_slack "github.com/vydon-io/vydon/internal/notifications/slack"
+	vydonotel "github.com/vydon-io/vydon/internal/otel"
 	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
 	"github.com/vydon-io/vydon/internal/rbac"
-	ee_slack "github.com/vydon-io/vydon/internal/notifications/slack"
-	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
-	neomigrate "github.com/vydon-io/vydon/internal/migrate"
-	"github.com/vydon-io/vydon/internal/vydondb"
-	vydonotel "github.com/vydon-io/vydon/internal/otel"
 	"github.com/vydon-io/vydon/internal/temporal/clientmanager"
+	"github.com/vydon-io/vydon/internal/vydondb"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -508,7 +508,7 @@ func serve(ctx context.Context) error {
 
 	useraccountService := v1alpha1_useraccountservice.New(&v1alpha1_useraccountservice.Config{
 		IsAuthEnabled:            isAuthEnabled,
-		IsVydonCloud:           ncloudlicense.IsValid(),
+		IsVydonCloud:             ncloudlicense.IsValid(),
 		DefaultMaxAllowedRecords: getDefaultMaxAllowedRecords(),
 	}, db, temporalConfigProvider, authclient, authadminclient, billingClient, rbacclient, cascadelicense)
 	api.Handle(
@@ -652,9 +652,9 @@ func serve(ctx context.Context) error {
 	}
 
 	jobServiceConfig := &v1alpha1_jobservice.Config{
-		IsAuthEnabled:  isAuthEnabled,
-		IsVydonCloud: ncloudlicense.IsValid(),
-		RunLogConfig:   runLogConfig,
+		IsAuthEnabled: isAuthEnabled,
+		IsVydonCloud:  ncloudlicense.IsValid(),
+		RunLogConfig:  runLogConfig,
 	}
 	jobService := v1alpha1_jobservice.New(
 		jobServiceConfig,
@@ -718,7 +718,7 @@ func serve(ctx context.Context) error {
 		IsPresidioEnabled:       isPresidioEnabled,
 		PresidioDefaultLanguage: getPresidioDefaultLanguage(),
 		IsAuthEnabled:           isAuthEnabled,
-		IsVydonCloud:          ncloudlicense.IsValid(),
+		IsVydonCloud:            ncloudlicense.IsValid(),
 	}, anonymizerMeter, userdataclient, useraccountService, transformerService, presAnalyzeClient, presAnonClient, db, cascadelicense)
 	api.Handle(
 		mgmtv1alpha1connect.NewAnonymizationServiceHandler(

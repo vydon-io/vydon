@@ -7,6 +7,7 @@ import (
 	"sync"
 	"time"
 
+	"github.com/spf13/viper"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
 	"github.com/vydon-io/vydon/internal/license"
@@ -22,7 +23,6 @@ import (
 	workflow_shared "github.com/vydon-io/vydon/worker/pkg/workflows/shared"
 	sync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/activities/sync"
 	tablesync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/workflow"
-	"github.com/spf13/viper"
 	"go.temporal.io/sdk/log"
 	"go.temporal.io/sdk/temporal"
 

@@ -12,8 +12,8 @@ import (
 
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/vydon-io/vydon/internal/database-record-mapper/builder"
-	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 	vydon_types "github.com/vydon-io/vydon/internal/types"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 type PostgresMapper struct{}

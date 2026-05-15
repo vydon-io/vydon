@@ -17,9 +17,9 @@ import (
 	vydon_types "github.com/vydon-io/vydon/internal/types"
 	vydon_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
 
+	"github.com/redpanda-data/benthos/v4/public/service"
 	vydongob "github.com/vydon-io/vydon/internal/gob"
 	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
-	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
 func init() {
@@ -89,7 +89,7 @@ func newVydonConnectionDataInput(
 		},
 		vydonConnectApi:   vydonConnectApi,
 		vydonTypeRegistry: registry,
-		logger:              logger,
+		logger:            logger,
 	}), nil
 }
 
@@ -120,7 +120,7 @@ type vydonInput struct {
 	schema         string
 	table          string
 
-	logger              *slog.Logger
+	logger            *slog.Logger
 	vydonConnectApi   mgmtv1alpha1connect.ConnectionDataServiceClient
 	vydonTypeRegistry *vydontypes.TypeRegistry
 

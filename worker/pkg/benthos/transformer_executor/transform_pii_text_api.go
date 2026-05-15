@@ -10,9 +10,9 @@ import (
 )
 
 type piiTextApi struct {
-	execConfig         *transformPiiTextConfig
+	execConfig       *transformPiiTextConfig
 	vydonOperatorApi ee_transformer_fns.VydonOperatorApi
-	logger             *slog.Logger
+	logger           *slog.Logger
 }
 
 func newFromExecConfig(
@@ -21,9 +21,9 @@ func newFromExecConfig(
 	logger *slog.Logger,
 ) transformers.TransformPiiTextApi {
 	return &piiTextApi{
-		execConfig:         execConfig,
+		execConfig:       execConfig,
 		vydonOperatorApi: vydonOperatorApi,
-		logger:             logger,
+		logger:           logger,
 	}
 }
 

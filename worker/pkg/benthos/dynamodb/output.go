@@ -17,9 +17,9 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/cenkalti/backoff/v4"
 
+	"github.com/redpanda-data/benthos/v4/public/service"
 	vydon_types "github.com/vydon-io/vydon/internal/types"
 	vydon_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
-	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
 const (

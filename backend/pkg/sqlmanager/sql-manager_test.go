@@ -3,13 +3,13 @@ package sqlmanager
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
 	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
 	mssql_queries "github.com/vydon-io/vydon/backend/pkg/mssql-querier"
 	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
 	"github.com/vydon-io/vydon/internal/connection-manager/providers/sqlprovider"
-	"github.com/stretchr/testify/require"
 )
 
 func Test_NewSqlManager(t *testing.T) {

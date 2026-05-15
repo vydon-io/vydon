@@ -17,7 +17,7 @@ func NewMockAnalyzeInterface(t mockT) *MockAnalyzeInterface {
 	return m
 }
 
-func (m *MockAnalyzeInterface) PostAnalyzeWithResponse(ctx context.Context, body interface{}) (*PostAnalyzeResponse, error) {
+func (m *MockAnalyzeInterface) PostAnalyzeWithResponse(ctx context.Context, body any) (*PostAnalyzeResponse, error) {
 	args := m.Called(ctx, body)
 	var r0 *PostAnalyzeResponse
 	if rf, ok := args.Get(0).(*PostAnalyzeResponse); ok {
@@ -37,7 +37,7 @@ func NewMockAnonymizeInterface(t mockT) *MockAnonymizeInterface {
 	return m
 }
 
-func (m *MockAnonymizeInterface) PostAnonymizeWithResponse(ctx context.Context, body interface{}) (*PostAnonymizeResponse, error) {
+func (m *MockAnonymizeInterface) PostAnonymizeWithResponse(ctx context.Context, body any) (*PostAnonymizeResponse, error) {
 	args := m.Called(ctx, body)
 	var r0 *PostAnonymizeResponse
 	if rf, ok := args.Get(0).(*PostAnonymizeResponse); ok {
@@ -57,7 +57,10 @@ func NewMockEntityInterface(t mockT) *MockEntityInterface {
 	return m
 }
 
-func (m *MockEntityInterface) GetSupportedentitiesWithResponse(ctx context.Context, params *GetSupportedentitiesParams) (*GetSupportedentitiesResponse, error) {
+func (m *MockEntityInterface) GetSupportedentitiesWithResponse(
+	ctx context.Context,
+	params *GetSupportedentitiesParams,
+) (*GetSupportedentitiesResponse, error) {
 	args := m.Called(ctx, params)
 	var r0 *GetSupportedentitiesResponse
 	if rf, ok := args.Get(0).(*GetSupportedentitiesResponse); ok {

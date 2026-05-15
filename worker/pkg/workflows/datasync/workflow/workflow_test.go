@@ -14,19 +14,19 @@ import (
 	runconfigs "github.com/vydon-io/vydon/internal/runconfigs"
 	"github.com/vydon-io/vydon/internal/testutil"
 	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	accounthook_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/account_hooks/workflow"
 	accountstatus_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/account-status"
 	genbenthosconfigs_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/gen-benthos-configs"
 	jobhooks_by_timing_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/jobhooks-by-timing"
 	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 	syncrediscleanup_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-redis-clean-up"
-	accounthook_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/account_hooks/workflow"
 	tablesync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/workflow"
 	"go.uber.org/atomic"
 
-	syncactivityopts_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-activity-opts"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	syncactivityopts_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-activity-opts"
 	"go.temporal.io/sdk/temporal"
 	"go.temporal.io/sdk/testsuite"
 	"go.temporal.io/sdk/workflow"
@@ -303,8 +303,11 @@ func Test_Workflow_Follows_Multiple_Dependents(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",
@@ -431,8 +434,11 @@ func Test_Workflow_Follows_Multiple_Dependent_Redis_Cleanup(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",
@@ -549,8 +555,11 @@ func Test_Workflow_Halts_Activities_OnError(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",
@@ -651,8 +660,11 @@ func Test_Workflow_Halts_Activities_On_InvalidAccountStatus(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",
@@ -762,8 +774,11 @@ func Test_Workflow_Cleans_Up_Redis_OnError(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",

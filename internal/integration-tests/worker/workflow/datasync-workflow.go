@@ -5,6 +5,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/redis/go-redis/v9"
+	"github.com/stretchr/testify/require"
 	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
 	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
@@ -16,14 +18,12 @@ import (
 	"github.com/vydon-io/vydon/internal/testutil"
 	vydon_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
 	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
+	accounthook_workflow_register "github.com/vydon-io/vydon/worker/pkg/workflows/account_hooks/workflow/register"
 	posttablesync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/post-table-sync"
 	datasync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/workflow"
 	datasync_workflow_register "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/workflow/register"
-	accounthook_workflow_register "github.com/vydon-io/vydon/worker/pkg/workflows/account_hooks/workflow/register"
 	schemainit_workflow_register "github.com/vydon-io/vydon/worker/pkg/workflows/schemainit/workflow/register"
 	tablesync_workflow_register "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/workflow/register"
-	"github.com/redis/go-redis/v9"
-	"github.com/stretchr/testify/require"
 	"go.opentelemetry.io/otel/metric"
 	"go.temporal.io/sdk/activity"
 	"go.temporal.io/sdk/client"
@@ -35,7 +35,7 @@ import (
 type Option func(*TestWorkflowEnv)
 
 type TestWorkflowEnv struct {
-	vydonApi          *tcvydonapi.VydonApiTestClient
+	vydonApi            *tcvydonapi.VydonApiTestClient
 	redisconfig         *vydon_redis.RedisConfig
 	fakeEELicense       *testutil.FakeEELicense
 	pageLimit           int
@@ -94,7 +94,7 @@ func NewTestDataSyncWorkflowEnv(
 	t.Helper()
 
 	workflowEnv := &TestWorkflowEnv{
-		vydonApi:          vydonApi,
+		vydonApi:            vydonApi,
 		fakeEELicense:       testutil.NewFakeEELicense(),
 		pageLimit:           10,
 		maxIterations:       5,

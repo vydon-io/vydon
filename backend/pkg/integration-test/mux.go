@@ -31,13 +31,13 @@ import (
 	awsmanager "github.com/vydon-io/vydon/internal/aws"
 	"github.com/vydon-io/vydon/internal/billing"
 	"github.com/vydon-io/vydon/internal/connectiondata"
+	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
 	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
 	"github.com/vydon-io/vydon/internal/rbac"
-	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
-	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
-	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/vydon-io/vydon/internal/testutil"
 	tcpostgres "github.com/vydon-io/vydon/internal/testutil/testcontainers/postgres"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 var (
@@ -181,7 +181,7 @@ func (s *VydonApiTestClient) setupMux(
 	userService := v1alpha1_useraccountservice.New(
 		&v1alpha1_useraccountservice.Config{
 			IsAuthEnabled:            isAuthEnabled,
-			IsVydonCloud:           isVydonCloud,
+			IsVydonCloud:             isVydonCloud,
 			DefaultMaxAllowedRecords: &maxAllowed,
 		},
 		vydondb.New(pgcontainer.DB, db_queries.New()),
@@ -268,7 +268,7 @@ func (s *VydonApiTestClient) setupMux(
 		&v1alpha_anonymizationservice.Config{
 			IsPresidioEnabled: isPresidioEnabled,
 			IsAuthEnabled:     isAuthEnabled,
-			IsVydonCloud:    isVydonCloud,
+			IsVydonCloud:      isVydonCloud,
 		},
 		nil, // meter
 		userclient,

@@ -123,12 +123,12 @@ type GetCustomFunctionsBySchemasRow struct {
 	ReturnDataType    string
 	Definition        string
 	IsDeterministic   int32
-	FunctionSignature interface{}
+	FunctionSignature any
 }
 
 func (q *Queries) GetCustomFunctionsBySchemas(ctx context.Context, db DBTX, schemas []string) ([]*GetCustomFunctionsBySchemasRow, error) {
 	query := getCustomFunctionsBySchemas
-	var queryParams []interface{}
+	var queryParams []any
 	if len(schemas) > 0 {
 		for _, v := range schemas {
 			queryParams = append(queryParams, v)
@@ -201,7 +201,7 @@ type GetCustomTriggersBySchemaAndTablesRow struct {
 // sqlc is broken for mysql so can't do CONCAT(EVENT_OBJECT_SCHEMA, '.', EVENT_OBJECT_TABLE) IN (sqlc.slice('schematables'))
 func (q *Queries) GetCustomTriggersBySchemaAndTables(ctx context.Context, db DBTX, arg *GetCustomTriggersBySchemaAndTablesParams) ([]*GetCustomTriggersBySchemaAndTablesRow, error) {
 	query := getCustomTriggersBySchemaAndTables
-	var queryParams []interface{}
+	var queryParams []any
 	queryParams = append(queryParams, arg.Schema)
 	if len(arg.Tables) > 0 {
 		for _, v := range arg.Tables {
@@ -271,7 +271,7 @@ type GetDatabaseSchemaRow struct {
 	TableName              string
 	ColumnName             string
 	OrdinalPosition        int64
-	ColumnDefault          interface{}
+	ColumnDefault          any
 	IsNullable             string
 	DataType               string
 	ColumnType             string
@@ -360,21 +360,21 @@ type GetDatabaseTableSchemasBySchemasAndTablesRow struct {
 	ColumnName              string
 	DataType                string
 	ColumnType              string
-	ColumnDefault           interface{}
+	ColumnDefault           any
 	IsNullable              int32
 	CharacterMaximumLength  int64
 	NumericPrecision        int64
 	NumericScale            int64
 	OrdinalPosition         int64
 	IdentityGeneration      sql.NullString
-	GenerationExp           interface{}
+	GenerationExp           any
 	AutoIncrementStartValue sql.NullInt64
 	Comment                 sql.NullString
 }
 
 func (q *Queries) GetDatabaseTableSchemasBySchemasAndTables(ctx context.Context, db DBTX, arg *GetDatabaseTableSchemasBySchemasAndTablesParams) ([]*GetDatabaseTableSchemasBySchemasAndTablesRow, error) {
 	query := getDatabaseTableSchemasBySchemasAndTables
-	var queryParams []interface{}
+	var queryParams []any
 	queryParams = append(queryParams, arg.Schema)
 	if len(arg.Tables) > 0 {
 		for _, v := range arg.Tables {
@@ -465,7 +465,7 @@ type GetIndicesBySchemasAndTablesRow struct {
 
 func (q *Queries) GetIndicesBySchemasAndTables(ctx context.Context, db DBTX, arg *GetIndicesBySchemasAndTablesParams) ([]*GetIndicesBySchemasAndTablesRow, error) {
 	query := getIndicesBySchemasAndTables
-	var queryParams []interface{}
+	var queryParams []any
 	queryParams = append(queryParams, arg.Schema)
 	if len(arg.Tables) > 0 {
 		for _, v := range arg.Tables {
@@ -654,12 +654,12 @@ type GetTableConstraintsRow struct {
 	ReferencedColumnNames json.RawMessage
 	UpdateRule            sql.NullString
 	DeleteRule            sql.NullString
-	CheckClause           interface{}
+	CheckClause           any
 }
 
 func (q *Queries) GetTableConstraints(ctx context.Context, db DBTX, arg *GetTableConstraintsParams) ([]*GetTableConstraintsRow, error) {
 	query := getTableConstraints
-	var queryParams []interface{}
+	var queryParams []any
 	queryParams = append(queryParams, arg.Schema)
 	if len(arg.Tables) > 0 {
 		for _, v := range arg.Tables {
@@ -761,12 +761,12 @@ type GetTableConstraintsBySchemasRow struct {
 	ReferencedColumnNames json.RawMessage
 	UpdateRule            sql.NullString
 	DeleteRule            sql.NullString
-	CheckClause           interface{}
+	CheckClause           any
 }
 
 func (q *Queries) GetTableConstraintsBySchemas(ctx context.Context, db DBTX, schemas []string) ([]*GetTableConstraintsBySchemasRow, error) {
 	query := getTableConstraintsBySchemas
-	var queryParams []interface{}
+	var queryParams []any
 	if len(schemas) > 0 {
 		for _, v := range schemas {
 			queryParams = append(queryParams, v)

@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
 	"github.com/vydon-io/vydon/worker/pkg/rng"
 	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
-	"github.com/stretchr/testify/require"
 )
 
 func Test_GenerateRandomFloat64WithInclusiveBoundsMinEqualMax(t *testing.T) {

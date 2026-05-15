@@ -10,10 +10,10 @@ import (
 	"strconv"
 	"time"
 
-	vydon_types "github.com/vydon-io/vydon/internal/types"
-	vydon_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/redpanda-data/benthos/v4/public/service"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
+	vydon_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"

@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/vydon-io/vydon/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 var testStringValue = "hello"
@@ -24,7 +24,12 @@ func Test_TransformStringPreserveLengthFalse(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.GreaterOrEqual(t, len(*res), 3, "The expected value should be greater than or equal to 3")
-	assert.LessOrEqual(t, int64(len(*res)), maxCharacterLimit, "The expected value should be less than or equal to the max character limit. ")
+	assert.LessOrEqual(
+		t,
+		int64(len(*res)),
+		maxCharacterLimit,
+		"The expected value should be less than or equal to the max character limit. ",
+	)
 }
 
 func Test_TransformStringMaxLength(t *testing.T) {
@@ -32,11 +37,21 @@ func Test_TransformStringMaxLength(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.GreaterOrEqual(t, len(*res), 3, "The expected value should be greater than or equal to 3")
-	assert.LessOrEqual(t, int64(len(*res)), maxCharacterLimit, "The expected value should be less than or equal to the max character limit. ")
+	assert.LessOrEqual(
+		t,
+		int64(len(*res)),
+		maxCharacterLimit,
+		"The expected value should be less than or equal to the max character limit. ",
+	)
 }
 
 func Test_TransformStringTransformer(t *testing.T) {
-	mapping := fmt.Sprintf(`root = transform_string(value:%q,preserve_length:true,min_length:%d,max_length:%d)`, testStringValue, 3, maxCharacterLimit)
+	mapping := fmt.Sprintf(
+		`root = transform_string(value:%q,preserve_length:true,min_length:%d,max_length:%d)`,
+		testStringValue,
+		3,
+		maxCharacterLimit,
+	)
 	ex, err := bloblang.Parse(mapping)
 	assert.NoError(t, err, "failed to parse the random string transformer")
 
@@ -61,7 +76,12 @@ func Test_TransformStringTransformer(t *testing.T) {
 
 func Test_TransformStringTransformerWithEmptyValue(t *testing.T) {
 	nilString := ""
-	mapping := fmt.Sprintf(`root = transform_string(value:%q,preserve_length:true,min_length:%d,max_length:%d)`, nilString, 3, maxCharacterLimit)
+	mapping := fmt.Sprintf(
+		`root = transform_string(value:%q,preserve_length:true,min_length:%d,max_length:%d)`,
+		nilString,
+		3,
+		maxCharacterLimit,
+	)
 	ex, err := bloblang.Parse(mapping)
 	assert.NoError(t, err, "failed to parse the email transformer")
 

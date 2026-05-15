@@ -50,7 +50,7 @@ type MockInterface_GetSubscriptions_Call struct {
 
 // GetSubscriptions is a helper method to define mock.On call
 //   - customerId string
-func (_e *MockInterface_Expecter) GetSubscriptions(customerId interface{}) *MockInterface_GetSubscriptions_Call {
+func (_e *MockInterface_Expecter) GetSubscriptions(customerId any) *MockInterface_GetSubscriptions_Call {
 	return &MockInterface_GetSubscriptions_Call{Call: _e.mock.On("GetSubscriptions", customerId)}
 }
 
@@ -109,7 +109,7 @@ type MockInterface_NewBillingPortalSession_Call struct {
 // NewBillingPortalSession is a helper method to define mock.On call
 //   - customerId string
 //   - accountSlug string
-func (_e *MockInterface_Expecter) NewBillingPortalSession(customerId interface{}, accountSlug interface{}) *MockInterface_NewBillingPortalSession_Call {
+func (_e *MockInterface_Expecter) NewBillingPortalSession(customerId any, accountSlug any) *MockInterface_NewBillingPortalSession_Call {
 	return &MockInterface_NewBillingPortalSession_Call{Call: _e.mock.On("NewBillingPortalSession", customerId, accountSlug)}
 }
 
@@ -170,7 +170,7 @@ type MockInterface_NewCheckoutSession_Call struct {
 //   - accountSlug string
 //   - userId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) NewCheckoutSession(customerId interface{}, accountSlug interface{}, userId interface{}, logger interface{}) *MockInterface_NewCheckoutSession_Call {
+func (_e *MockInterface_Expecter) NewCheckoutSession(customerId any, accountSlug any, userId any, logger any) *MockInterface_NewCheckoutSession_Call {
 	return &MockInterface_NewCheckoutSession_Call{Call: _e.mock.On("NewCheckoutSession", customerId, accountSlug, userId, logger)}
 }
 
@@ -228,7 +228,7 @@ type MockInterface_NewCustomer_Call struct {
 
 // NewCustomer is a helper method to define mock.On call
 //   - req *CustomerRequest
-func (_e *MockInterface_Expecter) NewCustomer(req interface{}) *MockInterface_NewCustomer_Call {
+func (_e *MockInterface_Expecter) NewCustomer(req any) *MockInterface_NewCustomer_Call {
 	return &MockInterface_NewCustomer_Call{Call: _e.mock.On("NewCustomer", req)}
 }
 
@@ -286,7 +286,7 @@ type MockInterface_NewMeterEvent_Call struct {
 
 // NewMeterEvent is a helper method to define mock.On call
 //   - req *MeterEventRequest
-func (_e *MockInterface_Expecter) NewMeterEvent(req interface{}) *MockInterface_NewMeterEvent_Call {
+func (_e *MockInterface_Expecter) NewMeterEvent(req any) *MockInterface_NewMeterEvent_Call {
 	return &MockInterface_NewMeterEvent_Call{Call: _e.mock.On("NewMeterEvent", req)}
 }
 

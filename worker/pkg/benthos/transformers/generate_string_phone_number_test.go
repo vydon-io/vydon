@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/vydon-io/vydon/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 func Test_GenerateStringPhoneNumber(t *testing.T) {
@@ -41,7 +41,12 @@ func Test_GenerateStringPhoneNumberShortMax(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.GreaterOrEqual(t, len(res), 8, "Should be greater than 9 characters in length. 9 for the number and 1 for the plus sign.")
-	assert.LessOrEqual(t, len(res), maxPhoneLimit, "Should be less than 16 characters in length. 15 for the number and 1 for the plus sign.")
+	assert.LessOrEqual(
+		t,
+		len(res),
+		maxPhoneLimit,
+		"Should be less than 16 characters in length. 15 for the number and 1 for the plus sign.",
+	)
 }
 
 func Test_GenerateStringPhoneNumberTransformer(t *testing.T) {
@@ -54,7 +59,12 @@ func Test_GenerateStringPhoneNumberTransformer(t *testing.T) {
 	res, err := ex.Query(nil)
 	assert.NoError(t, err)
 
-	assert.GreaterOrEqual(t, len(res.(string)), 8, "Should be greater than 9 characters in length. 9 for the number and 1 for the plus sign.")
+	assert.GreaterOrEqual(
+		t,
+		len(res.(string)),
+		8,
+		"Should be greater than 9 characters in length. 9 for the number and 1 for the plus sign.",
+	)
 	assert.LessOrEqual(t, len(res.(string)), 15, "Should be less than 16 characters in length. 15 for the number and 1 for the plus sign.")
 }
 

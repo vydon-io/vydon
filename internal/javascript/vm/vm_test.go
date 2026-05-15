@@ -61,11 +61,15 @@ func TestRunner(t *testing.T) {
 	})
 
 	t.Run("with_functions", func(t *testing.T) {
-		customFn := javascript_functions.NewFunctionDefinition("test", "test", func(r javascript_functions.Runner) javascript_functions.Function {
-			return func(ctx context.Context, call goja.FunctionCall, rt *goja.Runtime, l *slog.Logger) (any, error) {
-				return "hello world", nil
-			}
-		})
+		customFn := javascript_functions.NewFunctionDefinition(
+			"test",
+			"test",
+			func(r javascript_functions.Runner) javascript_functions.Function {
+				return func(ctx context.Context, call goja.FunctionCall, rt *goja.Runtime, l *slog.Logger) (any, error) {
+					return "hello world", nil
+				}
+			},
+		)
 
 		runner, err := NewRunner(WithFunctions(customFn))
 		require.NoError(t, err)

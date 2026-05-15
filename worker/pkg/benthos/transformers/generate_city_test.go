@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/vydon-io/vydon/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 var maxLength = int64(20)
@@ -17,7 +17,12 @@ func Test_GenerateCity(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.IsType(t, "", res, "The returned city should be a string")
-	assert.LessOrEqual(t, int64(len(res)), maxLength, fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res))
+	assert.LessOrEqual(
+		t,
+		int64(len(res)),
+		maxLength,
+		fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res),
+	)
 }
 
 func Test_GenerateCityShortMax(t *testing.T) {
@@ -25,7 +30,12 @@ func Test_GenerateCityShortMax(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.IsType(t, "", res, "The returned city should be a string")
-	assert.LessOrEqual(t, int64(len(res)), int64(3), fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res))
+	assert.LessOrEqual(
+		t,
+		int64(len(res)),
+		int64(3),
+		fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res),
+	)
 }
 
 func Test_CityTransformer(t *testing.T) {
@@ -38,7 +48,12 @@ func Test_CityTransformer(t *testing.T) {
 
 	assert.IsType(t, "", res, "The returned city should be a string")
 
-	assert.LessOrEqual(t, int64(len(res.(string))), maxLength, fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res))
+	assert.LessOrEqual(
+		t,
+		int64(len(res.(string))),
+		maxLength,
+		fmt.Sprintf("The city should be less than or equal to the max length. This is the error city:%s", res),
+	)
 }
 
 func Test_CityTransformer_NoOptions(t *testing.T) {

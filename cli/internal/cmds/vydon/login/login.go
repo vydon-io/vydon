@@ -12,6 +12,9 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+	"github.com/toqueteos/webbrowser"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	"github.com/vydon-io/vydon/cli/internal/auth"
@@ -19,9 +22,6 @@ import (
 	"github.com/vydon-io/vydon/cli/internal/userconfig"
 	"github.com/vydon-io/vydon/cli/internal/version"
 	http_client "github.com/vydon-io/vydon/internal/http/client"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
-	"github.com/toqueteos/webbrowser"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 )

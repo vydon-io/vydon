@@ -4,8 +4,8 @@ import (
 	"database/sql"
 	"testing"
 
-	mssql_queries "github.com/vydon-io/vydon/backend/pkg/mssql-querier"
 	"github.com/stretchr/testify/require"
+	mssql_queries "github.com/vydon-io/vydon/backend/pkg/mssql-querier"
 )
 
 func Test_BuildMssqlDeleteStatement(t *testing.T) {

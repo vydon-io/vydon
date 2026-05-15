@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"sync"
 
+	"github.com/redpanda-data/benthos/v4/public/service"
 	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	continuation_token "github.com/vydon-io/vydon/internal/continuation-token"
 	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper"
 	record_mapper_builder "github.com/vydon-io/vydon/internal/database-record-mapper/builder"
 	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
-	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
 func sqlRawInputSpec() *service.ConfigSpec {

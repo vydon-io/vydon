@@ -57,7 +57,7 @@ type MockBenthosStreamManagerClient_NewBenthosStreamFromBuilder_Call struct {
 
 // NewBenthosStreamFromBuilder is a helper method to define mock.On call
 //   - streambldr *service.StreamBuilder
-func (_e *MockBenthosStreamManagerClient_Expecter) NewBenthosStreamFromBuilder(streambldr interface{}) *MockBenthosStreamManagerClient_NewBenthosStreamFromBuilder_Call {
+func (_e *MockBenthosStreamManagerClient_Expecter) NewBenthosStreamFromBuilder(streambldr any) *MockBenthosStreamManagerClient_NewBenthosStreamFromBuilder_Call {
 	return &MockBenthosStreamManagerClient_NewBenthosStreamFromBuilder_Call{Call: _e.mock.On("NewBenthosStreamFromBuilder", streambldr)}
 }
 

@@ -7,12 +7,12 @@ import (
 	"connectrpc.com/connect"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	dyntypes "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
+	"github.com/stretchr/testify/require"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	"github.com/vydon-io/vydon/internal/gotypeutil"
 	tcdynamodb "github.com/vydon-io/vydon/internal/testutil/testcontainers/dynamodb"
-	"github.com/stretchr/testify/require"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -35,7 +35,9 @@ func createDynamodbSyncJob(
 	destinationOptions := &mgmtv1alpha1.JobDestinationOptions{
 		Config: &mgmtv1alpha1.JobDestinationOptions_DynamodbOptions{
 			DynamodbOptions: &mgmtv1alpha1.DynamoDBDestinationConnectionOptions{
-				TableMappings: []*mgmtv1alpha1.DynamoDBDestinationTableMapping{{SourceTable: sourceTableName, DestinationTable: destTableName}},
+				TableMappings: []*mgmtv1alpha1.DynamoDBDestinationTableMapping{
+					{SourceTable: sourceTableName, DestinationTable: destTableName},
+				},
 			},
 		},
 	}
@@ -275,7 +277,10 @@ func test_dynamodb_default_transformers(
 			Number: &mgmtv1alpha1.JobMappingTransformer{
 				Config: &mgmtv1alpha1.TransformerConfig{
 					Config: &mgmtv1alpha1.TransformerConfig_TransformInt64Config{
-						TransformInt64Config: &mgmtv1alpha1.TransformInt64{RandomizationRangeMin: gotypeutil.ToPtr(int64(10)), RandomizationRangeMax: gotypeutil.ToPtr(int64(1000))},
+						TransformInt64Config: &mgmtv1alpha1.TransformInt64{
+							RandomizationRangeMin: gotypeutil.ToPtr(int64(10)),
+							RandomizationRangeMax: gotypeutil.ToPtr(int64(1000)),
+						},
 					},
 				},
 			},
@@ -361,9 +366,11 @@ func getAllTypesTestData() []map[string]dyntypes.AttributeValue {
 											},
 											"Level4": &dyntypes.AttributeValueMemberM{
 												Value: map[string]dyntypes.AttributeValue{
-													"Attribute3":     &dyntypes.AttributeValueMemberS{Value: "Value3"},
-													"Boolean":        &dyntypes.AttributeValueMemberBOOL{Value: true},
-													"MoreBinaryData": &dyntypes.AttributeValueMemberB{Value: []byte("TW9yZUJpbmFyeURhdGE=")},
+													"Attribute3": &dyntypes.AttributeValueMemberS{Value: "Value3"},
+													"Boolean":    &dyntypes.AttributeValueMemberBOOL{Value: true},
+													"MoreBinaryData": &dyntypes.AttributeValueMemberB{
+														Value: []byte("TW9yZUJpbmFyeURhdGE="),
+													},
 													"MoreBinarySet": &dyntypes.AttributeValueMemberBS{
 														Value: [][]byte{
 															[]byte("TW9yZUJpbmFyeQ=="),

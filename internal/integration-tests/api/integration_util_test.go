@@ -8,12 +8,12 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/stretchr/testify/require"
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	"github.com/vydon-io/vydon/internal/vydondb"
-	"github.com/stretchr/testify/require"
 )
 
 func (s *IntegrationTestSuite) createPersonalAccount(

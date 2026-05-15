@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/vydon-io/vydon/internal/testutil"
 	"github.com/stretchr/testify/assert"
+	"github.com/vydon-io/vydon/internal/testutil"
 )
 
 func Test_GetLoggerFromContextOrDefault(t *testing.T) {

@@ -100,10 +100,14 @@ func Test_MssqlManager(t *testing.T) {
 		expected := &sqlmanager_shared.TableConstraints{
 			ForeignKeyConstraints: map[string][]*sqlmanager_shared.ForeignConstraint{
 				"sqlmanagermssql2.child1": {
-					{Columns: []string{"parent_id1", "parent_id2"}, NotNullable: []bool{false, false}, ForeignKey: &sqlmanager_shared.ForeignKey{
-						Table:   "sqlmanagermssql2.parent1",
-						Columns: []string{"id1", "id2"},
-					}},
+					{
+						Columns:     []string{"parent_id1", "parent_id2"},
+						NotNullable: []bool{false, false},
+						ForeignKey: &sqlmanager_shared.ForeignKey{
+							Table:   "sqlmanagermssql2.parent1",
+							Columns: []string{"id1", "id2"},
+						},
+					},
 				},
 
 				"sqlmanagermssql2.TableA": {

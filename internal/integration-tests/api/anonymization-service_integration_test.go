@@ -7,11 +7,11 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
+	"github.com/stretchr/testify/require"
+	"github.com/stripe/stripe-go/v81"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	integrationtests_test "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	"github.com/vydon-io/vydon/internal/gotypeutil"
-	"github.com/stretchr/testify/require"
-	"github.com/stripe/stripe-go/v81"
 )
 
 func (s *IntegrationTestSuite) Test_AnonymizeService_AnonymizeMany() {

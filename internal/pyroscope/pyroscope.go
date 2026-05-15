@@ -6,8 +6,8 @@ import (
 	"runtime"
 
 	"github.com/grafana/pyroscope-go"
-	pyroscope_logger "github.com/vydon-io/vydon/internal/pyroscope/logger"
 	"github.com/spf13/viper"
+	pyroscope_logger "github.com/vydon-io/vydon/internal/pyroscope/logger"
 )
 
 func NewFromEnv(applicationName string, logger *slog.Logger) (*pyroscope.Config, bool, error) {

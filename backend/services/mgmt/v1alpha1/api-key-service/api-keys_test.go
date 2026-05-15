@@ -10,13 +10,13 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	pgxmock "github.com/vydon-io/vydon/internal/mocks/github.com/jackc/pgx/v5"
 	"github.com/vydon-io/vydon/internal/vydondb"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/mock"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 

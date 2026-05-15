@@ -5,8 +5,8 @@ package db_queries
 import (
 	context "context"
 
-	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 	mock "github.com/stretchr/testify/mock"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 
 	pgtype "github.com/jackc/pgx/v5/pgtype"
 )
@@ -61,7 +61,7 @@ type MockQuerier_AreConnectionsInAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg AreConnectionsInAccountParams
-func (_e *MockQuerier_Expecter) AreConnectionsInAccount(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_AreConnectionsInAccount_Call {
+func (_e *MockQuerier_Expecter) AreConnectionsInAccount(ctx any, db any, arg any) *MockQuerier_AreConnectionsInAccount_Call {
 	return &MockQuerier_AreConnectionsInAccount_Call{Call: _e.mock.On("AreConnectionsInAccount", ctx, db, arg)}
 }
 
@@ -119,7 +119,7 @@ type MockQuerier_ConvertPersonalAccountToTeam_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg ConvertPersonalAccountToTeamParams
-func (_e *MockQuerier_Expecter) ConvertPersonalAccountToTeam(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_ConvertPersonalAccountToTeam_Call {
+func (_e *MockQuerier_Expecter) ConvertPersonalAccountToTeam(ctx any, db any, arg any) *MockQuerier_ConvertPersonalAccountToTeam_Call {
 	return &MockQuerier_ConvertPersonalAccountToTeam_Call{Call: _e.mock.On("ConvertPersonalAccountToTeam", ctx, db, arg)}
 }
 
@@ -177,7 +177,7 @@ type MockQuerier_CreateAccountApiKey_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateAccountApiKeyParams
-func (_e *MockQuerier_Expecter) CreateAccountApiKey(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateAccountApiKey_Call {
+func (_e *MockQuerier_Expecter) CreateAccountApiKey(ctx any, db any, arg any) *MockQuerier_CreateAccountApiKey_Call {
 	return &MockQuerier_CreateAccountApiKey_Call{Call: _e.mock.On("CreateAccountApiKey", ctx, db, arg)}
 }
 
@@ -235,7 +235,7 @@ type MockQuerier_CreateAccountHook_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateAccountHookParams
-func (_e *MockQuerier_Expecter) CreateAccountHook(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateAccountHook_Call {
+func (_e *MockQuerier_Expecter) CreateAccountHook(ctx any, db any, arg any) *MockQuerier_CreateAccountHook_Call {
 	return &MockQuerier_CreateAccountHook_Call{Call: _e.mock.On("CreateAccountHook", ctx, db, arg)}
 }
 
@@ -293,7 +293,7 @@ type MockQuerier_CreateAccountInvite_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateAccountInviteParams
-func (_e *MockQuerier_Expecter) CreateAccountInvite(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateAccountInvite_Call {
+func (_e *MockQuerier_Expecter) CreateAccountInvite(ctx any, db any, arg any) *MockQuerier_CreateAccountInvite_Call {
 	return &MockQuerier_CreateAccountInvite_Call{Call: _e.mock.On("CreateAccountInvite", ctx, db, arg)}
 }
 
@@ -341,7 +341,7 @@ type MockQuerier_CreateAccountUserAssociation_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateAccountUserAssociationParams
-func (_e *MockQuerier_Expecter) CreateAccountUserAssociation(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateAccountUserAssociation_Call {
+func (_e *MockQuerier_Expecter) CreateAccountUserAssociation(ctx any, db any, arg any) *MockQuerier_CreateAccountUserAssociation_Call {
 	return &MockQuerier_CreateAccountUserAssociation_Call{Call: _e.mock.On("CreateAccountUserAssociation", ctx, db, arg)}
 }
 
@@ -399,7 +399,7 @@ type MockQuerier_CreateConnection_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateConnectionParams
-func (_e *MockQuerier_Expecter) CreateConnection(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateConnection_Call {
+func (_e *MockQuerier_Expecter) CreateConnection(ctx any, db any, arg any) *MockQuerier_CreateConnection_Call {
 	return &MockQuerier_CreateConnection_Call{Call: _e.mock.On("CreateConnection", ctx, db, arg)}
 }
 
@@ -457,7 +457,7 @@ type MockQuerier_CreateIdentityProviderAssociation_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateIdentityProviderAssociationParams
-func (_e *MockQuerier_Expecter) CreateIdentityProviderAssociation(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateIdentityProviderAssociation_Call {
+func (_e *MockQuerier_Expecter) CreateIdentityProviderAssociation(ctx any, db any, arg any) *MockQuerier_CreateIdentityProviderAssociation_Call {
 	return &MockQuerier_CreateIdentityProviderAssociation_Call{Call: _e.mock.On("CreateIdentityProviderAssociation", ctx, db, arg)}
 }
 
@@ -515,7 +515,7 @@ type MockQuerier_CreateJob_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateJobParams
-func (_e *MockQuerier_Expecter) CreateJob(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateJob_Call {
+func (_e *MockQuerier_Expecter) CreateJob(ctx any, db any, arg any) *MockQuerier_CreateJob_Call {
 	return &MockQuerier_CreateJob_Call{Call: _e.mock.On("CreateJob", ctx, db, arg)}
 }
 
@@ -573,7 +573,7 @@ type MockQuerier_CreateJobConnectionDestination_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateJobConnectionDestinationParams
-func (_e *MockQuerier_Expecter) CreateJobConnectionDestination(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateJobConnectionDestination_Call {
+func (_e *MockQuerier_Expecter) CreateJobConnectionDestination(ctx any, db any, arg any) *MockQuerier_CreateJobConnectionDestination_Call {
 	return &MockQuerier_CreateJobConnectionDestination_Call{Call: _e.mock.On("CreateJobConnectionDestination", ctx, db, arg)}
 }
 
@@ -631,7 +631,7 @@ type MockQuerier_CreateJobConnectionDestinations_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg []CreateJobConnectionDestinationsParams
-func (_e *MockQuerier_Expecter) CreateJobConnectionDestinations(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateJobConnectionDestinations_Call {
+func (_e *MockQuerier_Expecter) CreateJobConnectionDestinations(ctx any, db any, arg any) *MockQuerier_CreateJobConnectionDestinations_Call {
 	return &MockQuerier_CreateJobConnectionDestinations_Call{Call: _e.mock.On("CreateJobConnectionDestinations", ctx, db, arg)}
 }
 
@@ -689,7 +689,7 @@ type MockQuerier_CreateJobHook_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateJobHookParams
-func (_e *MockQuerier_Expecter) CreateJobHook(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateJobHook_Call {
+func (_e *MockQuerier_Expecter) CreateJobHook(ctx any, db any, arg any) *MockQuerier_CreateJobHook_Call {
 	return &MockQuerier_CreateJobHook_Call{Call: _e.mock.On("CreateJobHook", ctx, db, arg)}
 }
 
@@ -746,7 +746,7 @@ type MockQuerier_CreateMachineUser_Call struct {
 // CreateMachineUser is a helper method to define mock.On call
 //   - ctx context.Context
 //   - db DBTX
-func (_e *MockQuerier_Expecter) CreateMachineUser(ctx interface{}, db interface{}) *MockQuerier_CreateMachineUser_Call {
+func (_e *MockQuerier_Expecter) CreateMachineUser(ctx any, db any) *MockQuerier_CreateMachineUser_Call {
 	return &MockQuerier_CreateMachineUser_Call{Call: _e.mock.On("CreateMachineUser", ctx, db)}
 }
 
@@ -803,7 +803,7 @@ type MockQuerier_CreateNonMachineUser_Call struct {
 // CreateNonMachineUser is a helper method to define mock.On call
 //   - ctx context.Context
 //   - db DBTX
-func (_e *MockQuerier_Expecter) CreateNonMachineUser(ctx interface{}, db interface{}) *MockQuerier_CreateNonMachineUser_Call {
+func (_e *MockQuerier_Expecter) CreateNonMachineUser(ctx any, db any) *MockQuerier_CreateNonMachineUser_Call {
 	return &MockQuerier_CreateNonMachineUser_Call{Call: _e.mock.On("CreateNonMachineUser", ctx, db)}
 }
 
@@ -861,7 +861,7 @@ type MockQuerier_CreatePersonalAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreatePersonalAccountParams
-func (_e *MockQuerier_Expecter) CreatePersonalAccount(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreatePersonalAccount_Call {
+func (_e *MockQuerier_Expecter) CreatePersonalAccount(ctx any, db any, arg any) *MockQuerier_CreatePersonalAccount_Call {
 	return &MockQuerier_CreatePersonalAccount_Call{Call: _e.mock.On("CreatePersonalAccount", ctx, db, arg)}
 }
 
@@ -919,7 +919,7 @@ type MockQuerier_CreateSlackOAuthConnection_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateSlackOAuthConnectionParams
-func (_e *MockQuerier_Expecter) CreateSlackOAuthConnection(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateSlackOAuthConnection_Call {
+func (_e *MockQuerier_Expecter) CreateSlackOAuthConnection(ctx any, db any, arg any) *MockQuerier_CreateSlackOAuthConnection_Call {
 	return &MockQuerier_CreateSlackOAuthConnection_Call{Call: _e.mock.On("CreateSlackOAuthConnection", ctx, db, arg)}
 }
 
@@ -977,7 +977,7 @@ type MockQuerier_CreateTeamAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountSlug string
-func (_e *MockQuerier_Expecter) CreateTeamAccount(ctx interface{}, db interface{}, accountSlug interface{}) *MockQuerier_CreateTeamAccount_Call {
+func (_e *MockQuerier_Expecter) CreateTeamAccount(ctx any, db any, accountSlug any) *MockQuerier_CreateTeamAccount_Call {
 	return &MockQuerier_CreateTeamAccount_Call{Call: _e.mock.On("CreateTeamAccount", ctx, db, accountSlug)}
 }
 
@@ -1035,7 +1035,7 @@ type MockQuerier_CreateUserDefinedTransformer_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg CreateUserDefinedTransformerParams
-func (_e *MockQuerier_Expecter) CreateUserDefinedTransformer(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_CreateUserDefinedTransformer_Call {
+func (_e *MockQuerier_Expecter) CreateUserDefinedTransformer(ctx any, db any, arg any) *MockQuerier_CreateUserDefinedTransformer_Call {
 	return &MockQuerier_CreateUserDefinedTransformer_Call{Call: _e.mock.On("CreateUserDefinedTransformer", ctx, db, arg)}
 }
 
@@ -1083,7 +1083,7 @@ type MockQuerier_DeleteJob_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) DeleteJob(ctx interface{}, db interface{}, id interface{}) *MockQuerier_DeleteJob_Call {
+func (_e *MockQuerier_Expecter) DeleteJob(ctx any, db any, id any) *MockQuerier_DeleteJob_Call {
 	return &MockQuerier_DeleteJob_Call{Call: _e.mock.On("DeleteJob", ctx, db, id)}
 }
 
@@ -1131,7 +1131,7 @@ type MockQuerier_DeleteSlackOAuthConnection_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountID pgtype.UUID
-func (_e *MockQuerier_Expecter) DeleteSlackOAuthConnection(ctx interface{}, db interface{}, accountID interface{}) *MockQuerier_DeleteSlackOAuthConnection_Call {
+func (_e *MockQuerier_Expecter) DeleteSlackOAuthConnection(ctx any, db any, accountID any) *MockQuerier_DeleteSlackOAuthConnection_Call {
 	return &MockQuerier_DeleteSlackOAuthConnection_Call{Call: _e.mock.On("DeleteSlackOAuthConnection", ctx, db, accountID)}
 }
 
@@ -1179,7 +1179,7 @@ type MockQuerier_DeleteUserDefinedTransformerById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) DeleteUserDefinedTransformerById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_DeleteUserDefinedTransformerById_Call {
+func (_e *MockQuerier_Expecter) DeleteUserDefinedTransformerById(ctx any, db any, id any) *MockQuerier_DeleteUserDefinedTransformerById_Call {
 	return &MockQuerier_DeleteUserDefinedTransformerById_Call{Call: _e.mock.On("DeleteUserDefinedTransformerById", ctx, db, id)}
 }
 
@@ -1237,7 +1237,7 @@ type MockQuerier_DoesJobHaveConnectionId_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg DoesJobHaveConnectionIdParams
-func (_e *MockQuerier_Expecter) DoesJobHaveConnectionId(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_DoesJobHaveConnectionId_Call {
+func (_e *MockQuerier_Expecter) DoesJobHaveConnectionId(ctx any, db any, arg any) *MockQuerier_DoesJobHaveConnectionId_Call {
 	return &MockQuerier_DoesJobHaveConnectionId_Call{Call: _e.mock.On("DoesJobHaveConnectionId", ctx, db, arg)}
 }
 
@@ -1295,7 +1295,7 @@ type MockQuerier_GetAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccount(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetAccount_Call {
+func (_e *MockQuerier_Expecter) GetAccount(ctx any, db any, id any) *MockQuerier_GetAccount_Call {
 	return &MockQuerier_GetAccount_Call{Call: _e.mock.On("GetAccount", ctx, db, id)}
 }
 
@@ -1353,7 +1353,7 @@ type MockQuerier_GetAccountApiKeyById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccountApiKeyById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetAccountApiKeyById_Call {
+func (_e *MockQuerier_Expecter) GetAccountApiKeyById(ctx any, db any, id any) *MockQuerier_GetAccountApiKeyById_Call {
 	return &MockQuerier_GetAccountApiKeyById_Call{Call: _e.mock.On("GetAccountApiKeyById", ctx, db, id)}
 }
 
@@ -1411,7 +1411,7 @@ type MockQuerier_GetAccountApiKeyByKeyValue_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - keyValue string
-func (_e *MockQuerier_Expecter) GetAccountApiKeyByKeyValue(ctx interface{}, db interface{}, keyValue interface{}) *MockQuerier_GetAccountApiKeyByKeyValue_Call {
+func (_e *MockQuerier_Expecter) GetAccountApiKeyByKeyValue(ctx any, db any, keyValue any) *MockQuerier_GetAccountApiKeyByKeyValue_Call {
 	return &MockQuerier_GetAccountApiKeyByKeyValue_Call{Call: _e.mock.On("GetAccountApiKeyByKeyValue", ctx, db, keyValue)}
 }
 
@@ -1471,7 +1471,7 @@ type MockQuerier_GetAccountApiKeys_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountid pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccountApiKeys(ctx interface{}, db interface{}, accountid interface{}) *MockQuerier_GetAccountApiKeys_Call {
+func (_e *MockQuerier_Expecter) GetAccountApiKeys(ctx any, db any, accountid any) *MockQuerier_GetAccountApiKeys_Call {
 	return &MockQuerier_GetAccountApiKeys_Call{Call: _e.mock.On("GetAccountApiKeys", ctx, db, accountid)}
 }
 
@@ -1529,7 +1529,7 @@ type MockQuerier_GetAccountHookById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccountHookById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetAccountHookById_Call {
+func (_e *MockQuerier_Expecter) GetAccountHookById(ctx any, db any, id any) *MockQuerier_GetAccountHookById_Call {
 	return &MockQuerier_GetAccountHookById_Call{Call: _e.mock.On("GetAccountHookById", ctx, db, id)}
 }
 
@@ -1589,7 +1589,7 @@ type MockQuerier_GetAccountHooksByAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountID pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccountHooksByAccount(ctx interface{}, db interface{}, accountID interface{}) *MockQuerier_GetAccountHooksByAccount_Call {
+func (_e *MockQuerier_Expecter) GetAccountHooksByAccount(ctx any, db any, accountID any) *MockQuerier_GetAccountHooksByAccount_Call {
 	return &MockQuerier_GetAccountHooksByAccount_Call{Call: _e.mock.On("GetAccountHooksByAccount", ctx, db, accountID)}
 }
 
@@ -1647,7 +1647,7 @@ type MockQuerier_GetAccountIdFromJobId_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccountIdFromJobId(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetAccountIdFromJobId_Call {
+func (_e *MockQuerier_Expecter) GetAccountIdFromJobId(ctx any, db any, id any) *MockQuerier_GetAccountIdFromJobId_Call {
 	return &MockQuerier_GetAccountIdFromJobId_Call{Call: _e.mock.On("GetAccountIdFromJobId", ctx, db, id)}
 }
 
@@ -1706,7 +1706,7 @@ type MockQuerier_GetAccountIds_Call struct {
 // GetAccountIds is a helper method to define mock.On call
 //   - ctx context.Context
 //   - db DBTX
-func (_e *MockQuerier_Expecter) GetAccountIds(ctx interface{}, db interface{}) *MockQuerier_GetAccountIds_Call {
+func (_e *MockQuerier_Expecter) GetAccountIds(ctx any, db any) *MockQuerier_GetAccountIds_Call {
 	return &MockQuerier_GetAccountIds_Call{Call: _e.mock.On("GetAccountIds", ctx, db)}
 }
 
@@ -1764,7 +1764,7 @@ type MockQuerier_GetAccountInvite_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccountInvite(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetAccountInvite_Call {
+func (_e *MockQuerier_Expecter) GetAccountInvite(ctx any, db any, id any) *MockQuerier_GetAccountInvite_Call {
 	return &MockQuerier_GetAccountInvite_Call{Call: _e.mock.On("GetAccountInvite", ctx, db, id)}
 }
 
@@ -1822,7 +1822,7 @@ type MockQuerier_GetAccountInviteByToken_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - token string
-func (_e *MockQuerier_Expecter) GetAccountInviteByToken(ctx interface{}, db interface{}, token interface{}) *MockQuerier_GetAccountInviteByToken_Call {
+func (_e *MockQuerier_Expecter) GetAccountInviteByToken(ctx any, db any, token any) *MockQuerier_GetAccountInviteByToken_Call {
 	return &MockQuerier_GetAccountInviteByToken_Call{Call: _e.mock.On("GetAccountInviteByToken", ctx, db, token)}
 }
 
@@ -1882,7 +1882,7 @@ type MockQuerier_GetAccountOnboardingConfig_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccountOnboardingConfig(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetAccountOnboardingConfig_Call {
+func (_e *MockQuerier_Expecter) GetAccountOnboardingConfig(ctx any, db any, id any) *MockQuerier_GetAccountOnboardingConfig_Call {
 	return &MockQuerier_GetAccountOnboardingConfig_Call{Call: _e.mock.On("GetAccountOnboardingConfig", ctx, db, id)}
 }
 
@@ -1940,7 +1940,7 @@ type MockQuerier_GetAccountUserAssociation_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg GetAccountUserAssociationParams
-func (_e *MockQuerier_Expecter) GetAccountUserAssociation(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetAccountUserAssociation_Call {
+func (_e *MockQuerier_Expecter) GetAccountUserAssociation(ctx any, db any, arg any) *MockQuerier_GetAccountUserAssociation_Call {
 	return &MockQuerier_GetAccountUserAssociation_Call{Call: _e.mock.On("GetAccountUserAssociation", ctx, db, arg)}
 }
 
@@ -2000,7 +2000,7 @@ type MockQuerier_GetAccountUsers_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountid pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccountUsers(ctx interface{}, db interface{}, accountid interface{}) *MockQuerier_GetAccountUsers_Call {
+func (_e *MockQuerier_Expecter) GetAccountUsers(ctx any, db any, accountid any) *MockQuerier_GetAccountUsers_Call {
 	return &MockQuerier_GetAccountUsers_Call{Call: _e.mock.On("GetAccountUsers", ctx, db, accountid)}
 }
 
@@ -2060,7 +2060,7 @@ type MockQuerier_GetAccountsByUser_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetAccountsByUser(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetAccountsByUser_Call {
+func (_e *MockQuerier_Expecter) GetAccountsByUser(ctx any, db any, id any) *MockQuerier_GetAccountsByUser_Call {
 	return &MockQuerier_GetAccountsByUser_Call{Call: _e.mock.On("GetAccountsByUser", ctx, db, id)}
 }
 
@@ -2120,7 +2120,7 @@ type MockQuerier_GetActiveAccountHooksByEvent_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg GetActiveAccountHooksByEventParams
-func (_e *MockQuerier_Expecter) GetActiveAccountHooksByEvent(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetActiveAccountHooksByEvent_Call {
+func (_e *MockQuerier_Expecter) GetActiveAccountHooksByEvent(ctx any, db any, arg any) *MockQuerier_GetActiveAccountHooksByEvent_Call {
 	return &MockQuerier_GetActiveAccountHooksByEvent_Call{Call: _e.mock.On("GetActiveAccountHooksByEvent", ctx, db, arg)}
 }
 
@@ -2180,7 +2180,7 @@ type MockQuerier_GetActiveAccountInvites_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountid pgtype.UUID
-func (_e *MockQuerier_Expecter) GetActiveAccountInvites(ctx interface{}, db interface{}, accountid interface{}) *MockQuerier_GetActiveAccountInvites_Call {
+func (_e *MockQuerier_Expecter) GetActiveAccountInvites(ctx any, db any, accountid any) *MockQuerier_GetActiveAccountInvites_Call {
 	return &MockQuerier_GetActiveAccountInvites_Call{Call: _e.mock.On("GetActiveAccountInvites", ctx, db, accountid)}
 }
 
@@ -2240,7 +2240,7 @@ type MockQuerier_GetActiveJobHooks_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - jobID pgtype.UUID
-func (_e *MockQuerier_Expecter) GetActiveJobHooks(ctx interface{}, db interface{}, jobID interface{}) *MockQuerier_GetActiveJobHooks_Call {
+func (_e *MockQuerier_Expecter) GetActiveJobHooks(ctx any, db any, jobID any) *MockQuerier_GetActiveJobHooks_Call {
 	return &MockQuerier_GetActiveJobHooks_Call{Call: _e.mock.On("GetActiveJobHooks", ctx, db, jobID)}
 }
 
@@ -2300,7 +2300,7 @@ type MockQuerier_GetActivePostSyncJobHooks_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - jobID pgtype.UUID
-func (_e *MockQuerier_Expecter) GetActivePostSyncJobHooks(ctx interface{}, db interface{}, jobID interface{}) *MockQuerier_GetActivePostSyncJobHooks_Call {
+func (_e *MockQuerier_Expecter) GetActivePostSyncJobHooks(ctx any, db any, jobID any) *MockQuerier_GetActivePostSyncJobHooks_Call {
 	return &MockQuerier_GetActivePostSyncJobHooks_Call{Call: _e.mock.On("GetActivePostSyncJobHooks", ctx, db, jobID)}
 }
 
@@ -2360,7 +2360,7 @@ type MockQuerier_GetActivePreSyncJobHooks_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - jobID pgtype.UUID
-func (_e *MockQuerier_Expecter) GetActivePreSyncJobHooks(ctx interface{}, db interface{}, jobID interface{}) *MockQuerier_GetActivePreSyncJobHooks_Call {
+func (_e *MockQuerier_Expecter) GetActivePreSyncJobHooks(ctx any, db any, jobID any) *MockQuerier_GetActivePreSyncJobHooks_Call {
 	return &MockQuerier_GetActivePreSyncJobHooks_Call{Call: _e.mock.On("GetActivePreSyncJobHooks", ctx, db, jobID)}
 }
 
@@ -2417,7 +2417,7 @@ type MockQuerier_GetAnonymousUser_Call struct {
 // GetAnonymousUser is a helper method to define mock.On call
 //   - ctx context.Context
 //   - db DBTX
-func (_e *MockQuerier_Expecter) GetAnonymousUser(ctx interface{}, db interface{}) *MockQuerier_GetAnonymousUser_Call {
+func (_e *MockQuerier_Expecter) GetAnonymousUser(ctx any, db any) *MockQuerier_GetAnonymousUser_Call {
 	return &MockQuerier_GetAnonymousUser_Call{Call: _e.mock.On("GetAnonymousUser", ctx, db)}
 }
 
@@ -2477,7 +2477,7 @@ type MockQuerier_GetBilledAccounts_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountids []pgtype.UUID
-func (_e *MockQuerier_Expecter) GetBilledAccounts(ctx interface{}, db interface{}, accountids interface{}) *MockQuerier_GetBilledAccounts_Call {
+func (_e *MockQuerier_Expecter) GetBilledAccounts(ctx any, db any, accountids any) *MockQuerier_GetBilledAccounts_Call {
 	return &MockQuerier_GetBilledAccounts_Call{Call: _e.mock.On("GetBilledAccounts", ctx, db, accountids)}
 }
 
@@ -2535,7 +2535,7 @@ type MockQuerier_GetConnectionById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetConnectionById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetConnectionById_Call {
+func (_e *MockQuerier_Expecter) GetConnectionById(ctx any, db any, id any) *MockQuerier_GetConnectionById_Call {
 	return &MockQuerier_GetConnectionById_Call{Call: _e.mock.On("GetConnectionById", ctx, db, id)}
 }
 
@@ -2593,7 +2593,7 @@ type MockQuerier_GetConnectionByNameAndAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg GetConnectionByNameAndAccountParams
-func (_e *MockQuerier_Expecter) GetConnectionByNameAndAccount(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetConnectionByNameAndAccount_Call {
+func (_e *MockQuerier_Expecter) GetConnectionByNameAndAccount(ctx any, db any, arg any) *MockQuerier_GetConnectionByNameAndAccount_Call {
 	return &MockQuerier_GetConnectionByNameAndAccount_Call{Call: _e.mock.On("GetConnectionByNameAndAccount", ctx, db, arg)}
 }
 
@@ -2653,7 +2653,7 @@ type MockQuerier_GetConnectionsByAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountid pgtype.UUID
-func (_e *MockQuerier_Expecter) GetConnectionsByAccount(ctx interface{}, db interface{}, accountid interface{}) *MockQuerier_GetConnectionsByAccount_Call {
+func (_e *MockQuerier_Expecter) GetConnectionsByAccount(ctx any, db any, accountid any) *MockQuerier_GetConnectionsByAccount_Call {
 	return &MockQuerier_GetConnectionsByAccount_Call{Call: _e.mock.On("GetConnectionsByAccount", ctx, db, accountid)}
 }
 
@@ -2713,7 +2713,7 @@ type MockQuerier_GetConnectionsByIds_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - dollar_1 []pgtype.UUID
-func (_e *MockQuerier_Expecter) GetConnectionsByIds(ctx interface{}, db interface{}, dollar_1 interface{}) *MockQuerier_GetConnectionsByIds_Call {
+func (_e *MockQuerier_Expecter) GetConnectionsByIds(ctx any, db any, dollar_1 any) *MockQuerier_GetConnectionsByIds_Call {
 	return &MockQuerier_GetConnectionsByIds_Call{Call: _e.mock.On("GetConnectionsByIds", ctx, db, dollar_1)}
 }
 
@@ -2771,7 +2771,7 @@ type MockQuerier_GetJobById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetJobById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetJobById_Call {
+func (_e *MockQuerier_Expecter) GetJobById(ctx any, db any, id any) *MockQuerier_GetJobById_Call {
 	return &MockQuerier_GetJobById_Call{Call: _e.mock.On("GetJobById", ctx, db, id)}
 }
 
@@ -2829,7 +2829,7 @@ type MockQuerier_GetJobByNameAndAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg GetJobByNameAndAccountParams
-func (_e *MockQuerier_Expecter) GetJobByNameAndAccount(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetJobByNameAndAccount_Call {
+func (_e *MockQuerier_Expecter) GetJobByNameAndAccount(ctx any, db any, arg any) *MockQuerier_GetJobByNameAndAccount_Call {
 	return &MockQuerier_GetJobByNameAndAccount_Call{Call: _e.mock.On("GetJobByNameAndAccount", ctx, db, arg)}
 }
 
@@ -2887,7 +2887,7 @@ type MockQuerier_GetJobConnectionDestination_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetJobConnectionDestination(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetJobConnectionDestination_Call {
+func (_e *MockQuerier_Expecter) GetJobConnectionDestination(ctx any, db any, id any) *MockQuerier_GetJobConnectionDestination_Call {
 	return &MockQuerier_GetJobConnectionDestination_Call{Call: _e.mock.On("GetJobConnectionDestination", ctx, db, id)}
 }
 
@@ -2947,7 +2947,7 @@ type MockQuerier_GetJobConnectionDestinations_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetJobConnectionDestinations(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetJobConnectionDestinations_Call {
+func (_e *MockQuerier_Expecter) GetJobConnectionDestinations(ctx any, db any, id any) *MockQuerier_GetJobConnectionDestinations_Call {
 	return &MockQuerier_GetJobConnectionDestinations_Call{Call: _e.mock.On("GetJobConnectionDestinations", ctx, db, id)}
 }
 
@@ -3007,7 +3007,7 @@ type MockQuerier_GetJobConnectionDestinationsByJobIds_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - jobids []pgtype.UUID
-func (_e *MockQuerier_Expecter) GetJobConnectionDestinationsByJobIds(ctx interface{}, db interface{}, jobids interface{}) *MockQuerier_GetJobConnectionDestinationsByJobIds_Call {
+func (_e *MockQuerier_Expecter) GetJobConnectionDestinationsByJobIds(ctx any, db any, jobids any) *MockQuerier_GetJobConnectionDestinationsByJobIds_Call {
 	return &MockQuerier_GetJobConnectionDestinationsByJobIds_Call{Call: _e.mock.On("GetJobConnectionDestinationsByJobIds", ctx, db, jobids)}
 }
 
@@ -3065,7 +3065,7 @@ type MockQuerier_GetJobHookById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetJobHookById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetJobHookById_Call {
+func (_e *MockQuerier_Expecter) GetJobHookById(ctx any, db any, id any) *MockQuerier_GetJobHookById_Call {
 	return &MockQuerier_GetJobHookById_Call{Call: _e.mock.On("GetJobHookById", ctx, db, id)}
 }
 
@@ -3125,7 +3125,7 @@ type MockQuerier_GetJobHooksByJob_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - jobID pgtype.UUID
-func (_e *MockQuerier_Expecter) GetJobHooksByJob(ctx interface{}, db interface{}, jobID interface{}) *MockQuerier_GetJobHooksByJob_Call {
+func (_e *MockQuerier_Expecter) GetJobHooksByJob(ctx any, db any, jobID any) *MockQuerier_GetJobHooksByJob_Call {
 	return &MockQuerier_GetJobHooksByJob_Call{Call: _e.mock.On("GetJobHooksByJob", ctx, db, jobID)}
 }
 
@@ -3185,7 +3185,7 @@ type MockQuerier_GetJobsByAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountid pgtype.UUID
-func (_e *MockQuerier_Expecter) GetJobsByAccount(ctx interface{}, db interface{}, accountid interface{}) *MockQuerier_GetJobsByAccount_Call {
+func (_e *MockQuerier_Expecter) GetJobsByAccount(ctx any, db any, accountid any) *MockQuerier_GetJobsByAccount_Call {
 	return &MockQuerier_GetJobsByAccount_Call{Call: _e.mock.On("GetJobsByAccount", ctx, db, accountid)}
 }
 
@@ -3243,7 +3243,7 @@ type MockQuerier_GetPersonalAccountByUserId_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - userid pgtype.UUID
-func (_e *MockQuerier_Expecter) GetPersonalAccountByUserId(ctx interface{}, db interface{}, userid interface{}) *MockQuerier_GetPersonalAccountByUserId_Call {
+func (_e *MockQuerier_Expecter) GetPersonalAccountByUserId(ctx any, db any, userid any) *MockQuerier_GetPersonalAccountByUserId_Call {
 	return &MockQuerier_GetPersonalAccountByUserId_Call{Call: _e.mock.On("GetPersonalAccountByUserId", ctx, db, userid)}
 }
 
@@ -3301,7 +3301,7 @@ type MockQuerier_GetRunContextByKey_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg GetRunContextByKeyParams
-func (_e *MockQuerier_Expecter) GetRunContextByKey(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetRunContextByKey_Call {
+func (_e *MockQuerier_Expecter) GetRunContextByKey(ctx any, db any, arg any) *MockQuerier_GetRunContextByKey_Call {
 	return &MockQuerier_GetRunContextByKey_Call{Call: _e.mock.On("GetRunContextByKey", ctx, db, arg)}
 }
 
@@ -3361,7 +3361,7 @@ type MockQuerier_GetRunContextsByExternalIdSuffix_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg GetRunContextsByExternalIdSuffixParams
-func (_e *MockQuerier_Expecter) GetRunContextsByExternalIdSuffix(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetRunContextsByExternalIdSuffix_Call {
+func (_e *MockQuerier_Expecter) GetRunContextsByExternalIdSuffix(ctx any, db any, arg any) *MockQuerier_GetRunContextsByExternalIdSuffix_Call {
 	return &MockQuerier_GetRunContextsByExternalIdSuffix_Call{Call: _e.mock.On("GetRunContextsByExternalIdSuffix", ctx, db, arg)}
 }
 
@@ -3419,7 +3419,7 @@ type MockQuerier_GetSlackAccessToken_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountID pgtype.UUID
-func (_e *MockQuerier_Expecter) GetSlackAccessToken(ctx interface{}, db interface{}, accountID interface{}) *MockQuerier_GetSlackAccessToken_Call {
+func (_e *MockQuerier_Expecter) GetSlackAccessToken(ctx any, db any, accountID any) *MockQuerier_GetSlackAccessToken_Call {
 	return &MockQuerier_GetSlackAccessToken_Call{Call: _e.mock.On("GetSlackAccessToken", ctx, db, accountID)}
 }
 
@@ -3479,7 +3479,7 @@ type MockQuerier_GetTeamAccountsByUserId_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - userid pgtype.UUID
-func (_e *MockQuerier_Expecter) GetTeamAccountsByUserId(ctx interface{}, db interface{}, userid interface{}) *MockQuerier_GetTeamAccountsByUserId_Call {
+func (_e *MockQuerier_Expecter) GetTeamAccountsByUserId(ctx any, db any, userid any) *MockQuerier_GetTeamAccountsByUserId_Call {
 	return &MockQuerier_GetTeamAccountsByUserId_Call{Call: _e.mock.On("GetTeamAccountsByUserId", ctx, db, userid)}
 }
 
@@ -3539,7 +3539,7 @@ type MockQuerier_GetTemporalConfigByAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetTemporalConfigByAccount(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetTemporalConfigByAccount_Call {
+func (_e *MockQuerier_Expecter) GetTemporalConfigByAccount(ctx any, db any, id any) *MockQuerier_GetTemporalConfigByAccount_Call {
 	return &MockQuerier_GetTemporalConfigByAccount_Call{Call: _e.mock.On("GetTemporalConfigByAccount", ctx, db, id)}
 }
 
@@ -3599,7 +3599,7 @@ type MockQuerier_GetTemporalConfigByUserAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg GetTemporalConfigByUserAccountParams
-func (_e *MockQuerier_Expecter) GetTemporalConfigByUserAccount(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetTemporalConfigByUserAccount_Call {
+func (_e *MockQuerier_Expecter) GetTemporalConfigByUserAccount(ctx any, db any, arg any) *MockQuerier_GetTemporalConfigByUserAccount_Call {
 	return &MockQuerier_GetTemporalConfigByUserAccount_Call{Call: _e.mock.On("GetTemporalConfigByUserAccount", ctx, db, arg)}
 }
 
@@ -3657,7 +3657,7 @@ type MockQuerier_GetUser_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetUser(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetUser_Call {
+func (_e *MockQuerier_Expecter) GetUser(ctx any, db any, id any) *MockQuerier_GetUser_Call {
 	return &MockQuerier_GetUser_Call{Call: _e.mock.On("GetUser", ctx, db, id)}
 }
 
@@ -3715,7 +3715,7 @@ type MockQuerier_GetUserAssociationByProviderSub_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - providerSub string
-func (_e *MockQuerier_Expecter) GetUserAssociationByProviderSub(ctx interface{}, db interface{}, providerSub interface{}) *MockQuerier_GetUserAssociationByProviderSub_Call {
+func (_e *MockQuerier_Expecter) GetUserAssociationByProviderSub(ctx any, db any, providerSub any) *MockQuerier_GetUserAssociationByProviderSub_Call {
 	return &MockQuerier_GetUserAssociationByProviderSub_Call{Call: _e.mock.On("GetUserAssociationByProviderSub", ctx, db, providerSub)}
 }
 
@@ -3773,7 +3773,7 @@ type MockQuerier_GetUserByProviderSub_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - providerSub string
-func (_e *MockQuerier_Expecter) GetUserByProviderSub(ctx interface{}, db interface{}, providerSub interface{}) *MockQuerier_GetUserByProviderSub_Call {
+func (_e *MockQuerier_Expecter) GetUserByProviderSub(ctx any, db any, providerSub any) *MockQuerier_GetUserByProviderSub_Call {
 	return &MockQuerier_GetUserByProviderSub_Call{Call: _e.mock.On("GetUserByProviderSub", ctx, db, providerSub)}
 }
 
@@ -3831,7 +3831,7 @@ type MockQuerier_GetUserDefinedTransformerById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) GetUserDefinedTransformerById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_GetUserDefinedTransformerById_Call {
+func (_e *MockQuerier_Expecter) GetUserDefinedTransformerById(ctx any, db any, id any) *MockQuerier_GetUserDefinedTransformerById_Call {
 	return &MockQuerier_GetUserDefinedTransformerById_Call{Call: _e.mock.On("GetUserDefinedTransformerById", ctx, db, id)}
 }
 
@@ -3891,7 +3891,7 @@ type MockQuerier_GetUserDefinedTransformersByAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountid pgtype.UUID
-func (_e *MockQuerier_Expecter) GetUserDefinedTransformersByAccount(ctx interface{}, db interface{}, accountid interface{}) *MockQuerier_GetUserDefinedTransformersByAccount_Call {
+func (_e *MockQuerier_Expecter) GetUserDefinedTransformersByAccount(ctx any, db any, accountid any) *MockQuerier_GetUserDefinedTransformersByAccount_Call {
 	return &MockQuerier_GetUserDefinedTransformersByAccount_Call{Call: _e.mock.On("GetUserDefinedTransformersByAccount", ctx, db, accountid)}
 }
 
@@ -3951,7 +3951,7 @@ type MockQuerier_GetUserIdentitiesByTeamAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - accountid pgtype.UUID
-func (_e *MockQuerier_Expecter) GetUserIdentitiesByTeamAccount(ctx interface{}, db interface{}, accountid interface{}) *MockQuerier_GetUserIdentitiesByTeamAccount_Call {
+func (_e *MockQuerier_Expecter) GetUserIdentitiesByTeamAccount(ctx any, db any, accountid any) *MockQuerier_GetUserIdentitiesByTeamAccount_Call {
 	return &MockQuerier_GetUserIdentitiesByTeamAccount_Call{Call: _e.mock.On("GetUserIdentitiesByTeamAccount", ctx, db, accountid)}
 }
 
@@ -4011,7 +4011,7 @@ type MockQuerier_GetUserIdentityAssociationsByUserIds_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - dollar_1 []pgtype.UUID
-func (_e *MockQuerier_Expecter) GetUserIdentityAssociationsByUserIds(ctx interface{}, db interface{}, dollar_1 interface{}) *MockQuerier_GetUserIdentityAssociationsByUserIds_Call {
+func (_e *MockQuerier_Expecter) GetUserIdentityAssociationsByUserIds(ctx any, db any, dollar_1 any) *MockQuerier_GetUserIdentityAssociationsByUserIds_Call {
 	return &MockQuerier_GetUserIdentityAssociationsByUserIds_Call{Call: _e.mock.On("GetUserIdentityAssociationsByUserIds", ctx, db, dollar_1)}
 }
 
@@ -4069,7 +4069,7 @@ type MockQuerier_GetUserIdentityByUserId_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - userID pgtype.UUID
-func (_e *MockQuerier_Expecter) GetUserIdentityByUserId(ctx interface{}, db interface{}, userID interface{}) *MockQuerier_GetUserIdentityByUserId_Call {
+func (_e *MockQuerier_Expecter) GetUserIdentityByUserId(ctx any, db any, userID any) *MockQuerier_GetUserIdentityByUserId_Call {
 	return &MockQuerier_GetUserIdentityByUserId_Call{Call: _e.mock.On("GetUserIdentityByUserId", ctx, db, userID)}
 }
 
@@ -4127,7 +4127,7 @@ type MockQuerier_IsAccountHookNameAvailable_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg IsAccountHookNameAvailableParams
-func (_e *MockQuerier_Expecter) IsAccountHookNameAvailable(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_IsAccountHookNameAvailable_Call {
+func (_e *MockQuerier_Expecter) IsAccountHookNameAvailable(ctx any, db any, arg any) *MockQuerier_IsAccountHookNameAvailable_Call {
 	return &MockQuerier_IsAccountHookNameAvailable_Call{Call: _e.mock.On("IsAccountHookNameAvailable", ctx, db, arg)}
 }
 
@@ -4185,7 +4185,7 @@ type MockQuerier_IsConnectionInAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg IsConnectionInAccountParams
-func (_e *MockQuerier_Expecter) IsConnectionInAccount(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_IsConnectionInAccount_Call {
+func (_e *MockQuerier_Expecter) IsConnectionInAccount(ctx any, db any, arg any) *MockQuerier_IsConnectionInAccount_Call {
 	return &MockQuerier_IsConnectionInAccount_Call{Call: _e.mock.On("IsConnectionInAccount", ctx, db, arg)}
 }
 
@@ -4243,7 +4243,7 @@ type MockQuerier_IsConnectionNameAvailable_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg IsConnectionNameAvailableParams
-func (_e *MockQuerier_Expecter) IsConnectionNameAvailable(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_IsConnectionNameAvailable_Call {
+func (_e *MockQuerier_Expecter) IsConnectionNameAvailable(ctx any, db any, arg any) *MockQuerier_IsConnectionNameAvailable_Call {
 	return &MockQuerier_IsConnectionNameAvailable_Call{Call: _e.mock.On("IsConnectionNameAvailable", ctx, db, arg)}
 }
 
@@ -4301,7 +4301,7 @@ type MockQuerier_IsJobHookNameAvailable_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg IsJobHookNameAvailableParams
-func (_e *MockQuerier_Expecter) IsJobHookNameAvailable(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_IsJobHookNameAvailable_Call {
+func (_e *MockQuerier_Expecter) IsJobHookNameAvailable(ctx any, db any, arg any) *MockQuerier_IsJobHookNameAvailable_Call {
 	return &MockQuerier_IsJobHookNameAvailable_Call{Call: _e.mock.On("IsJobHookNameAvailable", ctx, db, arg)}
 }
 
@@ -4359,7 +4359,7 @@ type MockQuerier_IsJobNameAvailable_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg IsJobNameAvailableParams
-func (_e *MockQuerier_Expecter) IsJobNameAvailable(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_IsJobNameAvailable_Call {
+func (_e *MockQuerier_Expecter) IsJobNameAvailable(ctx any, db any, arg any) *MockQuerier_IsJobNameAvailable_Call {
 	return &MockQuerier_IsJobNameAvailable_Call{Call: _e.mock.On("IsJobNameAvailable", ctx, db, arg)}
 }
 
@@ -4417,7 +4417,7 @@ type MockQuerier_IsTransformerNameAvailable_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg IsTransformerNameAvailableParams
-func (_e *MockQuerier_Expecter) IsTransformerNameAvailable(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_IsTransformerNameAvailable_Call {
+func (_e *MockQuerier_Expecter) IsTransformerNameAvailable(ctx any, db any, arg any) *MockQuerier_IsTransformerNameAvailable_Call {
 	return &MockQuerier_IsTransformerNameAvailable_Call{Call: _e.mock.On("IsTransformerNameAvailable", ctx, db, arg)}
 }
 
@@ -4475,7 +4475,7 @@ type MockQuerier_IsUserInAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg IsUserInAccountParams
-func (_e *MockQuerier_Expecter) IsUserInAccount(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_IsUserInAccount_Call {
+func (_e *MockQuerier_Expecter) IsUserInAccount(ctx any, db any, arg any) *MockQuerier_IsUserInAccount_Call {
 	return &MockQuerier_IsUserInAccount_Call{Call: _e.mock.On("IsUserInAccount", ctx, db, arg)}
 }
 
@@ -4533,7 +4533,7 @@ type MockQuerier_IsUserInAccountApiKey_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg IsUserInAccountApiKeyParams
-func (_e *MockQuerier_Expecter) IsUserInAccountApiKey(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_IsUserInAccountApiKey_Call {
+func (_e *MockQuerier_Expecter) IsUserInAccountApiKey(ctx any, db any, arg any) *MockQuerier_IsUserInAccountApiKey_Call {
 	return &MockQuerier_IsUserInAccountApiKey_Call{Call: _e.mock.On("IsUserInAccountApiKey", ctx, db, arg)}
 }
 
@@ -4581,7 +4581,7 @@ type MockQuerier_RemoveAccountApiKey_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) RemoveAccountApiKey(ctx interface{}, db interface{}, id interface{}) *MockQuerier_RemoveAccountApiKey_Call {
+func (_e *MockQuerier_Expecter) RemoveAccountApiKey(ctx any, db any, id any) *MockQuerier_RemoveAccountApiKey_Call {
 	return &MockQuerier_RemoveAccountApiKey_Call{Call: _e.mock.On("RemoveAccountApiKey", ctx, db, id)}
 }
 
@@ -4629,7 +4629,7 @@ type MockQuerier_RemoveAccountHookById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) RemoveAccountHookById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_RemoveAccountHookById_Call {
+func (_e *MockQuerier_Expecter) RemoveAccountHookById(ctx any, db any, id any) *MockQuerier_RemoveAccountHookById_Call {
 	return &MockQuerier_RemoveAccountHookById_Call{Call: _e.mock.On("RemoveAccountHookById", ctx, db, id)}
 }
 
@@ -4677,7 +4677,7 @@ type MockQuerier_RemoveAccountInvite_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) RemoveAccountInvite(ctx interface{}, db interface{}, id interface{}) *MockQuerier_RemoveAccountInvite_Call {
+func (_e *MockQuerier_Expecter) RemoveAccountInvite(ctx any, db any, id any) *MockQuerier_RemoveAccountInvite_Call {
 	return &MockQuerier_RemoveAccountInvite_Call{Call: _e.mock.On("RemoveAccountInvite", ctx, db, id)}
 }
 
@@ -4725,7 +4725,7 @@ type MockQuerier_RemoveAccountUser_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg RemoveAccountUserParams
-func (_e *MockQuerier_Expecter) RemoveAccountUser(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_RemoveAccountUser_Call {
+func (_e *MockQuerier_Expecter) RemoveAccountUser(ctx any, db any, arg any) *MockQuerier_RemoveAccountUser_Call {
 	return &MockQuerier_RemoveAccountUser_Call{Call: _e.mock.On("RemoveAccountUser", ctx, db, arg)}
 }
 
@@ -4773,7 +4773,7 @@ type MockQuerier_RemoveConnectionById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) RemoveConnectionById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_RemoveConnectionById_Call {
+func (_e *MockQuerier_Expecter) RemoveConnectionById(ctx any, db any, id any) *MockQuerier_RemoveConnectionById_Call {
 	return &MockQuerier_RemoveConnectionById_Call{Call: _e.mock.On("RemoveConnectionById", ctx, db, id)}
 }
 
@@ -4821,7 +4821,7 @@ type MockQuerier_RemoveConnectionByNameAndAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg RemoveConnectionByNameAndAccountParams
-func (_e *MockQuerier_Expecter) RemoveConnectionByNameAndAccount(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_RemoveConnectionByNameAndAccount_Call {
+func (_e *MockQuerier_Expecter) RemoveConnectionByNameAndAccount(ctx any, db any, arg any) *MockQuerier_RemoveConnectionByNameAndAccount_Call {
 	return &MockQuerier_RemoveConnectionByNameAndAccount_Call{Call: _e.mock.On("RemoveConnectionByNameAndAccount", ctx, db, arg)}
 }
 
@@ -4869,7 +4869,7 @@ type MockQuerier_RemoveJobById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) RemoveJobById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_RemoveJobById_Call {
+func (_e *MockQuerier_Expecter) RemoveJobById(ctx any, db any, id any) *MockQuerier_RemoveJobById_Call {
 	return &MockQuerier_RemoveJobById_Call{Call: _e.mock.On("RemoveJobById", ctx, db, id)}
 }
 
@@ -4917,7 +4917,7 @@ type MockQuerier_RemoveJobConnectionDestination_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) RemoveJobConnectionDestination(ctx interface{}, db interface{}, id interface{}) *MockQuerier_RemoveJobConnectionDestination_Call {
+func (_e *MockQuerier_Expecter) RemoveJobConnectionDestination(ctx any, db any, id any) *MockQuerier_RemoveJobConnectionDestination_Call {
 	return &MockQuerier_RemoveJobConnectionDestination_Call{Call: _e.mock.On("RemoveJobConnectionDestination", ctx, db, id)}
 }
 
@@ -4965,7 +4965,7 @@ type MockQuerier_RemoveJobConnectionDestinations_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - jobids []pgtype.UUID
-func (_e *MockQuerier_Expecter) RemoveJobConnectionDestinations(ctx interface{}, db interface{}, jobids interface{}) *MockQuerier_RemoveJobConnectionDestinations_Call {
+func (_e *MockQuerier_Expecter) RemoveJobConnectionDestinations(ctx any, db any, jobids any) *MockQuerier_RemoveJobConnectionDestinations_Call {
 	return &MockQuerier_RemoveJobConnectionDestinations_Call{Call: _e.mock.On("RemoveJobConnectionDestinations", ctx, db, jobids)}
 }
 
@@ -5013,7 +5013,7 @@ type MockQuerier_RemoveJobHookById_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) RemoveJobHookById(ctx interface{}, db interface{}, id interface{}) *MockQuerier_RemoveJobHookById_Call {
+func (_e *MockQuerier_Expecter) RemoveJobHookById(ctx any, db any, id any) *MockQuerier_RemoveJobHookById_Call {
 	return &MockQuerier_RemoveJobHookById_Call{Call: _e.mock.On("RemoveJobHookById", ctx, db, id)}
 }
 
@@ -5071,7 +5071,7 @@ type MockQuerier_SetAccountCreatedAt_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg SetAccountCreatedAtParams
-func (_e *MockQuerier_Expecter) SetAccountCreatedAt(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_SetAccountCreatedAt_Call {
+func (_e *MockQuerier_Expecter) SetAccountCreatedAt(ctx any, db any, arg any) *MockQuerier_SetAccountCreatedAt_Call {
 	return &MockQuerier_SetAccountCreatedAt_Call{Call: _e.mock.On("SetAccountCreatedAt", ctx, db, arg)}
 }
 
@@ -5129,7 +5129,7 @@ type MockQuerier_SetAccountHookEnabled_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg SetAccountHookEnabledParams
-func (_e *MockQuerier_Expecter) SetAccountHookEnabled(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_SetAccountHookEnabled_Call {
+func (_e *MockQuerier_Expecter) SetAccountHookEnabled(ctx any, db any, arg any) *MockQuerier_SetAccountHookEnabled_Call {
 	return &MockQuerier_SetAccountHookEnabled_Call{Call: _e.mock.On("SetAccountHookEnabled", ctx, db, arg)}
 }
 
@@ -5186,7 +5186,7 @@ type MockQuerier_SetAnonymousUser_Call struct {
 // SetAnonymousUser is a helper method to define mock.On call
 //   - ctx context.Context
 //   - db DBTX
-func (_e *MockQuerier_Expecter) SetAnonymousUser(ctx interface{}, db interface{}) *MockQuerier_SetAnonymousUser_Call {
+func (_e *MockQuerier_Expecter) SetAnonymousUser(ctx any, db any) *MockQuerier_SetAnonymousUser_Call {
 	return &MockQuerier_SetAnonymousUser_Call{Call: _e.mock.On("SetAnonymousUser", ctx, db)}
 }
 
@@ -5244,7 +5244,7 @@ type MockQuerier_SetJobHookEnabled_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg SetJobHookEnabledParams
-func (_e *MockQuerier_Expecter) SetJobHookEnabled(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_SetJobHookEnabled_Call {
+func (_e *MockQuerier_Expecter) SetJobHookEnabled(ctx any, db any, arg any) *MockQuerier_SetJobHookEnabled_Call {
 	return &MockQuerier_SetJobHookEnabled_Call{Call: _e.mock.On("SetJobHookEnabled", ctx, db, arg)}
 }
 
@@ -5302,7 +5302,7 @@ type MockQuerier_SetJobSyncOptions_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg SetJobSyncOptionsParams
-func (_e *MockQuerier_Expecter) SetJobSyncOptions(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_SetJobSyncOptions_Call {
+func (_e *MockQuerier_Expecter) SetJobSyncOptions(ctx any, db any, arg any) *MockQuerier_SetJobSyncOptions_Call {
 	return &MockQuerier_SetJobSyncOptions_Call{Call: _e.mock.On("SetJobSyncOptions", ctx, db, arg)}
 }
 
@@ -5360,7 +5360,7 @@ type MockQuerier_SetJobWorkflowOptions_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg SetJobWorkflowOptionsParams
-func (_e *MockQuerier_Expecter) SetJobWorkflowOptions(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_SetJobWorkflowOptions_Call {
+func (_e *MockQuerier_Expecter) SetJobWorkflowOptions(ctx any, db any, arg any) *MockQuerier_SetJobWorkflowOptions_Call {
 	return &MockQuerier_SetJobWorkflowOptions_Call{Call: _e.mock.On("SetJobWorkflowOptions", ctx, db, arg)}
 }
 
@@ -5418,7 +5418,7 @@ type MockQuerier_SetNewAccountStripeCustomerId_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg SetNewAccountStripeCustomerIdParams
-func (_e *MockQuerier_Expecter) SetNewAccountStripeCustomerId(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_SetNewAccountStripeCustomerId_Call {
+func (_e *MockQuerier_Expecter) SetNewAccountStripeCustomerId(ctx any, db any, arg any) *MockQuerier_SetNewAccountStripeCustomerId_Call {
 	return &MockQuerier_SetNewAccountStripeCustomerId_Call{Call: _e.mock.On("SetNewAccountStripeCustomerId", ctx, db, arg)}
 }
 
@@ -5466,7 +5466,7 @@ type MockQuerier_SetRunContext_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg SetRunContextParams
-func (_e *MockQuerier_Expecter) SetRunContext(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_SetRunContext_Call {
+func (_e *MockQuerier_Expecter) SetRunContext(ctx any, db any, arg any) *MockQuerier_SetRunContext_Call {
 	return &MockQuerier_SetRunContext_Call{Call: _e.mock.On("SetRunContext", ctx, db, arg)}
 }
 
@@ -5524,7 +5524,7 @@ type MockQuerier_UpdateAccountApiKeyValue_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateAccountApiKeyValueParams
-func (_e *MockQuerier_Expecter) UpdateAccountApiKeyValue(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateAccountApiKeyValue_Call {
+func (_e *MockQuerier_Expecter) UpdateAccountApiKeyValue(ctx any, db any, arg any) *MockQuerier_UpdateAccountApiKeyValue_Call {
 	return &MockQuerier_UpdateAccountApiKeyValue_Call{Call: _e.mock.On("UpdateAccountApiKeyValue", ctx, db, arg)}
 }
 
@@ -5582,7 +5582,7 @@ type MockQuerier_UpdateAccountHook_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateAccountHookParams
-func (_e *MockQuerier_Expecter) UpdateAccountHook(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateAccountHook_Call {
+func (_e *MockQuerier_Expecter) UpdateAccountHook(ctx any, db any, arg any) *MockQuerier_UpdateAccountHook_Call {
 	return &MockQuerier_UpdateAccountHook_Call{Call: _e.mock.On("UpdateAccountHook", ctx, db, arg)}
 }
 
@@ -5640,7 +5640,7 @@ type MockQuerier_UpdateAccountInviteToAccepted_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - id pgtype.UUID
-func (_e *MockQuerier_Expecter) UpdateAccountInviteToAccepted(ctx interface{}, db interface{}, id interface{}) *MockQuerier_UpdateAccountInviteToAccepted_Call {
+func (_e *MockQuerier_Expecter) UpdateAccountInviteToAccepted(ctx any, db any, id any) *MockQuerier_UpdateAccountInviteToAccepted_Call {
 	return &MockQuerier_UpdateAccountInviteToAccepted_Call{Call: _e.mock.On("UpdateAccountInviteToAccepted", ctx, db, id)}
 }
 
@@ -5698,7 +5698,7 @@ type MockQuerier_UpdateAccountOnboardingConfig_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateAccountOnboardingConfigParams
-func (_e *MockQuerier_Expecter) UpdateAccountOnboardingConfig(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateAccountOnboardingConfig_Call {
+func (_e *MockQuerier_Expecter) UpdateAccountOnboardingConfig(ctx any, db any, arg any) *MockQuerier_UpdateAccountOnboardingConfig_Call {
 	return &MockQuerier_UpdateAccountOnboardingConfig_Call{Call: _e.mock.On("UpdateAccountOnboardingConfig", ctx, db, arg)}
 }
 
@@ -5756,7 +5756,7 @@ type MockQuerier_UpdateActiveAccountInvitesToExpired_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateActiveAccountInvitesToExpiredParams
-func (_e *MockQuerier_Expecter) UpdateActiveAccountInvitesToExpired(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateActiveAccountInvitesToExpired_Call {
+func (_e *MockQuerier_Expecter) UpdateActiveAccountInvitesToExpired(ctx any, db any, arg any) *MockQuerier_UpdateActiveAccountInvitesToExpired_Call {
 	return &MockQuerier_UpdateActiveAccountInvitesToExpired_Call{Call: _e.mock.On("UpdateActiveAccountInvitesToExpired", ctx, db, arg)}
 }
 
@@ -5814,7 +5814,7 @@ type MockQuerier_UpdateConnection_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateConnectionParams
-func (_e *MockQuerier_Expecter) UpdateConnection(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateConnection_Call {
+func (_e *MockQuerier_Expecter) UpdateConnection(ctx any, db any, arg any) *MockQuerier_UpdateConnection_Call {
 	return &MockQuerier_UpdateConnection_Call{Call: _e.mock.On("UpdateConnection", ctx, db, arg)}
 }
 
@@ -5872,7 +5872,7 @@ type MockQuerier_UpdateJobConnectionDestination_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateJobConnectionDestinationParams
-func (_e *MockQuerier_Expecter) UpdateJobConnectionDestination(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateJobConnectionDestination_Call {
+func (_e *MockQuerier_Expecter) UpdateJobConnectionDestination(ctx any, db any, arg any) *MockQuerier_UpdateJobConnectionDestination_Call {
 	return &MockQuerier_UpdateJobConnectionDestination_Call{Call: _e.mock.On("UpdateJobConnectionDestination", ctx, db, arg)}
 }
 
@@ -5930,7 +5930,7 @@ type MockQuerier_UpdateJobHook_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateJobHookParams
-func (_e *MockQuerier_Expecter) UpdateJobHook(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateJobHook_Call {
+func (_e *MockQuerier_Expecter) UpdateJobHook(ctx any, db any, arg any) *MockQuerier_UpdateJobHook_Call {
 	return &MockQuerier_UpdateJobHook_Call{Call: _e.mock.On("UpdateJobHook", ctx, db, arg)}
 }
 
@@ -5988,7 +5988,7 @@ type MockQuerier_UpdateJobMappings_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateJobMappingsParams
-func (_e *MockQuerier_Expecter) UpdateJobMappings(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateJobMappings_Call {
+func (_e *MockQuerier_Expecter) UpdateJobMappings(ctx any, db any, arg any) *MockQuerier_UpdateJobMappings_Call {
 	return &MockQuerier_UpdateJobMappings_Call{Call: _e.mock.On("UpdateJobMappings", ctx, db, arg)}
 }
 
@@ -6046,7 +6046,7 @@ type MockQuerier_UpdateJobSchedule_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateJobScheduleParams
-func (_e *MockQuerier_Expecter) UpdateJobSchedule(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateJobSchedule_Call {
+func (_e *MockQuerier_Expecter) UpdateJobSchedule(ctx any, db any, arg any) *MockQuerier_UpdateJobSchedule_Call {
 	return &MockQuerier_UpdateJobSchedule_Call{Call: _e.mock.On("UpdateJobSchedule", ctx, db, arg)}
 }
 
@@ -6104,7 +6104,7 @@ type MockQuerier_UpdateJobSource_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateJobSourceParams
-func (_e *MockQuerier_Expecter) UpdateJobSource(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateJobSource_Call {
+func (_e *MockQuerier_Expecter) UpdateJobSource(ctx any, db any, arg any) *MockQuerier_UpdateJobSource_Call {
 	return &MockQuerier_UpdateJobSource_Call{Call: _e.mock.On("UpdateJobSource", ctx, db, arg)}
 }
 
@@ -6162,7 +6162,7 @@ type MockQuerier_UpdateJobTypeConfig_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateJobTypeConfigParams
-func (_e *MockQuerier_Expecter) UpdateJobTypeConfig(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateJobTypeConfig_Call {
+func (_e *MockQuerier_Expecter) UpdateJobTypeConfig(ctx any, db any, arg any) *MockQuerier_UpdateJobTypeConfig_Call {
 	return &MockQuerier_UpdateJobTypeConfig_Call{Call: _e.mock.On("UpdateJobTypeConfig", ctx, db, arg)}
 }
 
@@ -6220,7 +6220,7 @@ type MockQuerier_UpdateJobVirtualForeignKeys_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateJobVirtualForeignKeysParams
-func (_e *MockQuerier_Expecter) UpdateJobVirtualForeignKeys(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateJobVirtualForeignKeys_Call {
+func (_e *MockQuerier_Expecter) UpdateJobVirtualForeignKeys(ctx any, db any, arg any) *MockQuerier_UpdateJobVirtualForeignKeys_Call {
 	return &MockQuerier_UpdateJobVirtualForeignKeys_Call{Call: _e.mock.On("UpdateJobVirtualForeignKeys", ctx, db, arg)}
 }
 
@@ -6278,7 +6278,7 @@ type MockQuerier_UpdateTemporalConfigByAccount_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateTemporalConfigByAccountParams
-func (_e *MockQuerier_Expecter) UpdateTemporalConfigByAccount(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateTemporalConfigByAccount_Call {
+func (_e *MockQuerier_Expecter) UpdateTemporalConfigByAccount(ctx any, db any, arg any) *MockQuerier_UpdateTemporalConfigByAccount_Call {
 	return &MockQuerier_UpdateTemporalConfigByAccount_Call{Call: _e.mock.On("UpdateTemporalConfigByAccount", ctx, db, arg)}
 }
 
@@ -6336,7 +6336,7 @@ type MockQuerier_UpdateUserDefinedTransformer_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg UpdateUserDefinedTransformerParams
-func (_e *MockQuerier_Expecter) UpdateUserDefinedTransformer(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_UpdateUserDefinedTransformer_Call {
+func (_e *MockQuerier_Expecter) UpdateUserDefinedTransformer(ctx any, db any, arg any) *MockQuerier_UpdateUserDefinedTransformer_Call {
 	return &MockQuerier_UpdateUserDefinedTransformer_Call{Call: _e.mock.On("UpdateUserDefinedTransformer", ctx, db, arg)}
 }
 

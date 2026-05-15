@@ -5,11 +5,11 @@ import (
 	"fmt"
 
 	"connectrpc.com/connect"
+	"github.com/spf13/cobra"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	"github.com/vydon-io/vydon/cli/internal/auth"
 	cli_logger "github.com/vydon-io/vydon/cli/internal/logger"
-	"github.com/spf13/cobra"
 )
 
 func NewCmd() *cobra.Command {

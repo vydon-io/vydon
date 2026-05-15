@@ -23,7 +23,7 @@ type Service struct {
 
 type Config struct {
 	IsAuthEnabled           bool
-	IsVydonCloud          bool
+	IsVydonCloud            bool
 	IsPresidioEnabled       bool
 	PresidioDefaultLanguage *string
 }

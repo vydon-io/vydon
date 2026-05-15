@@ -13,11 +13,11 @@ import (
 	_ "github.com/doug-martin/goqu/v9/dialect/postgres"
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/lib/pq"
+	"github.com/redpanda-data/benthos/v4/public/service"
 	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	querybuilder "github.com/vydon-io/vydon/worker/pkg/query-builder"
-	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
 const (

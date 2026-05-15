@@ -60,7 +60,7 @@ type MocktokenProvider_GetToken_Call struct {
 
 // GetToken is a helper method to define mock.On call
 //   - _a0 context.Context
-func (_e *MocktokenProvider_Expecter) GetToken(_a0 interface{}) *MocktokenProvider_GetToken_Call {
+func (_e *MocktokenProvider_Expecter) GetToken(_a0 any) *MocktokenProvider_GetToken_Call {
 	return &MocktokenProvider_GetToken_Call{Call: _e.mock.On("GetToken", _a0)}
 }
 

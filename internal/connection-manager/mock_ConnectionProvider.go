@@ -3,8 +3,8 @@
 package connectionmanager
 
 import (
-	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	mock "github.com/stretchr/testify/mock"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 
 	slog "log/slog"
 )
@@ -47,7 +47,7 @@ type MockConnectionProvider_CloseClientConnection_Call[T any] struct {
 
 // CloseClientConnection is a helper method to define mock.On call
 //   - client T
-func (_e *MockConnectionProvider_Expecter[T]) CloseClientConnection(client interface{}) *MockConnectionProvider_CloseClientConnection_Call[T] {
+func (_e *MockConnectionProvider_Expecter[T]) CloseClientConnection(client any) *MockConnectionProvider_CloseClientConnection_Call[T] {
 	return &MockConnectionProvider_CloseClientConnection_Call[T]{Call: _e.mock.On("CloseClientConnection", client)}
 }
 
@@ -106,7 +106,7 @@ type MockConnectionProvider_GetConnectionClient_Call[T any] struct {
 // GetConnectionClient is a helper method to define mock.On call
 //   - connectionConfig *mgmtv1alpha1.ConnectionConfig
 //   - logger *slog.Logger
-func (_e *MockConnectionProvider_Expecter[T]) GetConnectionClient(connectionConfig interface{}, logger interface{}) *MockConnectionProvider_GetConnectionClient_Call[T] {
+func (_e *MockConnectionProvider_Expecter[T]) GetConnectionClient(connectionConfig any, logger any) *MockConnectionProvider_GetConnectionClient_Call[T] {
 	return &MockConnectionProvider_GetConnectionClient_Call[T]{Call: _e.mock.On("GetConnectionClient", connectionConfig, logger)}
 }
 

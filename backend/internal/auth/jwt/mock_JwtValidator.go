@@ -59,7 +59,7 @@ type MockJwtValidator_ValidateToken_Call struct {
 // ValidateToken is a helper method to define mock.On call
 //   - ctx context.Context
 //   - tokenString string
-func (_e *MockJwtValidator_Expecter) ValidateToken(ctx interface{}, tokenString interface{}) *MockJwtValidator_ValidateToken_Call {
+func (_e *MockJwtValidator_Expecter) ValidateToken(ctx any, tokenString any) *MockJwtValidator_ValidateToken_Call {
 	return &MockJwtValidator_ValidateToken_Call{Call: _e.mock.On("ValidateToken", ctx, tokenString)}
 }
 

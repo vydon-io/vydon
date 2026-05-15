@@ -9,9 +9,9 @@ import (
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	"github.com/vydon-io/vydon/backend/internal/userdata"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
 	"github.com/vydon-io/vydon/internal/rbac"
-	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 var (

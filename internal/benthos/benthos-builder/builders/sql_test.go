@@ -3,9 +3,9 @@ package benthosbuilder_builders
 import (
 	"testing"
 
+	"github.com/stretchr/testify/require"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
-	"github.com/stretchr/testify/require"
 )
 
 func TestFilterForeignKeysMap(t *testing.T) {
@@ -41,9 +41,15 @@ func TestFilterForeignKeysMap(t *testing.T) {
 			name: "Filtered composite foreign keys",
 			colTransformerMap: map[string]map[string]*mgmtv1alpha1.JobMappingTransformer{
 				"table1": {
-					"col1": &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{}}},
-					"col2": &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{}}},
-					"col3": &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{}}},
+					"col1": &mgmtv1alpha1.JobMappingTransformer{
+						Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{}},
+					},
+					"col2": &mgmtv1alpha1.JobMappingTransformer{
+						Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{}},
+					},
+					"col3": &mgmtv1alpha1.JobMappingTransformer{
+						Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{}},
+					},
 				},
 			},
 			foreignKeysMap: map[string][]*sqlmanager_shared.ForeignConstraint{
@@ -51,7 +57,10 @@ func TestFilterForeignKeysMap(t *testing.T) {
 					{
 						Columns:     []string{"col1", "col2", "col3"},
 						NotNullable: []bool{false, true, true},
-						ForeignKey:  &sqlmanager_shared.ForeignKey{Table: "ref_table", Columns: []string{"ref_col1", "ref_col2", "ref_col3"}},
+						ForeignKey: &sqlmanager_shared.ForeignKey{
+							Table:   "ref_table",
+							Columns: []string{"ref_col1", "ref_col2", "ref_col3"},
+						},
 					},
 				},
 			},
@@ -69,10 +78,14 @@ func TestFilterForeignKeysMap(t *testing.T) {
 			name: "Filtered foreign keys",
 			colTransformerMap: map[string]map[string]*mgmtv1alpha1.JobMappingTransformer{
 				"table1": {
-					"col1": &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_PassthroughConfig{}}},
+					"col1": &mgmtv1alpha1.JobMappingTransformer{
+						Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_PassthroughConfig{}},
+					},
 				},
 				"table2": {
-					"col2": &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{}}},
+					"col2": &mgmtv1alpha1.JobMappingTransformer{
+						Config: &mgmtv1alpha1.TransformerConfig{Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{}},
+					},
 				},
 			},
 			foreignKeysMap: map[string][]*sqlmanager_shared.ForeignConstraint{

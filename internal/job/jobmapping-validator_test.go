@@ -3,10 +3,10 @@ package job
 import (
 	"testing"
 
-	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
-	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 )
 
 func TestValidateJobMappingsExistInSource(t *testing.T) {
@@ -422,14 +422,23 @@ func TestValidateCircularDependencies(t *testing.T) {
 		}
 
 		jmv := NewJobMappingsValidator(mappings)
-		err := jmv.ValidateCircularDependencies(foreignKeys, primaryKeys, []*mgmtv1alpha1.VirtualForeignConstraint{}, map[string]map[string]*sqlmanager_shared.DatabaseSchemaRow{})
+		err := jmv.ValidateCircularDependencies(
+			foreignKeys,
+			primaryKeys,
+			[]*mgmtv1alpha1.VirtualForeignConstraint{},
+			map[string]map[string]*sqlmanager_shared.DatabaseSchemaRow{},
+		)
 		require.NoError(t, err)
 
 		errs := jmv.GetDatabaseErrors()
 		require.Len(t, errs, 1)
 		require.Len(t, errs, 1)
 		assert.Equal(t, mgmtv1alpha1.DatabaseError_DATABASE_ERROR_CODE_UNSUPPORTED_CIRCULAR_DEPENDENCY_AT_LEAST_ONE_NULLABLE, errs[0].Code)
-		assert.Contains(t, errs[0].Message, "unsupported circular dependency detected. at least one foreign key in circular dependency must be nullable")
+		assert.Contains(
+			t,
+			errs[0].Message,
+			"unsupported circular dependency detected. at least one foreign key in circular dependency must be nullable",
+		)
 	})
 
 	t.Run("should not return error when cycle has nullable foreign key", func(t *testing.T) {
@@ -467,7 +476,12 @@ func TestValidateCircularDependencies(t *testing.T) {
 		}
 
 		jmv := NewJobMappingsValidator(mappings)
-		err := jmv.ValidateCircularDependencies(foreignKeys, primaryKeys, []*mgmtv1alpha1.VirtualForeignConstraint{}, map[string]map[string]*sqlmanager_shared.DatabaseSchemaRow{})
+		err := jmv.ValidateCircularDependencies(
+			foreignKeys,
+			primaryKeys,
+			[]*mgmtv1alpha1.VirtualForeignConstraint{},
+			map[string]map[string]*sqlmanager_shared.DatabaseSchemaRow{},
+		)
 		require.NoError(t, err)
 
 		errs := jmv.GetDatabaseErrors()
@@ -512,7 +526,12 @@ func TestValidateCircularDependencies(t *testing.T) {
 		}
 
 		jmv := NewJobMappingsValidator(mappings)
-		err := jmv.ValidateCircularDependencies(map[string][]*sqlmanager_shared.ForeignConstraint{}, primaryKeys, virtualForeignKeys, tableColumnMap)
+		err := jmv.ValidateCircularDependencies(
+			map[string][]*sqlmanager_shared.ForeignConstraint{},
+			primaryKeys,
+			virtualForeignKeys,
+			tableColumnMap,
+		)
 		require.NoError(t, err)
 	})
 
@@ -591,7 +610,11 @@ func TestValidateCircularDependencies(t *testing.T) {
 		require.NotEmpty(t, errs)
 		require.Len(t, errs, 1)
 		assert.Equal(t, mgmtv1alpha1.DatabaseError_DATABASE_ERROR_CODE_UNSUPPORTED_CIRCULAR_DEPENDENCY_AT_LEAST_ONE_NULLABLE, errs[0].Code)
-		assert.Contains(t, errs[0].Message, "unsupported circular dependency detected. at least one foreign key in circular dependency must be nullable")
+		assert.Contains(
+			t,
+			errs[0].Message,
+			"unsupported circular dependency detected. at least one foreign key in circular dependency must be nullable",
+		)
 	})
 
 	t.Run("should skip tables not in mappings", func(t *testing.T) {
@@ -617,7 +640,12 @@ func TestValidateCircularDependencies(t *testing.T) {
 		}
 
 		jmv := NewJobMappingsValidator(mappings)
-		err := jmv.ValidateCircularDependencies(foreignKeys, primaryKeys, []*mgmtv1alpha1.VirtualForeignConstraint{}, map[string]map[string]*sqlmanager_shared.DatabaseSchemaRow{})
+		err := jmv.ValidateCircularDependencies(
+			foreignKeys,
+			primaryKeys,
+			[]*mgmtv1alpha1.VirtualForeignConstraint{},
+			map[string]map[string]*sqlmanager_shared.DatabaseSchemaRow{},
+		)
 		require.NoError(t, err)
 
 		errs := jmv.GetDatabaseErrors()
@@ -662,7 +690,12 @@ func TestValidateCircularDependencies(t *testing.T) {
 		}
 
 		jmv := NewJobMappingsValidator(mappings)
-		err := jmv.ValidateCircularDependencies(map[string][]*sqlmanager_shared.ForeignConstraint{}, primaryKeys, virtualForeignKeys, tableColumnMap)
+		err := jmv.ValidateCircularDependencies(
+			map[string][]*sqlmanager_shared.ForeignConstraint{},
+			primaryKeys,
+			virtualForeignKeys,
+			tableColumnMap,
+		)
 		require.NoError(t, err)
 
 		errs := jmv.GetColumnErrors()
@@ -891,7 +924,11 @@ func TestValidateVirtualForeignKeys(t *testing.T) {
 		errs := jmv.GetColumnErrors()
 		require.NotEmpty(t, errs)
 		assert.Equal(t, mgmtv1alpha1.ColumnError_COLUMN_ERROR_CODE_VFK_SOURCE_COLUMN_NOT_UNIQUE, errs["schema1.table1"]["col1"][0].Code)
-		assert.Contains(t, errs["schema1.table1"]["col1"][0].Message, "Virtual foreign key source must be either a primary key or have a unique constraint")
+		assert.Contains(
+			t,
+			errs["schema1.table1"]["col1"][0].Message,
+			"Virtual foreign key source must be either a primary key or have a unique constraint",
+		)
 	})
 
 	t.Run("should return error when self-referencing virtual foreign key is not nullable", func(t *testing.T) {
@@ -931,7 +968,11 @@ func TestValidateVirtualForeignKeys(t *testing.T) {
 		errs := jmv.GetColumnErrors()
 		require.NotEmpty(t, errs)
 		require.Len(t, errs["schema1.table1"]["col1"], 1)
-		assert.Equal(t, mgmtv1alpha1.ColumnError_COLUMN_ERROR_CODE_UNSUPPORTED_CIRCULAR_DEPENDENCY_AT_LEAST_ONE_NULLABLE, errs["schema1.table1"]["col1"][0].Code)
+		assert.Equal(
+			t,
+			mgmtv1alpha1.ColumnError_COLUMN_ERROR_CODE_UNSUPPORTED_CIRCULAR_DEPENDENCY_AT_LEAST_ONE_NULLABLE,
+			errs["schema1.table1"]["col1"][0].Code,
+		)
 		assert.Contains(t, errs["schema1.table1"]["col1"][0].Message, "Self referencing virtual foreign key target column must be nullable")
 	})
 
@@ -1130,7 +1171,11 @@ func TestValidateVirtualForeignKeys(t *testing.T) {
 		errs := jmv.GetColumnErrors()
 		require.NotEmpty(t, errs)
 		require.Len(t, errs["schema1.table1"]["col1"], 1)
-		assert.Equal(t, mgmtv1alpha1.ColumnError_COLUMN_ERROR_CODE_UNSUPPORTED_CIRCULAR_DEPENDENCY_AT_LEAST_ONE_NULLABLE, errs["schema1.table1"]["col1"][0].Code)
+		assert.Equal(
+			t,
+			mgmtv1alpha1.ColumnError_COLUMN_ERROR_CODE_UNSUPPORTED_CIRCULAR_DEPENDENCY_AT_LEAST_ONE_NULLABLE,
+			errs["schema1.table1"]["col1"][0].Code,
+		)
 		assert.Contains(t, errs["schema1.table1"]["col1"][0].Message, "Self referencing virtual foreign key target column must be nullable")
 	})
 
@@ -1528,6 +1573,10 @@ func Test_ValidateVirtualForeignKeys(t *testing.T) {
 
 		require.NoError(t, err)
 		require.NotEmpty(t, resp.DatabaseErrors)
-		assert.Equal(t, mgmtv1alpha1.DatabaseError_DATABASE_ERROR_CODE_UNSUPPORTED_CIRCULAR_DEPENDENCY_AT_LEAST_ONE_NULLABLE, resp.DatabaseErrors[0].Code)
+		assert.Equal(
+			t,
+			mgmtv1alpha1.DatabaseError_DATABASE_ERROR_CODE_UNSUPPORTED_CIRCULAR_DEPENDENCY_AT_LEAST_ONE_NULLABLE,
+			resp.DatabaseErrors[0].Code,
+		)
 	})
 }

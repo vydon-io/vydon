@@ -3,9 +3,9 @@ package vydon_benthos_defaulttransform
 import (
 	"testing"
 
-	transformer_executor "github.com/vydon-io/vydon/worker/pkg/benthos/transformer_executor"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	transformer_executor "github.com/vydon-io/vydon/worker/pkg/benthos/transformer_executor"
 )
 
 func Test_transformRoot(t *testing.T) {

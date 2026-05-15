@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"log/slog"
 
+	"github.com/redis/go-redis/v9"
+	"github.com/redpanda-data/benthos/v4/public/bloblang"
+	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	continuation_token "github.com/vydon-io/vydon/internal/continuation-token"
 	vydon_benthos_defaulttransform "github.com/vydon-io/vydon/worker/pkg/benthos/default_transform"
@@ -14,14 +17,11 @@ import (
 	vydon_benthos_json "github.com/vydon-io/vydon/worker/pkg/benthos/json"
 	benthos_metrics "github.com/vydon-io/vydon/worker/pkg/benthos/metrics"
 	vydon_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
-	vydon_benthos_connectiondata "github.com/vydon-io/vydon/worker/pkg/benthos/vydon_connection_data"
 	openaigenerate "github.com/vydon-io/vydon/worker/pkg/benthos/openai_generate"
 	benthos_redis "github.com/vydon-io/vydon/worker/pkg/benthos/redis"
 	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
 	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
-	"github.com/redis/go-redis/v9"
-	"github.com/redpanda-data/benthos/v4/public/bloblang"
-	"github.com/redpanda-data/benthos/v4/public/service"
+	vydon_benthos_connectiondata "github.com/vydon-io/vydon/worker/pkg/benthos/vydon_connection_data"
 	"go.opentelemetry.io/otel/metric"
 )
 

@@ -6,16 +6,16 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
+	"github.com/stretchr/testify/require"
+	"github.com/stretchr/testify/suite"
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	neomigrate "github.com/vydon-io/vydon/internal/migrate"
-	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/vydon-io/vydon/internal/testutil"
 	tcpostgres "github.com/vydon-io/vydon/internal/testutil/testcontainers/postgres"
-	"github.com/stretchr/testify/require"
-	"github.com/stretchr/testify/suite"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -204,12 +204,27 @@ func (s *IntegrationTestSuite) Test_ConvertPersonalToTeamAccount() {
 		}, testutil.GetTestLogger(t))
 		requireNoErrResp(t, resp, err)
 
-		require.Equal(t, vydondb.UUIDString(account.ID), vydondb.UUIDString(resp.TeamAccount.ID), "the new team account must be the same id as the old account")
+		require.Equal(
+			t,
+			vydondb.UUIDString(account.ID),
+			vydondb.UUIDString(resp.TeamAccount.ID),
+			"the new team account must be the same id as the old account",
+		)
 		require.Equal(t, vydondb.AccountType_Team, vydondb.AccountType(resp.TeamAccount.AccountType))
 		require.Equal(t, newTeamName, resp.TeamAccount.AccountSlug)
-		require.NotEqual(t, vydondb.UUIDString(account.ID), vydondb.UUIDString(resp.PersonalAccount.ID), "the new personal account must not have the same id as the old one")
+		require.NotEqual(
+			t,
+			vydondb.UUIDString(account.ID),
+			vydondb.UUIDString(resp.PersonalAccount.ID),
+			"the new personal account must not have the same id as the old one",
+		)
 		require.False(t, resp.TeamAccount.MaxAllowedRecords.Valid, "team account must not have any max allowed records set")
-		require.Equal(t, maxAllowedRecords, resp.PersonalAccount.MaxAllowedRecords.Int64, "max allowed records must persist on new personal account")
+		require.Equal(
+			t,
+			maxAllowedRecords,
+			resp.PersonalAccount.MaxAllowedRecords.Int64,
+			"max allowed records must persist on new personal account",
+		)
 	})
 
 	t.Run("invalid account type", func(t *testing.T) {
@@ -238,9 +253,14 @@ func (s *IntegrationTestSuite) Test_UpsertStripeCustomerId() {
 		requireNoErrResp(t, account, err)
 		require.False(t, account.StripeCustomerID.Valid)
 
-		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
-			return "testid", nil
-		}, testutil.GetTestLogger(t))
+		account, err = s.db.UpsertStripeCustomerId(
+			s.ctx,
+			account.ID,
+			func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
+				return "testid", nil
+			},
+			testutil.GetTestLogger(t),
+		)
 		requireNoErrResp(t, account, err)
 		require.True(t, account.StripeCustomerID.Valid)
 		require.Equal(t, "testid", account.StripeCustomerID.String)
@@ -252,16 +272,26 @@ func (s *IntegrationTestSuite) Test_UpsertStripeCustomerId() {
 		require.False(t, account.StripeCustomerID.Valid)
 
 		firstid := "testid"
-		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
-			return firstid, nil
-		}, testutil.GetTestLogger(t))
+		account, err = s.db.UpsertStripeCustomerId(
+			s.ctx,
+			account.ID,
+			func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
+				return firstid, nil
+			},
+			testutil.GetTestLogger(t),
+		)
 		requireNoErrResp(t, account, err)
 		require.True(t, account.StripeCustomerID.Valid)
 		require.Equal(t, firstid, account.StripeCustomerID.String)
 
-		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
-			return "secondid", nil
-		}, testutil.GetTestLogger(t))
+		account, err = s.db.UpsertStripeCustomerId(
+			s.ctx,
+			account.ID,
+			func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
+				return "secondid", nil
+			},
+			testutil.GetTestLogger(t),
+		)
 		requireNoErrResp(t, account, err)
 		require.True(t, account.StripeCustomerID.Valid)
 		require.Equal(t, firstid, account.StripeCustomerID.String)
@@ -272,9 +302,14 @@ func (s *IntegrationTestSuite) Test_UpsertStripeCustomerId() {
 		requireNoErrResp(t, account, err)
 		require.False(t, account.StripeCustomerID.Valid)
 
-		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
-			return "testid", nil
-		}, testutil.GetTestLogger(t))
+		account, err = s.db.UpsertStripeCustomerId(
+			s.ctx,
+			account.ID,
+			func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
+				return "testid", nil
+			},
+			testutil.GetTestLogger(t),
+		)
 		requireErrResp(t, account, err)
 	})
 }
@@ -291,15 +326,36 @@ func (s *IntegrationTestSuite) Test_CreateTeamAccountInvite() {
 	requireNoErrResp(t, account, err)
 
 	t.Run("new invite", func(t *testing.T) {
-		invite, err := s.db.CreateTeamAccountInvite(s.ctx, account.ID, user.ID, "foo2@example.com", getFutureTs(t, 1*time.Hour), dbViewerRole)
+		invite, err := s.db.CreateTeamAccountInvite(
+			s.ctx,
+			account.ID,
+			user.ID,
+			"foo2@example.com",
+			getFutureTs(t, 1*time.Hour),
+			dbViewerRole,
+		)
 		requireNoErrResp(t, invite, err)
 	})
 
 	t.Run("expire old invites", func(t *testing.T) {
-		invite, err := s.db.CreateTeamAccountInvite(s.ctx, account.ID, user.ID, "foo2@example.com", getFutureTs(t, 48*time.Hour), dbViewerRole)
+		invite, err := s.db.CreateTeamAccountInvite(
+			s.ctx,
+			account.ID,
+			user.ID,
+			"foo2@example.com",
+			getFutureTs(t, 48*time.Hour),
+			dbViewerRole,
+		)
 		requireNoErrResp(t, invite, err)
 
-		invite2, err := s.db.CreateTeamAccountInvite(s.ctx, account.ID, user.ID, "foo2@example.com", getFutureTs(t, 48*time.Hour), dbViewerRole)
+		invite2, err := s.db.CreateTeamAccountInvite(
+			s.ctx,
+			account.ID,
+			user.ID,
+			"foo2@example.com",
+			getFutureTs(t, 48*time.Hour),
+			dbViewerRole,
+		)
 		requireNoErrResp(t, invite2, err)
 		// Add time here as the expired invites as updated to CURRENT_TIMESTAMP, so this reduces flakiness
 		now := time.Now().Add(5 * time.Second)
@@ -313,7 +369,14 @@ func (s *IntegrationTestSuite) Test_CreateTeamAccountInvite() {
 		account, err := s.db.SetPersonalAccount(s.ctx, user.ID, nil)
 		requireNoErrResp(t, account, err)
 
-		invite, err := s.db.CreateTeamAccountInvite(s.ctx, account.ID, user.ID, "foo@example.com", getFutureTs(t, 1*time.Hour), dbViewerRole)
+		invite, err := s.db.CreateTeamAccountInvite(
+			s.ctx,
+			account.ID,
+			user.ID,
+			"foo@example.com",
+			getFutureTs(t, 1*time.Hour),
+			dbViewerRole,
+		)
 		requireErrResp(t, invite, err)
 		forbiddin := vydonerrors.NewForbidden("")
 		require.ErrorAs(t, err, &forbiddin)
@@ -328,7 +391,14 @@ func (s *IntegrationTestSuite) Test_ValidateInviteAddUserToAccount() {
 	requireNoErrResp(t, account, err)
 
 	t.Run("accept invite", func(t *testing.T) {
-		invite, err := s.db.CreateTeamAccountInvite(s.ctx, account.ID, user.ID, "foo2@example.com", getFutureTs(t, 24*time.Hour), dbViewerRole)
+		invite, err := s.db.CreateTeamAccountInvite(
+			s.ctx,
+			account.ID,
+			user.ID,
+			"foo2@example.com",
+			getFutureTs(t, 24*time.Hour),
+			dbViewerRole,
+		)
 		requireNoErrResp(t, invite, err)
 
 		user2 := s.setUser(t, s.ctx, "foo2")
@@ -338,7 +408,14 @@ func (s *IntegrationTestSuite) Test_ValidateInviteAddUserToAccount() {
 	})
 
 	t.Run("expired invite", func(t *testing.T) {
-		invite, err := s.db.CreateTeamAccountInvite(s.ctx, account.ID, user.ID, "foo3@example.com", getFutureTs(t, -1*time.Hour), dbViewerRole)
+		invite, err := s.db.CreateTeamAccountInvite(
+			s.ctx,
+			account.ID,
+			user.ID,
+			"foo3@example.com",
+			getFutureTs(t, -1*time.Hour),
+			dbViewerRole,
+		)
 		requireNoErrResp(t, invite, err)
 
 		user3 := s.setUser(t, s.ctx, "foo3")
@@ -351,7 +428,14 @@ func (s *IntegrationTestSuite) Test_ValidateInviteAddUserToAccount() {
 	})
 
 	t.Run("incorrect email", func(t *testing.T) {
-		invite, err := s.db.CreateTeamAccountInvite(s.ctx, account.ID, user.ID, "foo4@example.com", getFutureTs(t, -1*time.Hour), dbViewerRole)
+		invite, err := s.db.CreateTeamAccountInvite(
+			s.ctx,
+			account.ID,
+			user.ID,
+			"foo4@example.com",
+			getFutureTs(t, -1*time.Hour),
+			dbViewerRole,
+		)
 		requireNoErrResp(t, invite, err)
 
 		user4 := s.setUser(t, s.ctx, "foo3")

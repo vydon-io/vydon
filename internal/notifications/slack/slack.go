@@ -56,7 +56,7 @@ func (c *Client) TestConnection(_ context.Context, _ string) error    { return E
 // MockInterface satisfies the slack.Interface for tests.
 type MockInterface struct{}
 
-func NewMockInterface(_ interface{}) *MockInterface { return &MockInterface{} }
+func NewMockInterface(_ any) *MockInterface { return &MockInterface{} }
 
 var _ Interface = (*MockInterface)(nil)
 

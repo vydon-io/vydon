@@ -7,8 +7,8 @@ import (
 	"github.com/vydon-io/vydon/internal/billing"
 	"github.com/vydon-io/vydon/internal/license"
 	"github.com/vydon-io/vydon/internal/rbac"
-	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/vydon-io/vydon/internal/temporal/clientmanager"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type Service struct {
@@ -24,7 +24,7 @@ type Service struct {
 
 type Config struct {
 	IsAuthEnabled            bool
-	IsVydonCloud           bool
+	IsVydonCloud             bool
 	DefaultMaxAllowedRecords *int64
 }
 

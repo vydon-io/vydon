@@ -13,6 +13,6 @@ type Interface interface {
 
 type CloudLicense struct{}
 
-func NewFromEnv() (*CloudLicense, error)        { return &CloudLicense{}, nil }
-func (c *CloudLicense) IsValid() bool           { return false }
-func (c *CloudLicense) ExpiresAt() time.Time    { return time.Time{} }
+func NewFromEnv() (*CloudLicense, error)     { return &CloudLicense{}, nil }
+func (c *CloudLicense) IsValid() bool        { return false }
+func (c *CloudLicense) ExpiresAt() time.Time { return time.Time{} }

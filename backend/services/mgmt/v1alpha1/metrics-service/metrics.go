@@ -11,8 +11,8 @@ import (
 	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	"github.com/vydon-io/vydon/backend/pkg/metrics"
-	"github.com/vydon-io/vydon/internal/rbac"
 	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/rbac"
 )
 
 const (

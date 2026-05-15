@@ -58,7 +58,7 @@ type MockInterface_GetUser_Call struct {
 
 // GetUser is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockInterface_Expecter) GetUser(ctx interface{}) *MockInterface_GetUser_Call {
+func (_e *MockInterface_Expecter) GetUser(ctx any) *MockInterface_GetUser_Call {
 	return &MockInterface_GetUser_Call{Call: _e.mock.On("GetUser", ctx)}
 }
 

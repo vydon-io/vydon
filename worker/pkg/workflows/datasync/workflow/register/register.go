@@ -1,6 +1,7 @@
 package datasync_workflow_register
 
 import (
+	"github.com/redis/go-redis/v9"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
 	"github.com/vydon-io/vydon/internal/license"
@@ -11,7 +12,6 @@ import (
 	syncactivityopts_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-activity-opts"
 	syncrediscleanup_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-redis-clean-up"
 	datasync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/workflow"
-	"github.com/redis/go-redis/v9"
 )
 
 type Worker interface {

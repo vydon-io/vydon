@@ -6,9 +6,9 @@ import (
 	"testing"
 
 	"github.com/doug-martin/goqu/v9"
-	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/stretchr/testify/require"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 func Test_transformVydonToMysql(t *testing.T) {

@@ -61,7 +61,7 @@ type MockDBTX_Begin_Call struct {
 
 // Begin is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockDBTX_Expecter) Begin(ctx interface{}) *MockDBTX_Begin_Call {
+func (_e *MockDBTX_Expecter) Begin(ctx any) *MockDBTX_Begin_Call {
 	return &MockDBTX_Begin_Call{Call: _e.mock.On("Begin", ctx)}
 }
 
@@ -120,7 +120,7 @@ type MockDBTX_BeginTx_Call struct {
 // BeginTx is a helper method to define mock.On call
 //   - ctx context.Context
 //   - txOptions pgx.TxOptions
-func (_e *MockDBTX_Expecter) BeginTx(ctx interface{}, txOptions interface{}) *MockDBTX_BeginTx_Call {
+func (_e *MockDBTX_Expecter) BeginTx(ctx any, txOptions any) *MockDBTX_BeginTx_Call {
 	return &MockDBTX_BeginTx_Call{Call: _e.mock.On("BeginTx", ctx, txOptions)}
 }
 
@@ -179,7 +179,7 @@ type MockDBTX_CopyFrom_Call struct {
 //   - tableName pgx.Identifier
 //   - columnNames []string
 //   - rowSrc pgx.CopyFromSource
-func (_e *MockDBTX_Expecter) CopyFrom(ctx interface{}, tableName interface{}, columnNames interface{}, rowSrc interface{}) *MockDBTX_CopyFrom_Call {
+func (_e *MockDBTX_Expecter) CopyFrom(ctx any, tableName any, columnNames any, rowSrc any) *MockDBTX_CopyFrom_Call {
 	return &MockDBTX_CopyFrom_Call{Call: _e.mock.On("CopyFrom", ctx, tableName, columnNames, rowSrc)}
 }
 
@@ -202,7 +202,7 @@ func (_c *MockDBTX_CopyFrom_Call) RunAndReturn(run func(context.Context, pgx.Ide
 
 // Exec provides a mock function with given fields: _a0, _a1, _a2
 func (_m *MockDBTX) Exec(_a0 context.Context, _a1 string, _a2 ...any) (pgconn.CommandTag, error) {
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, _a0, _a1)
 	_ca = append(_ca, _a2...)
 	ret := _m.Called(_ca...)
@@ -240,9 +240,9 @@ type MockDBTX_Exec_Call struct {
 //   - _a0 context.Context
 //   - _a1 string
 //   - _a2 ...any
-func (_e *MockDBTX_Expecter) Exec(_a0 interface{}, _a1 interface{}, _a2 ...interface{}) *MockDBTX_Exec_Call {
+func (_e *MockDBTX_Expecter) Exec(_a0 any, _a1 any, _a2 ...any) *MockDBTX_Exec_Call {
 	return &MockDBTX_Exec_Call{Call: _e.mock.On("Exec",
-		append([]interface{}{_a0, _a1}, _a2...)...)}
+		append([]any{_a0, _a1}, _a2...)...)}
 }
 
 func (_c *MockDBTX_Exec_Call) Run(run func(_a0 context.Context, _a1 string, _a2 ...any)) *MockDBTX_Exec_Call {
@@ -293,7 +293,7 @@ type MockDBTX_Ping_Call struct {
 
 // Ping is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockDBTX_Expecter) Ping(ctx interface{}) *MockDBTX_Ping_Call {
+func (_e *MockDBTX_Expecter) Ping(ctx any) *MockDBTX_Ping_Call {
 	return &MockDBTX_Ping_Call{Call: _e.mock.On("Ping", ctx)}
 }
 
@@ -316,7 +316,7 @@ func (_c *MockDBTX_Ping_Call) RunAndReturn(run func(context.Context) error) *Moc
 
 // Query provides a mock function with given fields: _a0, _a1, _a2
 func (_m *MockDBTX) Query(_a0 context.Context, _a1 string, _a2 ...any) (pgx.Rows, error) {
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, _a0, _a1)
 	_ca = append(_ca, _a2...)
 	ret := _m.Called(_ca...)
@@ -356,9 +356,9 @@ type MockDBTX_Query_Call struct {
 //   - _a0 context.Context
 //   - _a1 string
 //   - _a2 ...any
-func (_e *MockDBTX_Expecter) Query(_a0 interface{}, _a1 interface{}, _a2 ...interface{}) *MockDBTX_Query_Call {
+func (_e *MockDBTX_Expecter) Query(_a0 any, _a1 any, _a2 ...any) *MockDBTX_Query_Call {
 	return &MockDBTX_Query_Call{Call: _e.mock.On("Query",
-		append([]interface{}{_a0, _a1}, _a2...)...)}
+		append([]any{_a0, _a1}, _a2...)...)}
 }
 
 func (_c *MockDBTX_Query_Call) Run(run func(_a0 context.Context, _a1 string, _a2 ...any)) *MockDBTX_Query_Call {
@@ -386,7 +386,7 @@ func (_c *MockDBTX_Query_Call) RunAndReturn(run func(context.Context, string, ..
 
 // QueryRow provides a mock function with given fields: _a0, _a1, _a2
 func (_m *MockDBTX) QueryRow(_a0 context.Context, _a1 string, _a2 ...any) pgx.Row {
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, _a0, _a1)
 	_ca = append(_ca, _a2...)
 	ret := _m.Called(_ca...)
@@ -416,9 +416,9 @@ type MockDBTX_QueryRow_Call struct {
 //   - _a0 context.Context
 //   - _a1 string
 //   - _a2 ...any
-func (_e *MockDBTX_Expecter) QueryRow(_a0 interface{}, _a1 interface{}, _a2 ...interface{}) *MockDBTX_QueryRow_Call {
+func (_e *MockDBTX_Expecter) QueryRow(_a0 any, _a1 any, _a2 ...any) *MockDBTX_QueryRow_Call {
 	return &MockDBTX_QueryRow_Call{Call: _e.mock.On("QueryRow",
-		append([]interface{}{_a0, _a1}, _a2...)...)}
+		append([]any{_a0, _a1}, _a2...)...)}
 }
 
 func (_c *MockDBTX_QueryRow_Call) Run(run func(_a0 context.Context, _a1 string, _a2 ...any)) *MockDBTX_QueryRow_Call {

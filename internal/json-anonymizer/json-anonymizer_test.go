@@ -5,9 +5,9 @@ import (
 	"os"
 	"testing"
 
+	"github.com/stretchr/testify/require"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/internal/testutil"
-	"github.com/stretchr/testify/require"
 )
 
 func Test_NewAnonymizer(t *testing.T) {
@@ -148,7 +148,11 @@ func Test_AnonymizeJSONObjects(t *testing.T) {
 		anonymizer, err := NewAnonymizer(WithTransformerMappings(mappings), WithHaltOnFailure(true))
 		require.NoError(t, err)
 
-		inputs := []string{`{"id": 1, "name": "John Doe", "city": "New York"}`, `{"id": 2, "name": 1, "city": "New York"}`, `{"id": 3, "name": "John Doe", "city": "New York"}`}
+		inputs := []string{
+			`{"id": 1, "name": "John Doe", "city": "New York"}`,
+			`{"id": 2, "name": 1, "city": "New York"}`,
+			`{"id": 3, "name": "John Doe", "city": "New York"}`,
+		}
 		outputs, anonErrors := anonymizer.AnonymizeJSONObjects(inputs)
 		require.Len(t, anonErrors, 1)
 		require.Equal(t, int64(1), anonErrors[0].InputIndex)
@@ -174,7 +178,11 @@ func Test_AnonymizeJSONObjects(t *testing.T) {
 		anonymizer, err := NewAnonymizer(WithTransformerMappings(mappings), WithHaltOnFailure(false))
 		require.NoError(t, err)
 
-		inputs := []string{`{"id": 0, "name": "John Doe", "city": "New York"}`, `{"id": 1, "name": 1, "city": "New York"}`, `{"id": 2, "name": "John Doe", "city": "New York"}`}
+		inputs := []string{
+			`{"id": 0, "name": "John Doe", "city": "New York"}`,
+			`{"id": 1, "name": 1, "city": "New York"}`,
+			`{"id": 2, "name": "John Doe", "city": "New York"}`,
+		}
 		outputs, anonErrors := anonymizer.AnonymizeJSONObjects(inputs)
 		require.Len(t, anonErrors, 1)
 		require.Equal(t, int64(1), anonErrors[0].InputIndex)
@@ -353,7 +361,11 @@ func Test_AnonymizeJSON_Largedata(t *testing.T) {
 
 		// Check if non-anonymized fields remain unchanged
 		require.Equal(t, inputObjects[i]["foundedYear"], result["foundedYear"])
-		require.Equal(t, inputObjects[i]["headquarters"].(map[string]any)["address"].(map[string]any)["city"], result["headquarters"].(map[string]any)["address"].(map[string]any)["city"])
+		require.Equal(
+			t,
+			inputObjects[i]["headquarters"].(map[string]any)["address"].(map[string]any)["city"],
+			result["headquarters"].(map[string]any)["address"].(map[string]any)["city"],
+		)
 	}
 }
 
@@ -444,7 +456,11 @@ func Test_AnonymizeJSON_Largedata_WithDefaults(t *testing.T) {
 
 		// Check if other fields where anonymized
 		require.NotEqual(t, inputObjects[i]["foundedYear"], result["foundedYear"])
-		require.NotEqual(t, inputObjects[i]["headquarters"].(map[string]any)["address"].(map[string]any)["city"], result["headquarters"].(map[string]any)["address"].(map[string]any)["city"])
+		require.NotEqual(
+			t,
+			inputObjects[i]["headquarters"].(map[string]any)["address"].(map[string]any)["city"],
+			result["headquarters"].(map[string]any)["address"].(map[string]any)["city"],
+		)
 	}
 }
 
@@ -502,7 +518,11 @@ func Test_AnonymizeJSON_Largedata_Advanced(t *testing.T) {
 
 		// Check if non-anonymized fields remain unchanged
 		require.Equal(t, inputObjects[i]["foundedYear"], result["foundedYear"])
-		require.Equal(t, inputObjects[i]["headquarters"].(map[string]any)["address"].(map[string]any)["city"], result["headquarters"].(map[string]any)["address"].(map[string]any)["city"])
+		require.Equal(
+			t,
+			inputObjects[i]["headquarters"].(map[string]any)["address"].(map[string]any)["city"],
+			result["headquarters"].(map[string]any)["address"].(map[string]any)["city"],
+		)
 	}
 }
 

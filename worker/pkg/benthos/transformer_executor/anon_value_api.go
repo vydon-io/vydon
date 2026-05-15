@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	javascript_functions "github.com/vydon-io/vydon/internal/javascript/functions"
 	"github.com/redpanda-data/benthos/v4/public/service"
+	javascript_functions "github.com/vydon-io/vydon/internal/javascript/functions"
 )
 
 type anonValueApi struct {

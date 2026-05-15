@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
-	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/stretchr/testify/require"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 func Test_transformVydonToMssql(t *testing.T) {

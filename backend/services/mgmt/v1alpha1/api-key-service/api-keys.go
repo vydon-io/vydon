@@ -10,8 +10,8 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	pkg_utils "github.com/vydon-io/vydon/backend/pkg/utils"
 	"github.com/vydon-io/vydon/internal/apikey"
-	"github.com/vydon-io/vydon/internal/rbac"
 	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/rbac"
 	"github.com/vydon-io/vydon/internal/vydondb"
 )
 

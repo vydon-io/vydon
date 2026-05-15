@@ -58,7 +58,7 @@ type MockLokiHttpClient_Do_Call struct {
 
 // Do is a helper method to define mock.On call
 //   - req *http.Request
-func (_e *MockLokiHttpClient_Expecter) Do(req interface{}) *MockLokiHttpClient_Do_Call {
+func (_e *MockLokiHttpClient_Expecter) Do(req any) *MockLokiHttpClient_Do_Call {
 	return &MockLokiHttpClient_Do_Call{Call: _e.mock.On("Do", req)}
 }
 

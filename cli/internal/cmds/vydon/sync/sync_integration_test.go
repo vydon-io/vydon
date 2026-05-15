@@ -21,8 +21,8 @@ import (
 	mysqlalltypes "github.com/vydon-io/vydon/internal/testutil/testdata/mysql/alltypes"
 	pgalltypes "github.com/vydon-io/vydon/internal/testutil/testdata/postgres/alltypes"
 
-	tcworkflow "github.com/vydon-io/vydon/internal/integration-tests/worker/workflow"
 	"github.com/stretchr/testify/require"
+	tcworkflow "github.com/vydon-io/vydon/internal/integration-tests/worker/workflow"
 )
 
 const vydonDbMigrationsPath = "../../../../../backend/sql/postgresql/schema"
@@ -75,7 +75,12 @@ func Test_Sync(t *testing.T) {
 			// right now CLI sync and init schema takes everything in source and copies it to target since there are no job mappings defined by the user
 			// so it can't be scoped to specific schema
 			// t.Parallel()
-			err = postgres.Source.RunCreateStmtsInSchema(ctx, testdataFolder, []string{"humanresources/create-tables.sql"}, "humanresources")
+			err = postgres.Source.RunCreateStmtsInSchema(
+				ctx,
+				testdataFolder,
+				[]string{"humanresources/create-tables.sql"},
+				"humanresources",
+			)
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -141,11 +146,29 @@ func Test_Sync(t *testing.T) {
 			require.NoError(t, err)
 			defer target.Close()
 
-			testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, alltypesSchema, "all_data_types", "postgres", []string{"id"})
+			testutil_testdata.VerifySQLTableColumnValues(
+				t,
+				ctx,
+				source,
+				target,
+				alltypesSchema,
+				"all_data_types",
+				"postgres",
+				[]string{"id"},
+			)
 			testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, alltypesSchema, "time_time", "postgres", []string{"id"})
 			testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, alltypesSchema, "json_data", "postgres", []string{"id"})
 			testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, alltypesSchema, "array_types", "postgres", []string{"id"})
-			testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, alltypesSchema, "generated_table", "postgres", []string{"id"})
+			testutil_testdata.VerifySQLTableColumnValues(
+				t,
+				ctx,
+				source,
+				target,
+				alltypesSchema,
+				"generated_table",
+				"postgres",
+				[]string{"id"},
+			)
 		})
 
 		t.Run("S3_end_to_end", func(t *testing.T) {
@@ -255,10 +278,46 @@ func Test_Sync(t *testing.T) {
 				require.NoError(t, err)
 				defer target.Close()
 
-				testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, alltypesSchema, "all_data_types", "postgres", []string{"id"})
-				testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, alltypesSchema, "time_time", "postgres", []string{"id"})
-				testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, alltypesSchema, "json_data", "postgres", []string{"id"})
-				testutil_testdata.VerifySQLTableColumnValues(t, ctx, source, target, alltypesSchema, "array_types", "postgres", []string{"id"})
+				testutil_testdata.VerifySQLTableColumnValues(
+					t,
+					ctx,
+					source,
+					target,
+					alltypesSchema,
+					"all_data_types",
+					"postgres",
+					[]string{"id"},
+				)
+				testutil_testdata.VerifySQLTableColumnValues(
+					t,
+					ctx,
+					source,
+					target,
+					alltypesSchema,
+					"time_time",
+					"postgres",
+					[]string{"id"},
+				)
+				testutil_testdata.VerifySQLTableColumnValues(
+					t,
+					ctx,
+					source,
+					target,
+					alltypesSchema,
+					"json_data",
+					"postgres",
+					[]string{"id"},
+				)
+				testutil_testdata.VerifySQLTableColumnValues(
+					t,
+					ctx,
+					source,
+					target,
+					alltypesSchema,
+					"array_types",
+					"postgres",
+					[]string{"id"},
+				)
 			})
 		})
 
@@ -337,9 +396,36 @@ func Test_Sync(t *testing.T) {
 			require.NoError(t, err)
 			require.Greater(t, rowCount, 1)
 
-			testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, alltypesSchema, "json_data", "mysql", []string{"id"})
-			testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, alltypesSchema, "all_data_types", "mysql", []string{"id"})
-			testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, alltypesSchema, "generated_table", "mysql", []string{"id"})
+			testutil_testdata.VerifySQLTableColumnValues(
+				t,
+				ctx,
+				mysql.Source.DB,
+				mysql.Target.DB,
+				alltypesSchema,
+				"json_data",
+				"mysql",
+				[]string{"id"},
+			)
+			testutil_testdata.VerifySQLTableColumnValues(
+				t,
+				ctx,
+				mysql.Source.DB,
+				mysql.Target.DB,
+				alltypesSchema,
+				"all_data_types",
+				"mysql",
+				[]string{"id"},
+			)
+			testutil_testdata.VerifySQLTableColumnValues(
+				t,
+				ctx,
+				mysql.Source.DB,
+				mysql.Target.DB,
+				alltypesSchema,
+				"generated_table",
+				"mysql",
+				[]string{"id"},
+			)
 		})
 
 		t.Run("S3_end_to_end", func(t *testing.T) {
@@ -442,9 +528,36 @@ func Test_Sync(t *testing.T) {
 			require.NoError(t, err)
 			require.Greater(t, rowCount, 1)
 
-			testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, alltypesSchema, "json_data", "mysql", []string{"id"})
-			testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, alltypesSchema, "all_data_types", "mysql", []string{"id"})
-			testutil_testdata.VerifySQLTableColumnValues(t, ctx, mysql.Source.DB, mysql.Target.DB, alltypesSchema, "generated_table", "mysql", []string{"id"})
+			testutil_testdata.VerifySQLTableColumnValues(
+				t,
+				ctx,
+				mysql.Source.DB,
+				mysql.Target.DB,
+				alltypesSchema,
+				"json_data",
+				"mysql",
+				[]string{"id"},
+			)
+			testutil_testdata.VerifySQLTableColumnValues(
+				t,
+				ctx,
+				mysql.Source.DB,
+				mysql.Target.DB,
+				alltypesSchema,
+				"all_data_types",
+				"mysql",
+				[]string{"id"},
+			)
+			testutil_testdata.VerifySQLTableColumnValues(
+				t,
+				ctx,
+				mysql.Source.DB,
+				mysql.Target.DB,
+				alltypesSchema,
+				"generated_table",
+				"mysql",
+				[]string{"id"},
+			)
 		})
 
 		t.Cleanup(func() {
@@ -462,7 +575,15 @@ func Test_Sync(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		sourceConn := tcvydonapi.CreateDynamoDBConnection(ctx, t, vydonApi.OSSUnauthenticatedLicensedClients.Connections(), accountId, "dynamo-source", dynamo.Source.URL, dynamo.Source.Credentials)
+		sourceConn := tcvydonapi.CreateDynamoDBConnection(
+			ctx,
+			t,
+			vydonApi.OSSUnauthenticatedLicensedClients.Connections(),
+			accountId,
+			"dynamo-source",
+			dynamo.Source.URL,
+			dynamo.Source.Credentials,
+		)
 
 		t.Run("dynamodb_sync", func(t *testing.T) {
 			t.Parallel()
@@ -496,7 +617,9 @@ func Test_Sync(t *testing.T) {
 											"Level3": &dyntypes.AttributeValueMemberM{
 												Value: map[string]dyntypes.AttributeValue{
 													"Attribute2": &dyntypes.AttributeValueMemberS{Value: "Value2"},
-													"StringSet":  &dyntypes.AttributeValueMemberSS{Value: []string{"Item1", "Item2", "Item3"}},
+													"StringSet": &dyntypes.AttributeValueMemberSS{
+														Value: []string{"Item1", "Item2", "Item3"},
+													},
 													"BinarySet": &dyntypes.AttributeValueMemberBS{
 														Value: [][]byte{
 															[]byte("U29tZUJpbmFyeQ=="),
@@ -505,9 +628,11 @@ func Test_Sync(t *testing.T) {
 													},
 													"Level4": &dyntypes.AttributeValueMemberM{
 														Value: map[string]dyntypes.AttributeValue{
-															"Attribute3":     &dyntypes.AttributeValueMemberS{Value: "Value3"},
-															"Boolean":        &dyntypes.AttributeValueMemberBOOL{Value: true},
-															"MoreBinaryData": &dyntypes.AttributeValueMemberB{Value: []byte("TW9yZUJpbmFyeURhdGE=")},
+															"Attribute3": &dyntypes.AttributeValueMemberS{Value: "Value3"},
+															"Boolean":    &dyntypes.AttributeValueMemberBOOL{Value: true},
+															"MoreBinaryData": &dyntypes.AttributeValueMemberB{
+																Value: []byte("TW9yZUJpbmFyeURhdGE="),
+															},
 															"MoreBinarySet": &dyntypes.AttributeValueMemberBS{
 																Value: [][]byte{
 																	[]byte("TW9yZUJpbmFyeQ=="),

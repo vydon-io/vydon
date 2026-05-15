@@ -759,7 +759,7 @@ type GetDatabaseSchemaRow struct {
 	OrdinalPosition        int16
 	GeneratedType          string
 	IdentityGeneration     string
-	TableOid               interface{}
+	TableOid               any
 	SequenceType           string
 	SeqIncrementBy         sql.NullInt64
 	SeqMinValue            sql.NullInt64
@@ -962,7 +962,7 @@ type GetDatabaseTableSchemasBySchemasAndTablesRow struct {
 	OrdinalPosition        int16
 	GeneratedType          string
 	IdentityGeneration     string
-	TableOid               interface{}
+	TableOid               any
 	SequenceType           string
 	SeqIncrementBy         sql.NullInt64
 	SeqMinValue            sql.NullInt64

@@ -39,15 +39,15 @@ func WithEnvInterpolation(input string) string {
 type ConnectionType string
 
 const (
-	ConnectionTypePostgres    ConnectionType = "postgres"
-	ConnectionTypeMysql       ConnectionType = "mysql"
-	ConnectionTypeMssql       ConnectionType = "mssql"
-	ConnectionTypeAwsS3       ConnectionType = "aws-s3"
-	ConnectionTypeGCP         ConnectionType = "gcp-cloud-storage"
-	ConnectionTypeMongo       ConnectionType = "mongodb"
-	ConnectionTypeDynamodb    ConnectionType = "aws-dynamodb"
-	ConnectionTypeLocalDir    ConnectionType = "local-directory"
-	ConnectionTypeOpenAI      ConnectionType = "openai"
+	ConnectionTypePostgres  ConnectionType = "postgres"
+	ConnectionTypeMysql     ConnectionType = "mysql"
+	ConnectionTypeMssql     ConnectionType = "mssql"
+	ConnectionTypeAwsS3     ConnectionType = "aws-s3"
+	ConnectionTypeGCP       ConnectionType = "gcp-cloud-storage"
+	ConnectionTypeMongo     ConnectionType = "mongodb"
+	ConnectionTypeDynamodb  ConnectionType = "aws-dynamodb"
+	ConnectionTypeLocalDir  ConnectionType = "local-directory"
+	ConnectionTypeOpenAI    ConnectionType = "openai"
 	ConnectionTypeVydonData ConnectionType = "vydon-data-stream"
 )
 

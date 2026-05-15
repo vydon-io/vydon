@@ -3,8 +3,8 @@ package schemamanager_shared
 import (
 	"testing"
 
-	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	"github.com/stretchr/testify/require"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 )
 
 func findMatchingColumnTest(

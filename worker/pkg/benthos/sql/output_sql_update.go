@@ -7,10 +7,10 @@ import (
 
 	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
 	_ "github.com/doug-martin/goqu/v9/dialect/postgres"
+	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/vydon-io/vydon/backend/pkg/sqldbtx"
 	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	querybuilder "github.com/vydon-io/vydon/worker/pkg/query-builder"
-	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
 type SqlDbtx interface {

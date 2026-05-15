@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
+	"github.com/stretchr/testify/suite"
 	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	"github.com/vydon-io/vydon/internal/testutil"
-	"github.com/stretchr/testify/suite"
 )
 
 type IntegrationTestSuite struct {

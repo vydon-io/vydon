@@ -60,7 +60,7 @@ type MockManagerInterface_GetClient_Call struct {
 // GetClient is a helper method to define mock.On call
 //   - ctx context.Context
 //   - logger *slog.Logger
-func (_e *MockManagerInterface_Expecter) GetClient(ctx interface{}, logger interface{}) *MockManagerInterface_GetClient_Call {
+func (_e *MockManagerInterface_Expecter) GetClient(ctx any, logger any) *MockManagerInterface_GetClient_Call {
 	return &MockManagerInterface_GetClient_Call{Call: _e.mock.On("GetClient", ctx, logger)}
 }
 

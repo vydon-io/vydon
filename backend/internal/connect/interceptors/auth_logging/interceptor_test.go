@@ -9,6 +9,8 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
+	"github.com/stretchr/testify/mock"
+	"github.com/stretchr/testify/require"
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
@@ -16,10 +18,8 @@ import (
 	auth_jwt "github.com/vydon-io/vydon/backend/internal/auth/jwt"
 	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
 	"github.com/vydon-io/vydon/internal/apikey"
-	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/vydon-io/vydon/internal/testutil"
-	"github.com/stretchr/testify/mock"
-	"github.com/stretchr/testify/require"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 func Test_Interceptor_WrapUnary_JwtContextData_ValidUser(t *testing.T) {
