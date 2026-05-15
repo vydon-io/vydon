@@ -12,7 +12,7 @@ type MockAnalyzeInterface struct {
 
 func NewMockAnalyzeInterface(t mockT) *MockAnalyzeInterface {
 	m := &MockAnalyzeInterface{}
-	m.Mock.Test(t)
+	m.Test(t)
 	t.Cleanup(func() { m.AssertExpectations(t) })
 	return m
 }
@@ -32,7 +32,7 @@ type MockAnonymizeInterface struct {
 
 func NewMockAnonymizeInterface(t mockT) *MockAnonymizeInterface {
 	m := &MockAnonymizeInterface{}
-	m.Mock.Test(t)
+	m.Test(t)
 	t.Cleanup(func() { m.AssertExpectations(t) })
 	return m
 }
@@ -52,7 +52,7 @@ type MockEntityInterface struct {
 
 func NewMockEntityInterface(t mockT) *MockEntityInterface {
 	m := &MockEntityInterface{}
-	m.Mock.Test(t)
+	m.Test(t)
 	t.Cleanup(func() { m.AssertExpectations(t) })
 	return m
 }

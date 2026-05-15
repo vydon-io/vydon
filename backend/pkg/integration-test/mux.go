@@ -2,7 +2,6 @@ package integrationtests_test
 
 import (
 	"context"
-	"fmt"
 	"log/slog"
 	"net/http"
 
@@ -85,10 +84,7 @@ func (s *VydonApiTestClient) setupOssUnauthenticatedLicensedMux(
 	isLicensed := true
 	isAuthEnabled := false
 	isVydonCloud := false
-	enforcedRbacClient, err := s.getEnforcedRbacClient(ctx, pgcontainer)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get enforced rbac client: %w", err)
-	}
+	enforcedRbacClient := s.getEnforcedRbacClient(ctx, pgcontainer)
 	return s.setupMux(
 		pgcontainer,
 		isAuthEnabled,
@@ -107,10 +103,7 @@ func (s *VydonApiTestClient) setupOssLicensedAuthMux(
 	isLicensed := true
 	isAuthEnabled := true
 	isVydonCloud := false
-	enforcedRbacClient, err := s.getEnforcedRbacClient(ctx, pgcontainer)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get enforced rbac client: %w", err)
-	}
+	enforcedRbacClient := s.getEnforcedRbacClient(ctx, pgcontainer)
 	return s.setupMux(
 		pgcontainer,
 		isAuthEnabled,
@@ -147,10 +140,7 @@ func (s *VydonApiTestClient) setupNeoCloudMux(
 	isLicensed := true
 	isAuthEnabled := true
 	isVydonCloud := true
-	enforcedRbacClient, err := s.getEnforcedRbacClient(ctx, pgcontainer)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get enforced rbac client: %w", err)
-	}
+	enforcedRbacClient := s.getEnforcedRbacClient(ctx, pgcontainer)
 	return s.setupMux(
 		pgcontainer,
 		isAuthEnabled,
@@ -355,6 +345,6 @@ func (s *VydonApiTestClient) setupMux(
 func (s *VydonApiTestClient) getEnforcedRbacClient(
 	_ context.Context,
 	_ *tcpostgres.PostgresTestContainer,
-) (rbac.Interface, error) {
-	return rbac.NewAllowAllClient(), nil
+) rbac.Interface {
+	return rbac.NewAllowAllClient()
 }

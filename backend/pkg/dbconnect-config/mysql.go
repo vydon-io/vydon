@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/go-sql-driver/mysql"
+	"github.com/spf13/viper"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	vydonerrors "github.com/vydon-io/vydon/internal/errors"
-	"github.com/spf13/viper"
 )
 
 const (
