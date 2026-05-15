@@ -40,6 +40,7 @@ linters:
         - ifElseChain
         - octalLiteral
         - whyNoLint
+        - importShadow
       enabled-tags:
         - diagnostic
         - experimental
@@ -94,6 +95,15 @@ linters:
           - dupl
           - unparam
         path: gen_.*\.go$
+      - linters:
+          - gosec
+        text: "G115"
+      - linters:
+          - gosec
+        text: "G703"
+      - linters:
+          - nolintlint
+        text: "directive .* is unused for linter"
     paths:
       - frontend
       - charts

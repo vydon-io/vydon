@@ -38,13 +38,10 @@ A Helm chart for the Vydon App
 | istio.enabled | bool | `false` | Whether or not to apply the default istio annotations/labels to the deployment |
 | jobHooks.enabled | bool | `false` | Enables Job Hooks on the frontend. Note: This will only work if it has also been enabled via the backend with a valid license |
 | nameOverride | string | `nil` | Override the name specified on the Chart, which defaults to .Chart.Name |
-| vydonApi.url | string | `"http://vydon-api"` | The URL to the Vydon API instance |
-| vydonCloud.enabled | bool | `false` | Whether or not this is VydonCloud |
 | nextAuthSecret | string | `"This is an example"` | next-auth secret that is used to encrypt the session cookie |
 | nextAuthUrl | string | `"http://localhost:3000"` | next-auth base url. Should be the public url for the application |
 | nextPublic.appBaseUrl | string | `"http://localhost:3000"` | next public app base url. Should be the public url for the application |
 | nodeSelector | object | `{}` | Any node selectors that should be applied to the deployment |
-| vydonEnv | string | `nil` | Mostly used by VydonCloud. Adds a special tag to the logging to determine what environment is running |
 | otel.enabled | bool | `false` | whether or not to enable open telemetry settings |
 | otel.otlpPort | int | `4317` | Specifies the port that otel is listening on that the service will export metrics and traces to |
 | podAnnotations | object | `{}` | Provide a map of pod annotations that will be attached to the deployment's pod template annotations |
@@ -64,3 +61,6 @@ A Helm chart for the Vydon App
 | tolerations | list | `[]` | Any tolerations that should be applied to the deployment |
 | unify.key | string | `nil` | Unify Key |
 | updateStrategy | string | `nil` | The strategy to use when rolling out new replicas |
+| vydonApi.url | string | `"http://vydon-api"` | The URL to the Vydon API instance |
+| vydonCloud.enabled | bool | `false` | Whether or not this is VydonCloud |
+| vydonEnv | string | `nil` | Mostly used by VydonCloud. Adds a special tag to the logging to determine what environment is running |
