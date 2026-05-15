@@ -1,13 +1,48 @@
 # Security Policy
 
-## Supported Versions
+## Supported versions
 
-It is recommended to use the latest version of Neosync to ensure you are up-to-date on all the latest security updates.
+Vydon is pre-1.0. We support the latest minor release. Older releases receive
+security patches only at maintainer discretion.
 
-## Reporting a Vulnerability
+## Reporting a vulnerability
 
-If you believe to have uncovered a vulnerability, please email security@neosync.dev.
+**Do not open a public issue, pull request, or discussion for a security
+vulnerability.**
 
-In the message, please provide as much detail as you can to give our engineers an easy path to reproducing the issue such that we may swiftly fix it.
+Use GitHub's [private vulnerability reporting][gh-pvr] for this repository:
 
-Please also note that this email address should be used only for undisclosed vulnerabilities. We ask that security problems are reported to us before disclosing it publicly.
+[gh-pvr]: https://github.com/vydon-io/vydon/security/advisories/new
+
+You will get an acknowledgment within **72 hours** and a substantive response
+within **7 business days**. We aim to ship a fix within **30 days** of
+confirmation for critical and high severity issues.
+
+Please include:
+
+- a description of the issue and its impact
+- a minimal reproduction (proof-of-concept, payload, or affected code path)
+- the version, deployment mode (local, Helm, Docker), and OS
+- any mitigations you are aware of
+
+## Scope
+
+In scope:
+
+- the `vydon` core services (backend, worker, frontend)
+- the `vydon` CLI and SDKs
+- the Helm charts and container images we publish
+- the connectors and transformers shipped in this repository
+
+Out of scope:
+
+- third-party dependencies (report upstream; CC us if helpful)
+- self-hosted deployments running on unsupported infrastructure
+- denial-of-service via resource exhaustion on default limits
+- vulnerabilities requiring physical access or compromised credentials
+- social engineering of contributors
+
+## Coordinated disclosure
+
+We follow a 90-day coordinated disclosure window. Credit is given to reporters
+in the published advisory unless you opt out.

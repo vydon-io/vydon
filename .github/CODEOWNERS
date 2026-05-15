@@ -1,0 +1,13 @@
+# Default owner for everything.
+* @pr-rnc
+
+# Build and CI configuration.
+/.github/                 @pr-rnc
+/.commitlintrc.yml        @pr-rnc
+/lefthook.yml             @pr-rnc
+/package.json             @pr-rnc
+
+# Security-sensitive files.
+/SECURITY.md              @pr-rnc
+/NOTICE                   @pr-rnc
+/LICENSE.md               @pr-rnc

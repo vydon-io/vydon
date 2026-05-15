@@ -1,0 +1,40 @@
+name: Feature request
+description: Propose a new capability or enhancement.
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before opening a feature request, check existing
+        [discussions](https://github.com/vydon-io/vydon/discussions) and
+        [issues](https://github.com/vydon-io/vydon/issues?q=is%3Aissue) to
+        avoid duplicates.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What problem are you trying to solve? Why does it matter?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: What should Vydon do? Be concrete. Sketch the API or UX if relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What other approaches did you consider and why are they insufficient?
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Real-world example, links to related work, prior art.
