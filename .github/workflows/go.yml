@@ -105,6 +105,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   cli-integration-tests:
+    if: ${{ vars.INTEGRATION_TEST_AWS_ROLE_ARN != '' }}
     name: CLI Integration Tests
     runs-on: ubuntu-latest
     permissions:

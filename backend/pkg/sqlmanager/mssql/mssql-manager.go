@@ -422,12 +422,12 @@ func (m *Manager) GetTableRowCount(
 	if whereClause != nil && *whereClause != "" {
 		query = query.Where(goqu.L(*whereClause))
 	}
-	sql, _, err := query.ToSQL()
+	statement, _, err := query.ToSQL()
 	if err != nil {
 		return 0, fmt.Errorf("unable to build table row count statement for mssql: %w", err)
 	}
 	var count int64
-	err = m.db.QueryRowContext(ctx, sql).Scan(&count)
+	err = m.db.QueryRowContext(ctx, statement).Scan(&count)
 	if err != nil {
 		return 0, fmt.Errorf("unable to query table row count for mssql: %w", err)
 	}

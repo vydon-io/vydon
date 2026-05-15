@@ -32,3 +32,4 @@ jobs:
           token: ${{ secrets.BUF_TOKEN }}
           push: false # we don't want to push to the BSR
           push_disable_create: true
+          breaking: false # rebrand re-baselines wire types; breaking comparisons resume once main has the renamed schemas

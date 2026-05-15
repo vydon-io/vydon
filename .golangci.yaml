@@ -88,6 +88,12 @@ linters:
           - staticcheck
           - whitespace
         path: ^mock_.*\.go$
+      - linters:
+          - goconst
+          - gocritic
+          - dupl
+          - unparam
+        path: gen_.*\.go$
     paths:
       - frontend
       - charts
