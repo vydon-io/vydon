@@ -1,0 +1,62 @@
+---
+description: Go conventions for Vydon backend, worker, cli and sdk/go
+globs: "**/*.go"
+alwaysApply: false
+---
+
+# Vydon Go Rules
+
+## Formatting
+
+- `gofmt` + `goimports` + `golines --max-len=140` are the source of truth.
+- `interface{}` is auto-rewritten to `any` by gofmt — write `any` directly.
+- Imports are grouped (stdlib / external / internal) separated by blank lines.
+
+## Linters (`.golangci.yaml`)
+
+`bodyclose`, `errcheck`, `forbidigo`, `goconst`, `gocritic`, `gosec`, `govet`, `ineffassign`, `misspell`, `nakedret`, `noctx`, `nolintlint`, `revive`, `staticcheck`, `unconvert`, `unparam`, `unused`, `usestdlibvars`, `whitespace`, `mnd`.
+
+- `gocyclo` complexity limit: 10.
+- `funlen` statement limit: 50.
+- `goconst` triggers after 10 occurrences.
+- `//nolint:<linter>` is acceptable when justified by a comment above; bare `//nolint` is rejected.
+
+## Errors
+
+- Wrap with `fmt.Errorf("context: %w", err)`. Never `errors.New(err.Error())`.
+- Check with `errors.Is` / `errors.As`. Never compare error strings.
+- Reserve `panic` for `init()` and contract violations. `log.Fatal` is allowed only in `main`.
+- Ignoring an error must be explicit: `_ = f()`.
+
+## Logging
+
+- `log/slog` only. No `log` stdlib, no `zap`, no `logrus`.
+- Always pass context: `logger.InfoContext(ctx, "msg", "key", value)`.
+- No `fmt.Println` in production code.
+
+## Concurrency
+
+- `ctx context.Context` is the first parameter and never stored in a struct.
+- Pair every `context.WithCancel` / `WithTimeout` with `defer cancel()` on the next line.
+- Use `errgroup.WithContext` instead of raw goroutines + `sync.WaitGroup`.
+- Channels in API signatures have explicit direction (`<-chan T`, `chan<- T`).
+
+## HTTP and SQL
+
+- `bodyclose` enforces `defer resp.Body.Close()` immediately after a successful HTTP call.
+- `noctx` enforces context-aware request constructors (`http.NewRequestWithContext`).
+- SQL goes through `sqlc`-generated queriers. No hand-built string concatenation in business code.
+- Use pointer types for nullable `Scan` targets.
+
+## Naming and structure
+
+- Packages: lowercase, short, no `_` or `-`. Files may use `kebab-case.go`.
+- Constructors `NewX` return `*X`.
+- Functional options use the `WithFoo(v T) Option` pattern that dominates `backend/pkg`.
+- Interface names describe capability (`Reader`, `SqlDatabase`), not the concrete type.
+- Sentinel errors: `var ErrFoo = errors.New("foo")`.
+
+## Generated code
+
+- `backend/gen/`, `mock_*.go`, and `sqlc`-generated files are read-only.
+- Re-run `buf generate`, `sqlc generate`, or `mockery` instead of editing by hand.

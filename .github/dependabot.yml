@@ -7,6 +7,10 @@ updates:
     labels:
       - dependencies
     directory: "/"
+    commit-message:
+      prefix: "build"
+      prefix-development: "build"
+      include: "scope"
     groups:
       golang-minor:
         update-types:
@@ -20,6 +24,10 @@ updates:
     labels:
       - dependencies
     directory: "tools"
+    commit-message:
+      prefix: "build"
+      prefix-development: "build"
+      include: "scope"
     groups:
       golang-minor:
         update-types:
@@ -28,12 +36,36 @@ updates:
     reviewers:
       - nickzelei
 
+  # Root npm tooling (commitlint, lefthook)
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    labels:
+      - dependencies
+    commit-message:
+      prefix: "build"
+      prefix-development: "build"
+      include: "scope"
+    groups:
+      npm-tooling:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+    versioning-strategy: increase
+
   - package-ecosystem: "npm"
     directory: "frontend"
     schedule:
       interval: "weekly"
     labels:
       - dependencies
+    commit-message:
+      prefix: "build"
+      prefix-development: "build"
+      include: "scope"
     groups:
       npm-development:
         dependency-type: development
@@ -55,6 +87,10 @@ updates:
       interval: "weekly"
     labels:
       - dependencies
+    commit-message:
+      prefix: "build"
+      prefix-development: "build"
+      include: "scope"
     groups:
       npm-all-dependencies:
         patterns:
@@ -72,6 +108,10 @@ updates:
       interval: "weekly"
     labels:
       - dependencies
+    commit-message:
+      prefix: "build"
+      prefix-development: "build"
+      include: "scope"
     groups:
       actions-minor:
         update-types:

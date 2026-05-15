@@ -1,74 +1,90 @@
 ---
-description: Prefer using sub-tests over table tests for easier readability and one-off testing.
+description: Sub-tests over table tests, testify assertions, Test_ prefix
 globs: **/*_test.go
 alwaysApply: false
 ---
 
-# Adding Go Tests
+# Vydon Go Test Rules
 
-- When generating tests for a single Go Test, prefer generating sub tests instead of the table or using loops
-- prefer to prefix the test name with `Test_` as we find it makes it easier to read. Example: `Test_MyFunction` instead of `TestMyFunction`.
+## Naming
 
-## Bad
+- Prefix test functions with `Test_` (underscore). Example: `Test_isTokenValid`, not `TestIsTokenValid`.
+- Sub-test names are short, lowercase, and describe the input or scenario (`"nil"`, `"expired"`, `"non-nil"`).
+
+## Structure
+
+- Prefer **sub-tests** with `t.Run(name, func(t *testing.T) { ... })` over table tests for one-off cases.
+- Use a table + loop **only** when there are six or more cases sharing the exact same assertion shape; otherwise sub-tests stay clearer.
+- Always call `t.Helper()` as the first line of helper functions.
+
+### Bad
 
 ```go
 func Test_isTokenValid(t *testing.T) {
-  type testcase struct {
-    token     *string
-		expiresAt *time.Time
-		expBuffer time.Duration
-
-		expected bool
-	}
-
-	testcases := []testcase{
-    {token: nil, expiresAt: nil, expected: false},
-		{token: ptr("foo"), expiresAt: nil, expected: false},
-	}
-
-	for _, testcase := range testcases {
-    t.Run(t.Name(), func(t *testing.T) {
-      assert.Equal(t, testcase.expected, isTokenValid(testcase.token, testcase.expiresAt, testcase.expBuffer))
-		})
-	}
+    type testcase struct {
+        token     *string
+        expiresAt *time.Time
+        expBuffer time.Duration
+        expected  bool
+    }
+    testcases := []testcase{
+        {token: nil, expiresAt: nil, expected: false},
+        {token: ptr("foo"), expiresAt: nil, expected: false},
+    }
+    for _, tc := range testcases {
+        t.Run(t.Name(), func(t *testing.T) {
+            assert.Equal(t, tc.expected, isTokenValid(tc.token, tc.expiresAt, tc.expBuffer))
+        })
+    }
 }
 ```
 
-## Good
+### Good
+
 ```go
 func Test_isTokenValid(t *testing.T) {
-  t.Run("nil", func(t *testing.T) {
-    assert.Equal(t, false, isTokenValid(nil, nil, nil))
-  })
+    t.Run("nil", func(t *testing.T) {
+        assert.False(t, isTokenValid(nil, nil, 0))
+    })
 
-  t.Run("non-nil", func(t *testing.T {
-    token := "foo"
-    assert.Equal(t, false, isTokenValid(&token, nil, nil))
-  })
+    t.Run("non-nil without expiry", func(t *testing.T) {
+        token := "foo"
+        assert.False(t, isTokenValid(&token, nil, 0))
+    })
 }
 ```
 
-# Assertion style
+## Assertions
 
-- When generating test assertions, prefer using `require` or `assert` from `stretchr` instead of using an if condition.
+- Use `github.com/stretchr/testify/require` for fatal checks and `assert` for non-fatal ones.
+- Never write `if err != nil { t.Fatal(...) }`.
 
-## Bad
+### Bad
 
 ```go
 func Test_isOk(t *testing.T) {
-	isOk := false
-
-	if !isOk {
-		t.Fatal("isOk is false")
-	}
+    isOk := false
+    if !isOk {
+        t.Fatal("isOk is false")
+    }
 }
 ```
 
-## Good
+### Good
 
 ```go
 func Test_isOk(t *testing.T) {
-	isOk := false
-	require.True(t, isOk, "is not okay")
+    require.True(t, isOk(), "expected isOk to return true")
 }
 ```
+
+## Context and cleanup
+
+- Use `t.Context()` (Go 1.24+) or `context.Background()` for the root context inside a test.
+- Register cleanup with `t.Cleanup(func() { ... })` rather than ad-hoc `defer`s when ordering matters.
+
+## What not to test
+
+- Do not test third-party libraries.
+- Do not assert on log output unless the log is part of the contract.
+- Generated code (`backend/gen/`) is excluded from coverage.

@@ -1,0 +1,13 @@
+{
+  "name": "vydon-tooling",
+  "private": true,
+  "description": "Root tooling (commitlint, lefthook). Not a workspace root for frontend; see frontend/package.json.",
+  "scripts": {
+    "commitlint": "commitlint"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "lefthook": "^1.7.18"
+  }
+}

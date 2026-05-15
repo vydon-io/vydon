@@ -1,0 +1,19 @@
+commit-msg:
+  commands:
+    commitlint:
+      run: npx --no -- commitlint --edit {1}
+    no-automated-trailers:
+      run: |
+        if grep -Eqi '^Co-Authored-By:.+(bot|noreply|@users\.noreply\.github\.com)' "{1}"; then
+          echo "✖ Automated 'Co-Authored-By' trailers are not allowed."
+          echo "  Keep authorship single and human."
+          exit 1
+        fi
+        if grep -Eqi '^(Generated|Created) (with|by)\b' "{1}"; then
+          echo "✖ Automated generation trailers are not allowed."
+          exit 1
+        fi
+        if grep -q '🤖' "{1}"; then
+          echo "✖ Robot emoji is not allowed in commit messages."
+          exit 1
+        fi

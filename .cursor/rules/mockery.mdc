@@ -1,14 +1,15 @@
 ---
-description: Lays out Mockery best practices
+description: Mockery .EXPECT() syntax with explicit call counts
 globs: **/*_test.go
 alwaysApply: false
 ---
-## Use .EXPECT Instead of .ON Syntax when using Mocks and mockery
 
-- Mockery has two types of mocking syntax. .On("MyFunction") and .EXPECT().MyFunction
-- Always prefer to use .EXPECT() as it is more type safe
-- .On is worse because you provide the function as a string and do not benefit from type safety and signature changes.
-- If there are cases where .On makes more sense for reasons unknown that you are aware of, prefer that.
+# Vydon Mockery Rules
+
+## Use `.EXPECT()` exclusively
+
+- Mockery exposes two syntaxes: `.On("MyFunction", ...)` (string-based) and `.EXPECT().MyFunction(...)` (type-safe).
+- Always use `.EXPECT()`. The string form silently breaks when signatures change.
 
 ### Bad
 
@@ -24,7 +25,17 @@ encryptor := sym_encrypt.NewMockInterface(t)
 encryptor.EXPECT().Encrypt(mock.Anything).Return("token", nil).Once()
 ```
 
-## Use call counts after function mocks
+## Always declare call counts
 
-- For all mocks, prefer to also include the amount of times expected that it should be called.
-  - Ex: `.Once()`, `.Twice()`, etc.
+- Append `.Once()`, `.Twice()`, `.Times(n)`, or `.Maybe()` to every expectation.
+- A missing count masks regressions where a mock is invoked more (or fewer) times than expected.
+
+## Mock construction
+
+- Construct mocks with `NewMock<Iface>(t)` so the testify cleanup runs automatically.
+- Do not stub return values inline at construction time; assign them per sub-test for clarity.
+
+## Mock file location
+
+- Generated mocks live next to the interface source as `mock_<InterfaceName>.go`.
+- Never edit a `mock_*.go` file by hand. Re-run `mockery` after interface changes.

@@ -1,0 +1,67 @@
+---
+description: Conventional Commits, atomic commits, neutral authorship
+globs: "**/*"
+alwaysApply: true
+---
+
+# Vydon Commit Rules
+
+See `CONTRIBUTING.md` for the contributor entry point.
+
+## Format
+
+```
+<type>(<scope>): <subject>
+
+<body>
+
+<footer>
+```
+
+- `type` (required): `feat`, `fix`, `perf`, `refactor`, `docs`, `test`, `build`, `ci`, `chore`, `style`, `revert`.
+- `scope` (optional, lowercase): `backend`, `worker`, `frontend`, `cli`, `sdk`, `charts`, `terraform`, `docs`, `ci`, or a package name.
+- `subject`: imperative present (`add`, not `adds`/`added`), lowercase first letter, no trailing period, ≤ 72 characters.
+- `body` (optional): explains **why**, not what. Wrapped at 72 columns.
+- `footer` (optional): `Refs: VYD-201`, `Closes: #123`, or `BREAKING CHANGE: ...`.
+
+## Atomicity
+
+- One intent per commit. If the subject contains "and", split it.
+- Refactor first, feature second. Never bundle.
+- Formatting and lint auto-fixes go into a separate `style:` commit.
+
+## Banned
+
+- Emojis of any kind.
+- Automated authorship trailers (`Co-Authored-By:` with `bot`, `noreply`, or `@users.noreply.github.com`), `Generated with ...`, `🤖`. The local `commit-msg` hook rejects them.
+- Phrases like "This commit introduces", "Adds the ability to", "Implements a robust solution".
+- `WIP`, `fix typo`, `misc`, `update`, `final`.
+- Bullet lists in the subject line.
+
+## Examples
+
+Good:
+
+```
+feat(sqlmanager): support deferrable constraints on upsert
+
+Postgres on-conflict updates were dropping rows when the target had
+deferrable constraints. Defer the checks until commit so all conflicts
+resolve in a single pass.
+
+Refs: VYD-209
+```
+
+```
+refactor(backend): replace interface{} with any
+```
+
+Bad:
+
+```
+✨ Added a new feature for handling deferrable constraints
+```
+
+```
+fix stuff
+```
