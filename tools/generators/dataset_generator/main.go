@@ -110,7 +110,9 @@ func main() {
 		panic(err)
 	}
 	for _, idx := range sortedLengthIdxKeys {
-		_, err = outputFile.WriteString(fmt.Sprintf("\t%d,\n", idx))
+		if _, err = outputFile.WriteString(fmt.Sprintf("\t%d,\n", idx)); err != nil {
+			panic(err)
+		}
 	}
 	_, err = outputFile.WriteString("}\n")
 	if err != nil {

@@ -127,7 +127,7 @@ function ApiKeyDetails(props: ApiKeyDetailsProps): ReactElement {
             <Input value={keyValue} disabled={true} />
             <CopyButton
               buttonVariant="outline"
-              textToCopy={keyValue ?? ''}
+              textToCopy={keyValue}
               onCopiedText="Success!"
               onHoverText="Copy the API key"
             />

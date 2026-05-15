@@ -35,9 +35,7 @@ export default function ValidateQueryErrorAlert(
       {rowCountError && (
         <Alert variant="destructive">
           <AlertTitle>Unable to get table row count</AlertTitle>
-          <AlertDescription>
-            {rowCountError ? rowCountError : 'unknown error message'}
-          </AlertDescription>
+          <AlertDescription>{rowCountError}</AlertDescription>
         </Alert>
       )}
     </div>

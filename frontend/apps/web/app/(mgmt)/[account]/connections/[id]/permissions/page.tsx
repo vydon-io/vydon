@@ -107,7 +107,7 @@ export default function PermissionsPage(props: PageProps) {
       </div>
     );
   }
-  if (!isLoading && !data?.connection) {
+  if (!data?.connection) {
     return <Error statusCode={404} />;
   }
 

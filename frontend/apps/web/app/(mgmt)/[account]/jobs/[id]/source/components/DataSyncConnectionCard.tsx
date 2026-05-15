@@ -1351,10 +1351,10 @@ async function getUpdatedValues(
   );
 
   const values = {
-    sourceId: connectionId || '',
+    sourceId: connectionId,
     sourceOptions: {},
     mappings,
-    connectionId: connectionId || '',
+    connectionId: connectionId,
     destinationOptions: [],
   };
 

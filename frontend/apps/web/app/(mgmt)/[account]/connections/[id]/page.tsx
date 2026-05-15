@@ -47,7 +47,7 @@ export default function ConnectionPage(props: PageProps): ReactElement {
       </div>
     );
   }
-  if (!isLoading && !data?.connection) {
+  if (!data?.connection) {
     return <Error statusCode={404} />;
   }
 

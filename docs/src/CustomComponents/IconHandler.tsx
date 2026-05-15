@@ -191,8 +191,6 @@ export function IconHandler(name: string): ReactElement {
       return <SiJavascript />;
     case 'Foreign Keys':
       return <CiViewTable />;
-    case 'Foreign Keys':
-      return <CiViewTable />;
     case 'Virtual Foreign Keys':
       return <AiOutlinePartition />;
     case 'Circular Dependencies':

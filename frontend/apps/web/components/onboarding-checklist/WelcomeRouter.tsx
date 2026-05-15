@@ -153,7 +153,7 @@ export default function WelcomeRouter({
           onClick={() => {
             setIsDialogOpen(false);
             completeForm();
-            onPreviousStep;
+            onPreviousStep();
             router.push(
               href ??
                 `/${account?.name}/new/job/define?${dataSyncParams.toString()}`

@@ -35,7 +35,7 @@ func (d *VydonDb) SetUserByAuthSub(
 					return err
 				}
 				userResp = &user
-				association, err = d.Q.CreateIdentityProviderAssociation(ctx, dbtx, db_queries.CreateIdentityProviderAssociationParams{
+				_, err = d.Q.CreateIdentityProviderAssociation(ctx, dbtx, db_queries.CreateIdentityProviderAssociationParams{
 					UserID:      user.ID,
 					ProviderSub: authSub,
 				})
