@@ -28,8 +28,7 @@ frontend/out
 # contentlayer
 .contentlayer
 
-/package.json
-/package-lock.json
+lefthook-local.yml
 
 env/
 
@@ -45,3 +44,5 @@ neosync_cloud_ca.key
 .env.app.local
 .env.api.local
 .env.worker.local
+
+*.db

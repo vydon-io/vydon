@@ -1,0 +1,41 @@
+# <type>(<scope>): <subject>          # 72 chars max, lowercase, imperative
+#
+# <body>                              # Why, not what. Wrap at 72 chars.
+#
+# <footer>                            # Closes: #123
+#                                     # BREAKING CHANGE: <description>
+# ----------------------------------------------------------------------
+# Allowed <type> values:
+#   feat      new user-facing feature
+#   fix       bug fix
+#   perf      performance improvement
+#   refactor  code change without behavior change
+#   docs      documentation only
+#   test      adding or correcting tests only
+#   build     build system or dependency change
+#   ci        CI/CD pipelines and workflows
+#   chore     internal housekeeping, renames, scripts
+#   style     formatting only — no logic change
+#   revert    reverts a previous commit
+#
+# Allowed <scope> examples:
+#   backend, worker, frontend, cli, sdk, charts, terraform, docs, ci
+#   or a precise package: sqlmanager, transformers, ...
+#
+# Subject rules:
+#   - imperative present: "add", "fix", "remove" — not "added", "adds"
+#   - lowercase first letter, no trailing period
+#   - <= 72 chars (50 ideal)
+#
+# Body rules:
+#   - blank line between subject and body
+#   - explain the WHY, not the WHAT
+#   - wrap at 72 chars
+#
+# Forbidden:
+#   - emojis (✨, 🎉, :sparkles:)
+#   - vague subjects (WIP, update, misc, final, fix typo)
+#   - past tense or 3rd person ("added", "adds")
+#   - automated authorship trailers in single-author commits
+#
+# Activate locally:  git config commit.template .gitmessage
