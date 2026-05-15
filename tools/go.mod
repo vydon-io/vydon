@@ -1,14 +1,14 @@
-module github.com/nucleuscloud/neosync/tools
+module github.com/vydon-io/vydon/tools
 
 go 1.24.1
 
-replace github.com/nucleuscloud/neosync => ../
+replace github.com/vydon-io/vydon => ../
 
 require (
 	github.com/antlr4-go/antlr/v4 v4.13.1
-	github.com/nucleuscloud/go-antlrv4-parser v0.0.0-20240830015744-041b46c70aa5
-	github.com/nucleuscloud/neosync v0.5.1
 	github.com/pganalyze/pg_query_go/v5 v5.1.0
+	github.com/vydon-io/go-antlrv4-parser v0.0.0-20260515121122-35ca9c3d1ebe
+	github.com/vydon-io/vydon v0.5.1
 )
 
 require (

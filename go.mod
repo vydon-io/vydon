@@ -23,7 +23,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.33.17
 	github.com/aws/smithy-go v1.22.3
 	github.com/bufbuild/protovalidate-go v0.9.2
-	github.com/casbin/casbin/v2 v2.104.0
 	github.com/cenkalti/backoff/v4 v4.3.0
 	github.com/cenkalti/backoff/v5 v5.0.2
 	github.com/charmbracelet/bubbles v0.20.0
@@ -46,10 +45,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/microsoft/go-mssqldb v1.8.0
 	github.com/neilotoole/slogt v1.1.0
-	github.com/nucleuscloud/go-antlrv4-parser v0.0.0-20240830015744-041b46c70aa5
-	github.com/nucleuscloud/sql-adapter v0.0.0-20250327235651-6f5a05a7cedc
 	github.com/oapi-codegen/oapi-codegen/v2 v2.4.1
-	github.com/oapi-codegen/runtime v1.1.1
 	github.com/openai/openai-go v0.1.0-alpha.65
 	github.com/pganalyze/pg_query_go/v5 v5.1.0
 	github.com/prometheus/client_golang v1.21.1
@@ -58,7 +54,6 @@ require (
 	github.com/redpanda-data/benthos/v4 v4.45.1
 	github.com/redpanda-data/connect/v4 v4.49.1
 	github.com/rodaine/table v1.3.0
-	github.com/slack-go/slack v0.16.0
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/viper v1.19.0
 	github.com/stretchr/testify v1.10.0
@@ -69,9 +64,9 @@ require (
 	github.com/testcontainers/testcontainers-go/modules/mysql v0.35.0
 	github.com/testcontainers/testcontainers-go/modules/postgres v0.35.0
 	github.com/testcontainers/testcontainers-go/modules/redis v0.35.0
-	github.com/tiktoken-go/tokenizer v0.6.0
 	github.com/toqueteos/webbrowser v1.2.0
 	github.com/veqryn/slog-dedup v0.5.0
+	github.com/vydon-io/go-antlrv4-parser v0.0.0-20260515121122-35ca9c3d1ebe
 	github.com/xwb1989/sqlparser v0.0.0-20180606152119-120387863bf2
 	github.com/zeebo/assert v1.3.1
 	go.mongodb.org/mongo-driver v1.17.3
@@ -147,7 +142,6 @@ require (
 	github.com/PuerkitoBio/rehttp v1.4.0 // indirect
 	github.com/anmitsu/go-shlex v0.0.0-20200514113438-38f4b401e2be // indirect
 	github.com/apache/arrow/go/v15 v15.0.2 // indirect
-	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aws/aws-lambda-go v1.47.0 // indirect
 	github.com/aws/aws-sdk-go v1.55.5 // indirect
@@ -176,8 +170,6 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/ssooidc v1.29.1 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
-	github.com/bmatcuk/doublestar/v4 v4.7.1 // indirect
-	github.com/casbin/govaluate v1.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/charmbracelet/colorprofile v0.2.3-0.20250311203215-f60798e515dc // indirect
 	github.com/charmbracelet/x/ansi v0.8.0 // indirect
