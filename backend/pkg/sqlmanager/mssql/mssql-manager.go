@@ -13,7 +13,7 @@ import (
 	mysql_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/mysql"
 	mssql_queries "github.com/nucleuscloud/neosync/backend/pkg/mssql-querier"
 	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	ee_sqlmanager_mssql "github.com/nucleuscloud/neosync/internal/ee/mssql-manager"
+	ee_sqlmanager_mssql "github.com/nucleuscloud/neosync/internal/mssqlmanager"
 	"github.com/nucleuscloud/neosync/internal/gotypeutil"
 	"github.com/nucleuscloud/neosync/internal/neosyncdb"
 	"golang.org/x/sync/errgroup"
@@ -508,4 +508,60 @@ func BuildMssqlSetIdentityInsertStatement(
 		enabledKeyword = "ON"
 	}
 	return fmt.Sprintf("SET IDENTITY_INSERT %q.%q %s;", schema, table, enabledKeyword)
+}
+
+// GetDataTypesByTables returns empty data type information. A native
+// implementation will replace this stub when the OSS MSSQL provider is
+// fleshed out.
+func (m *Manager) GetDataTypesByTables(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) (*sqlmanager_shared.AllTableDataTypes, error) {
+	return &sqlmanager_shared.AllTableDataTypes{}, nil
+}
+
+// GetSchemaInitStatements returns no init statements. A native
+// implementation will replace this stub.
+func (m *Manager) GetSchemaInitStatements(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) ([]*sqlmanager_shared.InitSchemaStatements, error) {
+	return nil, nil
+}
+
+// GetSchemaTableTriggers returns no triggers. A native implementation
+// will replace this stub.
+func (m *Manager) GetSchemaTableTriggers(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) ([]*sqlmanager_shared.TableTrigger, error) {
+	return nil, nil
+}
+
+// GetSequencesByTables returns no sequences. MSSQL sequences are not
+// modeled in the OSS distribution yet.
+func (m *Manager) GetSequencesByTables(
+	_ context.Context,
+	_ string,
+	_ []string,
+) ([]*sqlmanager_shared.DataType, error) {
+	return nil, nil
+}
+
+// GetSchemaTableDataTypes returns empty data type info. This method is
+// scheduled to be removed in favor of GetDataTypesByTables.
+func (m *Manager) GetSchemaTableDataTypes(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) (*sqlmanager_shared.SchemaTableDataTypeResponse, error) {
+	return &sqlmanager_shared.SchemaTableDataTypeResponse{}, nil
+}
+
+// GetTableInitStatements returns no init statements. A native
+// implementation will replace this stub.
+func (m *Manager) GetTableInitStatements(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) ([]*sqlmanager_shared.TableInitStatement, error) {
+	return nil, nil
 }

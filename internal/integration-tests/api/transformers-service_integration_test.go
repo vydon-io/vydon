@@ -5,7 +5,7 @@ import (
 
 	"connectrpc.com/connect"
 	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	presidioapi "github.com/nucleuscloud/neosync/internal/ee/presidio"
+	presidioapi "github.com/nucleuscloud/neosync/internal/piidetect/presidio"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )

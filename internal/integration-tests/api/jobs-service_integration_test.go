@@ -12,7 +12,7 @@ import (
 	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	integrationtests_test "github.com/nucleuscloud/neosync/backend/pkg/integration-test"
-	piidetect_table_activities "github.com/nucleuscloud/neosync/worker/pkg/workflows/ee/piidetect/workflows/table/activities"
+	piidetect_table_activities "github.com/nucleuscloud/neosync/worker/pkg/workflows/piidetect/table/activities"
 	"github.com/stretchr/testify/require"
 )
 

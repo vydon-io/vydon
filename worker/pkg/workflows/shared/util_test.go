@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/nucleuscloud/neosync/internal/testutil"
-	accounthook_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/ee/account_hooks/workflow"
+	accounthook_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/account_hooks/workflow"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"

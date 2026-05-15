@@ -43,8 +43,8 @@ import (
 	"github.com/openai/openai-go/option"
 
 	datasync_workflow_register "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/workflow/register"
-	accounthook_workflow_register "github.com/nucleuscloud/neosync/worker/pkg/workflows/ee/account_hooks/workflow/register"
-	piidetect_workflow_register "github.com/nucleuscloud/neosync/worker/pkg/workflows/ee/piidetect/workflows/register"
+	accounthook_workflow_register "github.com/nucleuscloud/neosync/worker/pkg/workflows/account_hooks/workflow/register"
+	piidetect_workflow_register "github.com/nucleuscloud/neosync/worker/pkg/workflows/piidetect/register"
 	tablesync_workflow_register "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/workflow/register"
 	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"

@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/uuid"
 	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	presidioapi "github.com/nucleuscloud/neosync/internal/ee/presidio"
-	ee_transformer_fns "github.com/nucleuscloud/neosync/internal/ee/transformers/functions"
+	presidioapi "github.com/nucleuscloud/neosync/internal/piidetect/presidio"
+	ee_transformer_fns "github.com/nucleuscloud/neosync/internal/transformers/functions"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )

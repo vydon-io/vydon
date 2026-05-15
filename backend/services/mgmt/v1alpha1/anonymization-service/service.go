@@ -4,7 +4,7 @@ import (
 	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	"github.com/nucleuscloud/neosync/backend/internal/userdata"
 	"github.com/nucleuscloud/neosync/internal/license"
-	presidioapi "github.com/nucleuscloud/neosync/internal/ee/presidio"
+	presidioapi "github.com/nucleuscloud/neosync/internal/piidetect/presidio"
 	"github.com/nucleuscloud/neosync/internal/neosyncdb"
 	"go.opentelemetry.io/otel/metric"
 )
