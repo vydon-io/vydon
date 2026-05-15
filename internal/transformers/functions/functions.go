@@ -43,7 +43,7 @@ type mockT interface {
 
 func NewMockVydonOperatorApi(t mockT) *MockVydonOperatorApi {
 	m := &MockVydonOperatorApi{}
-	m.Mock.Test(t)
+	m.Test(t)
 	t.Cleanup(func() { m.AssertExpectations(t) })
 	return m
 }

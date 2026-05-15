@@ -183,19 +183,16 @@ func (rc *RunConfig) String() string {
 			fmt.Fprintf(&sb, "    [%d] Root: %s, Subset: %s\n", i, sp.Root, sp.Subset)
 			sb.WriteString("    JoinSteps:\n")
 			for j, js := range sp.JoinSteps {
-				sb.WriteString(
-					fmt.Sprintf("      [%d] FromKey: %s, ToKey: %s\n", j, js.FromKey, js.ToKey),
-				)
+				fmt.Fprintf(&sb, "      [%d] FromKey: %s, ToKey: %s\n", j, js.FromKey, js.ToKey)
 				if js.ForeignKey != nil {
-					sb.WriteString(
-						fmt.Sprintf(
-							"        FK: Columns: %v, NotNullable: %v, ReferenceSchema: %s, ReferenceTable: %s, ReferenceColumns: %v\n",
-							js.ForeignKey.Columns,
-							js.ForeignKey.NotNullable,
-							js.ForeignKey.ReferenceSchema,
-							js.ForeignKey.ReferenceTable,
-							js.ForeignKey.ReferenceColumns,
-						),
+					fmt.Fprintf(
+						&sb,
+						"        FK: Columns: %v, NotNullable: %v, ReferenceSchema: %s, ReferenceTable: %s, ReferenceColumns: %v\n",
+						js.ForeignKey.Columns,
+						js.ForeignKey.NotNullable,
+						js.ForeignKey.ReferenceSchema,
+						js.ForeignKey.ReferenceTable,
+						js.ForeignKey.ReferenceColumns,
 					)
 				}
 			}

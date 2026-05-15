@@ -6,10 +6,10 @@ import (
 	"log/slog"
 	"os"
 
-	neomigrate "github.com/vydon-io/vydon/internal/migrate"
-	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	neomigrate "github.com/vydon-io/vydon/internal/migrate"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 func NewCmd() *cobra.Command {

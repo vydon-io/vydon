@@ -1,9 +1,9 @@
 package migrate_cmd
 
 import (
+	"github.com/spf13/cobra"
 	down_cmd "github.com/vydon-io/vydon/backend/internal/cmds/mgmt/migrate/down"
 	up_cmd "github.com/vydon-io/vydon/backend/internal/cmds/mgmt/migrate/up"
-	"github.com/spf13/cobra"
 )
 
 func NewCmd() *cobra.Command {
