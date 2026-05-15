@@ -6,8 +6,8 @@ import (
 	"log/slog"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 )
 
 const Wildcard = "*"

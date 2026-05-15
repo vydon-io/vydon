@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	accounthooks "github.com/nucleuscloud/neosync/backend/internal/hooks/accounts"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	accounthooks "github.com/vydon-io/vydon/backend/internal/hooks/accounts"
 )
 
 type Service struct {

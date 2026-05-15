@@ -9,10 +9,10 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	integrationtests_test "github.com/nucleuscloud/neosync/backend/pkg/integration-test"
-	piidetect_table_activities "github.com/nucleuscloud/neosync/worker/pkg/workflows/piidetect/table/activities"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	integrationtests_test "github.com/vydon-io/vydon/backend/pkg/integration-test"
+	piidetect_table_activities "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/table/activities"
 	"github.com/stretchr/testify/require"
 )
 

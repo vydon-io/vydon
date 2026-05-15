@@ -7,14 +7,14 @@ import (
 	"os"
 	"path/filepath"
 
-	accounts_cmd "github.com/nucleuscloud/neosync/cli/internal/cmds/neosync/accounts"
-	connections_cmd "github.com/nucleuscloud/neosync/cli/internal/cmds/neosync/connections"
-	jobs_cmd "github.com/nucleuscloud/neosync/cli/internal/cmds/neosync/jobs"
-	login_cmd "github.com/nucleuscloud/neosync/cli/internal/cmds/neosync/login"
-	sync_cmd "github.com/nucleuscloud/neosync/cli/internal/cmds/neosync/sync"
-	version_cmd "github.com/nucleuscloud/neosync/cli/internal/cmds/neosync/version"
-	whoami_cmd "github.com/nucleuscloud/neosync/cli/internal/cmds/neosync/whoami"
-	"github.com/nucleuscloud/neosync/cli/internal/version"
+	accounts_cmd "github.com/vydon-io/vydon/cli/internal/cmds/neosync/accounts"
+	connections_cmd "github.com/vydon-io/vydon/cli/internal/cmds/neosync/connections"
+	jobs_cmd "github.com/vydon-io/vydon/cli/internal/cmds/neosync/jobs"
+	login_cmd "github.com/vydon-io/vydon/cli/internal/cmds/neosync/login"
+	sync_cmd "github.com/vydon-io/vydon/cli/internal/cmds/neosync/sync"
+	version_cmd "github.com/vydon-io/vydon/cli/internal/cmds/neosync/version"
+	whoami_cmd "github.com/vydon-io/vydon/cli/internal/cmds/neosync/whoami"
+	"github.com/vydon-io/vydon/cli/internal/version"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"google.golang.org/grpc/metadata"
@@ -25,7 +25,7 @@ const (
 	cliSettingsFileNameNoExt = "config"
 	cliSettingsFileExt       = "yaml"
 
-	apiKeyEnvVarName = "NEOSYNC_API_KEY" //nolint:gosec
+	apiKeyEnvVarName = "VYDON_API_KEY" //nolint:gosec
 	apiKeyFlag       = "api-key"
 )
 
@@ -124,7 +124,7 @@ func initConfig(cfgFilePath string) {
 		}
 
 		fullNeosyncSettingsDir := filepath.Join(home, neosyncDirName)
-		neosyncConfigDir := os.Getenv("NEOSYNC_CONFIG_DIR") // helpful for tools such as direnv and people who want it somewhere interesting
+		neosyncConfigDir := os.Getenv("VYDON_CONFIG_DIR") // helpful for tools such as direnv and people who want it somewhere interesting
 		xdgConfigHome := os.Getenv("XDG_CONFIG_HOME")       // linux users expect this to be respected
 
 		viper.AddConfigPath(".")

@@ -31,7 +31,7 @@ import {
   PostgresSourceConnectionOptions_NewColumnAdditionStrategySchema,
   TransformerConfig,
   TransformerConfigSchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import * as Yup from 'yup';
 import { getDurationValidateFn } from './number';
 

@@ -11,9 +11,9 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/builder"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
-	neosync_types "github.com/nucleuscloud/neosync/internal/types"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/builder"
+	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
+	neosync_types "github.com/vydon-io/vydon/internal/types"
 )
 
 type PostgresMapper struct{}

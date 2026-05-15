@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"connectrpc.com/connect"
-	auth_apikey "github.com/nucleuscloud/neosync/backend/internal/auth/apikey"
+	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
 )
 
 type AuthClient interface {

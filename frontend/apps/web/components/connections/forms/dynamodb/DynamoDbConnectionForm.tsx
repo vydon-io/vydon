@@ -2,7 +2,7 @@ import { buildConnectionConfigDynamoDB } from '@/app/(mgmt)/[account]/connection
 import { DynamoDbFormValues } from '@/yup-validations/connections';
 
 import SkeletonForm from '@/components/skeleton/SkeletonForm';
-import { Connection } from '@neosync/sdk';
+import { Connection } from '@vydon/sdk';
 import { ReactElement } from 'react';
 import { ConnectionFormProps } from '../types';
 import { useConnection } from '../useConnection';

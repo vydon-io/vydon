@@ -7,11 +7,11 @@ import (
 	"net/http"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/cli/internal/userconfig"
-	"github.com/nucleuscloud/neosync/cli/internal/version"
-	http_client "github.com/nucleuscloud/neosync/internal/http/client"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/cli/internal/userconfig"
+	"github.com/vydon-io/vydon/cli/internal/version"
+	http_client "github.com/vydon-io/vydon/internal/http/client"
 	"github.com/spf13/viper"
 )
 
@@ -41,7 +41,7 @@ var defaultBaseUrl string = "http://localhost:8080"
 
 // Returns the neosync url found in the environment, otherwise defaults to localhost
 func GetNeosyncUrl() string {
-	baseurl := viper.GetString("NEOSYNC_API_URL")
+	baseurl := viper.GetString("VYDON_API_URL")
 	if baseurl == "" {
 		return defaultBaseUrl
 	}

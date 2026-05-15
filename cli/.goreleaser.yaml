@@ -16,7 +16,7 @@ builds:
       - arm64
 
     ldflags:
-      - -s -w -X 'github.com/nucleuscloud/neosync/cli/internal/version.buildDate={{.Date}}' -X 'github.com/nucleuscloud/neosync/cli/internal/version.gitCommit={{.Commit}}' -X 'github.com/nucleuscloud/neosync/cli/internal/version.gitVersion={{.Version}}' -X 'github.com/nucleuscloud/neosync/cli/internal/auth.defaultBaseUrl={{ .Env.NEOSYNC_BASE_URL }}'
+      - -s -w -X 'github.com/nucleuscloud/neosync/cli/internal/version.buildDate={{.Date}}' -X 'github.com/nucleuscloud/neosync/cli/internal/version.gitCommit={{.Commit}}' -X 'github.com/nucleuscloud/neosync/cli/internal/version.gitVersion={{.Version}}' -X 'github.com/nucleuscloud/neosync/cli/internal/auth.defaultBaseUrl={{ .Env.VYDON_BASE_URL }}'
 
     main: ./cmd/neosync
 
@@ -80,7 +80,7 @@ aurs:
 
 dockers:
   - image_templates:
-      - "ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64"
+      - "ghcr.io/vydon-io/neosync/cli:{{ .Version }}-amd64"
     use: buildx
     dockerfile: Dockerfile.goreleaser
     build_flag_templates:
@@ -93,7 +93,7 @@ dockers:
       - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
   - image_templates:
-      - "ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64"
+      - "ghcr.io/vydon-io/neosync/cli:{{ .Version }}-arm64"
     use: buildx
     dockerfile: Dockerfile.goreleaser
     build_flag_templates:
@@ -107,23 +107,23 @@ dockers:
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
 
 docker_manifests:
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}
+  - name_template: ghcr.io/vydon-io/neosync/cli:{{ .Version }}
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:latest
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-arm64
+  - name_template: ghcr.io/vydon-io/neosync/cli:latest
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:{{ .Tag }}
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-arm64
+  - name_template: ghcr.io/vydon-io/neosync/cli:{{ .Tag }}
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:v{{ .Major }}
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-arm64
+  - name_template: ghcr.io/vydon-io/neosync/cli:v{{ .Major }}
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:v{{ .Major }}.{{ .Minor }}
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-arm64
+  - name_template: ghcr.io/vydon-io/neosync/cli:v{{ .Major }}.{{ .Minor }}
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/neosync/cli:{{ .Version }}-arm64

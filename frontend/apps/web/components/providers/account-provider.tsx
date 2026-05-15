@@ -2,7 +2,7 @@
 import { useNeosyncUser } from '@/libs/hooks/useNeosyncUser';
 import { getSingleOrUndefined } from '@/libs/utils';
 import { useQuery } from '@connectrpc/connect-query';
-import { UserAccount, UserAccountService } from '@neosync/sdk';
+import { UserAccount, UserAccountService } from '@vydon/sdk';
 import { useParams, useRouter } from 'next/navigation';
 import {
   ReactElement,

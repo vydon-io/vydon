@@ -1,4 +1,4 @@
-import { Job } from '@neosync/sdk';
+import { Job } from '@vydon/sdk';
 
 export function isDataGenJob(job?: Job): boolean {
   return job?.source?.options?.config?.case === 'generate';

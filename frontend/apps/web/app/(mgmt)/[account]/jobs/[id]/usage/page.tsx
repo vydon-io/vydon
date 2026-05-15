@@ -12,7 +12,7 @@ import {
   periodToDateRange,
 } from '@/components/usage/util';
 import { useGetSystemAppConfig } from '@/libs/hooks/useGetSystemAppConfig';
-import { RangedMetricName } from '@neosync/sdk';
+import { RangedMetricName } from '@vydon/sdk';
 import { format } from 'date-fns';
 import { ReactElement, use, useState } from 'react';
 

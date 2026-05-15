@@ -3,8 +3,8 @@ package integrationtests_test
 import (
 	"net/http"
 
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	http_client "github.com/nucleuscloud/neosync/internal/http/client"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	http_client "github.com/vydon-io/vydon/internal/http/client"
 )
 
 type NeosyncClients struct {

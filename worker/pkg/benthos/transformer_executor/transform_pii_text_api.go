@@ -4,9 +4,9 @@ import (
 	"context"
 	"log/slog"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	ee_transformer_fns "github.com/nucleuscloud/neosync/internal/transformers/functions"
-	"github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	ee_transformer_fns "github.com/vydon-io/vydon/internal/transformers/functions"
+	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 )
 
 type piiTextApi struct {

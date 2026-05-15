@@ -6,7 +6,7 @@ import {
   GetAccessTokenFn,
   NeosyncClient,
   getNeosyncClient,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '../app/api/auth/[...nextauth]/auth';
 

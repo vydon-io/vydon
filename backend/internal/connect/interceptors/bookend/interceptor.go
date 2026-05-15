@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"connectrpc.com/connect"
-	logger_interceptor "github.com/nucleuscloud/neosync/backend/internal/connect/interceptors/logger"
-	"github.com/nucleuscloud/neosync/backend/pkg/utils"
+	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
+	"github.com/vydon-io/vydon/backend/pkg/utils"
 )
 
 type Interceptor struct {

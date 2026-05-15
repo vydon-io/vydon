@@ -10,7 +10,7 @@ import {
   AccountHookSchema,
   NewAccountHook,
   NewAccountHookSchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import * as yup from 'yup';
 
 const AccountHookWebhookFormValues = yup.object().shape({

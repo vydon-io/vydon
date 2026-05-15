@@ -9,8 +9,8 @@ import (
 	"github.com/jackc/pgx/v5/pgconn"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/jackc/pgx/v5/tracelog"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	pgxslog "github.com/nucleuscloud/neosync/internal/pgx-slog"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	pgxslog "github.com/vydon-io/vydon/internal/pgx-slog"
 )
 
 type DBTX interface {

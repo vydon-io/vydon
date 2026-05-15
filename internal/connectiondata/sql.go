@@ -9,17 +9,17 @@ import (
 	"log/slog"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlconnect"
-	sql_manager "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	sqlmanager_mysql "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/mysql"
-	sqlmanager_postgres "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/postgres"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	database_record_mapper "github.com/nucleuscloud/neosync/internal/database-record-mapper"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
-	querybuilder "github.com/nucleuscloud/neosync/worker/pkg/query-builder"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
+	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	sqlmanager_mysql "github.com/vydon-io/vydon/backend/pkg/sqlmanager/mysql"
+	sqlmanager_postgres "github.com/vydon-io/vydon/backend/pkg/sqlmanager/postgres"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper"
+	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
+	querybuilder "github.com/vydon-io/vydon/worker/pkg/query-builder"
 )
 
 type SQLConnectionDataService struct {

@@ -3,7 +3,7 @@ import { create } from '@bufbuild/protobuf';
 import {
   SetPersonalAccountRequestSchema,
   SetUserRequestSchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {

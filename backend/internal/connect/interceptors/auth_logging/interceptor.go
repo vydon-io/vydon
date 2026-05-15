@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	"github.com/nucleuscloud/neosync/backend/internal/auth/tokenctx"
-	logger_interceptor "github.com/nucleuscloud/neosync/backend/internal/connect/interceptors/logger"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	"github.com/vydon-io/vydon/backend/internal/auth/tokenctx"
+	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 )
 
 type Interceptor struct {

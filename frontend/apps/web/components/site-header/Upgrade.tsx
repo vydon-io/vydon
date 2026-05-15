@@ -5,7 +5,7 @@ import {
   AccountStatus,
   IsAccountStatusValidResponse,
   UserAccountService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { ArrowUpIcon, ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { ReactElement, useState } from 'react';
 import { IoAlertCircleOutline } from 'react-icons/io5';

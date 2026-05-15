@@ -1,10 +1,10 @@
 package v1alpha1_transformersservice
 
 import (
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	"github.com/nucleuscloud/neosync/internal/license"
-	presidioapi "github.com/nucleuscloud/neosync/internal/piidetect/presidio"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	"github.com/vydon-io/vydon/internal/license"
+	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 )
 
 type Service struct {

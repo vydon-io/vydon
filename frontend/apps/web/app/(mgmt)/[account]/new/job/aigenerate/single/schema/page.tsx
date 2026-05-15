@@ -40,7 +40,7 @@ import {
   ConnectionDataService,
   ConnectionService,
   JobService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from 'next/navigation';

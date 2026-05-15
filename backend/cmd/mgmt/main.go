@@ -1,6 +1,6 @@
 package main
 
-import mgmt_cmd "github.com/nucleuscloud/neosync/backend/internal/cmds/mgmt"
+import mgmt_cmd "github.com/vydon-io/vydon/backend/internal/cmds/mgmt"
 
 func main() {
 	mgmt_cmd.Execute()

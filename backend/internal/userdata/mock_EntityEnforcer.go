@@ -5,7 +5,7 @@ package userdata
 import (
 	context "context"
 
-	rbac "github.com/nucleuscloud/neosync/internal/rbac"
+	rbac "github.com/vydon-io/vydon/internal/rbac"
 	mock "github.com/stretchr/testify/mock"
 )
 

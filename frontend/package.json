@@ -8,7 +8,7 @@
     "lint": "turbo run lint",
     "test": "turbo run test",
     "typecheck": "turbo run typecheck",
-    "docker": "turbo prune @neosync/app --docker",
+    "docker": "turbo prune @vydon/app --docker",
     "prettier:check": "prettier --check .",
     "prettier:write": "prettier --write .",
     "knip": "knip",
@@ -27,5 +27,5 @@
     "packages/*"
   ],
   "packageManager": "npm@10.9.2",
-  "name": "frontend"
+  "name": "vydon-frontend"
 }

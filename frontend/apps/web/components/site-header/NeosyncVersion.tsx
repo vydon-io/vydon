@@ -1,6 +1,6 @@
 'use client';
 import { useQuery } from '@connectrpc/connect-query';
-import { UserAccountService } from '@neosync/sdk';
+import { UserAccountService } from '@vydon/sdk';
 import { ReactElement } from 'react';
 
 export default function NeosyncVersion(): ReactElement | null {

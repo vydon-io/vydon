@@ -18,7 +18,7 @@ import {
   ConnectionDataService,
   ConnectionService,
   GetTableRowCountResponse,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { ReactElement, useEffect, useMemo, useState } from 'react';
 import ValidateQueryErrorAlert from '../SubsetErrorAlert';
 import { SubsetTableRow } from '../SubsetTable/Columns';

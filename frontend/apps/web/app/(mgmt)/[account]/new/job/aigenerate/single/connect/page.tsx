@@ -30,7 +30,7 @@ import { getSingleOrUndefined, splitConnections } from '@/libs/utils';
 import { create } from '@bufbuild/protobuf';
 import { useQuery } from '@connectrpc/connect-query';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ConnectionConfigSchema, ConnectionService } from '@neosync/sdk';
+import { ConnectionConfigSchema, ConnectionService } from '@vydon/sdk';
 import { useRouter } from 'next/navigation';
 import { usePostHog } from 'posthog-js/react';
 import { ReactElement, use, useEffect } from 'react';

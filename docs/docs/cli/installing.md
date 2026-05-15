@@ -145,11 +145,11 @@ The container will need further configuration so that Neosync can access configu
 See the example below for how to login to the CLI, and then view a list of environments in a Neosync account.
 
 ```console
-docker run -it --rm -p 4242:4242 --mount source=neosynccfg,target=/root/.config/.neosync ghcr.io/nucleuscloud/neosync/cli:latest login
+docker run -it --rm -p 4242:4242 --mount source=neosynccfg,target=/root/.config/.neosync ghcr.io/vydon-io/neosync/cli:latest login
 ```
 
 ```console
-docker run -it --rm --mount source=neosynccfg,target=/root/.config/.neosync ghcr.io/nucleuscloud/neosync/cli:latest accounts ls
+docker run -it --rm --mount source=neosynccfg,target=/root/.config/.neosync ghcr.io/vydon-io/neosync/cli:latest accounts ls
 ```
 
 The command above will print out a list of environments that are in the account associated with the logged in credentials. Note that the port mapping isn't required here, as that is only necessary during the login flow.

@@ -8,8 +8,8 @@ import (
 
 	"github.com/dop251/goja"
 	goja_require "github.com/dop251/goja_nodejs/require"
-	javascript_functions "github.com/nucleuscloud/neosync/internal/javascript/functions"
-	"github.com/nucleuscloud/neosync/internal/testutil"
+	javascript_functions "github.com/vydon-io/vydon/internal/javascript/functions"
+	"github.com/vydon-io/vydon/internal/testutil"
 
 	"github.com/stretchr/testify/require"
 )

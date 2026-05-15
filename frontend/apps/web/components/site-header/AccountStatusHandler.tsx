@@ -3,7 +3,7 @@ import { SystemAppConfig } from '@/app/config/app-config';
 import { cn } from '@/libs/utils';
 import { timestampDate } from '@bufbuild/protobuf/wkt';
 import { useQuery } from '@connectrpc/connect-query';
-import { AccountStatus, UserAccountService } from '@neosync/sdk';
+import { AccountStatus, UserAccountService } from '@vydon/sdk';
 import { differenceInDays } from 'date-fns';
 import { useAccount } from '../providers/account-provider';
 import { Skeleton } from '../ui/skeleton';

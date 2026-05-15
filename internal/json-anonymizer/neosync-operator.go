@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/worker/pkg/benthos/transformer_executor"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/worker/pkg/benthos/transformer_executor"
 )
 
 type neosyncOperatorApi struct {

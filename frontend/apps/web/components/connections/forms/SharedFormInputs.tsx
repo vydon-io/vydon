@@ -37,7 +37,7 @@ import {
   CheckSSHConnectionRequest,
   CheckSSHConnectionResult,
   ConnectionService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import {
   CheckCircledIcon,
   ExclamationTriangleIcon,

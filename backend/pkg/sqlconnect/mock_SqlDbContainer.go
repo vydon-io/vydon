@@ -3,7 +3,7 @@
 package sqlconnect
 
 import (
-	sqldbtx "github.com/nucleuscloud/neosync/backend/pkg/sqldbtx"
+	sqldbtx "github.com/vydon-io/vydon/backend/pkg/sqldbtx"
 	mock "github.com/stretchr/testify/mock"
 )
 

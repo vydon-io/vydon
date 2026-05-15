@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/nucleuscloud/neosync/cli/internal/version"
+	"github.com/vydon-io/vydon/cli/internal/version"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v3"
 )

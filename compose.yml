@@ -13,7 +13,7 @@ include:
 services:
   app:
     container_name: neosync-app
-    image: ghcr.io/nucleuscloud/neosync/app:latest
+    image: ghcr.io/vydon-io/neosync/app:latest
     ports:
       - 3000:3000
     environment:
@@ -21,7 +21,7 @@ services:
       - NUCLEUS_ENV=dev
       - NEXTAUTH_SECRET=foo
       - NEXTAUTH_URL=http://localhost:3000
-      - NEOSYNC_API_BASE_URL=http://api:8080
+      - VYDON_API_BASE_URL=http://api:8080
       - NEXT_PUBLIC_APP_BASE_URL=http://localhost:3000
 
       - POSTHOG_KEY=phc_qju45RhNvCDwYVdRyUjtWuWsOmLFaQZi3fmztMBaJip
@@ -53,7 +53,7 @@ services:
 
   api:
     container_name: neosync-api
-    image: ghcr.io/nucleuscloud/neosync/api:latest
+    image: ghcr.io/vydon-io/neosync/api:latest
     ports:
       - 8080:8080
     command: serve connect
@@ -115,13 +115,13 @@ services:
 
   worker:
     container_name: neosync-worker
-    image: ghcr.io/nucleuscloud/neosync/worker:latest
+    image: ghcr.io/vydon-io/neosync/worker:latest
     environment:
       - NUCLEUS_ENV=dev
       - TEMPORAL_URL=temporal:7233
       - TEMPORAL_NAMESPACE=default
       - TEMPORAL_TASK_QUEUE=sync-job
-      - NEOSYNC_URL=http://api:8080
+      - VYDON_URL=http://api:8080
       - REDIS_URL=redis://default:foofar@redis:6379
       - TABLESYNC_MAX_CONCURRENCY=3
     networks:

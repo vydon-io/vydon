@@ -10,9 +10,9 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 func (d *NeosyncDb) SetUserByAuthSub(

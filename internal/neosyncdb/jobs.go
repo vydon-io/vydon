@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 )
 
 type CreateJobConnectionDestination struct {

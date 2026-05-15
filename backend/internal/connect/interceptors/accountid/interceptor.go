@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	logger_interceptor "github.com/nucleuscloud/neosync/backend/internal/connect/interceptors/logger"
+	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
 )
 
 type Interceptor struct{}

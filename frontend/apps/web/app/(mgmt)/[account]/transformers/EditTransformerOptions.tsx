@@ -35,7 +35,7 @@ import {
   TransformerConfigSchema,
   TransformerSource,
   TransformersService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import {
   EyeOpenIcon,
   MixerHorizontalIcon,

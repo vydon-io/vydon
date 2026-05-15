@@ -44,7 +44,7 @@ import {
   ValidateJobMappingsResponse,
   VirtualForeignConstraintSchema,
   VirtualForeignKeySchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { useRouter } from 'next/navigation';
 import { usePostHog } from 'posthog-js/react';
 import {

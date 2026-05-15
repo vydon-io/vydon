@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/builder"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
-	neosync_types "github.com/nucleuscloud/neosync/internal/types"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/builder"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
+	neosync_types "github.com/vydon-io/vydon/internal/types"
 )
 
 type DynamoDBMapper struct{}

@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
+	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -54,7 +54,7 @@ func Test_parsePgRowValues(t *testing.T) {
 				BaseType: neosynctypes.BaseType{
 					Neosync: neosynctypes.Neosync{
 						Version: 1,
-						TypeId:  "NEOSYNC_BINARY",
+						TypeId:  "VYDON_BINARY",
 					},
 				},
 				Bytes: binaryData,
@@ -124,7 +124,7 @@ func Test_parsePgRowValues(t *testing.T) {
 				BaseType: neosynctypes.BaseType{
 					Neosync: neosynctypes.Neosync{
 						Version: 1,
-						TypeId:  "NEOSYNC_BIT",
+						TypeId:  "VYDON_BIT",
 					},
 				},
 				Bytes: bits.Bytes,
@@ -134,7 +134,7 @@ func Test_parsePgRowValues(t *testing.T) {
 				BaseType: neosynctypes.BaseType{
 					Neosync: neosynctypes.Neosync{
 						Version: 1,
-						TypeId:  "NEOSYNC_BIT",
+						TypeId:  "VYDON_BIT",
 					},
 				},
 				Bytes: varbits.Bytes,
@@ -144,7 +144,7 @@ func Test_parsePgRowValues(t *testing.T) {
 				BaseType: neosynctypes.BaseType{
 					Neosync: neosynctypes.Neosync{
 						Version: 1,
-						TypeId:  "NEOSYNC_BINARY",
+						TypeId:  "VYDON_BINARY",
 					},
 				},
 				Bytes: byteaValue,
@@ -153,7 +153,7 @@ func Test_parsePgRowValues(t *testing.T) {
 				BaseType: neosynctypes.BaseType{
 					Neosync: neosynctypes.Neosync{
 						Version: 1,
-						TypeId:  "NEOSYNC_ARRAY",
+						TypeId:  "VYDON_ARRAY",
 					},
 				},
 				Elements: []neosynctypes.NeosyncAdapter{
@@ -161,7 +161,7 @@ func Test_parsePgRowValues(t *testing.T) {
 						BaseType: neosynctypes.BaseType{
 							Neosync: neosynctypes.Neosync{
 								Version: 1,
-								TypeId:  "NEOSYNC_BIT",
+								TypeId:  "VYDON_BIT",
 							},
 						},
 						Bytes: []byte{0x05},
@@ -171,7 +171,7 @@ func Test_parsePgRowValues(t *testing.T) {
 						BaseType: neosynctypes.BaseType{
 							Neosync: neosynctypes.Neosync{
 								Version: 1,
-								TypeId:  "NEOSYNC_BIT",
+								TypeId:  "VYDON_BIT",
 							},
 						},
 						Bytes: []byte{0x03},
@@ -183,7 +183,7 @@ func Test_parsePgRowValues(t *testing.T) {
 				BaseType: neosynctypes.BaseType{
 					Neosync: neosynctypes.Neosync{
 						Version: 1,
-						TypeId:  "NEOSYNC_ARRAY",
+						TypeId:  "VYDON_ARRAY",
 					},
 				},
 				Elements: []neosynctypes.NeosyncAdapter{
@@ -191,7 +191,7 @@ func Test_parsePgRowValues(t *testing.T) {
 						BaseType: neosynctypes.BaseType{
 							Neosync: neosynctypes.Neosync{
 								Version: 1,
-								TypeId:  "NEOSYNC_BINARY",
+								TypeId:  "VYDON_BINARY",
 							},
 						},
 						Bytes: []byte{0x01, 0x02},
@@ -200,7 +200,7 @@ func Test_parsePgRowValues(t *testing.T) {
 						BaseType: neosynctypes.BaseType{
 							Neosync: neosynctypes.Neosync{
 								Version: 1,
-								TypeId:  "NEOSYNC_BINARY",
+								TypeId:  "VYDON_BINARY",
 							},
 						},
 						Bytes: []byte{0x03, 0x04},
@@ -311,7 +311,7 @@ func Test_parsePgRowValues(t *testing.T) {
 				BaseType: neosynctypes.BaseType{
 					Neosync: neosynctypes.Neosync{
 						Version: 1,
-						TypeId:  "NEOSYNC_ARRAY",
+						TypeId:  "VYDON_ARRAY",
 					},
 				},
 				Elements: []neosynctypes.NeosyncAdapter{
@@ -319,7 +319,7 @@ func Test_parsePgRowValues(t *testing.T) {
 						BaseType: neosynctypes.BaseType{
 							Neosync: neosynctypes.Neosync{
 								Version: 1,
-								TypeId:  "NEOSYNC_BINARY",
+								TypeId:  "VYDON_BINARY",
 							},
 						},
 						Bytes: binaryData1,
@@ -328,7 +328,7 @@ func Test_parsePgRowValues(t *testing.T) {
 						BaseType: neosynctypes.BaseType{
 							Neosync: neosynctypes.Neosync{
 								Version: 1,
-								TypeId:  "NEOSYNC_BINARY",
+								TypeId:  "VYDON_BINARY",
 							},
 						},
 						Bytes: binaryData2,

@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 )
 
 type ConfigProvider interface {

@@ -6,7 +6,7 @@ import { useAccount } from '@/components/providers/account-provider';
 import { useGetSystemAppConfig } from '@/libs/hooks/useGetSystemAppConfig';
 import { cn } from '@/libs/utils';
 import { toTitleCase } from '@/util/util';
-import { UserAccountType } from '@neosync/sdk';
+import { UserAccountType } from '@vydon/sdk';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ReactElement } from 'react';

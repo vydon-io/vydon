@@ -9,7 +9,7 @@ import {
   CheckConnectionConfigByIdRequestSchema,
   CheckConnectionConfigRequestSchema,
   ConnectionService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { ReactElement, useEffect } from 'react';
 import { create } from 'zustand';
 import {

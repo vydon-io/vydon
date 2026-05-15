@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/nucleuscloud/neosync/internal/testutil"
+	"github.com/vydon-io/vydon/internal/testutil"
 	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/stretchr/testify/require"
 )

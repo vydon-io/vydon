@@ -1,8 +1,8 @@
 package v1alpha1_apikeyservice
 
 import (
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 )
 
 type Service struct {

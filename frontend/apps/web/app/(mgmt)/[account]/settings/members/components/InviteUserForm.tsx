@@ -27,7 +27,7 @@ import { getErrorMessage } from '@/util/util';
 import { InviteMembersForm } from '@/yup-validations/invite-members';
 import { useMutation } from '@connectrpc/connect-query';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AccountRole, UserAccountService } from '@neosync/sdk';
+import { AccountRole, UserAccountService } from '@vydon/sdk';
 import { DialogClose } from '@radix-ui/react-dialog';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { ReactElement, useState } from 'react';

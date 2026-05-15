@@ -11,10 +11,10 @@ import (
 	"strings"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	neosync_gcp "github.com/nucleuscloud/neosync/internal/gcp"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	neosync_gcp "github.com/vydon-io/vydon/internal/gcp"
 )
 
 type GcpConnectionDataService struct {

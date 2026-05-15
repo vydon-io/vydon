@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"reflect"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	tablesync_shared "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/shared"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	tablesync_shared "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/shared"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 

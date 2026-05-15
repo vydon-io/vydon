@@ -11,13 +11,13 @@ import (
 	"sync"
 	"time"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	job_util "github.com/nucleuscloud/neosync/internal/job"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	job_util "github.com/vydon-io/vydon/internal/job"
+	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 	"golang.org/x/sync/errgroup"
 )
 

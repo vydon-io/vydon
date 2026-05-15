@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	initschema_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/schemainit/activities/init-schema"
+	initschema_activity "github.com/vydon-io/vydon/worker/pkg/workflows/schemainit/activities/init-schema"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 	"go.temporal.io/sdk/testsuite"

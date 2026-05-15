@@ -1,14 +1,14 @@
 package v1alpha1_useraccountservice
 
 import (
-	auth_client "github.com/nucleuscloud/neosync/backend/internal/auth/client"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	"github.com/nucleuscloud/neosync/internal/authmgmt"
-	"github.com/nucleuscloud/neosync/internal/billing"
-	"github.com/nucleuscloud/neosync/internal/license"
-	"github.com/nucleuscloud/neosync/internal/rbac"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
-	"github.com/nucleuscloud/neosync/internal/temporal/clientmanager"
+	auth_client "github.com/vydon-io/vydon/backend/internal/auth/client"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	"github.com/vydon-io/vydon/internal/authmgmt"
+	"github.com/vydon-io/vydon/internal/billing"
+	"github.com/vydon-io/vydon/internal/license"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/temporal/clientmanager"
 )
 
 type Service struct {

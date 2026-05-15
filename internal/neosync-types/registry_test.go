@@ -3,7 +3,7 @@ package neosynctypes
 import (
 	"testing"
 
-	"github.com/nucleuscloud/neosync/internal/testutil"
+	"github.com/vydon-io/vydon/internal/testutil"
 	"github.com/stretchr/testify/require"
 )
 
@@ -77,7 +77,7 @@ func Test_TypeRegistry(t *testing.T) {
 		registry := NewTypeRegistry(testutil.GetTestLogger(t))
 		intervalJSON := []byte(`{
 			"_neosync": {
-				"type_id": "NEOSYNC_INTERVAL",
+				"type_id": "VYDON_INTERVAL",
 				"version": 1
 			},
 			"microseconds": 1,
@@ -97,7 +97,7 @@ func Test_TypeRegistry(t *testing.T) {
 		registry := NewTypeRegistry(testutil.GetTestLogger(t))
 		intervalMap := map[string]any{
 			"_neosync": map[string]any{
-				"type_id": "NEOSYNC_INTERVAL",
+				"type_id": "VYDON_INTERVAL",
 				"version": 1,
 			},
 			"microseconds": 1,
@@ -117,13 +117,13 @@ func Test_TypeRegistry(t *testing.T) {
 		registry := NewTypeRegistry(testutil.GetTestLogger(t))
 		arrayJSON := []byte(`{
 			"_neosync": {
-				"type_id": "NEOSYNC_ARRAY",
+				"type_id": "VYDON_ARRAY",
 				"version": 1
 			},
 			"elements": [
 				{
 					"_neosync": {
-						"type_id": "NEOSYNC_INTERVAL",
+						"type_id": "VYDON_INTERVAL",
 						"version": 1
 					},
 					"microseconds": 1,
@@ -132,7 +132,7 @@ func Test_TypeRegistry(t *testing.T) {
 				},
 				{
 					"_neosync": {
-						"type_id": "NEOSYNC_INTERVAL",
+						"type_id": "VYDON_INTERVAL",
 						"version": 1
 					},
 					"microseconds": 11,
@@ -161,7 +161,7 @@ func Test_TypeRegistry(t *testing.T) {
 		registry := NewTypeRegistry(testutil.GetTestLogger(t))
 		invalidArrayJSON := []byte(`{
 			"_neosync": {
-				"type_id": "NEOSYNC_ARRAY",
+				"type_id": "VYDON_ARRAY",
 				"version": 1
 			},
 			"elements": "not-an-array"
@@ -177,7 +177,7 @@ func Test_TypeRegistry(t *testing.T) {
 		registry := NewTypeRegistry(testutil.GetTestLogger(t))
 		invalidElementJSON := []byte(`{
 			"_neosync": {
-				"type_id": "NEOSYNC_ARRAY",
+				"type_id": "VYDON_ARRAY",
 				"version": 1
 			},
 			"elements": [

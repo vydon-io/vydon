@@ -2,7 +2,7 @@ import { create } from '@bufbuild/protobuf';
 import {
   Date as NeosyncDate,
   DateSchema as NeosyncDateSchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { endOfMonth, format, startOfMonth, subMonths } from 'date-fns';
 
 export type MetricIdentifierType = 'accountId' | 'jobId' | 'runId';

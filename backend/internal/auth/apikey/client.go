@@ -8,12 +8,12 @@ import (
 	"time"
 
 	"connectrpc.com/connect"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	"github.com/nucleuscloud/neosync/backend/internal/utils"
-	pkg_utils "github.com/nucleuscloud/neosync/backend/pkg/utils"
-	"github.com/nucleuscloud/neosync/internal/apikey"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	"github.com/vydon-io/vydon/backend/internal/utils"
+	pkg_utils "github.com/vydon-io/vydon/backend/pkg/utils"
+	"github.com/vydon-io/vydon/internal/apikey"
+	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 )
 
 type TokenContextKey struct{}

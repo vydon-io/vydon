@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/select';
 import { getStorageClassString } from '@/util/util';
 import { AwsS3DestinationOptionsFormValues } from '@/yup-validations/jobs';
-import { AwsS3DestinationConnectionOptions_StorageClass } from '@neosync/sdk';
+import { AwsS3DestinationConnectionOptions_StorageClass } from '@vydon/sdk';
 import { ReactElement, ReactNode } from 'react';
 import { FieldErrors } from 'react-hook-form';
 

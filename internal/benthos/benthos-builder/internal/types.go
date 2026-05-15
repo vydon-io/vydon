@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"log/slog"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/metrics"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	bb_shared "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/shared"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
-	tablesync_shared "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/shared"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/metrics"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	bb_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
+	"github.com/vydon-io/vydon/internal/runconfigs"
+	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	tablesync_shared "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/shared"
 )
 
 // Determines SQL driver from connection type

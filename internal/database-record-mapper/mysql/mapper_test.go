@@ -3,7 +3,7 @@ package mysql
 import (
 	"testing"
 
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
+	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
 	"github.com/stretchr/testify/require"
 )
 
@@ -43,7 +43,7 @@ func Test_parseMysqlRowValues(t *testing.T) {
 				BaseType: neosynctypes.BaseType{
 					Neosync: neosynctypes.Neosync{
 						Version: 1,
-						TypeId:  "NEOSYNC_BINARY",
+						TypeId:  "VYDON_BINARY",
 					},
 				},
 				Bytes: binaryData,

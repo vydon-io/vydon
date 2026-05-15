@@ -7,10 +7,10 @@ import (
 	"strings"
 	"time"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	"github.com/vydon-io/vydon/internal/runconfigs"
+	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 type awsS3SyncBuilder struct {

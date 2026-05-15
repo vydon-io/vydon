@@ -1,16 +1,16 @@
 package datasync_workflow_register
 
 import (
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	sql_manager "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	"github.com/nucleuscloud/neosync/internal/license"
-	accountstatus_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/account-status"
-	genbenthosconfigs_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/gen-benthos-configs"
-	jobhooks_by_timing_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/jobhooks-by-timing"
-	posttablesync_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/post-table-sync"
-	syncactivityopts_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/sync-activity-opts"
-	syncrediscleanup_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/sync-redis-clean-up"
-	datasync_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/workflow"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	"github.com/vydon-io/vydon/internal/license"
+	accountstatus_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/account-status"
+	genbenthosconfigs_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/gen-benthos-configs"
+	jobhooks_by_timing_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/jobhooks-by-timing"
+	posttablesync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/post-table-sync"
+	syncactivityopts_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-activity-opts"
+	syncrediscleanup_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-redis-clean-up"
+	datasync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/workflow"
 	"github.com/redis/go-redis/v9"
 )
 

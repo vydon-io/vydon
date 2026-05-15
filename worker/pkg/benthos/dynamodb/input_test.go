@@ -7,7 +7,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	dynamodbmapper "github.com/nucleuscloud/neosync/internal/database-record-mapper/dynamodb"
+	dynamodbmapper "github.com/vydon-io/vydon/internal/database-record-mapper/dynamodb"
 	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"

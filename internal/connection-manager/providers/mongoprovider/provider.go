@@ -5,9 +5,9 @@ import (
 	"errors"
 	"log/slog"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	neosync_benthos_mongodb "github.com/nucleuscloud/neosync/worker/pkg/benthos/mongodb"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	neosync_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

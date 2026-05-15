@@ -1,13 +1,13 @@
 package tablesync_workflow_register
 
 import (
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	benthosstream "github.com/nucleuscloud/neosync/internal/benthos-stream"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	neosync_benthos_mongodb "github.com/nucleuscloud/neosync/worker/pkg/benthos/mongodb"
-	neosync_benthos_sql "github.com/nucleuscloud/neosync/worker/pkg/benthos/sql"
-	sync_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/activities/sync"
-	tablesync_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/workflow"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	benthosstream "github.com/vydon-io/vydon/internal/benthos-stream"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	neosync_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
+	neosync_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
+	sync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/activities/sync"
+	tablesync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/workflow"
 	"github.com/redis/go-redis/v9"
 	"go.opentelemetry.io/otel/metric"
 	"go.temporal.io/sdk/client"

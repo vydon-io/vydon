@@ -2,8 +2,8 @@ package userdata
 
 import (
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/nucleuscloud/neosync/internal/rbac"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 )
 
 // Domain entity interface that mimics the domain model of the mgmt service

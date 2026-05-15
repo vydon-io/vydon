@@ -3,11 +3,11 @@ package sqlprovider
 import (
 	"log/slog"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlconnect"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqldbtx"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	neosync_benthos_sql "github.com/nucleuscloud/neosync/worker/pkg/benthos/sql"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
+	"github.com/vydon-io/vydon/backend/pkg/sqldbtx"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	neosync_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
 )
 
 type Provider struct {

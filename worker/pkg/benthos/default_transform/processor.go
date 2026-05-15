@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"reflect"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	transformer_executor "github.com/nucleuscloud/neosync/worker/pkg/benthos/transformer_executor"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	transformer_executor "github.com/vydon-io/vydon/worker/pkg/benthos/transformer_executor"
 
 	"google.golang.org/protobuf/encoding/protojson"
 

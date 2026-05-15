@@ -1,8 +1,8 @@
 package v1alpha1_metricsservice
 
 import (
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
 	promv1 "github.com/prometheus/client_golang/api/prometheus/v1"
 )
 

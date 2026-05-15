@@ -6,15 +6,15 @@ import (
 	"log/slog"
 
 	"connectrpc.com/connect"
-	mysql_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/mysql"
-	pg_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/postgresql"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/mongoconnect"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlconnect"
-	sql_manager "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	aws_manager "github.com/nucleuscloud/neosync/internal/aws"
-	neosync_gcp "github.com/nucleuscloud/neosync/internal/gcp"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
+	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
+	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/mongoconnect"
+	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
+	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	aws_manager "github.com/vydon-io/vydon/internal/aws"
+	neosync_gcp "github.com/vydon-io/vydon/internal/gcp"
+	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
 )
 
 type SampleDataStream interface {

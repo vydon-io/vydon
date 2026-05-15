@@ -10,7 +10,7 @@ import {
 import {
   CheckConnectionConfigByIdResponse,
   CheckConnectionConfigResponse,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import {
   CheckCircledIcon,
   ExclamationTriangleIcon,

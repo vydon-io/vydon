@@ -7,7 +7,7 @@ import { useGetSystemAppConfig } from '@/libs/hooks/useGetSystemAppConfig';
 import { useNeosyncUser } from '@/libs/hooks/useNeosyncUser';
 import { getErrorMessage } from '@/util/util';
 import { useMutation } from '@connectrpc/connect-query';
-import { UserAccountService } from '@neosync/sdk';
+import { UserAccountService } from '@vydon/sdk';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import { signIn, useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';

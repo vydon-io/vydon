@@ -1,4 +1,4 @@
-import { Connection } from '@neosync/sdk';
+import { Connection } from '@vydon/sdk';
 
 interface CreateProps {
   mode: 'create';

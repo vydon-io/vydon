@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
+	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/stretchr/testify/require"
 )

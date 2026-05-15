@@ -22,7 +22,7 @@ import {
   ConnectionConfigSchema,
   ConnectionRolePrivilege,
   ConnectionService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { UpdateIcon } from '@radix-ui/react-icons';
 import { ColumnDef } from '@tanstack/react-table';
 import Error from 'next/error';

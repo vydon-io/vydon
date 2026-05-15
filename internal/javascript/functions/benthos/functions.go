@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/dop251/goja"
-	javascript_functions "github.com/nucleuscloud/neosync/internal/javascript/functions"
+	javascript_functions "github.com/vydon-io/vydon/internal/javascript/functions"
 )
 
 const (

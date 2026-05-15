@@ -13,12 +13,12 @@ const (
 
 // Get or Creates the Nucleus folder that lives and stores persisted settings.
 //
-// 1. Checks for directory specified by env var NEOSYNC_CONFIG_DIR
+// 1. Checks for directory specified by env var VYDON_CONFIG_DIR
 // 2. Checks for existence of XDG_CONFIG_HOME and append "neosync" to it, if exists
 // 3. Use ~/.neosync
 func GetOrCreateNeosyncFolder() (string, error) {
 	configDir := os.Getenv(
-		"NEOSYNC_CONFIG_DIR",
+		"VYDON_CONFIG_DIR",
 	) // helpful for tools such as direnv and people who want it somewhere interesting
 	xdgConfigHome := os.Getenv("XDG_CONFIG_HOME") // linux users expect this to be respected
 

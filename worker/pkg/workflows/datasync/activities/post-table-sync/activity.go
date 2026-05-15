@@ -7,12 +7,12 @@ import (
 	"strings"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	temporallogger "github.com/nucleuscloud/neosync/worker/internal/temporal-logger"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	temporallogger "github.com/vydon-io/vydon/worker/internal/temporal-logger"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 	"go.temporal.io/sdk/activity"
 	"go.temporal.io/sdk/log"
 )

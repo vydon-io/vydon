@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/builder"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
-	neosync_types "github.com/nucleuscloud/neosync/internal/types"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/builder"
+	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
+	neosync_types "github.com/vydon-io/vydon/internal/types"
 )
 
 type MySQLMapper struct{}

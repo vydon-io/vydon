@@ -6,7 +6,7 @@ package db_queries
 
 import (
 	"github.com/jackc/pgx/v5/pgtype"
-	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 )
 
 type NeosyncApiAccount struct {

@@ -11,8 +11,8 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/nucleuscloud/neosync/cli/internal/output"
-	benthosbuilder "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder"
+	"github.com/vydon-io/vydon/cli/internal/output"
+	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
 	"github.com/redpanda-data/benthos/v4/public/service"
 
 	"github.com/charmbracelet/bubbles/spinner"

@@ -4,7 +4,7 @@ import {
   SupportedJobType,
   TransformerDataType,
   TransformerSource,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { format } from 'date-fns';
 import {
   convertMinutesToNanoseconds,

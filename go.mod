@@ -1,4 +1,4 @@
-module github.com/nucleuscloud/neosync
+module github.com/vydon-io/vydon
 
 go 1.24.1
 

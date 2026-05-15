@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

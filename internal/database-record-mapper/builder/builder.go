@@ -3,7 +3,7 @@ package builder
 import (
 	"fmt"
 
-	neosync_types "github.com/nucleuscloud/neosync/internal/types"
+	neosync_types "github.com/vydon-io/vydon/internal/types"
 )
 
 type DatabaseRecordMapper[T any] interface {

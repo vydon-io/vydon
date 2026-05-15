@@ -7,10 +7,10 @@ import (
 	"slices"
 	"strings"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	sql_manager "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	benthosbuilder "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
+	"github.com/vydon-io/vydon/internal/runconfigs"
 )
 
 func maxInt(a, b int) int {

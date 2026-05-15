@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"slices"
 
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	"github.com/vydon-io/vydon/internal/runconfigs"
 )
 
 type OrderedTablesResult struct {

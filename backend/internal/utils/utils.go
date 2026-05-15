@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
+	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 func FilterSlice[T any](slice []T, filterFn func(T) bool) []T {

@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	transformer_utils "github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers/utils"
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
+	transformer_utils "github.com/vydon-io/vydon/worker/pkg/benthos/transformers/utils"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
 )

@@ -8,12 +8,12 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/dop251/goja"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	"github.com/vydon-io/vydon/internal/runconfigs"
+	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )

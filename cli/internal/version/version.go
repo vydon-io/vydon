@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"runtime"
 
-	"github.com/nucleuscloud/neosync/backend/pkg/utils"
+	"github.com/vydon-io/vydon/backend/pkg/utils"
 	"google.golang.org/grpc/metadata"
 )
 

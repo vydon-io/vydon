@@ -6,7 +6,7 @@ import {
   Date as NeosyncDate,
   DateSchema as NeosyncDateSchema,
   RangedMetricName,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { format } from 'date-fns';
 import { useTheme } from 'next-themes';
 import { ReactElement } from 'react';

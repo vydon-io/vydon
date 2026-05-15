@@ -3,7 +3,7 @@ package register
 import (
 	"go.temporal.io/sdk/worker"
 
-	accounthook_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/account_hooks/workflow"
+	accounthook_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/account_hooks/workflow"
 )
 
 // Register wires the account-hooks workflow on a Temporal worker. The

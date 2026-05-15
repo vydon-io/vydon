@@ -3,7 +3,7 @@ package userdata
 import (
 	"context"
 
-	"github.com/nucleuscloud/neosync/internal/rbac"
+	"github.com/vydon-io/vydon/internal/rbac"
 )
 
 type UserEntityEnforcer struct {

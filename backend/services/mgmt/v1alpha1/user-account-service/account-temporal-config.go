@@ -4,13 +4,13 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
-	"github.com/nucleuscloud/neosync/internal/rbac"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
+	"github.com/vydon-io/vydon/internal/rbac"
+	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 )
 
 func (s *Service) GetAccountTemporalConfig(

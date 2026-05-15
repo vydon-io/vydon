@@ -6,9 +6,9 @@ import (
 	"fmt"
 
 	"github.com/doug-martin/goqu/v9"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
+	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
+	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/redpanda-data/benthos/v4/public/service"
 )
 

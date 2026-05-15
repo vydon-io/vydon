@@ -29,7 +29,7 @@ import { ApiKeyFormValues } from '@/yup-validations/apikey';
 import { timestampFromMs } from '@bufbuild/protobuf/wkt';
 import { useMutation } from '@connectrpc/connect-query';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ApiKeyService } from '@neosync/sdk';
+import { ApiKeyService } from '@vydon/sdk';
 import { CalendarIcon } from '@radix-ui/react-icons';
 import { PopoverTrigger } from '@radix-ui/react-popover';
 import { addDays } from 'date-fns';

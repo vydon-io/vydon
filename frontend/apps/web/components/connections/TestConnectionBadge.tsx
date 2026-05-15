@@ -3,7 +3,7 @@ import { getErrorMessage } from '@/util/util';
 import {
   CheckConnectionConfigByIdResponse,
   CheckConnectionConfigResponse,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { ArrowTopRightIcon, CheckCircledIcon } from '@radix-ui/react-icons';
 import Link from 'next/link';
 import { ReactElement } from 'react';

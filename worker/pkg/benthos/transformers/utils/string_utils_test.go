@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 	"github.com/stretchr/testify/require"
 )
 

@@ -25,7 +25,7 @@ A Helm chart for the Neosync Temporal Worker
 | fullnameOverride | string | `nil` | Fully overrides the chart name |
 | host | string | `"0.0.0.0"` | Sets the host that the backend will listen on. 0.0.0.0 is common for Kubernetes workloads. |
 | image.pullPolicy | string | `nil` | Overrides the default K8s pull policy |
-| image.repository | string | `"ghcr.io/nucleuscloud/neosync/worker"` | The default image repository |
+| image.repository | string | `"ghcr.io/vydon-io/neosync/worker"` | The default image repository |
 | image.tag | string | `nil` | Overrides the image tag whose default is {{ printf "v%s" .Chart.AppVersion }} |
 | imagePullSecrets | list | `[]` | Define a list of image pull secrets that will be used by the deployment |
 | istio.enabled | bool | `false` | Whether or not to apply the default istio annotations/labels to the deployment |

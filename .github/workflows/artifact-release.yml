@@ -60,7 +60,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ghcr.io/nucleuscloud/neosync/api
+            ghcr.io/vydon-io/neosync/api
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
@@ -134,7 +134,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ghcr.io/nucleuscloud/neosync/app
+            ghcr.io/vydon-io/neosync/app
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
@@ -203,7 +203,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ghcr.io/nucleuscloud/neosync/worker
+            ghcr.io/vydon-io/neosync/worker
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
@@ -700,7 +700,7 @@ jobs:
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
           AUR_KEY: ${{ secrets.AUR_PRIVATE_KEY }}
           DISABLE_CHANGELOG: false
-          NEOSYNC_BASE_URL: ${{ vars.DEFAULT_NEOSYNC_ENDPOINT }}
+          VYDON_BASE_URL: ${{ vars.DEFAULT_VYDON_ENDPOINT }}
 
   py-sdk-build:
     name: Python SDK Build

@@ -17,5 +17,5 @@ kindV1Alpha4Cluster:
         kubeletExtraArgs:
           node-labels: "ingress-ready=true"
     extraMounts:
-    - hostPath: {NEOSYNC_DEV_HOSTPATH}
+    - hostPath: {VYDON_DEV_HOSTPATH}
       containerPath: /neosync

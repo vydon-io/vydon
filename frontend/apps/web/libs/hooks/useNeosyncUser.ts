@@ -1,6 +1,6 @@
 'use client';
 
-import { SetUserResponse } from '@neosync/sdk';
+import { SetUserResponse } from '@vydon/sdk';
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { useSession } from 'next-auth/react';
 import { fetcher } from '../fetcher';

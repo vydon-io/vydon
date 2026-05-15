@@ -6,7 +6,7 @@ import (
 	"math/big"
 	"strconv"
 
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 /* FLOAT MANIPULATION UTILS */

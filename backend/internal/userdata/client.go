@@ -5,11 +5,11 @@ import (
 	"fmt"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	auth_apikey "github.com/nucleuscloud/neosync/backend/internal/auth/apikey"
-	"github.com/nucleuscloud/neosync/internal/license"
-	"github.com/nucleuscloud/neosync/internal/rbac"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
+	"github.com/vydon-io/vydon/internal/license"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 )
 
 type UserServiceClient interface {

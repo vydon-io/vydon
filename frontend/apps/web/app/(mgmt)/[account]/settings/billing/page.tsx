@@ -14,7 +14,7 @@ import { getErrorMessage, toTitleCase } from '@/util/util';
 import { CreateTeamFormValues } from '@/yup-validations/account-switcher';
 import { useMutation, useQuery } from '@connectrpc/connect-query';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UserAccount, UserAccountService, UserAccountType } from '@neosync/sdk';
+import { UserAccount, UserAccountService, UserAccountType } from '@vydon/sdk';
 import { CheckIcon } from '@radix-ui/react-icons';
 import Error from 'next/error';
 import Link from 'next/link';

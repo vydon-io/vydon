@@ -3,8 +3,8 @@ package schemamanager_shared
 import (
 	"testing"
 
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	"github.com/nucleuscloud/neosync/internal/testutil"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	"github.com/vydon-io/vydon/internal/testutil"
 	"github.com/stretchr/testify/assert"
 )
 

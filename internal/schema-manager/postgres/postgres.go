@@ -7,13 +7,13 @@ import (
 	"strings"
 	"sync"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	sqlmanager_postgres "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/postgres"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	tabledependency "github.com/nucleuscloud/neosync/backend/pkg/table-dependency"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	shared "github.com/nucleuscloud/neosync/internal/schema-manager/shared"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	sqlmanager_postgres "github.com/vydon-io/vydon/backend/pkg/sqlmanager/postgres"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	tabledependency "github.com/vydon-io/vydon/backend/pkg/table-dependency"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	shared "github.com/vydon-io/vydon/internal/schema-manager/shared"
 	"golang.org/x/sync/errgroup"
 )
 

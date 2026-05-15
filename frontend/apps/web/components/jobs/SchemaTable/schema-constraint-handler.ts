@@ -14,7 +14,7 @@ import {
   VirtualForeignConstraint,
   VirtualForeignKey,
   VirtualForeignKeySchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 
 export type JobType = 'sync' | 'generate';
 

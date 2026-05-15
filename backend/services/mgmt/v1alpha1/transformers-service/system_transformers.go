@@ -6,10 +6,10 @@ import (
 	"slices"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	ee_transformers "github.com/nucleuscloud/neosync/internal/transformers"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	ee_transformers "github.com/vydon-io/vydon/internal/transformers"
+	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
 )
 
 var (

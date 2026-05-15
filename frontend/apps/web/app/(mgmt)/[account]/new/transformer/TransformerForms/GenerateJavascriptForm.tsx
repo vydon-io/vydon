@@ -15,7 +15,7 @@ import {
   GenerateJavascript,
   GenerateJavascriptSchema,
   TransformersService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { CheckCircledIcon, CrossCircledIcon } from '@radix-ui/react-icons';
 import { useTheme } from 'next-themes';
 import { ReactElement, useEffect, useState } from 'react';

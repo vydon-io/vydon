@@ -13,7 +13,7 @@ import {
 } from '@/components/ui/tooltip';
 import { cn } from '@/libs/utils';
 import { useMutation, useQuery } from '@connectrpc/connect-query';
-import { AccountHookService } from '@neosync/sdk';
+import { AccountHookService } from '@vydon/sdk';
 import { CheckCircledIcon, ReloadIcon } from '@radix-ui/react-icons';
 import { ReactElement, useState } from 'react';
 import { GoXCircleFill } from 'react-icons/go';

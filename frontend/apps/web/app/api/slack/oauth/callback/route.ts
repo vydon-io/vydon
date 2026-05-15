@@ -1,6 +1,6 @@
 import { withNeosyncContext } from '@/api-only/neosync-context';
 import { getSystemAppConfig } from '@/app/api/config/config';
-import { ConnectError } from '@neosync/sdk';
+import { ConnectError } from '@vydon/sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
 const SLACK_REDIRECT_URL = '/hooks/slack';

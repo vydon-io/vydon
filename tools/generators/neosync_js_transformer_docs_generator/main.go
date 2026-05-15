@@ -12,7 +12,7 @@ import (
 	"strings"
 	"text/template"
 
-	transformers "github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers"
+	transformers "github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 )
 
 func main() {

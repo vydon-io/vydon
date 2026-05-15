@@ -1,4 +1,4 @@
-name: neosync
+name: vydon
 
 include:
   - path: ./compose/temporal/compose.yml
@@ -12,7 +12,7 @@ include:
 
 services:
   app:
-    container_name: neosync-app
+    container_name: vydon-app
     build:
       context: ./
       dockerfile: ./frontend/apps/web/dev/build/Dockerfile.dev
@@ -23,7 +23,7 @@ services:
       - NUCLEUS_ENV=dev
       - NEXTAUTH_SECRET=foo
       - NEXTAUTH_URL=http://localhost:3000
-      - NEOSYNC_API_BASE_URL=http://api:8080
+      - VYDON_API_BASE_URL=http://api:8080
       - NEXT_PUBLIC_APP_BASE_URL=http://localhost:3000
 
       - POSTHOG_KEY=phc_qju45RhNvCDwYVdRyUjtWuWsOmLFaQZi3fmztMBaJip
@@ -34,7 +34,7 @@ services:
       - path: ./.env.app.local
         required: false
     networks:
-      - neosync-network
+      - vydon-network
     volumes:
       - ./frontend:/app/:rw
       - neosync_app_nodemodules:/app/node_modules
@@ -43,7 +43,7 @@ services:
       - neosync_next_cache:/app/apps/web/.next
 
   db:
-    container_name: neosync-db
+    container_name: vydon-db
     image: postgres:15
     ports:
       - 5432:5432
@@ -57,13 +57,13 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - neosync-network
+      - vydon-network
     volumes:
       - neosync_pg_data:/var/lib/postgresql/data
       - ./scripts/pg-init:/docker-entrypoint-initdb.d
 
   api:
-    container_name: neosync-api
+    container_name: vydon-api
     build:
       context: ./
       dockerfile: ./backend/dev/build/Dockerfile.dev
@@ -95,7 +95,7 @@ services:
       - path: ./.env.api.local
         required: false
     networks:
-      - neosync-network
+      - vydon-network
       - temporal-network
     depends_on:
       db:
@@ -113,7 +113,7 @@ services:
     restart: on-failure
 
   worker:
-    container_name: neosync-worker
+    container_name: vydon-worker
     build:
       context: ./
       dockerfile: ./worker/dev/build/Dockerfile.dev
@@ -122,7 +122,7 @@ services:
       - TEMPORAL_URL=temporal:7233
       - TEMPORAL_NAMESPACE=default
       - TEMPORAL_TASK_QUEUE=sync-job
-      - NEOSYNC_URL=http://api:8080
+      - VYDON_URL=http://api:8080
       - REDIS_URL=redis://default:foofar@redis:6379
       - TABLESYNC_MAX_CONCURRENCY=3
       - LOG_LEVEL=DEBUG
@@ -131,7 +131,7 @@ services:
       - path: ./.env.worker.local
         required: false
     networks:
-      - neosync-network
+      - vydon-network
       - temporal-network
     depends_on:
       temporal:
@@ -149,13 +149,13 @@ services:
     restart: on-failure
 
   redis:
-    container_name: neosync-redis
+    container_name: vydon-redis
     image: redis:7.2.4
     ports:
       - 6379:6379
     command: redis-server --save 20 1 --loglevel warning --requirepass foofar
     networks:
-      - neosync-network
+      - vydon-network
     volumes:
       - neosync_redis_cache:/data
 
@@ -173,5 +173,5 @@ volumes:
   neosync_next_cache:
 
 networks:
-  neosync-network:
-    name: neosync-network
+  vydon-network:
+    name: vydon-network

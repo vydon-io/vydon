@@ -7,9 +7,9 @@ import (
 	"os"
 	"time"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/cli/internal/output"
-	benthosbuilder_shared "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/shared"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/cli/internal/output"
+	benthosbuilder_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
 	"github.com/spf13/cobra"
 	"gopkg.in/yaml.v2"
 )

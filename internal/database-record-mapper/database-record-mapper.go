@@ -3,14 +3,14 @@ package databaserecordmapper
 import (
 	"fmt"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/builder"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/dynamodb"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/mongodb"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/mssql"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/mysql"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/postgres"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/builder"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/dynamodb"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/mongodb"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/mssql"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/mysql"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/postgres"
 )
 
 func NewDatabaseRecordMapper(dbType string) (builder.DatabaseRecordMapper[any], error) {

@@ -3,9 +3,9 @@ package tokenctx
 import (
 	"context"
 
-	auth_apikey "github.com/nucleuscloud/neosync/backend/internal/auth/apikey"
-	auth_jwt "github.com/nucleuscloud/neosync/backend/internal/auth/jwt"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
+	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
+	auth_jwt "github.com/vydon-io/vydon/backend/internal/auth/jwt"
+	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 type TokenCtxResponse struct {

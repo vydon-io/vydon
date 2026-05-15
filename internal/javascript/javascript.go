@@ -4,11 +4,11 @@ import (
 	"log/slog"
 
 	goja_require "github.com/dop251/goja_nodejs/require"
-	javascript_functions "github.com/nucleuscloud/neosync/internal/javascript/functions"
-	benthos_functions "github.com/nucleuscloud/neosync/internal/javascript/functions/benthos"
-	neosync_functions "github.com/nucleuscloud/neosync/internal/javascript/functions/neosync"
-	javascript_vm "github.com/nucleuscloud/neosync/internal/javascript/vm"
-	"github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers"
+	javascript_functions "github.com/vydon-io/vydon/internal/javascript/functions"
+	benthos_functions "github.com/vydon-io/vydon/internal/javascript/functions/benthos"
+	neosync_functions "github.com/vydon-io/vydon/internal/javascript/functions/neosync"
+	javascript_vm "github.com/vydon-io/vydon/internal/javascript/vm"
+	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 )
 
 // Comes full featured, but expects a value api that the benthos/neosync functions can manipulate

@@ -15,7 +15,7 @@ import {
   TransformCharacterScramble,
   TransformCharacterScrambleSchema,
   TransformersService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { ReactElement, useState } from 'react';
 import { TransformerConfigProps } from './util';
 

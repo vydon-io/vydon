@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/metrics"
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	bb_shared "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/shared"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/metrics"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	bb_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
+	"github.com/vydon-io/vydon/internal/runconfigs"
 
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
+	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 func (b *BenthosConfigManager) GenerateBenthosConfigs(

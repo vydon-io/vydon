@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	neosync_types "github.com/nucleuscloud/neosync/internal/types"
+	neosync_types "github.com/vydon-io/vydon/internal/types"
 	"github.com/stretchr/testify/require"
 )
 

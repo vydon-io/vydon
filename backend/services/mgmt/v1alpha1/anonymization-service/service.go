@@ -1,11 +1,11 @@
 package v1alpha_anonymizationservice
 
 import (
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	"github.com/nucleuscloud/neosync/internal/license"
-	presidioapi "github.com/nucleuscloud/neosync/internal/piidetect/presidio"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	"github.com/vydon-io/vydon/internal/license"
+	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
+	"github.com/vydon-io/vydon/internal/neosyncdb"
 	"go.opentelemetry.io/otel/metric"
 )
 
