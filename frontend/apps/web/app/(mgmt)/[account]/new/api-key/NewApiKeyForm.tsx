@@ -69,6 +69,10 @@ export default function NewApiKeyForm(): ReactElement {
         name: values.name,
       });
       if (apiKey.apiKey?.id) {
+        // The freshly minted API key is shown to the user once.
+        // We park it in sessionStorage so the post-redirect page can read it
+        // and display it under the "copy now or lose it" UX. Session storage
+        // is wiped when the tab closes; it is the upstream design choice.
         if (apiKey.apiKey.keyValue && !!window?.sessionStorage) {
           const storeVal: ApiKeyValueSessionStore = {
             keyValue: apiKey.apiKey.keyValue,

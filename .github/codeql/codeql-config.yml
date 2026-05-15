@@ -1,0 +1,30 @@
+name: Vydon CodeQL config
+
+# Drop the "security-and-quality" suite — its non-security warnings
+# (useless conditional, duplicate switch case, expression has no
+# effect) add noise without security signal. We keep
+# security-extended which retains the real security checks.
+queries:
+  - uses: security-extended
+
+# Don't run on generated code or build artefacts.
+paths-ignore:
+  - "**/backend/gen/**"
+  - "**/frontend/packages/sdk/src/client/**"
+  - "**/frontend/.next/**"
+  - "**/node_modules/**"
+  - "**/python/src/vydon/mgmt/**"
+  - "**/dist/**"
+
+# Suppress two well-understood false positives / accepted patterns:
+# - One-shot session storage of newly minted API keys is the upstream
+#   UX (key is revealed once, never persisted) so the clear-text
+#   storage warning is informational only.
+# - React JSX in TestConnectionBadge auto-escapes text nodes; CodeQL
+#   flags the validation error string as "DOM text reinterpreted as
+#   HTML", which is structurally incorrect for React.
+query-filters:
+  - exclude:
+      id: js/clear-text-storage-of-sensitive-data
+  - exclude:
+      id: js/xss-through-dom

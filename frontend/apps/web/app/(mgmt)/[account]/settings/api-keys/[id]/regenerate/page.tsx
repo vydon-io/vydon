@@ -91,6 +91,8 @@ export default function RegenerateAccountApiKey(
           expiresAt: timestampFromMs(values.expiresAt.getTime()),
         })
       );
+      // The regenerated API key follows the same "show once" UX as the
+      // initial create flow — see NewApiKeyForm for rationale.
       if (updatedApiKey.apiKey?.keyValue && !!window?.sessionStorage) {
         const storeVal: ApiKeyValueSessionStore = {
           keyValue: updatedApiKey.apiKey.keyValue,
