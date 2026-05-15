@@ -4,6 +4,10 @@
 // runtime work is performed.
 package activities
 
+import (
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+)
+
 const (
 	PiiTableReportSuffix = "pii-table-report"
 )
@@ -11,6 +15,8 @@ const (
 type PiiCategory string
 
 const PiiCategoryPersonal PiiCategory = "personal"
+
+func (c PiiCategory) String() string { return string(c) }
 
 func BuildTableReportExternalId(jobID, schema, table string) string {
 	return jobID + "/" + schema + "/" + table + "/" + PiiTableReportSuffix
@@ -20,11 +26,9 @@ type RegexPiiDetectReport struct {
 	Category PiiCategory
 }
 
-func (c PiiCategory) String() string { return string(c) }
-
 type LLMPiiDetectReport struct {
 	Category   PiiCategory
-	Confidence float64
+	Confidence float32
 }
 
 type CombinedPiiDetectReport struct {
@@ -38,8 +42,8 @@ type ColumnReport struct {
 }
 
 type TableReport struct {
-	Schema        string
-	Table         string
+	TableSchema   string
+	TableName     string
 	ColumnReports []*ColumnReport
-	ReportKey     string
+	ReportKey     *mgmtv1alpha1.RunContextKey
 }

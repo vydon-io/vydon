@@ -1,10 +1,20 @@
 package job
 
+import (
+	"go.temporal.io/sdk/workflow"
+)
+
 type PiiDetectRequest struct {
-	JobID     string
+	JobId     string
 	AccountID string
 }
 
-// Workflow is the Temporal workflow type name. The PII detection
-// workflow is disabled in OSS.
-const Workflow = "PiiDetectJob"
+type PiiDetectResponse struct{}
+
+type Workflow struct{}
+
+// JobPiiDetect is the Temporal workflow entrypoint. With the PII
+// detection feature disabled in OSS, the workflow returns immediately.
+func (*Workflow) JobPiiDetect(_ workflow.Context, _ *PiiDetectRequest) (*PiiDetectResponse, error) {
+	return &PiiDetectResponse{}, nil
+}

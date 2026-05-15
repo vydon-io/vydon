@@ -3,8 +3,8 @@
 package table
 
 type TablePiiDetectRequest struct {
-	JobID     string
-	AccountID string
-	Schema    string
-	Table     string
+	JobID       string
+	AccountID   string
+	TableSchema string
+	TableName   string
 }
