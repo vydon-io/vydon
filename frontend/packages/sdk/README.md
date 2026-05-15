@@ -64,10 +64,10 @@ import { getNeosyncClient } from '@neosync/sdk';
 import { createConnectTransport } from '@connectrpc/connect-node';
 
 const neosyncClient = getNeosyncClient({
-  getAccessToken: () => process.env.NEOSYNC_API_KEY,
+  getAccessToken: () => process.env.VYDON_API_KEY,
   getTransport(interceptors) {
     return createConnectTransport({
-      baseUrl: process.env.NEOSYNC_API_URL,
+      baseUrl: process.env.VYDON_API_URL,
       httpVersion: '2',
       interceptors: interceptors,
     });

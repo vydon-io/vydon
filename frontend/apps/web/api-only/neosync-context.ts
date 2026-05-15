@@ -79,9 +79,9 @@ function getAccessTokenFn(
 }
 
 function getApiBaseUrlFromEnv(): string {
-  const apiUrl = process.env.NEOSYNC_API_BASE_URL;
+  const apiUrl = process.env.VYDON_API_BASE_URL;
   if (!apiUrl) {
-    throw new Error('must provide NEOSYNC_API_BASE_URL');
+    throw new Error('must provide VYDON_API_BASE_URL');
   }
   return apiUrl;
 }

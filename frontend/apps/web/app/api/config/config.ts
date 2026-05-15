@@ -8,7 +8,7 @@ export const PUBLIC_PATHNAME = '/api/neosync';
 // This only seems to be an issue with the root layout.tsx, where as all sub pages cause a re-render of the root layout
 // which causes them to be their correct values. However, if navigating to "/", the root layout isn't re-rendered and is given the defaults.
 export function getSystemAppConfig(): SystemAppConfig {
-  const isNeosyncCloud = process.env.NEOSYNC_CLOUD === 'true';
+  const isNeosyncCloud = process.env.VYDON_CLOUD === 'true';
   return {
     isAuthEnabled: process.env.AUTH_ENABLED === 'true',
     publicAppBaseUrl:
@@ -31,7 +31,7 @@ export function getSystemAppConfig(): SystemAppConfig {
       process.env.CALENDLY_UPGRADE_LINK ?? 'https://calendly.com/evis1/30min',
     isGcpCloudStorageConnectionsEnabled: isGcpConnectionsEnabled(),
     neosyncApiBaseUrl:
-      process.env.NEOSYNC_API_BASE_URL ?? 'http://localhost:8080',
+      process.env.VYDON_API_BASE_URL ?? 'http://localhost:8080',
     publicNeosyncApiBaseUrl: PUBLIC_PATHNAME, // ensures that this always points to the same domain
     isJobHooksEnabled: process.env.JOBHOOKS_ENABLED === 'true',
     isAccountHooksEnabled:
@@ -54,6 +54,6 @@ function isGcpConnectionsEnabled(): boolean {
 }
 
 function isAnalyticsEnabled(): boolean {
-  const val = process.env.NEOSYNC_ANALYTICS_ENABLED;
+  const val = process.env.VYDON_ANALYTICS_ENABLED;
   return val ? val === 'true' : true;
 }

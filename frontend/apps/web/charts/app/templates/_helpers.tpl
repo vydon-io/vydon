@@ -76,7 +76,7 @@ OTEL_EXPORTER_OTLP_PORT: {{ .Values.otel.otlpPort | quote }} # sends to gRPC rec
 NUCLEUS_ENV: {{ .Values.nucleusEnv }}
 {{- end }}
 {{- if .Values.neosyncApi.url }}
-NEOSYNC_API_BASE_URL: {{ .Values.neosyncApi.url }}
+VYDON_API_BASE_URL: {{ .Values.neosyncApi.url }}
 {{- end }}
 NEXTAUTH_SECRET: {{ .Values.nextAuthSecret }}
 {{- if .Values.nextAuthUrl }}
@@ -123,7 +123,7 @@ NEXT_PUBLIC_APP_BASE_URL: {{ .Values.nextPublic.appBaseUrl }}
 {{- end }}
 AUTH_ENABLED: {{ .Values.auth.enabled | default "false" | quote }}
 AUTH_TRUST_HOST: {{ .Values.auth.trustHost | default "true" | quote }}
-NEOSYNC_ANALYTICS_ENABLED: {{ .Values.analytics.enabled | default "true" | quote }}
+VYDON_ANALYTICS_ENABLED: {{ .Values.analytics.enabled | default "true" | quote }}
 {{- if and .Values.posthog .Values.posthog.key }}
 POSTHOG_KEY: {{ .Values.posthog.key }}
 {{- end }}
@@ -133,7 +133,7 @@ POSTHOG_HOST: {{ .Values.posthog.host }}
 {{- if and .Values.unify .Values.unify.key }}
 UNIFY_KEY: {{ .Values.unify.key }}
 {{- end }}
-NEOSYNC_CLOUD: {{ .Values.neosyncCloud.enabled | default "false" | quote }}
+VYDON_CLOUD: {{ .Values.neosyncCloud.enabled | default "false" | quote }}
 ENABLE_RUN_LOGS: {{ .Values.enableRunLogs | default "false" | quote }}
 {{- if and .Values.protometrics .Values.protometrics.enabled }}
 METRICS_SERVICE_ENABLED: {{ .Values.protometrics.enabled | default "false" | quote }}
