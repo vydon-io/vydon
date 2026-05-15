@@ -1,0 +1,28 @@
+Vydon
+Copyright 2026 Vydon SAS
+
+This product is licensed under the MIT License. See LICENSE.md for the full
+text.
+
+---
+
+This product is a fork of Neosync, originally developed by Nucleus Cloud Corp.
+
+  Neosync
+  Copyright 2024 Nucleus Cloud Corp
+  Licensed under the MIT License
+  https://github.com/nucleuscloud/neosync
+
+The Vydon distribution retains the full git history of the upstream Neosync
+repository in accordance with the MIT License attribution requirement.
+
+The original LICENSE.md file is preserved at the root of this repository.
+
+---
+
+Portions of this product include third-party software components. Their
+respective licenses are preserved within their source files and listed in
+the dependency audit at docs/legal/dependency-audit.md.
+
+If you redistribute this software, you must include this NOTICE file and the
+accompanying LICENSE.md unchanged.
