@@ -321,14 +321,14 @@ class GetSystemInformationResponse(_message.Message):
     def __init__(self, version: _Optional[str] = ..., commit: _Optional[str] = ..., compiler: _Optional[str] = ..., platform: _Optional[str] = ..., build_date: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., license: _Optional[_Union[SystemLicense, _Mapping]] = ...) -> None: ...
 
 class SystemLicense(_message.Message):
-    __slots__ = ("is_valid", "expires_at", "is_neosync_cloud")
+    __slots__ = ("is_valid", "expires_at", "is_vydon_cloud")
     IS_VALID_FIELD_NUMBER: _ClassVar[int]
     EXPIRES_AT_FIELD_NUMBER: _ClassVar[int]
-    IS_NEOSYNC_CLOUD_FIELD_NUMBER: _ClassVar[int]
+    IS_VYDON_CLOUD_FIELD_NUMBER: _ClassVar[int]
     is_valid: bool
     expires_at: _timestamp_pb2.Timestamp
-    is_neosync_cloud: bool
-    def __init__(self, is_valid: bool = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_neosync_cloud: bool = ...) -> None: ...
+    is_vydon_cloud: bool
+    def __init__(self, is_valid: bool = ..., expires_at: _Optional[_Union[_timestamp_pb2.Timestamp, _Mapping]] = ..., is_vydon_cloud: bool = ...) -> None: ...
 
 class GetAccountOnboardingConfigRequest(_message.Message):
     __slots__ = ("account_id",)

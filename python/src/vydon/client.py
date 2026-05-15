@@ -10,7 +10,7 @@ from grpc import (
     StreamStreamClientInterceptor,
 )
 from typing import Callable, Optional, Union
-from neosync.mgmt.v1alpha1 import (
+from vydon.mgmt.v1alpha1 import (
     anonymization_pb2_grpc,
     api_key_pb2_grpc,
     connection_data_pb2_grpc,
@@ -25,22 +25,22 @@ from neosync.mgmt.v1alpha1 import (
 # Function that returns the access token
 GetAccessTokenFn = Callable[[], Union[str, None]]
 
-# Default gRPC URL for Neosync Cloud API
-_DEFAULT_NEOSYNC_CLOUD_API_URL = "neosync-api.svcs.neosync.dev:443"
+# Default gRPC URL for Vydon Cloud API
+_DEFAULT_VYDON_CLOUD_API_URL = "vydon-api.svcs.vydon.dev:443"
 
 
-class Neosync:
-    """A client for interacting with the Neosync API.
+class Vydon:
+    """A client for interacting with the Vydon API.
 
-    This class provides access to various Neosync services including connections,
+    This class provides access to various Vydon services including connections,
     jobs, metrics, transformers, and more. It handles authentication and
-    communication with the Neosync API endpoints.
+    communication with the Vydon API endpoints.
 
     Args:
         access_token (Optional[str]): A static bearer token for API authentication.
             Mutually exclusive with get_access_token.
-        api_url (Optional[str]): The URL of the Neosync API endpoint.
-            Defaults to "neosync-api.svcs.neosync.dev:443".
+        api_url (Optional[str]): The URL of the Vydon API endpoint.
+            Defaults to "vydon-api.svcs.vydon.dev:443".
         get_access_token (Optional[GetAccessTokenFn]): A callback function that returns
             a bearer token for API authentication. Mutually exclusive with access_token.
         insecure (Optional[bool]): If True, creates an insecure channel without TLS.
@@ -57,7 +57,7 @@ class Neosync:
         apikeys: Service client for API key management.
 
     Example:
-        >>> client = Neosync(access_token="your-token")
+        >>> client = Vydon(access_token="your-token")
         >>> # Access various services
         >>> jobs = client.jobs.ListJobs(GetJobsRequest(account_id="your-account-id"))
     """
@@ -65,7 +65,7 @@ class Neosync:
     def __init__(
         self,
         access_token: Optional[str] = None,
-        api_url: Optional[str] = _DEFAULT_NEOSYNC_CLOUD_API_URL,
+        api_url: Optional[str] = _DEFAULT_VYDON_CLOUD_API_URL,
         get_access_token: Optional[GetAccessTokenFn] = None,
         insecure: Optional[bool] = False,
     ):

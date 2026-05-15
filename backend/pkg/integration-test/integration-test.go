@@ -65,7 +65,7 @@ type VydonApiTestClient struct {
 	// OSS, Unauthenticated, Unlicensed
 	OSSUnauthenticatedUnlicensedClients *VydonClients
 	// NeoCloud, Authenticated, Licensed
-	NeosyncCloudAuthenticatedLicensedClients *VydonClients
+	VydonCloudAuthenticatedLicensedClients *VydonClients
 
 	Mocks *Mocks
 }
@@ -184,7 +184,7 @@ func (s *VydonApiTestClient) Setup(ctx context.Context, t testing.TB) error {
 	s.OSSUnauthenticatedUnlicensedClients = newVydonClients(
 		s.httpsrv.URL + openSourceUnauthenticatedUnlicensedPostfix,
 	)
-	s.NeosyncCloudAuthenticatedLicensedClients = newVydonClients(
+	s.VydonCloudAuthenticatedLicensedClients = newVydonClients(
 		s.httpsrv.URL + neoCloudAuthenticatedLicensedPostfix,
 	)
 

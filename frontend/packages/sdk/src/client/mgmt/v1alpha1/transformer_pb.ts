@@ -435,7 +435,7 @@ export const UserDefinedTransformerSchema: GenMessage<UserDefinedTransformer> = 
   messageDesc(file_mgmt_v1alpha1_transformer, 16);
 
 /**
- * A system transformer is a transformer that is built into the Neosync platform.
+ * A system transformer is a transformer that is built into the Vydon platform.
  * It can be used directly in job mappings or used in user-defined transformers to snapshot a specific configuration.
  *
  * @generated from message mgmt.v1alpha1.SystemTransformer
@@ -766,7 +766,7 @@ export type TransformerConfig = Message<"mgmt.v1alpha1.TransformerConfig"> & {
     case: "generateCountryConfig";
   } | {
     /**
-     * NeosyncCloud/Enterprise only transformer for anonymizing PII Text
+     * VydonCloud/Enterprise only transformer for anonymizing PII Text
      *
      * @generated from field: mgmt.v1alpha1.TransformPiiText transform_pii_text_config = 44;
      */
@@ -825,7 +825,7 @@ export const TransformScrambleIdentitySchema: GenMessage<TransformScrambleIdenti
   messageDesc(file_mgmt_v1alpha1_transformer, 19);
 
 /**
- * NeosyncCloud/Enterprise only transformer for anonymizing PII Text
+ * VydonCloud/Enterprise only transformer for anonymizing PII Text
  *
  * @generated from message mgmt.v1alpha1.TransformPiiText
  */
@@ -961,7 +961,7 @@ export type PiiAnonymizer = Message<"mgmt.v1alpha1.PiiAnonymizer"> & {
     case: "hash";
   } | {
     /**
-     * Configures the anonymizer to use a Neosync configured transformer
+     * Configures the anonymizer to use a Vydon configured transformer
      *
      * @generated from field: mgmt.v1alpha1.PiiAnonymizer.Transform transform = 5;
      */
@@ -2324,7 +2324,7 @@ export enum TransformerSource {
   GENERATE_COUNTRY = 46,
 
   /**
-   * NeosyncCloud/Enterprise only transformer for anonymizing PII Text
+   * VydonCloud/Enterprise only transformer for anonymizing PII Text
    *
    * @generated from enum value: TRANSFORMER_SOURCE_TRANSFORM_PII_TEXT = 47;
    */

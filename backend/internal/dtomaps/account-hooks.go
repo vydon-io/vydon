@@ -10,10 +10,10 @@ import (
 )
 
 func ToAccountHookDto(
-	input *db_queries.NeosyncApiAccountHook,
+	input *db_queries.VydonApiAccountHook,
 ) (*mgmtv1alpha1.AccountHook, error) {
 	if input == nil {
-		input = &db_queries.NeosyncApiAccountHook{}
+		input = &db_queries.VydonApiAccountHook{}
 	}
 
 	config := &mgmtv1alpha1.AccountHookConfig{}
@@ -40,7 +40,7 @@ func ToAccountHookDto(
 }
 
 func ToAccountHooksDto(
-	input []db_queries.NeosyncApiAccountHook,
+	input []db_queries.VydonApiAccountHook,
 ) ([]*mgmtv1alpha1.AccountHook, error) {
 	dtos := make([]*mgmtv1alpha1.AccountHook, len(input))
 	for idx := range input {

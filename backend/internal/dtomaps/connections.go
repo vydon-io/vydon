@@ -8,7 +8,7 @@ import (
 )
 
 func ToConnectionDto(
-	input *db_queries.NeosyncApiConnection,
+	input *db_queries.VydonApiConnection,
 	canViewSensitive bool,
 ) (*mgmtv1alpha1.Connection, error) {
 	ccDto, err := input.ConnectionConfig.ToDto(canViewSensitive)

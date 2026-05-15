@@ -30,7 +30,7 @@ func Test_Interceptor_WrapUnary_JwtContextData_ValidUser(t *testing.T) {
 
 	genuuid, _ := vydondb.ToUuid(uuid.NewString())
 	mockQuerier.On("GetUserByProviderSub", mock.Anything, mock.Anything, "auth-user-id").
-		Return(db_queries.NeosyncApiUser{ID: genuuid}, nil)
+		Return(db_queries.VydonApiUser{ID: genuuid}, nil)
 
 	mux := http.NewServeMux()
 	mux.Handle(mgmtv1alpha1connect.UserAccountServiceGetUserProcedure, connect.NewUnaryHandler(
@@ -118,7 +118,7 @@ func Test_getAuthValues_Valid_Jwt(t *testing.T) {
 	uuidstr := uuid.NewString()
 	genuuid, _ := vydondb.ToUuid(uuidstr)
 	mockQuerier.On("GetUserByProviderSub", mock.Anything, mock.Anything, "auth-user-id").
-		Return(db_queries.NeosyncApiUser{ID: genuuid}, nil)
+		Return(db_queries.VydonApiUser{ID: genuuid}, nil)
 
 	ctx := context.WithValue(context.Background(), auth_jwt.TokenContextKey{}, &auth_jwt.TokenContextData{
 		AuthUserId: "auth-user-id",
@@ -137,7 +137,7 @@ func Test_getAuthValues_Valid_Jwt_No_User(t *testing.T) {
 	mockQuerier := db_queries.NewMockQuerier(t)
 
 	mockQuerier.On("GetUserByProviderSub", mock.Anything, mock.Anything, "auth-user-id").
-		Return(db_queries.NeosyncApiUser{}, errors.New("test err"))
+		Return(db_queries.VydonApiUser{}, errors.New("test err"))
 
 	ctx := context.WithValue(context.Background(), auth_jwt.TokenContextKey{}, &auth_jwt.TokenContextData{
 		AuthUserId: "auth-user-id",
@@ -165,7 +165,7 @@ func Test_getAuthValues_Valid_ApiKey(t *testing.T) {
 
 	ctx := context.WithValue(context.Background(), auth_apikey.TokenContextKey{}, &auth_apikey.TokenContextData{
 		ApiKeyType: apikey.AccountApiKey,
-		ApiKey: &db_queries.NeosyncApiAccountApiKey{
+		ApiKey: &db_queries.VydonApiAccountApiKey{
 			ID:        apikeyuuid,
 			AccountID: accountiduuid,
 			UserID:    useriduuid,

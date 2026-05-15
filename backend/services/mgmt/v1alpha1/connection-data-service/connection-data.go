@@ -13,7 +13,7 @@ import (
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	vydongob "github.com/vydon-io/vydon/internal/gob"
 
 	"golang.org/x/sync/errgroup"
@@ -251,7 +251,7 @@ func (s *Service) GetAiGeneratedData(
 
 	openaiconfig := aiconnection.GetConnectionConfig().GetOpenaiConfig()
 	if openaiconfig == nil {
-		return nil, nucleuserrors.NewBadRequest("connection must be a valid openai connection")
+		return nil, vydonerrors.NewBadRequest("connection must be a valid openai connection")
 	}
 
 	client, err := azopenai.NewClientForOpenAI(

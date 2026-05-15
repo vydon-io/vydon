@@ -53,8 +53,8 @@ func Test_Connections(t *testing.T) {
 
 	t.Run("list_cloud", func(t *testing.T) {
 		testAuthUserId := "34f3e404-c995-452b-89e4-9c486b491dab"
-		userclient := vydonApi.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
-		connclient := vydonApi.NeosyncCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId))
+		userclient := vydonApi.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+		connclient := vydonApi.VydonCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId))
 		tcvydonapi.SetUser(ctx, t, userclient)
 		accountId := tcvydonapi.CreatePersonalAccount(ctx, t, userclient)
 		conn1 := tcvydonapi.CreatePostgresConnection(ctx, t, connclient, accountId, "conn1", postgresUrl)

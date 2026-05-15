@@ -74,7 +74,7 @@ aurs:
       # license
       install -Dm644 "./LICENSE" "${pkgdir}/usr/share/licenses/vydon/LICENSE"
     commit_author:
-      name: nucleusbot
+      name: vydonbot
       email: devops@vydon-io.com
     private_key: "{{ .Env.AUR_KEY }}"
 

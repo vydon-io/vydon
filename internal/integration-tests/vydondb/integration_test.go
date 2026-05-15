@@ -9,7 +9,7 @@ import (
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	neomigrate "github.com/vydon-io/vydon/internal/migrate"
 	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/vydon-io/vydon/internal/testutil"
@@ -105,7 +105,7 @@ func (s *IntegrationTestSuite) Test_SetUserByAuth0Id() {
 	})
 }
 
-func (s *IntegrationTestSuite) setUser(t testing.TB, ctx context.Context, sub string) *db_queries.NeosyncApiUser {
+func (s *IntegrationTestSuite) setUser(t testing.TB, ctx context.Context, sub string) *db_queries.VydonApiUser {
 	resp, err := s.db.SetUserByAuthSub(ctx, sub)
 	requireNoErrResp(t, resp, err)
 	return resp
@@ -182,7 +182,7 @@ func (s *IntegrationTestSuite) Test_CreateTeamAccount() {
 
 		account1, err := s.db.CreateTeamAccount(s.ctx, user.ID, "myteam", testutil.GetTestLogger(t))
 		requireErrResp(t, account1, err)
-		alreadyExists := nucleuserrors.NewAlreadyExists("")
+		alreadyExists := vydonerrors.NewAlreadyExists("")
 		require.ErrorAs(t, err, &alreadyExists)
 	})
 }
@@ -223,7 +223,7 @@ func (s *IntegrationTestSuite) Test_ConvertPersonalToTeamAccount() {
 			TeamName:          "myteam2",
 		}, testutil.GetTestLogger(t))
 		requireErrResp(t, resp, err)
-		badreqerror := nucleuserrors.NewBadRequest("")
+		badreqerror := vydonerrors.NewBadRequest("")
 		require.ErrorAs(t, err, &badreqerror)
 	})
 }
@@ -238,7 +238,7 @@ func (s *IntegrationTestSuite) Test_UpsertStripeCustomerId() {
 		requireNoErrResp(t, account, err)
 		require.False(t, account.StripeCustomerID.Valid)
 
-		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.NeosyncApiAccount) (string, error) {
+		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
 			return "testid", nil
 		}, testutil.GetTestLogger(t))
 		requireNoErrResp(t, account, err)
@@ -252,14 +252,14 @@ func (s *IntegrationTestSuite) Test_UpsertStripeCustomerId() {
 		require.False(t, account.StripeCustomerID.Valid)
 
 		firstid := "testid"
-		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.NeosyncApiAccount) (string, error) {
+		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
 			return firstid, nil
 		}, testutil.GetTestLogger(t))
 		requireNoErrResp(t, account, err)
 		require.True(t, account.StripeCustomerID.Valid)
 		require.Equal(t, firstid, account.StripeCustomerID.String)
 
-		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.NeosyncApiAccount) (string, error) {
+		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
 			return "secondid", nil
 		}, testutil.GetTestLogger(t))
 		requireNoErrResp(t, account, err)
@@ -272,7 +272,7 @@ func (s *IntegrationTestSuite) Test_UpsertStripeCustomerId() {
 		requireNoErrResp(t, account, err)
 		require.False(t, account.StripeCustomerID.Valid)
 
-		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.NeosyncApiAccount) (string, error) {
+		account, err = s.db.UpsertStripeCustomerId(s.ctx, account.ID, func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
 			return "testid", nil
 		}, testutil.GetTestLogger(t))
 		requireErrResp(t, account, err)
@@ -315,7 +315,7 @@ func (s *IntegrationTestSuite) Test_CreateTeamAccountInvite() {
 
 		invite, err := s.db.CreateTeamAccountInvite(s.ctx, account.ID, user.ID, "foo@example.com", getFutureTs(t, 1*time.Hour), dbViewerRole)
 		requireErrResp(t, invite, err)
-		forbiddin := nucleuserrors.NewForbidden("")
+		forbiddin := vydonerrors.NewForbidden("")
 		require.ErrorAs(t, err, &forbiddin)
 	})
 }
@@ -346,7 +346,7 @@ func (s *IntegrationTestSuite) Test_ValidateInviteAddUserToAccount() {
 		verifyResp, err := s.db.ValidateInviteAddUserToAccount(s.ctx, user3.ID, invite.Token, "foo3@example.com")
 		require.Error(t, err)
 		require.Nil(t, verifyResp)
-		forbidden := nucleuserrors.NewForbidden("")
+		forbidden := vydonerrors.NewForbidden("")
 		require.ErrorAs(t, err, &forbidden)
 	})
 
@@ -359,7 +359,7 @@ func (s *IntegrationTestSuite) Test_ValidateInviteAddUserToAccount() {
 		verifyResp, err := s.db.ValidateInviteAddUserToAccount(s.ctx, user4.ID, invite.Token, "blah@example.com")
 		require.Error(t, err)
 		require.Nil(t, verifyResp)
-		badrequest := nucleuserrors.NewBadRequest("")
+		badrequest := vydonerrors.NewBadRequest("")
 		require.ErrorAs(t, err, &badrequest)
 		t.Log(err.Error())
 	})

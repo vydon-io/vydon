@@ -22,7 +22,7 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/loki"
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	"github.com/vydon-io/vydon/internal/rbac"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 	piidetect_job_activities "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/job/activities"
 	piidetect_table_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/table"
@@ -716,7 +716,7 @@ func (s *Service) streamLogs(
 ) error {
 	if s.cfg.RunLogConfig == nil || !s.cfg.RunLogConfig.IsEnabled ||
 		s.cfg.RunLogConfig.RunLogType == nil {
-		return nucleuserrors.NewNotImplemented(
+		return vydonerrors.NewNotImplemented(
 			"job run logs is not enabled. please configure or contact system administrator to enable logs.",
 		)
 	}
@@ -751,7 +751,7 @@ func (s *Service) streamLogs(
 		}
 		return nil
 	default:
-		return nucleuserrors.NewNotImplemented(
+		return vydonerrors.NewNotImplemented(
 			"streaming log pods not implemented for this container type",
 		)
 	}
@@ -785,7 +785,7 @@ func (s *Service) streamK8sWorkerPodLogs(
 	logger *slog.Logger,
 ) error {
 	if s.cfg.RunLogConfig.RunLogPodConfig == nil {
-		return nucleuserrors.NewInternalError("run logs configured but no config provided")
+		return vydonerrors.NewInternalError("run logs configured but no config provided")
 	}
 	workflowExecution, err := s.temporalmgr.GetWorkflowExecutionById(
 		ctx,
@@ -845,7 +845,7 @@ func (s *Service) streamK8sWorkerPodLogs(
 		if err != nil && !k8serrors.IsNotFound(err) {
 			return err
 		} else if err != nil && k8serrors.IsNotFound(err) {
-			return nucleuserrors.NewNotFound("pod no longer exists")
+			return vydonerrors.NewNotFound("pod no longer exists")
 		}
 
 		scanner := bufio.NewScanner(logstream)
@@ -888,10 +888,10 @@ func (s *Service) streamLokiWorkerLogs(
 ) error {
 	if s.cfg.RunLogConfig == nil || !s.cfg.RunLogConfig.IsEnabled ||
 		s.cfg.RunLogConfig.LokiRunLogConfig == nil {
-		return nucleuserrors.NewInternalError("run logs configured but no config provided")
+		return vydonerrors.NewInternalError("run logs configured but no config provided")
 	}
 	if s.cfg.RunLogConfig.LokiRunLogConfig.LabelsQuery == "" {
-		return nucleuserrors.NewInternalError("must provide a labels query for loki to filter by")
+		return vydonerrors.NewInternalError("must provide a labels query for loki to filter by")
 	}
 	workflowExecution, err := s.temporalmgr.GetWorkflowExecutionById(
 		ctx,
@@ -1063,7 +1063,7 @@ func (s *Service) GetRunContext(
 	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, fmt.Errorf("unable to retrieve run context by key: %w", err)
 	} else if err != nil && vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("no run context exists with the provided key")
+		return nil, vydonerrors.NewNotFound("no run context exists with the provided key")
 	}
 
 	return connect.NewResponse(&mgmtv1alpha1.GetRunContextResponse{
@@ -1085,8 +1085,8 @@ func (s *Service) SetRunContext(
 		return nil, err
 	}
 
-	if s.cfg.IsNeosyncCloud && !user.IsWorkerApiKey() {
-		return nil, nucleuserrors.NewUnauthenticated(
+	if s.cfg.IsVydonCloud && !user.IsWorkerApiKey() {
+		return nil, vydonerrors.NewUnauthenticated(
 			"must provide valid authentication credentials for this endpoint",
 		)
 	}
@@ -1126,8 +1126,8 @@ func (s *Service) SetRunContexts(
 			return nil, err
 		}
 
-		if s.cfg.IsNeosyncCloud && !user.IsWorkerApiKey() {
-			return nil, nucleuserrors.NewUnauthenticated(
+		if s.cfg.IsVydonCloud && !user.IsWorkerApiKey() {
+			return nil, vydonerrors.NewUnauthenticated(
 				"must provide valid authentication credentials for this endpoint",
 			)
 		}
@@ -1232,7 +1232,7 @@ func (s *Service) getTableRunContextsFromJobReport(
 	ctx context.Context,
 	jobRun *mgmtv1alpha1.JobRun,
 	accountUuid pgtype.UUID,
-) ([]*db_queries.NeosyncApiRuncontext, error) {
+) ([]*db_queries.VydonApiRuncontext, error) {
 	runContext, err := s.db.Q.GetRunContextByKey(ctx, s.db.Db, db_queries.GetRunContextByKeyParams{
 		WorkflowId: jobRun.GetId(),
 		ExternalId: piidetect_job_activities.BuildJobReportExternalId(jobRun.GetJobId()),
@@ -1266,10 +1266,10 @@ func (s *Service) getTableRunContextsFromJobReport(
 func (s *Service) getDbRunContextsFromKeys(
 	ctx context.Context,
 	keys []*mgmtv1alpha1.RunContextKey,
-) ([]*db_queries.NeosyncApiRuncontext, error) {
+) ([]*db_queries.VydonApiRuncontext, error) {
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.SetLimit(10)
-	runContexts := []*db_queries.NeosyncApiRuncontext{}
+	runContexts := []*db_queries.VydonApiRuncontext{}
 	mu := sync.Mutex{}
 	// this could be further optimized by fetching all the run contexts in a single query
 	// where the account id and workflow id are the same
@@ -1307,7 +1307,7 @@ func (s *Service) getDbRunContextsFromKeys(
 }
 
 func getReportsFromTableContexts(
-	tableContexts []*db_queries.NeosyncApiRuncontext,
+	tableContexts []*db_queries.VydonApiRuncontext,
 ) ([]*piidetect_table_activities.TableReport, error) {
 	reports := make([]*piidetect_table_activities.TableReport, len(tableContexts))
 	for i := range tableContexts {

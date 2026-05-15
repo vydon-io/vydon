@@ -8,7 +8,7 @@ import (
 	"connectrpc.com/connect"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 func (s *Service) GetAuthStatus(
@@ -42,7 +42,7 @@ func (s *Service) LoginCli(
 				resp.Error.ErrorDescription,
 			),
 		)
-		return nil, nucleuserrors.NewUnauthenticated("Request unauthenticated")
+		return nil, vydonerrors.NewUnauthenticated("Request unauthenticated")
 	}
 	var refreshToken *string
 	if resp.Result.RefreshToken != "" {
@@ -81,7 +81,7 @@ func (s *Service) RefreshCli(
 				resp.Error.ErrorDescription,
 			),
 		)
-		return nil, nucleuserrors.NewUnauthenticated("Unable to refresh access token")
+		return nil, vydonerrors.NewUnauthenticated("Unable to refresh access token")
 	}
 	var refreshToken *string
 	if resp.Result.RefreshToken != "" {

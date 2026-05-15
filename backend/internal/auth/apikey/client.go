@@ -12,20 +12,20 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/utils"
 	pkg_utils "github.com/vydon-io/vydon/backend/pkg/utils"
 	"github.com/vydon-io/vydon/internal/apikey"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type TokenContextKey struct{}
 type TokenContextData struct {
 	RawToken   string
-	ApiKey     *db_queries.NeosyncApiAccountApiKey
+	ApiKey     *db_queries.VydonApiAccountApiKey
 	ApiKeyType apikey.ApiKeyType
 }
 
 var (
 	ErrInvalidApiKey = errors.New("token is not a valid vydon api key")
-	ErrApiKeyExpired = nucleuserrors.NewUnauthenticated("token is expired")
+	ErrApiKeyExpired = vydonerrors.NewUnauthenticated("token is expired")
 )
 
 type Queries interface {
@@ -33,7 +33,7 @@ type Queries interface {
 		ctx context.Context,
 		db db_queries.DBTX,
 		apiKey string,
-	) (db_queries.NeosyncApiAccountApiKey, error)
+	) (db_queries.VydonApiAccountApiKey, error)
 }
 
 type Client struct {
@@ -106,7 +106,7 @@ func (c *Client) InjectTokenCtx(
 func GetTokenDataFromCtx(ctx context.Context) (*TokenContextData, error) {
 	data, ok := ctx.Value(TokenContextKey{}).(*TokenContextData)
 	if !ok {
-		return nil, nucleuserrors.NewUnauthenticated(
+		return nil, vydonerrors.NewUnauthenticated(
 			"ctx does not contain TokenContextData or unable to cast struct",
 		)
 	}

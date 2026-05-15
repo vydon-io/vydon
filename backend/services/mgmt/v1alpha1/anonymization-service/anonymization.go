@@ -13,7 +13,7 @@ import (
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
 	"github.com/vydon-io/vydon/backend/pkg/metrics"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	jsonanonymizer "github.com/vydon-io/vydon/internal/json-anonymizer"
 	"github.com/vydon-io/vydon/internal/vydondb"
 	"go.opentelemetry.io/otel/attribute"
@@ -33,7 +33,7 @@ func (s *Service) AnonymizeMany(
 ) (*connect.Response[mgmtv1alpha1.AnonymizeManyResponse], error) {
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
 	if !s.license.IsValid() {
-		return nil, nucleuserrors.NewNotImplemented(
+		return nil, vydonerrors.NewNotImplemented(
 			fmt.Sprintf(
 				"%s is not implemented in the OSS version of Vydon.",
 				strings.TrimPrefix(
@@ -63,7 +63,7 @@ func (s *Service) AnonymizeMany(
 		return nil, err
 	}
 	if account.AccountType == int16(vydondb.AccountType_Personal) {
-		return nil, nucleuserrors.NewForbidden(
+		return nil, vydonerrors.NewForbidden(
 			fmt.Sprintf(
 				"%s is not implemented for personal accounts",
 				strings.TrimPrefix(
@@ -93,7 +93,7 @@ func (s *Service) AnonymizeMany(
 	}
 
 	if !resp.Msg.IsValid {
-		return nil, nucleuserrors.NewBadRequest(
+		return nil, vydonerrors.NewBadRequest(
 			fmt.Sprintf(
 				"unable to anonymize due to account in invalid state. Reason: %q",
 				*resp.Msg.Reason,
@@ -190,10 +190,10 @@ func (s *Service) AnonymizeSingle(
 	if err != nil {
 		return nil, err
 	}
-	if !s.license.IsValid() || (s.cfg.IsNeosyncCloud && account.AccountType == int16(vydondb.AccountType_Personal)) {
+	if !s.license.IsValid() || (s.cfg.IsVydonCloud && account.AccountType == int16(vydondb.AccountType_Personal)) {
 		for _, mapping := range req.Msg.GetTransformerMappings() {
 			if mapping.GetTransformer().GetTransformPiiTextConfig() != nil {
-				return nil, nucleuserrors.NewForbidden(
+				return nil, vydonerrors.NewForbidden(
 					"TransformPiiText is not available for use. Please contact us about upgrading your account.",
 				)
 			}
@@ -202,7 +202,7 @@ func (s *Service) AnonymizeSingle(
 		if defaultTransforms.GetBoolean().GetTransformPiiTextConfig() != nil ||
 			defaultTransforms.GetN().GetTransformPiiTextConfig() != nil ||
 			defaultTransforms.GetS().GetTransformPiiTextConfig() != nil {
-			return nil, nucleuserrors.NewForbidden(
+			return nil, vydonerrors.NewForbidden(
 				"TransformPiiText is not available for use. Please contact us about upgrading your account.",
 			)
 		}
@@ -227,7 +227,7 @@ func (s *Service) AnonymizeSingle(
 	}
 
 	if !resp.Msg.IsValid {
-		return nil, nucleuserrors.NewBadRequest(
+		return nil, vydonerrors.NewBadRequest(
 			fmt.Sprintf(
 				"unable to anonymize due to account in invalid state. Reason: %q",
 				*resp.Msg.Reason,
@@ -326,7 +326,7 @@ func validateTransformerConfig(cfg *mgmtv1alpha1.TransformerConfig) error {
 	if defaultAnonymizer != nil {
 		child := defaultAnonymizer.GetTransform().GetConfig().GetTransformPiiTextConfig()
 		if child != nil {
-			return nucleuserrors.NewBadRequest(
+			return vydonerrors.NewBadRequest(
 				"found nested TransformPiiText config in default anonymizer. TransformPiiText may not be used deeply nested within itself.",
 			)
 		}
@@ -335,7 +335,7 @@ func validateTransformerConfig(cfg *mgmtv1alpha1.TransformerConfig) error {
 	for entity, entityAnonymizer := range entityAnonymizers {
 		child := entityAnonymizer.GetTransform().GetConfig().GetTransformPiiTextConfig()
 		if child != nil {
-			return nucleuserrors.NewBadRequest(
+			return vydonerrors.NewBadRequest(
 				fmt.Sprintf(
 					"found nested TransformPiiText config in entity (%s) anonymizer. TransformPiiText may not be used deeply nested within itself.",
 					entity,

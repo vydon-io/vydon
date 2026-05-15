@@ -17,7 +17,7 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	"github.com/vydon-io/vydon/internal/billing"
 	"github.com/vydon-io/vydon/internal/rbac"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/stripe/stripe-go/v81"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -57,7 +57,7 @@ func (s *Service) GetAccountStatus(
 	}
 
 	logger = logger.With("accountId", req.Msg.GetAccountId())
-	if !s.cfg.IsNeosyncCloud || s.billingclient == nil {
+	if !s.cfg.IsVydonCloud || s.billingclient == nil {
 		return connect.NewResponse(&mgmtv1alpha1.GetAccountStatusResponse{}), nil
 	}
 
@@ -191,7 +191,7 @@ func (s *Service) IsAccountStatusValid(
 		return nil, err
 	}
 
-	if !s.cfg.IsNeosyncCloud || s.billingclient == nil {
+	if !s.cfg.IsVydonCloud || s.billingclient == nil {
 		return connect.NewResponse(&mgmtv1alpha1.IsAccountStatusValidResponse{IsValid: true}), nil
 	}
 
@@ -241,8 +241,8 @@ func (s *Service) GetAccountBillingCheckoutSession(
 	req *connect.Request[mgmtv1alpha1.GetAccountBillingCheckoutSessionRequest],
 ) (*connect.Response[mgmtv1alpha1.GetAccountBillingCheckoutSessionResponse], error) {
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
-	if !s.cfg.IsNeosyncCloud || s.billingclient == nil {
-		return nil, nucleuserrors.NewNotImplemented(
+	if !s.cfg.IsVydonCloud || s.billingclient == nil {
+		return nil, vydonerrors.NewNotImplemented(
 			fmt.Sprintf(
 				"%s is not implemented",
 				strings.TrimPrefix(
@@ -311,8 +311,8 @@ func (s *Service) GetAccountBillingPortalSession(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.GetAccountBillingPortalSessionRequest],
 ) (*connect.Response[mgmtv1alpha1.GetAccountBillingPortalSessionResponse], error) {
-	if !s.cfg.IsNeosyncCloud || s.billingclient == nil {
-		return nil, nucleuserrors.NewNotImplemented(
+	if !s.cfg.IsVydonCloud || s.billingclient == nil {
+		return nil, vydonerrors.NewNotImplemented(
 			fmt.Sprintf(
 				"%s is not implemented",
 				strings.TrimPrefix(
@@ -347,7 +347,7 @@ func (s *Service) GetAccountBillingPortalSession(
 		return nil, err
 	}
 	if !account.StripeCustomerID.Valid {
-		return nil, nucleuserrors.NewForbidden(
+		return nil, vydonerrors.NewForbidden(
 			"requested account does not have a valid stripe customer id",
 		)
 	}
@@ -373,8 +373,8 @@ func (s *Service) GetBillingAccounts(
 	if err != nil {
 		return nil, err
 	}
-	if s.cfg.IsNeosyncCloud && !user.IsWorkerApiKey() {
-		return nil, nucleuserrors.NewUnauthorized(
+	if s.cfg.IsVydonCloud && !user.IsWorkerApiKey() {
+		return nil, vydonerrors.NewUnauthorized(
 			"must provide valid authentication credentials for this endpoint",
 		)
 	}
@@ -406,15 +406,15 @@ func (s *Service) SetBillingMeterEvent(
 	req *connect.Request[mgmtv1alpha1.SetBillingMeterEventRequest],
 ) (*connect.Response[mgmtv1alpha1.SetBillingMeterEventResponse], error) {
 	if s.billingclient == nil {
-		return nil, nucleuserrors.NewUnauthorized("billing is not currently enabled")
+		return nil, vydonerrors.NewUnauthorized("billing is not currently enabled")
 	}
 	userdataclient := s.UserDataClient()
 	user, err := userdataclient.GetUser(ctx)
 	if err != nil {
 		return nil, err
 	}
-	if s.cfg.IsNeosyncCloud && !user.IsWorkerApiKey() {
-		return nil, nucleuserrors.NewUnauthorized(
+	if s.cfg.IsVydonCloud && !user.IsWorkerApiKey() {
+		return nil, vydonerrors.NewUnauthorized(
 			"must provide valid authentication credentials for this endpoint",
 		)
 	}
@@ -435,10 +435,10 @@ func (s *Service) SetBillingMeterEvent(
 	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
 	} else if err != nil && vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("account does not exist")
+		return nil, vydonerrors.NewNotFound("account does not exist")
 	}
 	if !account.StripeCustomerID.Valid {
-		return nil, nucleuserrors.NewBadRequest("account is not an active billed customer")
+		return nil, vydonerrors.NewBadRequest("account is not an active billed customer")
 	}
 
 	var ts *int64

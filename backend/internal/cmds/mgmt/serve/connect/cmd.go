@@ -508,7 +508,7 @@ func serve(ctx context.Context) error {
 
 	useraccountService := v1alpha1_useraccountservice.New(&v1alpha1_useraccountservice.Config{
 		IsAuthEnabled:            isAuthEnabled,
-		IsNeosyncCloud:           ncloudlicense.IsValid(),
+		IsVydonCloud:           ncloudlicense.IsValid(),
 		DefaultMaxAllowedRecords: getDefaultMaxAllowedRecords(),
 	}, db, temporalConfigProvider, authclient, authadminclient, billingClient, rbacclient, cascadelicense)
 	api.Handle(
@@ -614,7 +614,7 @@ func serve(ctx context.Context) error {
 	)
 
 	connectionService := v1alpha1_connectionservice.New(
-		&v1alpha1_connectionservice.Config{IsNeosyncCloud: ncloudlicense.IsValid()},
+		&v1alpha1_connectionservice.Config{IsVydonCloud: ncloudlicense.IsValid()},
 		db,
 		userdataclient,
 		mongoconnector,
@@ -653,7 +653,7 @@ func serve(ctx context.Context) error {
 
 	jobServiceConfig := &v1alpha1_jobservice.Config{
 		IsAuthEnabled:  isAuthEnabled,
-		IsNeosyncCloud: ncloudlicense.IsValid(),
+		IsVydonCloud: ncloudlicense.IsValid(),
 		RunLogConfig:   runLogConfig,
 	}
 	jobService := v1alpha1_jobservice.New(
@@ -718,7 +718,7 @@ func serve(ctx context.Context) error {
 		IsPresidioEnabled:       isPresidioEnabled,
 		PresidioDefaultLanguage: getPresidioDefaultLanguage(),
 		IsAuthEnabled:           isAuthEnabled,
-		IsNeosyncCloud:          ncloudlicense.IsValid(),
+		IsVydonCloud:          ncloudlicense.IsValid(),
 	}, anonymizerMeter, userdataclient, useraccountService, transformerService, presAnalyzeClient, presAnonClient, db, cascadelicense)
 	api.Handle(
 		mgmtv1alpha1connect.NewAnonymizationServiceHandler(
@@ -1053,8 +1053,8 @@ func getAuthApiProvider() string {
 	return viper.GetString("AUTH_API_PROVIDER")
 }
 
-func getAllowedWorkerApiKeys(isNeosyncCloud bool) []string {
-	if isNeosyncCloud {
+func getAllowedWorkerApiKeys(isVydonCloud bool) []string {
+	if isVydonCloud {
 		return viper.GetStringSlice("VYDON_CLOUD_ALLOWED_WORKER_API_KEYS")
 	}
 	return []string{}

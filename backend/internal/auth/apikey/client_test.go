@@ -38,7 +38,7 @@ func Test_Client_InjectTokenCtx_Account(t *testing.T) {
 	)
 	expiresAt, err := vydondb.ToTimestamp(time.Now().Add(5 * time.Minute))
 	assert.NoError(t, err)
-	apiKeyRecord := db_queries.NeosyncApiAccountApiKey{
+	apiKeyRecord := db_queries.VydonApiAccountApiKey{
 		ID:        pgtype.UUID{Valid: true},
 		ExpiresAt: expiresAt,
 	}
@@ -77,7 +77,7 @@ func Test_Client_InjectTokenCtx_Account_Expired(t *testing.T) {
 	)
 	expiresAt, err := vydondb.ToTimestamp(time.Now().Add(-5 * time.Second))
 	assert.NoError(t, err)
-	apiKeyRecord := db_queries.NeosyncApiAccountApiKey{
+	apiKeyRecord := db_queries.VydonApiAccountApiKey{
 		ID:        pgtype.UUID{Valid: true},
 		ExpiresAt: expiresAt,
 	}
@@ -123,7 +123,7 @@ func Test_Client_InjectTokenCtx_Account_NotFoundKeyValue(t *testing.T) {
 	)
 
 	mockQuerier.On("GetAccountApiKeyByKeyValue", mock.Anything, mock.Anything, hashedFakeToken).
-		Return(db_queries.NeosyncApiAccountApiKey{}, pgx.ErrNoRows)
+		Return(db_queries.VydonApiAccountApiKey{}, pgx.ErrNoRows)
 
 	newctx, err := client.InjectTokenCtx(context.Background(), http.Header{
 		"Authorization": []string{fmt.Sprintf("Bearer %s", fakeToken)},

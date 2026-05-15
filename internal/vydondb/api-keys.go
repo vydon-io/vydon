@@ -18,8 +18,8 @@ type CreateAccountApiKeyRequest struct {
 func (d *VydonDb) CreateAccountApikey(
 	ctx context.Context,
 	req *CreateAccountApiKeyRequest,
-) (*db_queries.NeosyncApiAccountApiKey, error) {
-	var createdApiKey *db_queries.NeosyncApiAccountApiKey
+) (*db_queries.VydonApiAccountApiKey, error) {
+	var createdApiKey *db_queries.VydonApiAccountApiKey
 	if err := d.WithTx(ctx, nil, func(tx BaseDBTX) error {
 		// create machine user
 		user, err := d.Q.CreateMachineUser(ctx, tx)

@@ -1,3 +1,3 @@
 ALTER TABLE
-  neosync_api.accounts
+  vydon_api.accounts
 DROP COLUMN IF EXISTS onboarding_config;

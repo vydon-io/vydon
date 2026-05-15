@@ -1,1 +1,1 @@
-ALTER TABLE neosync_api.account_invites DROP COLUMN IF EXISTS role;
+ALTER TABLE vydon_api.account_invites DROP COLUMN IF EXISTS role;

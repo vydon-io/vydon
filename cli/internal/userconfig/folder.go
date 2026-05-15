@@ -11,7 +11,7 @@ const (
 	vydonFolderName = ".vydon"
 )
 
-// Get or Creates the Nucleus folder that lives and stores persisted settings.
+// Get or Creates the Vydon folder that lives and stores persisted settings.
 //
 // 1. Checks for directory specified by env var VYDON_CONFIG_DIR
 // 2. Checks for existence of XDG_CONFIG_HOME and append "vydon" to it, if exists

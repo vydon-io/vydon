@@ -884,7 +884,7 @@ export type GetAiGeneratedDataRequest = Message<"mgmt.v1alpha1.GetAiGeneratedDat
   modelName: string;
 
   /**
-   * The prompt that will be used to further refine the data generation. This is appended to the prompt that Neosync generates that includes schema information.
+   * The prompt that will be used to further refine the data generation. This is appended to the prompt that Vydon generates that includes schema information.
    *
    * @generated from field: optional string user_prompt = 4;
    */

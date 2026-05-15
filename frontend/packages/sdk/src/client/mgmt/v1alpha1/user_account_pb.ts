@@ -190,7 +190,7 @@ export type ConvertPersonalToTeamAccountResponse = Message<"mgmt.v1alpha1.Conver
   accountId: string;
 
   /**
-   * If NeosyncCloud, will respond with a checkout session url so they can setup billing
+   * If VydonCloud, will respond with a checkout session url so they can setup billing
    *
    * @generated from field: optional string checkout_session_url = 2;
    */
@@ -428,7 +428,7 @@ export type CreateTeamAccountResponse = Message<"mgmt.v1alpha1.CreateTeamAccount
   accountId: string;
 
   /**
-   * If NeosyncCloud, will respond with a checkout session url so they can setup billing
+   * If VydonCloud, will respond with a checkout session url so they can setup billing
    *
    * @generated from field: optional string checkout_session_url = 2;
    */
@@ -838,14 +838,14 @@ export type GetSystemInformationResponse = Message<"mgmt.v1alpha1.GetSystemInfor
   commit: string;
 
   /**
-   * The Go compiler flag that was used to build this version of Neosync
+   * The Go compiler flag that was used to build this version of Vydon
    *
    * @generated from field: string compiler = 3;
    */
   compiler: string;
 
   /**
-   * The Go platform flag that was used to build this version of Neosync
+   * The Go platform flag that was used to build this version of Vydon
    *
    * @generated from field: string platform = 4;
    */
@@ -892,11 +892,11 @@ export type SystemLicense = Message<"mgmt.v1alpha1.SystemLicense"> & {
   expiresAt?: Timestamp;
 
   /**
-   * Whether or not the license is for NeosyncCloud
+   * Whether or not the license is for VydonCloud
    *
-   * @generated from field: bool is_neosync_cloud = 3;
+   * @generated from field: bool is_vydon_cloud = 3;
    */
-  isNeosyncCloud: boolean;
+  isVydonCloud: boolean;
 };
 
 /**

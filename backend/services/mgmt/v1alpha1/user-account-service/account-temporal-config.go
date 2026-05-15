@@ -9,7 +9,7 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 	"github.com/vydon-io/vydon/internal/rbac"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
@@ -17,8 +17,8 @@ func (s *Service) GetAccountTemporalConfig(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.GetAccountTemporalConfigRequest],
 ) (*connect.Response[mgmtv1alpha1.GetAccountTemporalConfigResponse], error) {
-	if s.cfg.IsNeosyncCloud {
-		return nil, nucleuserrors.NewNotImplemented("not enabled in Vydon Cloud")
+	if s.cfg.IsVydonCloud {
+		return nil, vydonerrors.NewNotImplemented("not enabled in Vydon Cloud")
 	}
 	userdataclient := s.UserDataClient()
 	user, err := userdataclient.GetUser(ctx)
@@ -48,8 +48,8 @@ func (s *Service) SetAccountTemporalConfig(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.SetAccountTemporalConfigRequest],
 ) (*connect.Response[mgmtv1alpha1.SetAccountTemporalConfigResponse], error) {
-	if s.cfg.IsNeosyncCloud {
-		return nil, nucleuserrors.NewNotImplemented("not enabled in Vydon Cloud")
+	if s.cfg.IsVydonCloud {
+		return nil, vydonerrors.NewNotImplemented("not enabled in Vydon Cloud")
 	}
 	userdataclient := s.UserDataClient()
 	user, err := userdataclient.GetUser(ctx)

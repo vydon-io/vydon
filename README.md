@@ -39,8 +39,8 @@ Open Source Data Anonymization and Synthetic Data Orchestration
   <a href="https://github.com/vydon-io/vydon/actions/workflows/go.yml/">
     <img alt="Go Tests" src="https://github.com/vydon-io/vydon/actions/workflows/go.yml/badge.svg"/>
   </a>
-  <a href="https://x.com/vydoncloud">
-    <img alt="Follow X" src="https://img.shields.io/twitter/follow/vydoncloud?label=Follow"/>
+  <a href="https://x.com/vydon">
+    <img alt="Follow X" src="https://img.shields.io/twitter/follow/vydon?label=Follow"/>
   </a>
   <a href="https://artifacthub.io/packages/search?repo=vydon">
     <img alt="ArtifactHub Vydon" src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/vydon" />
@@ -110,7 +110,7 @@ Some resources to help you along the way:
 
 - [Docs](https://docs.vydon.dev) for comprehensive documentation and guides
 - [Discord](https://discord.com/invite/MFAMgnp4HF) for discussion with the community and Vydon team
-- [X](https://x.com/vydoncloud) for the latest updates
+- [X](https://x.com/vydon) for the latest updates
 
 ## Contributing
 

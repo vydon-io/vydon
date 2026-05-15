@@ -14,7 +14,7 @@ import (
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 	"github.com/vydon-io/vydon/internal/apikey"
 	"github.com/vydon-io/vydon/internal/authmgmt"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/temporal/clientmanager"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
@@ -114,8 +114,8 @@ func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountTemporalConfig_
 	requireConnectError(s.T(), err, connect.CodePermissionDenied)
 }
 
-func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountTemporalConfig_NeosyncCloud() {
-	userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountTemporalConfig_VydonCloud() {
+	userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient)
 	accountId := s.createPersonalAccount(s.ctx, userclient)
 
@@ -130,8 +130,8 @@ func (s *IntegrationTestSuite) Test_UserAccountService_SetAccountTemporalConfig_
 	requireConnectError(s.T(), err, connect.CodePermissionDenied)
 }
 
-func (s *IntegrationTestSuite) Test_UserAccountService_SetAccountTemporalConfig_NeosyncCloud() {
-	userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+func (s *IntegrationTestSuite) Test_UserAccountService_SetAccountTemporalConfig_VydonCloud() {
+	userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient)
 	accountId := s.createPersonalAccount(s.ctx, userclient)
 
@@ -212,8 +212,8 @@ func (s *IntegrationTestSuite) Test_UserAccountService_CreateTeamAccount_Auth() 
 	require.NotEmpty(s.T(), resp.Msg.GetAccountId())
 }
 
-func (s *IntegrationTestSuite) Test_UserAccountService_CreateTeamAccount_NeosyncCloud() {
-	client := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+func (s *IntegrationTestSuite) Test_UserAccountService_CreateTeamAccount_VydonCloud() {
+	client := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, client)
 
 	s.Mocks.Billingclient.On("NewCustomer", mock.Anything).Once().
@@ -377,8 +377,8 @@ func (s *IntegrationTestSuite) Test_UserAccountService_GetSystemInformation() {
 	requireNoErrResp(s.T(), resp, err)
 }
 
-func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountStatus_NeosyncCloud_Personal() {
-	userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountStatus_VydonCloud_Personal() {
+	userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient)
 	accountId := s.createPersonalAccount(s.ctx, userclient)
 
@@ -407,8 +407,8 @@ func (t *testSubscriptionIter) Err() error {
 	return nil
 }
 
-func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountStatus_NeosyncCloud_Billed() {
-	userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountStatus_VydonCloud_Billed() {
+	userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient)
 
 	t := s.T()
@@ -460,8 +460,8 @@ func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountStatus_OSS_Pers
 	require.Equal(s.T(), mgmtv1alpha1.BillingStatus_BILLING_STATUS_UNSPECIFIED, resp.Msg.GetSubscriptionStatus())
 }
 
-func (s *IntegrationTestSuite) Test_UserAccountService_IsAccountStatusValid_NeosyncCloud_Personal() {
-	userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+func (s *IntegrationTestSuite) Test_UserAccountService_IsAccountStatusValid_VydonCloud_Personal() {
+	userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient)
 	accountId := s.createPersonalAccount(s.ctx, userclient)
 
@@ -475,8 +475,8 @@ func (s *IntegrationTestSuite) Test_UserAccountService_IsAccountStatusValid_Neos
 	require.Equal(s.T(), mgmtv1alpha1.AccountStatus_ACCOUNT_STATUS_ACCOUNT_TRIAL_ACTIVE, resp.Msg.GetAccountStatus())
 }
 
-func (s *IntegrationTestSuite) Test_UserAccountService_IsAccountStatusValid_NeosyncCloud_Billed() {
-	userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+func (s *IntegrationTestSuite) Test_UserAccountService_IsAccountStatusValid_VydonCloud_Billed() {
+	userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient)
 
 	t := s.T()
@@ -565,7 +565,7 @@ func (s *IntegrationTestSuite) Test_UserAccountService_IsAccountStatusValid_Neos
 }
 
 func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountBillingCheckoutSession() {
-	userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+	userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient)
 
 	t := s.T()
@@ -591,7 +591,7 @@ func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountBillingCheckout
 		requireErrResp(s.T(), resp, err)
 	})
 
-	t.Run("non-vydoncloud - disallowed", func(t *testing.T) {
+	t.Run("non-vydon - disallowed", func(t *testing.T) {
 		personalAccountId := s.createPersonalAccount(s.ctx, s.OSSUnauthenticatedLicensedClients.Users())
 		resp, err := userclient.GetAccountBillingCheckoutSession(s.ctx, connect.NewRequest(&mgmtv1alpha1.GetAccountBillingCheckoutSessionRequest{
 			AccountId: personalAccountId,
@@ -601,7 +601,7 @@ func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountBillingCheckout
 }
 
 func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountBillingPortalSession() {
-	userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+	userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient)
 
 	t := s.T()
@@ -627,7 +627,7 @@ func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountBillingPortalSe
 		requireErrResp(s.T(), resp, err)
 	})
 
-	t.Run("non-vydoncloud - disallowed", func(t *testing.T) {
+	t.Run("non-vydon - disallowed", func(t *testing.T) {
 		personalAccountId := s.createPersonalAccount(s.ctx, s.OSSUnauthenticatedLicensedClients.Users())
 		resp, err := s.OSSUnauthenticatedLicensedClients.Users().GetAccountBillingPortalSession(s.ctx, connect.NewRequest(&mgmtv1alpha1.GetAccountBillingPortalSessionRequest{
 			AccountId: personalAccountId,
@@ -645,14 +645,14 @@ func (s *IntegrationTestSuite) createBilledTeamAccount(ctx context.Context, clie
 }
 
 func (s *IntegrationTestSuite) Test_GetBillingAccounts() {
-	userclient1 := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+	userclient1 := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient1)
 
-	userclient2 := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId2))
+	userclient2 := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId2))
 	s.setUser(s.ctx, userclient2)
 
 	workerapikey := apikey.NewV1WorkerKey()
-	workeruserclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(workerapikey))
+	workeruserclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(workerapikey))
 
 	t := s.T()
 
@@ -689,7 +689,7 @@ func (s *IntegrationTestSuite) Test_GetBillingAccounts() {
 	t.Run("requires worker api key", func(t *testing.T) {
 		resp, err := userclient1.GetBillingAccounts(s.ctx, connect.NewRequest(&mgmtv1alpha1.GetBillingAccountsRequest{}))
 		requireErrResp(t, resp, err)
-		unautherr := nucleuserrors.NewUnauthorized("")
+		unautherr := vydonerrors.NewUnauthorized("")
 		require.ErrorAs(t, err, &unautherr)
 	})
 }
@@ -720,7 +720,7 @@ func (s *IntegrationTestSuite) Test_ConvertPersonalToTeamAccount() {
 	})
 
 	t.Run("cloud billing success", func(t *testing.T) {
-		userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+		userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 		s.setUser(s.ctx, userclient)
 		accountId := s.createPersonalAccount(s.ctx, userclient)
 
@@ -738,7 +738,7 @@ func (s *IntegrationTestSuite) Test_ConvertPersonalToTeamAccount() {
 	})
 
 	t.Run("cloud success unspecified account", func(t *testing.T) {
-		userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+		userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 		s.setUser(s.ctx, userclient)
 
 		stripeCustomerId := "foo"
@@ -754,11 +754,11 @@ func (s *IntegrationTestSuite) Test_ConvertPersonalToTeamAccount() {
 }
 
 func (s *IntegrationTestSuite) Test_SetBillingMeterEvent() {
-	userclient1 := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+	userclient1 := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 	s.setUser(s.ctx, userclient1)
 
 	workerapikey := apikey.NewV1WorkerKey()
-	workeruserclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(workerapikey))
+	workeruserclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(workerapikey))
 
 	t := s.T()
 
@@ -788,14 +788,14 @@ func (s *IntegrationTestSuite) Test_SetBillingMeterEvent() {
 			Timestamp: &ts,
 		}))
 		requireErrResp(t, resp, err)
-		badreqerr := nucleuserrors.NewBadRequest("")
+		badreqerr := vydonerrors.NewBadRequest("")
 		require.ErrorAs(t, err, &badreqerr)
 	})
 
 	t.Run("requires worker api key", func(t *testing.T) {
 		resp, err := userclient1.SetBillingMeterEvent(s.ctx, connect.NewRequest(&mgmtv1alpha1.SetBillingMeterEventRequest{}))
 		requireErrResp(t, resp, err)
-		unautherr := nucleuserrors.NewUnauthorized("")
+		unautherr := vydonerrors.NewUnauthorized("")
 		require.ErrorAs(t, err, &unautherr)
 	})
 

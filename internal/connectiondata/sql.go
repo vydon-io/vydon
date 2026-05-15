@@ -17,7 +17,7 @@ import (
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
 	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 	querybuilder "github.com/vydon-io/vydon/worker/pkg/query-builder"
 )
@@ -391,7 +391,7 @@ func (s *SQLConnectionDataService) GetInitStatements(
 				truncateStmtsMap[k] = stmt
 			}
 		} else if options.GetTruncateBeforeInsert() {
-			return nil, nucleuserrors.NewNotImplemented("postgres truncate unsupported. table foreig keys required to build truncate statement.")
+			return nil, vydonerrors.NewNotImplemented("postgres truncate unsupported. table foreig keys required to build truncate statement.")
 		}
 
 	default:
@@ -565,7 +565,7 @@ func (s *SQLConnectionDataService) areSchemaAndTableValid(
 	}
 
 	if !isValidSchema(schema, schemas) || !isValidTable(table, schemas) {
-		return nucleuserrors.NewBadRequest("must provide valid schema and table")
+		return vydonerrors.NewBadRequest("must provide valid schema and table")
 	}
 	return nil
 }

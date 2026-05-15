@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/spf13/viper"
 )
 
@@ -36,7 +36,7 @@ func NewFromMssqlConnection(
 			mssqlurl = config.MssqlConfig.GetUrl()
 		} else if config.MssqlConfig.GetUrlFromEnv() != "" {
 			if !strings.HasPrefix(config.MssqlConfig.GetUrlFromEnv(), userDefinedEnvPrefix) {
-				return nil, nucleuserrors.NewBadRequest(fmt.Sprintf("to source a url from an environment variable, the variable must have a prefix of %s", userDefinedEnvPrefix))
+				return nil, vydonerrors.NewBadRequest(fmt.Sprintf("to source a url from an environment variable, the variable must have a prefix of %s", userDefinedEnvPrefix))
 			}
 			mssqlurl = viper.GetString(config.MssqlConfig.GetUrlFromEnv())
 		}
@@ -55,7 +55,7 @@ func NewFromMssqlConnection(
 
 		return &mssqlConnectConfig{url: uriconfig.String(), user: getUserFromInfo(uriconfig.User)}, nil
 	default:
-		return nil, nucleuserrors.NewBadRequest(fmt.Sprintf("must provide valid mssql connection: %T", cc))
+		return nil, vydonerrors.NewBadRequest(fmt.Sprintf("must provide valid mssql connection: %T", cc))
 	}
 }
 

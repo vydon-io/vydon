@@ -48,7 +48,7 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB=nucleus
+      - POSTGRES_DB=vydon
       - POSTGRES_PASSWORD=foofar
       - PGUSER=postgres
     healthcheck:
@@ -79,7 +79,7 @@ services:
       - DB_SCHEMA_DIR=/workspace/backend/sql/postgresql/schema
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_NAME=nucleus
+      - DB_NAME=vydon
       - DB_USER=postgres
       - DB_PASS=foofar
       - DB_SSL_DISABLE=true

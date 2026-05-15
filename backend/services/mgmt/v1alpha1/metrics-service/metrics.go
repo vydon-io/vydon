@@ -12,7 +12,7 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	"github.com/vydon-io/vydon/backend/pkg/metrics"
 	"github.com/vydon-io/vydon/internal/rbac"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 const (
@@ -27,21 +27,21 @@ func (s *Service) GetDailyMetricCount(
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
 
 	if req.Msg.GetStart() == nil || req.Msg.GetEnd() == nil {
-		return nil, nucleuserrors.NewBadRequest("must provide a start and end time")
+		return nil, vydonerrors.NewBadRequest("must provide a start and end time")
 	}
 	if req.Msg.GetMetric() == mgmtv1alpha1.RangedMetricName_RANGED_METRIC_NAME_UNSPECIFIED {
-		return nil, nucleuserrors.NewBadRequest("must provide a metric name")
+		return nil, vydonerrors.NewBadRequest("must provide a metric name")
 	}
 	start := metrics.DateToTime(req.Msg.GetStart())
 	end := metrics.ToEndOfDay(metrics.DateToTime(req.Msg.GetEnd()))
 
 	if start.After(end) {
-		return nil, nucleuserrors.NewBadRequest("start must not be before end")
+		return nil, vydonerrors.NewBadRequest("start must not be before end")
 	}
 
 	timeDiff := end.Sub(start)
 	if timeDiff > timeLimit {
-		return nil, nucleuserrors.NewBadRequest(
+		return nil, vydonerrors.NewBadRequest(
 			"duration between start and end must not exceed 60 days",
 		)
 	}
@@ -92,7 +92,7 @@ func (s *Service) GetDailyMetricCount(
 			metrics.NewEqLabel(metrics.TemporalWorkflowId, jrResp.Msg.GetJobRun().GetId()),
 		)
 	default:
-		return nil, nucleuserrors.NewBadRequest("must provide a valid identifier to proceed")
+		return nil, vydonerrors.NewBadRequest("must provide a valid identifier to proceed")
 	}
 
 	query, err := metrics.GetPromQueryFromMetric(
@@ -111,7 +111,7 @@ func (s *Service) GetDailyMetricCount(
 }
 
 var (
-	// NeosyncCloud currently limits prom metric storage to 60 days
+	// VydonCloud currently limits prom metric storage to 60 days
 	// todo: expose as env var if we want to change this per environment
 	timeLimit = 60 * 24 * time.Hour
 )
@@ -123,21 +123,21 @@ func (s *Service) GetMetricCount(
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
 
 	if req.Msg.GetStartDay() == nil || req.Msg.GetEndDay() == nil {
-		return nil, nucleuserrors.NewBadRequest("must provide a start and end time")
+		return nil, vydonerrors.NewBadRequest("must provide a start and end time")
 	}
 	if req.Msg.GetMetric() == mgmtv1alpha1.RangedMetricName_RANGED_METRIC_NAME_UNSPECIFIED {
-		return nil, nucleuserrors.NewBadRequest("must provide a metric name")
+		return nil, vydonerrors.NewBadRequest("must provide a metric name")
 	}
 	start := metrics.DateToTime(req.Msg.GetStartDay())
 	end := metrics.ToEndOfDay(metrics.DateToTime(req.Msg.GetEndDay()))
 
 	if start.After(end) {
-		return nil, nucleuserrors.NewBadRequest("start must not be before end")
+		return nil, vydonerrors.NewBadRequest("start must not be before end")
 	}
 
 	timeDiff := end.Sub(start)
 	if timeDiff > timeLimit {
-		return nil, nucleuserrors.NewBadRequest(
+		return nil, vydonerrors.NewBadRequest(
 			"duration between start and end must not exceed 60 days",
 		)
 	}
@@ -188,7 +188,7 @@ func (s *Service) GetMetricCount(
 			metrics.NewEqLabel(metrics.TemporalWorkflowId, jrResp.Msg.GetJobRun().GetId()),
 		)
 	default:
-		return nil, nucleuserrors.NewBadRequest("must provide a valid identifier to proceed")
+		return nil, vydonerrors.NewBadRequest("must provide a valid identifier to proceed")
 	}
 
 	query, err := metrics.GetPromQueryFromMetric(

@@ -26,19 +26,19 @@ debug() {
 MIGRATION_TABLE_NAME='"public"."vydon_api_schema_migrations"'
 
 PG_LOGIN="${PG_USERNAME:-postgres}:${PG_PASSWORD:-foofar}"
-PG_HOSTNAME=${PG_HOSTNAME:-"localhost:5432/nucleus"}
+PG_HOSTNAME=${PG_HOSTNAME:-"localhost:5432/vydon"}
 PG_OPTIONS="x-migrations-table=${MIGRATION_TABLE_NAME}&x-migrations-table-quoted=true"
 
-if [ "$PG_HOSTNAME" = "localhost:5432/nucleus" ]; then
+if [ "$PG_HOSTNAME" = "localhost:5432/vydon" ]; then
     PG_OPTIONS="${PG_OPTIONS}&sslmode=disable"
 fi
-if [ "$PG_HOSTNAME" = "postgresql:5432/nucleus" ]; then
+if [ "$PG_HOSTNAME" = "postgresql:5432/vydon" ]; then
     PG_OPTIONS="${PG_OPTIONS}&sslmode=disable"
 fi
-if [ "$PG_HOSTNAME" = "vydon-postgresql:5432/nucleus" ]; then
+if [ "$PG_HOSTNAME" = "vydon-postgresql:5432/vydon" ]; then
     PG_OPTIONS="${PG_OPTIONS}&sslmode=disable"
 fi
-if [ "$PG_HOSTNAME" = "db:5432/nucleus" ]; then
+if [ "$PG_HOSTNAME" = "db:5432/vydon" ]; then
     PG_OPTIONS="${PG_OPTIONS}&sslmode=disable"
 fi
 

@@ -32,7 +32,7 @@ spec:
         {{- end }}
         {{- end }}
         {{- if eq .Values.datadog.enabled true }}
-        ad.datadoghq.com/nucleus-api.logs: '[{"source":"nucleus-vydon-api","service":"{{ template "vydon-api.fullname" . }}"}]'
+        ad.datadoghq.com/vydon-api.logs: '[{"source":"vydon-vydon-api","service":"{{ template "vydon-api.fullname" . }}"}]'
         {{- end }}
         {{- if eq .Values.istio.enabled true }}
         proxy.istio.io/config: '{ "holdApplicationUntilProxyStarts": true }'

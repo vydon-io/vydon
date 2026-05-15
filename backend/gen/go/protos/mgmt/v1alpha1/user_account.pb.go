@@ -742,7 +742,7 @@ type ConvertPersonalToTeamAccountResponse struct {
 
 	// The id of the team account (will be the same identifier as the personal account)
 	AccountId string `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
-	// If NeosyncCloud, will respond with a checkout session url so they can setup billing
+	// If VydonCloud, will respond with a checkout session url so they can setup billing
 	CheckoutSessionUrl *string `protobuf:"bytes,2,opt,name=checkout_session_url,json=checkoutSessionUrl,proto3,oneof" json:"checkout_session_url,omitempty"`
 	// The identifier of the newly created personal account
 	NewPersonalAccountId string `protobuf:"bytes,3,opt,name=new_personal_account_id,json=newPersonalAccountId,proto3" json:"new_personal_account_id,omitempty"`
@@ -1283,7 +1283,7 @@ type CreateTeamAccountResponse struct {
 
 	// The unique identifier of the team account that was created.
 	AccountId string `protobuf:"bytes,1,opt,name=account_id,json=accountId,proto3" json:"account_id,omitempty"`
-	// If NeosyncCloud, will respond with a checkout session url so they can setup billing
+	// If VydonCloud, will respond with a checkout session url so they can setup billing
 	CheckoutSessionUrl *string `protobuf:"bytes,2,opt,name=checkout_session_url,json=checkoutSessionUrl,proto3,oneof" json:"checkout_session_url,omitempty"`
 }
 
@@ -2143,9 +2143,9 @@ type GetSystemInformationResponse struct {
 	Version string `protobuf:"bytes,1,opt,name=version,proto3" json:"version,omitempty"`
 	// The Git commit
 	Commit string `protobuf:"bytes,2,opt,name=commit,proto3" json:"commit,omitempty"`
-	// The Go compiler flag that was used to build this version of Neosync
+	// The Go compiler flag that was used to build this version of Vydon
 	Compiler string `protobuf:"bytes,3,opt,name=compiler,proto3" json:"compiler,omitempty"`
-	// The Go platform flag that was used to build this version of Neosync
+	// The Go platform flag that was used to build this version of Vydon
 	Platform string `protobuf:"bytes,4,opt,name=platform,proto3" json:"platform,omitempty"`
 	// The time when the build was created
 	BuildDate *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=build_date,json=buildDate,proto3" json:"build_date,omitempty"`
@@ -2234,8 +2234,8 @@ type SystemLicense struct {
 	IsValid bool `protobuf:"varint,1,opt,name=is_valid,json=isValid,proto3" json:"is_valid,omitempty"`
 	// The time when the license expires
 	ExpiresAt *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expires_at,json=expiresAt,proto3" json:"expires_at,omitempty"`
-	// Whether or not the license is for NeosyncCloud
-	IsNeosyncCloud bool `protobuf:"varint,3,opt,name=is_neosync_cloud,json=isNeosyncCloud,proto3" json:"is_neosync_cloud,omitempty"`
+	// Whether or not the license is for VydonCloud
+	IsVydonCloud bool `protobuf:"varint,3,opt,name=is_vydon_cloud,json=isVydonCloud,proto3" json:"is_vydon_cloud,omitempty"`
 }
 
 func (x *SystemLicense) Reset() {
@@ -2282,9 +2282,9 @@ func (x *SystemLicense) GetExpiresAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *SystemLicense) GetIsNeosyncCloud() bool {
+func (x *SystemLicense) GetIsVydonCloud() bool {
 	if x != nil {
-		return x.IsNeosyncCloud
+		return x.IsVydonCloud
 	}
 	return false
 }

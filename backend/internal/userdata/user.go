@@ -10,7 +10,7 @@ import (
 	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
 	"github.com/vydon-io/vydon/internal/apikey"
 	"github.com/vydon-io/vydon/internal/license"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
@@ -58,7 +58,7 @@ func (u *User) EnforceLicense(ctx context.Context, accountId string) error {
 		return err
 	}
 	if !ok {
-		return nucleuserrors.NewUnauthorized("account does not have an active license")
+		return vydonerrors.NewUnauthorized("account does not have an active license")
 	}
 	return nil
 }
@@ -89,7 +89,7 @@ func enforceAccountAccess(ctx context.Context, user *User, accountId string) err
 		// However, we still want to make a DB request to ensure the DB still says it's in the account
 		if user.apiKeyData.ApiKey == nil ||
 			vydondb.UUIDString(user.apiKeyData.ApiKey.AccountID) != accountId {
-			return nucleuserrors.NewUnauthorized("api key is not valid for account")
+			return vydonerrors.NewUnauthorized("api key is not valid for account")
 		}
 	}
 
@@ -102,7 +102,7 @@ func enforceAccountAccess(ctx context.Context, user *User, accountId string) err
 		return fmt.Errorf("unable to check if user is in account: %w", err)
 	}
 	if !inAccountResp.Msg.GetOk() {
-		return nucleuserrors.NewUnauthorized("user is not in account")
+		return vydonerrors.NewUnauthorized("user is not in account")
 	}
 	return nil
 }

@@ -8,7 +8,7 @@ import (
 	"connectrpc.com/connect"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	ee_transformers "github.com/vydon-io/vydon/internal/transformers"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/gotypeutil"
 )
 
@@ -996,7 +996,7 @@ func (s *Service) GetSystemTransformerBySource(
 
 	transformer, ok := transformerMap[req.Msg.GetSource()]
 	if !ok {
-		return nil, nucleuserrors.NewNotFound(
+		return nil, vydonerrors.NewNotFound(
 			"unable to find system transformer with provided source",
 		)
 	}

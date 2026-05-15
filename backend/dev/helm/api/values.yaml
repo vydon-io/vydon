@@ -6,7 +6,7 @@ serviceAccount:
 
 db:
   host: vydon-postgresql
-  name: nucleus
+  name: vydon
   port: 5432
   username: postgres
   password: foofar
@@ -15,7 +15,7 @@ db:
 migrations:
   db:
     host: vydon-postgresql
-    name: nucleus
+    name: vydon
     port: 5432
     username: postgres
     password: foofar

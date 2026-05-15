@@ -19,8 +19,8 @@ func (d *VydonDb) CreateJob(
 	ctx context.Context,
 	cjParams *db_queries.CreateJobParams,
 	destinations []*CreateJobConnectionDestination,
-) (*db_queries.NeosyncApiJob, error) {
-	var createdJob *db_queries.NeosyncApiJob
+) (*db_queries.VydonApiJob, error) {
+	var createdJob *db_queries.VydonApiJob
 	if err := d.WithTx(ctx, nil, func(tx BaseDBTX) error {
 		job, err := d.Q.CreateJob(ctx, tx, *cjParams)
 		if err != nil {

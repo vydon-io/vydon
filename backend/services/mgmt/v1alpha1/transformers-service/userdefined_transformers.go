@@ -14,7 +14,7 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 	"github.com/vydon-io/vydon/internal/rbac"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
@@ -80,7 +80,7 @@ func (s *Service) GetUserDefinedTransformerById(
 	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
 	} else if err != nil && vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find transformer by id")
+		return nil, vydonerrors.NewNotFound("unable to find transformer by id")
 	}
 
 	dto, err := dtomaps.ToUserDefinedTransformerDto(&transformer, s.getSystemTransformerSourceMap())
@@ -223,7 +223,7 @@ func (s *Service) UpdateUserDefinedTransformer(
 	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
 	} else if err != nil && vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find transformer by id")
+		return nil, vydonerrors.NewNotFound("unable to find transformer by id")
 	}
 
 	user, err := s.userdataclient.GetUser(ctx)

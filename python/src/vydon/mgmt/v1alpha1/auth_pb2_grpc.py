@@ -6,7 +6,7 @@ from mgmt.v1alpha1 import auth_pb2 as mgmt_dot_v1alpha1_dot_auth__pb2
 
 
 class AuthServiceStub(object):
-    """Service that handles generic Authentication for Neosync
+    """Service that handles generic Authentication for Vydon
     Today this is mostly used by the CLI to receive authentication information
     """
 
@@ -44,19 +44,19 @@ class AuthServiceStub(object):
 
 
 class AuthServiceServicer(object):
-    """Service that handles generic Authentication for Neosync
+    """Service that handles generic Authentication for Vydon
     Today this is mostly used by the CLI to receive authentication information
     """
 
     def LoginCli(self, request, context):
-        """Used by the CLI to login to Neosync with OAuth.
+        """Used by the CLI to login to Vydon with OAuth.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def RefreshCli(self, request, context):
-        """Used by the CLI to refresh an expired Neosync accesss token.
+        """Used by the CLI to refresh an expired Vydon accesss token.
         This should only be used if an access token was previously retrieved from the `LoginCli` or `RefreshCli` methods.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -122,7 +122,7 @@ def add_AuthServiceServicer_to_server(servicer, server):
 
  # This class is part of an EXPERIMENTAL API.
 class AuthService(object):
-    """Service that handles generic Authentication for Neosync
+    """Service that handles generic Authentication for Vydon
     Today this is mostly used by the CLI to receive authentication information
     """
 

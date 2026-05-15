@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"strings"
 
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 func FilterSlice[T any](slice []T, filterFn func(T) bool) []T {
@@ -58,14 +58,14 @@ func GetBearerTokenFromHeader(
 ) (string, error) {
 	unparsedToken := header.Get(key)
 	if unparsedToken == "" {
-		return "", nucleuserrors.NewUnauthenticated("must provide valid bearer token")
+		return "", vydonerrors.NewUnauthenticated("must provide valid bearer token")
 	}
 	pieces := strings.Split(unparsedToken, " ")
 	if len(pieces) != 2 {
-		return "", nucleuserrors.NewUnauthenticated("token not in proper format")
+		return "", vydonerrors.NewUnauthenticated("token not in proper format")
 	}
 	if pieces[0] != "Bearer" {
-		return "", nucleuserrors.NewUnauthenticated("must provided bearer token")
+		return "", vydonerrors.NewUnauthenticated("must provided bearer token")
 	}
 	token := pieces[1]
 	return token, nil

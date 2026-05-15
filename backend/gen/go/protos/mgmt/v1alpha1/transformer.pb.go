@@ -71,7 +71,7 @@ const (
 	TransformerSource_TRANSFORMER_SOURCE_USER_DEFINED                 TransformerSource = 44
 	TransformerSource_TRANSFORMER_SOURCE_GENERATE_JAVASCRIPT          TransformerSource = 45
 	TransformerSource_TRANSFORMER_SOURCE_GENERATE_COUNTRY             TransformerSource = 46
-	// NeosyncCloud/Enterprise only transformer for anonymizing PII Text
+	// VydonCloud/Enterprise only transformer for anonymizing PII Text
 	TransformerSource_TRANSFORMER_SOURCE_TRANSFORM_PII_TEXT          TransformerSource = 47
 	TransformerSource_TRANSFORMER_SOURCE_GENERATE_BUSINESS_NAME      TransformerSource = 48
 	TransformerSource_TRANSFORMER_SOURCE_GENERATE_IP_ADDRESS         TransformerSource = 49
@@ -1491,7 +1491,7 @@ func (x *UserDefinedTransformer) GetDataTypes() []TransformerDataType {
 	return nil
 }
 
-// A system transformer is a transformer that is built into the Neosync platform.
+// A system transformer is a transformer that is built into the Vydon platform.
 // It can be used directly in job mappings or used in user-defined transformers to snapshot a specific configuration.
 type SystemTransformer struct {
 	state         protoimpl.MessageState
@@ -2204,7 +2204,7 @@ type TransformerConfig_GenerateCountryConfig struct {
 }
 
 type TransformerConfig_TransformPiiTextConfig struct {
-	// NeosyncCloud/Enterprise only transformer for anonymizing PII Text
+	// VydonCloud/Enterprise only transformer for anonymizing PII Text
 	TransformPiiTextConfig *TransformPiiText `protobuf:"bytes,44,opt,name=transform_pii_text_config,json=transformPiiTextConfig,proto3,oneof"`
 }
 
@@ -2359,7 +2359,7 @@ func (*TransformScrambleIdentity) Descriptor() ([]byte, []int) {
 	return file_mgmt_v1alpha1_transformer_proto_rawDescGZIP(), []int{19}
 }
 
-// NeosyncCloud/Enterprise only transformer for anonymizing PII Text
+// VydonCloud/Enterprise only transformer for anonymizing PII Text
 type TransformPiiText struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -2634,7 +2634,7 @@ type PiiAnonymizer_Hash_ struct {
 }
 
 type PiiAnonymizer_Transform_ struct {
-	// Configures the anonymizer to use a Neosync configured transformer
+	// Configures the anonymizer to use a Vydon configured transformer
 	Transform *PiiAnonymizer_Transform `protobuf:"bytes,5,opt,name=transform,proto3,oneof"`
 }
 

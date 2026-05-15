@@ -13,7 +13,7 @@ import (
 	"connectrpc.com/connect"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
 )
 
@@ -61,7 +61,7 @@ func (s *GcpConnectionDataService) StreamData(
 ) error {
 	gcpStreamCfg := config.GetGcpCloudstorageConfig()
 	if gcpStreamCfg == nil {
-		return nucleuserrors.NewBadRequest(
+		return vydonerrors.NewBadRequest(
 			"must provide non-nil gcp cloud storage config in request",
 		)
 	}
@@ -81,7 +81,7 @@ func (s *GcpConnectionDataService) StreamData(
 		}
 		jobRunId = runId
 	default:
-		return nucleuserrors.NewNotImplemented(fmt.Sprintf("unsupported GCP Cloud Storage config id: %T", id))
+		return vydonerrors.NewNotImplemented(fmt.Sprintf("unsupported GCP Cloud Storage config id: %T", id))
 	}
 
 	onRecord := func(record map[string][]byte) error {
@@ -112,7 +112,7 @@ func (s *GcpConnectionDataService) GetSchema(
 ) ([]*mgmtv1alpha1.DatabaseColumn, error) {
 	gcpCfg := config.GetGcpCloudstorageConfig()
 	if gcpCfg == nil {
-		return nil, nucleuserrors.NewBadRequest("must provide gcp cloud storage config")
+		return nil, vydonerrors.NewBadRequest("must provide gcp cloud storage config")
 	}
 
 	gcpclient, err := s.gcpmanager.GetClient(ctx, s.logger)
@@ -131,7 +131,7 @@ func (s *GcpConnectionDataService) GetSchema(
 		}
 		jobRunId = runId
 	default:
-		return nil, nucleuserrors.NewNotImplemented(fmt.Sprintf("unsupported GCP Cloud Storage config id: %T", id))
+		return nil, vydonerrors.NewNotImplemented(fmt.Sprintf("unsupported GCP Cloud Storage config id: %T", id))
 	}
 
 	schemas, err := gcpclient.GetDbSchemaFromPrefix(

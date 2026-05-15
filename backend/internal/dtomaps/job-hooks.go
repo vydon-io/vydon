@@ -8,10 +8,10 @@ import (
 )
 
 func ToJobHookDto(
-	input *db_queries.NeosyncApiJobHook,
+	input *db_queries.VydonApiJobHook,
 ) (*mgmtv1alpha1.JobHook, error) {
 	if input == nil {
-		input = &db_queries.NeosyncApiJobHook{}
+		input = &db_queries.VydonApiJobHook{}
 	}
 	priority := uint32(0)
 	if input.Priority > 0 {
@@ -42,7 +42,7 @@ func ToJobHookDto(
 }
 
 func ToJobHooksDto(
-	input []db_queries.NeosyncApiJobHook,
+	input []db_queries.VydonApiJobHook,
 ) ([]*mgmtv1alpha1.JobHook, error) {
 	dtos := make([]*mgmtv1alpha1.JobHook, len(input))
 	for idx := range input {

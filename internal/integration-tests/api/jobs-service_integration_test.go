@@ -106,12 +106,12 @@ func (s *IntegrationTestSuite) Test_JobService_JobHooks() {
 	})
 
 	t.Run("Cloud", func(t *testing.T) {
-		client := s.NeosyncCloudAuthenticatedLicensedClients.Jobs(integrationtests_test.WithUserId(testAuthUserId))
-		s.setUser(ctx, s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId)))
-		accountId := s.createPersonalAccount(ctx, s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId)))
+		client := s.VydonCloudAuthenticatedLicensedClients.Jobs(integrationtests_test.WithUserId(testAuthUserId))
+		s.setUser(ctx, s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId)))
+		accountId := s.createPersonalAccount(ctx, s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId)))
 
-		srcconn := s.createPostgresConnection(s.NeosyncCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId)), accountId, "source", "test")
-		destconn := s.createPostgresConnection(s.NeosyncCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId)), accountId, "dest", "test2")
+		srcconn := s.createPostgresConnection(s.VydonCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId)), accountId, "source", "test")
+		destconn := s.createPostgresConnection(s.VydonCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId)), accountId, "dest", "test2")
 
 		s.MockTemporalForCreateJob("test-id")
 		jobResp, err := client.CreateJob(ctx, connect.NewRequest(&mgmtv1alpha1.CreateJobRequest{

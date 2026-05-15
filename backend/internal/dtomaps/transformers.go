@@ -10,7 +10,7 @@ import (
 )
 
 func ToUserDefinedTransformerDto(
-	input *db_queries.NeosyncApiTransformer,
+	input *db_queries.VydonApiTransformer,
 	systemTransformers map[mgmtv1alpha1.TransformerSource]*mgmtv1alpha1.SystemTransformer,
 ) (*mgmtv1alpha1.UserDefinedTransformer, error) {
 	if _, ok := mgmtv1alpha1.TransformerSource_name[input.Source]; !ok {

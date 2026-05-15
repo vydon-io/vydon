@@ -5,7 +5,7 @@ import (
 
 	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
 	auth_jwt "github.com/vydon-io/vydon/backend/internal/auth/jwt"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 type TokenCtxResponse struct {
@@ -19,7 +19,7 @@ func GetTokenCtx(ctx context.Context) (*TokenCtxResponse, error) {
 	if err != nil {
 		jwtData, err := auth_jwt.GetTokenDataFromCtx(ctx)
 		if err != nil {
-			return nil, nucleuserrors.NewUnauthenticated("unable to find any token data in context")
+			return nil, vydonerrors.NewUnauthenticated("unable to find any token data in context")
 		}
 		return &TokenCtxResponse{JwtContextData: jwtData}, nil
 	}

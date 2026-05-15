@@ -11,7 +11,7 @@ import (
 	pkg_utils "github.com/vydon-io/vydon/backend/pkg/utils"
 	"github.com/vydon-io/vydon/internal/apikey"
 	"github.com/vydon-io/vydon/internal/rbac"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
@@ -62,7 +62,7 @@ func (s *Service) GetAccountApiKey(
 	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
 	} else if err != nil && vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find api key")
+		return nil, vydonerrors.NewNotFound("unable to find api key")
 	}
 
 	user, err := s.userdataclient.GetUser(ctx)
@@ -88,7 +88,7 @@ func (s *Service) CreateAccountApiKey(
 	}
 
 	if user.IsApiKey() {
-		return nil, nucleuserrors.NewUnauthorized("api key user cannot create api keys")
+		return nil, vydonerrors.NewUnauthorized("api key user cannot create api keys")
 	}
 
 	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(req.Msg.GetAccountId()), rbac.AccountAction_Edit); err != nil {
@@ -138,7 +138,7 @@ func (s *Service) RegenerateAccountApiKey(
 	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
 	} else if err != nil && vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("account api key not found")
+		return nil, vydonerrors.NewNotFound("account api key not found")
 	}
 
 	user, err := s.userdataclient.GetUser(ctx)
@@ -147,7 +147,7 @@ func (s *Service) RegenerateAccountApiKey(
 	}
 
 	if user.IsApiKey() {
-		return nil, nucleuserrors.NewUnauthorized("api key user cannot regenerate api keys")
+		return nil, vydonerrors.NewUnauthorized("api key user cannot regenerate api keys")
 	}
 
 	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(vydondb.UUIDString(apiKey.AccountID)), rbac.AccountAction_Edit); err != nil {
@@ -201,7 +201,7 @@ func (s *Service) DeleteAccountApiKey(
 		return nil, err
 	}
 	if user.IsApiKey() {
-		return nil, nucleuserrors.NewUnauthorized("api key user cannot delete api keys")
+		return nil, vydonerrors.NewUnauthorized("api key user cannot delete api keys")
 	}
 	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(vydondb.UUIDString(apiKey.AccountID)), rbac.AccountAction_Edit); err != nil {
 		return nil, err

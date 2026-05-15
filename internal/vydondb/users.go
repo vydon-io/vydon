@@ -12,14 +12,14 @@ import (
 	"github.com/jackc/pgx/v5/pgtype"
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 func (d *VydonDb) SetUserByAuthSub(
 	ctx context.Context,
 	authSub string,
-) (*db_queries.NeosyncApiUser, error) {
-	var userResp *db_queries.NeosyncApiUser
+) (*db_queries.VydonApiUser, error) {
+	var userResp *db_queries.VydonApiUser
 	if err := d.WithTx(ctx, &pgx.TxOptions{IsoLevel: pgx.Serializable}, func(dbtx BaseDBTX) error {
 		user, err := d.Q.GetUserByProviderSub(ctx, dbtx, authSub)
 		if err != nil && !IsNoRows(err) {
@@ -68,8 +68,8 @@ func (d *VydonDb) SetPersonalAccount(
 	ctx context.Context,
 	userId pgtype.UUID,
 	maxAllowedRecords *int64, // only used when personal account is created
-) (*db_queries.NeosyncApiAccount, error) {
-	var personalAccount *db_queries.NeosyncApiAccount
+) (*db_queries.VydonApiAccount, error) {
+	var personalAccount *db_queries.VydonApiAccount
 	if err := d.WithTx(ctx, &pgx.TxOptions{IsoLevel: pgx.Serializable}, func(dbtx BaseDBTX) error {
 		resp, err := upsertPersonalAccount(ctx, d.Q, dbtx, &upsertPersonalAccountRequest{
 			UserId:            userId,
@@ -92,7 +92,7 @@ type upsertPersonalAccountRequest struct {
 }
 
 type upsertPersonalAccountResponse struct {
-	Account *db_queries.NeosyncApiAccount
+	Account *db_queries.VydonApiAccount
 }
 
 func upsertPersonalAccount(
@@ -144,14 +144,14 @@ func (d *VydonDb) CreateTeamAccount(
 	userId pgtype.UUID,
 	teamName string,
 	logger *slog.Logger,
-) (*db_queries.NeosyncApiAccount, error) {
-	var teamAccount *db_queries.NeosyncApiAccount
+) (*db_queries.VydonApiAccount, error) {
+	var teamAccount *db_queries.VydonApiAccount
 	if err := d.WithTx(ctx, &pgx.TxOptions{IsoLevel: pgx.Serializable}, func(dbtx BaseDBTX) error {
 		accounts, err := d.Q.GetAccountsByUser(ctx, dbtx, userId)
 		if err != nil && !IsNoRows(err) {
 			return fmt.Errorf("unable to get account(s) by user id: %w", err)
 		} else if err != nil && IsNoRows(err) {
-			accounts = []db_queries.NeosyncApiAccount{}
+			accounts = []db_queries.VydonApiAccount{}
 		}
 		logger.Debug(fmt.Sprintf("found %d accounts for user during team account creation", len(accounts)))
 		if err := verifyAccountNameUnique(accounts, teamName); err != nil {
@@ -177,10 +177,10 @@ func (d *VydonDb) CreateTeamAccount(
 	return teamAccount, nil
 }
 
-func verifyAccountNameUnique(accounts []db_queries.NeosyncApiAccount, name string) error {
+func verifyAccountNameUnique(accounts []db_queries.VydonApiAccount, name string) error {
 	for idx := range accounts {
 		if strings.EqualFold(accounts[idx].AccountSlug, name) {
-			return nucleuserrors.NewAlreadyExists(
+			return vydonerrors.NewAlreadyExists(
 				fmt.Sprintf("team account with the name %s already exists", name),
 			)
 		}
@@ -189,15 +189,15 @@ func verifyAccountNameUnique(accounts []db_queries.NeosyncApiAccount, name strin
 }
 
 func getAccountById(
-	accounts []db_queries.NeosyncApiAccount,
+	accounts []db_queries.VydonApiAccount,
 	id pgtype.UUID,
-) (*db_queries.NeosyncApiAccount, error) {
+) (*db_queries.VydonApiAccount, error) {
 	for idx := range accounts {
 		if accounts[idx].ID.Valid && id.Valid && UUIDString(accounts[idx].ID) == UUIDString(id) {
 			return &accounts[idx], nil
 		}
 	}
-	return nil, nucleuserrors.NewNotFound("could not find id in list of vydon accounts")
+	return nil, vydonerrors.NewNotFound("could not find id in list of vydon accounts")
 }
 
 type ConvertPersonalToTeamAccountRequest struct {
@@ -210,8 +210,8 @@ type ConvertPersonalToTeamAccountRequest struct {
 }
 
 type ConvertPersonalToTeamAccountResponse struct {
-	PersonalAccount *db_queries.NeosyncApiAccount
-	TeamAccount     *db_queries.NeosyncApiAccount
+	PersonalAccount *db_queries.VydonApiAccount
+	TeamAccount     *db_queries.VydonApiAccount
 }
 
 func (d *VydonDb) ConvertPersonalToTeamAccount(
@@ -236,7 +236,7 @@ func (d *VydonDb) ConvertPersonalToTeamAccount(
 		}
 		logger.DebugContext(ctx, "verified that requested personal account id is owned by the user")
 		if personalAccount.AccountType != int16(AccountType_Personal) {
-			return nucleuserrors.NewBadRequest("requested account conversion is not a personal account and thus cannot be converted")
+			return vydonerrors.NewBadRequest("requested account conversion is not a personal account and thus cannot be converted")
 		}
 
 		// update personal account to be team account.
@@ -271,10 +271,10 @@ func (d *VydonDb) ConvertPersonalToTeamAccount(
 func (d *VydonDb) UpsertStripeCustomerId(
 	ctx context.Context,
 	accountId pgtype.UUID,
-	getStripeCustomerId func(ctx context.Context, account db_queries.NeosyncApiAccount) (string, error),
+	getStripeCustomerId func(ctx context.Context, account db_queries.VydonApiAccount) (string, error),
 	logger *slog.Logger,
-) (*db_queries.NeosyncApiAccount, error) {
-	var account *db_queries.NeosyncApiAccount
+) (*db_queries.VydonApiAccount, error) {
+	var account *db_queries.VydonApiAccount
 
 	// Serializable here to ensure the highest level of data integrity and avoid race conditions
 	if err := d.WithTx(ctx, &pgx.TxOptions{IsoLevel: pgx.Serializable}, func(dbtx BaseDBTX) error {
@@ -327,8 +327,8 @@ func (d *VydonDb) CreateTeamAccountInvite(
 	email string,
 	expiresAt pgtype.Timestamp,
 	role pgtype.Int4,
-) (*db_queries.NeosyncApiAccountInvite, error) {
-	var accountInvite *db_queries.NeosyncApiAccountInvite
+) (*db_queries.VydonApiAccountInvite, error) {
+	var accountInvite *db_queries.VydonApiAccountInvite
 	if err := d.WithTx(ctx, nil, func(dbtx BaseDBTX) error {
 		account, err := d.Q.GetAccount(ctx, dbtx, accountId)
 		if err != nil {
@@ -336,7 +336,7 @@ func (d *VydonDb) CreateTeamAccountInvite(
 		}
 		if account.AccountType != int16(AccountType_Team) &&
 			account.AccountType != int16(AccountType_Enterprise) {
-			return nucleuserrors.NewForbidden("unable to create team account invite: account type is not team, enterprise")
+			return vydonerrors.NewForbidden("unable to create team account invite: account type is not team, enterprise")
 		}
 
 		// update any active invites for user to expired before creating new invite
@@ -383,12 +383,12 @@ func (d *VydonDb) ValidateInviteAddUserToAccount(
 	if err := d.WithTx(ctx, nil, func(dbtx BaseDBTX) error {
 		invite, err := d.Q.GetAccountInviteByToken(ctx, dbtx, token)
 		if err != nil && !IsNoRows(err) {
-			return nucleuserrors.New(err)
+			return vydonerrors.New(err)
 		} else if err != nil && IsNoRows(err) {
-			return nucleuserrors.NewBadRequest("invalid invite. unable to accept invite")
+			return vydonerrors.NewBadRequest("invalid invite. unable to accept invite")
 		}
 		if invite.Email != userEmail {
-			return nucleuserrors.NewBadRequest("invalid invite email. unable to accept invite")
+			return vydonerrors.NewBadRequest("invalid invite email. unable to accept invite")
 		}
 		if !invite.Accepted.Bool {
 			_, err = d.Q.UpdateAccountInviteToAccepted(ctx, dbtx, invite.ID)
@@ -411,11 +411,11 @@ func (d *VydonDb) ValidateInviteAddUserToAccount(
 			return err
 		} else if err != nil && IsNoRows(err) {
 			if invite.Accepted.Bool {
-				return nucleuserrors.NewBadRequest("account invitation already accepted")
+				return vydonerrors.NewBadRequest("account invitation already accepted")
 			}
 
 			if invite.ExpiresAt.Time.Before(time.Now().UTC()) {
-				return nucleuserrors.NewForbidden("account invitation expired")
+				return vydonerrors.NewForbidden("account invitation expired")
 			}
 
 			err = d.Q.CreateAccountUserAssociation(ctx, dbtx, db_queries.CreateAccountUserAssociationParams{

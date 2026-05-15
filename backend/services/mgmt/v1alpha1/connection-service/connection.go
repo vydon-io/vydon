@@ -22,7 +22,7 @@ import (
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
 	"github.com/vydon-io/vydon/internal/rbac"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/vydon-io/vydon/internal/sshtunnel"
 	"golang.org/x/crypto/ssh"
@@ -180,7 +180,7 @@ func (s *Service) CheckConnectionConfig(
 			Privileges:      privs,
 		}), nil
 	default:
-		return nil, nucleuserrors.NewBadRequest(fmt.Errorf("this method does not support this connection type %T: %w", req.Msg.GetConnectionConfig().GetConfig(), errors.ErrUnsupported).Error())
+		return nil, vydonerrors.NewBadRequest(fmt.Errorf("this method does not support this connection type %T: %w", req.Msg.GetConnectionConfig().GetConfig(), errors.ErrUnsupported).Error())
 	}
 }
 
@@ -341,7 +341,7 @@ func (s *Service) GetConnection(
 	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
 	} else if err != nil && vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find connection by id")
+		return nil, vydonerrors.NewNotFound("unable to find connection by id")
 	}
 
 	user, err := s.userclient.GetUser(ctx)
@@ -395,15 +395,15 @@ func (s *Service) CreateConnection(
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_MssqlConfig:
-		if err := checkUrlEnvVar(cfg.MssqlConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.MssqlConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_MysqlConfig:
-		if err := checkUrlEnvVar(cfg.MysqlConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.MysqlConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_PgConfig:
-		if err := checkUrlEnvVar(cfg.PgConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.PgConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	}
@@ -447,7 +447,7 @@ func (s *Service) UpdateConnection(
 	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
 	} else if err != nil && vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find connection by id")
+		return nil, vydonerrors.NewNotFound("unable to find connection by id")
 	}
 
 	user, err := s.userclient.GetUser(ctx)
@@ -460,15 +460,15 @@ func (s *Service) UpdateConnection(
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_MssqlConfig:
-		if err := checkUrlEnvVar(cfg.MssqlConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.MssqlConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_MysqlConfig:
-		if err := checkUrlEnvVar(cfg.MysqlConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.MysqlConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_PgConfig:
-		if err := checkUrlEnvVar(cfg.PgConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.PgConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	}
@@ -667,9 +667,9 @@ type urlEnvVarConfig interface {
 	GetUrlFromEnv() string
 }
 
-func checkUrlEnvVar(cfg urlEnvVarConfig, isNeosyncCloud bool) error {
-	if cfg.GetUrlFromEnv() != "" && isNeosyncCloud {
-		return nucleuserrors.NewBadRequest("url env var is not supported in vydon cloud")
+func checkUrlEnvVar(cfg urlEnvVarConfig, isVydonCloud bool) error {
+	if cfg.GetUrlFromEnv() != "" && isVydonCloud {
+		return vydonerrors.NewBadRequest("url env var is not supported in vydon cloud")
 	}
 	return nil
 }

@@ -22,7 +22,7 @@ import (
 	"github.com/vydon-io/vydon/internal/apikey"
 	"github.com/vydon-io/vydon/internal/billing"
 	"github.com/vydon-io/vydon/internal/rbac"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/stripe/stripe-go/v81"
 	"golang.org/x/sync/errgroup"
@@ -44,7 +44,7 @@ func (s *Service) GetUser(
 		}
 		user, err := s.db.Q.GetAnonymousUser(ctx, s.db.Db)
 		if err != nil && !vydondb.IsNoRows(err) {
-			return nil, nucleuserrors.New(err)
+			return nil, vydonerrors.New(err)
 		} else if err != nil && vydondb.IsNoRows(err) {
 			user, err = s.db.Q.SetAnonymousUser(ctx, s.db.Db)
 			if err != nil {
@@ -72,7 +72,7 @@ func (s *Service) GetUser(
 				UserId: "00000000-0000-0000-0000-000000000000",
 			}), nil
 		}
-		return nil, nucleuserrors.NewUnauthenticated(
+		return nil, vydonerrors.NewUnauthenticated(
 			fmt.Sprintf(
 				"invalid api key type when calling GetUser: %s",
 				tokenctxResp.ApiKeyContextData.ApiKeyType,
@@ -81,16 +81,16 @@ func (s *Service) GetUser(
 	} else if tokenctxResp.JwtContextData != nil {
 		user, err := s.db.Q.GetUserAssociationByProviderSub(ctx, s.db.Db, tokenctxResp.JwtContextData.AuthUserId)
 		if err != nil && !vydondb.IsNoRows(err) {
-			return nil, nucleuserrors.New(err)
+			return nil, vydonerrors.New(err)
 		} else if err != nil && vydondb.IsNoRows(err) {
-			return nil, nucleuserrors.NewNotFound("unable to find user")
+			return nil, vydonerrors.NewNotFound("unable to find user")
 		}
 
 		return connect.NewResponse(&mgmtv1alpha1.GetUserResponse{
 			UserId: vydondb.UUIDString(user.UserID),
 		}), nil
 	}
-	return nil, nucleuserrors.NewUnauthenticated(
+	return nil, vydonerrors.NewUnauthenticated(
 		"unable to find a valid user based on the provided auth credentials",
 	)
 }
@@ -128,19 +128,19 @@ func (s *Service) SetUser(
 	} else if tokenctxResp.JwtContextData != nil {
 		tokenCtxData, err := authjwt.GetTokenDataFromCtx(ctx)
 		if err != nil {
-			return nil, nucleuserrors.New(err)
+			return nil, vydonerrors.New(err)
 		}
 
 		user, err := s.db.SetUserByAuthSub(ctx, tokenCtxData.AuthUserId)
 		if err != nil {
-			return nil, nucleuserrors.New(err)
+			return nil, vydonerrors.New(err)
 		}
 
 		return connect.NewResponse(&mgmtv1alpha1.SetUserResponse{
 			UserId: vydondb.UUIDString(user.ID),
 		}), nil
 	}
-	return nil, nucleuserrors.NewUnauthenticated(
+	return nil, vydonerrors.NewUnauthenticated(
 		"unable to find a valid user based on the provided auth credentials",
 	)
 }
@@ -177,12 +177,12 @@ func (s *Service) ConvertPersonalToTeamAccount(
 	req *connect.Request[mgmtv1alpha1.ConvertPersonalToTeamAccountRequest],
 ) (*connect.Response[mgmtv1alpha1.ConvertPersonalToTeamAccountResponse], error) {
 	if !s.cfg.IsAuthEnabled {
-		return nil, nucleuserrors.NewForbidden(
+		return nil, vydonerrors.NewForbidden(
 			"unable to convert personal account to team account as authentication is not enabled",
 		)
 	}
-	if s.cfg.IsNeosyncCloud && s.billingclient == nil {
-		return nil, nucleuserrors.NewForbidden(
+	if s.cfg.IsVydonCloud && s.billingclient == nil {
+		return nil, vydonerrors.NewForbidden(
 			"creating team accounts via the API is currently forbidden in Vydon Cloud environments. Please contact us to create a team account.",
 		)
 	}
@@ -207,7 +207,7 @@ func (s *Service) ConvertPersonalToTeamAccount(
 		if err != nil && !vydondb.IsNoRows(err) {
 			return nil, err
 		} else if err != nil && vydondb.IsNoRows(err) {
-			return nil, nucleuserrors.NewNotFound("user has no accounts")
+			return nil, vydonerrors.NewNotFound("user has no accounts")
 		}
 
 		for idx := range accounts {
@@ -234,14 +234,14 @@ func (s *Service) ConvertPersonalToTeamAccount(
 			return nil, err
 		}
 		if count == 0 {
-			return nil, nucleuserrors.NewNotFound("user is not in the provided account")
+			return nil, vydonerrors.NewNotFound("user is not in the provided account")
 		}
 		account, err := s.db.Q.GetAccount(ctx, s.db.Db, personalAccountUuid)
 		if err != nil {
 			return nil, err
 		}
 		if account.AccountType != int16(vydondb.AccountType_Personal) {
-			return nil, nucleuserrors.NewNotFound("account is not a personal account")
+			return nil, vydonerrors.NewNotFound("account is not a personal account")
 		}
 	}
 
@@ -280,7 +280,7 @@ func (s *Service) ConvertPersonalToTeamAccount(
 	}
 
 	var checkoutSessionUrl *string
-	if s.cfg.IsNeosyncCloud && !resp.TeamAccount.StripeCustomerID.Valid && s.billingclient != nil {
+	if s.cfg.IsVydonCloud && !resp.TeamAccount.StripeCustomerID.Valid && s.billingclient != nil {
 		account, err := s.db.UpsertStripeCustomerId(
 			ctx,
 			resp.TeamAccount.ID,
@@ -413,12 +413,12 @@ func (s *Service) CreateTeamAccount(
 ) (*connect.Response[mgmtv1alpha1.CreateTeamAccountResponse], error) {
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
 	if !s.cfg.IsAuthEnabled {
-		return nil, nucleuserrors.NewForbidden(
+		return nil, vydonerrors.NewForbidden(
 			"unable to create team account as authentication is not enabled",
 		)
 	}
-	if s.cfg.IsNeosyncCloud && s.billingclient == nil {
-		return nil, nucleuserrors.NewForbidden(
+	if s.cfg.IsVydonCloud && s.billingclient == nil {
+		return nil, vydonerrors.NewForbidden(
 			"creating team accounts via the API is currently forbidden in Vydon Cloud environments. Please contact us to create a team account.",
 		)
 	}
@@ -440,7 +440,7 @@ func (s *Service) CreateTeamAccount(
 	logger = logger.With("accountId", vydondb.UUIDString(account.ID))
 
 	var checkoutSessionUrl *string
-	if s.cfg.IsNeosyncCloud && !account.StripeCustomerID.Valid && s.billingclient != nil {
+	if s.cfg.IsVydonCloud && !account.StripeCustomerID.Valid && s.billingclient != nil {
 		account, err = s.db.UpsertStripeCustomerId(
 			ctx,
 			account.ID,
@@ -491,8 +491,8 @@ func (s *Service) CreateTeamAccount(
 func (s *Service) getCreateStripeAccountFunction(
 	userId string,
 	logger *slog.Logger,
-) func(ctx context.Context, account db_queries.NeosyncApiAccount) (string, error) {
-	return func(ctx context.Context, account db_queries.NeosyncApiAccount) (string, error) {
+) func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
+	return func(ctx context.Context, account db_queries.VydonApiAccount) (string, error) {
 		email := s.getEmailFromToken(ctx, logger)
 		if email == nil {
 			return "", errors.New(
@@ -751,7 +751,7 @@ func (s *Service) GetTeamAccountInvites(
 
 	invites, err := s.db.Q.GetActiveAccountInvites(ctx, s.db.Db, accountUuid)
 	if err != nil && !vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.New(err)
+		return nil, vydonerrors.New(err)
 	} else if err != nil && vydondb.IsNoRows(err) {
 		return connect.NewResponse(&mgmtv1alpha1.GetTeamAccountInvitesResponse{
 			Invites: []*mgmtv1alpha1.AccountInvite{},
@@ -778,7 +778,7 @@ func (s *Service) RemoveTeamAccountInvite(
 	}
 	invite, err := s.db.Q.GetAccountInvite(ctx, s.db.Db, inviteId)
 	if err != nil && !vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.New(err)
+		return nil, vydonerrors.New(err)
 	} else if err != nil && vydondb.IsNoRows(err) {
 		return connect.NewResponse(&mgmtv1alpha1.RemoveTeamAccountInviteResponse{}), nil
 	}
@@ -798,7 +798,7 @@ func (s *Service) RemoveTeamAccountInvite(
 
 	err = s.db.Q.RemoveAccountInvite(ctx, s.db.Db, inviteId)
 	if err != nil && !vydondb.IsNoRows(err) {
-		return nil, nucleuserrors.New(err)
+		return nil, vydonerrors.New(err)
 	}
 
 	return connect.NewResponse(&mgmtv1alpha1.RemoveTeamAccountInviteResponse{}), nil
@@ -822,7 +822,7 @@ func (s *Service) AcceptTeamAccountInvite(
 		return nil, err
 	}
 	if tokenctxResp.JwtContextData == nil {
-		return nil, nucleuserrors.NewUnauthenticated(
+		return nil, vydonerrors.NewUnauthenticated(
 			"must be a valid jwt user to accept team account invites",
 		)
 	}
@@ -838,12 +838,12 @@ func (s *Service) AcceptTeamAccountInvite(
 		}
 		// should we check if email is verified here? maybe in the future
 		if userinfo.Email == "" {
-			return nil, nucleuserrors.NewInternalError("retrieved user info but email was not present")
+			return nil, vydonerrors.NewInternalError("retrieved user info but email was not present")
 		}
 		email = &userinfo.Email
 	}
 	if email == nil {
-		return nil, nucleuserrors.NewUnauthenticated(
+		return nil, vydonerrors.NewUnauthenticated(
 			"unable to find email to valid to add user to account",
 		)
 	}
@@ -906,7 +906,7 @@ func (s *Service) SetUserRole(
 		return nil, err
 	}
 	if count == 0 {
-		return nil, nucleuserrors.NewBadRequest("provided user id is not in account")
+		return nil, vydonerrors.NewBadRequest("provided user id is not in account")
 	}
 
 	err = s.rbacClient.SetAccountRole(
@@ -929,7 +929,7 @@ func (s *Service) verifyTeamAccount(ctx context.Context, accountId pgtype.UUID) 
 	}
 	if account.AccountType != int16(vydondb.AccountType_Team) &&
 		account.AccountType != int16(vydondb.AccountType_Enterprise) {
-		return nucleuserrors.NewForbidden("account is not a team account")
+		return vydonerrors.NewForbidden("account is not a team account")
 	}
 	return nil
 }
@@ -952,7 +952,7 @@ func (s *Service) GetSystemInformation(
 		License: &mgmtv1alpha1.SystemLicense{
 			IsValid:        s.licenseclient.IsValid(),
 			ExpiresAt:      timestamppb.New(s.licenseclient.ExpiresAt()),
-			IsNeosyncCloud: s.cfg.IsNeosyncCloud,
+			IsVydonCloud: s.cfg.IsVydonCloud,
 		},
 	}), nil
 }

@@ -83,22 +83,22 @@ func (_c *MockQuerier_AreConnectionsInAccount_Call) RunAndReturn(run func(contex
 }
 
 // ConvertPersonalAccountToTeam provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) ConvertPersonalAccountToTeam(ctx context.Context, db DBTX, arg ConvertPersonalAccountToTeamParams) (NeosyncApiAccount, error) {
+func (_m *MockQuerier) ConvertPersonalAccountToTeam(ctx context.Context, db DBTX, arg ConvertPersonalAccountToTeamParams) (VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for ConvertPersonalAccountToTeam")
 	}
 
-	var r0 NeosyncApiAccount
+	var r0 VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, ConvertPersonalAccountToTeamParams) (NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, ConvertPersonalAccountToTeamParams) (VydonApiAccount, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, ConvertPersonalAccountToTeamParams) NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, ConvertPersonalAccountToTeamParams) VydonApiAccount); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccount)
+		r0 = ret.Get(0).(VydonApiAccount)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, ConvertPersonalAccountToTeamParams) error); ok {
@@ -130,33 +130,33 @@ func (_c *MockQuerier_ConvertPersonalAccountToTeam_Call) Run(run func(ctx contex
 	return _c
 }
 
-func (_c *MockQuerier_ConvertPersonalAccountToTeam_Call) Return(_a0 NeosyncApiAccount, _a1 error) *MockQuerier_ConvertPersonalAccountToTeam_Call {
+func (_c *MockQuerier_ConvertPersonalAccountToTeam_Call) Return(_a0 VydonApiAccount, _a1 error) *MockQuerier_ConvertPersonalAccountToTeam_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_ConvertPersonalAccountToTeam_Call) RunAndReturn(run func(context.Context, DBTX, ConvertPersonalAccountToTeamParams) (NeosyncApiAccount, error)) *MockQuerier_ConvertPersonalAccountToTeam_Call {
+func (_c *MockQuerier_ConvertPersonalAccountToTeam_Call) RunAndReturn(run func(context.Context, DBTX, ConvertPersonalAccountToTeamParams) (VydonApiAccount, error)) *MockQuerier_ConvertPersonalAccountToTeam_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateAccountApiKey provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateAccountApiKey(ctx context.Context, db DBTX, arg CreateAccountApiKeyParams) (NeosyncApiAccountApiKey, error) {
+func (_m *MockQuerier) CreateAccountApiKey(ctx context.Context, db DBTX, arg CreateAccountApiKeyParams) (VydonApiAccountApiKey, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateAccountApiKey")
 	}
 
-	var r0 NeosyncApiAccountApiKey
+	var r0 VydonApiAccountApiKey
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountApiKeyParams) (NeosyncApiAccountApiKey, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountApiKeyParams) (VydonApiAccountApiKey, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountApiKeyParams) NeosyncApiAccountApiKey); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountApiKeyParams) VydonApiAccountApiKey); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountApiKey)
+		r0 = ret.Get(0).(VydonApiAccountApiKey)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateAccountApiKeyParams) error); ok {
@@ -188,33 +188,33 @@ func (_c *MockQuerier_CreateAccountApiKey_Call) Run(run func(ctx context.Context
 	return _c
 }
 
-func (_c *MockQuerier_CreateAccountApiKey_Call) Return(_a0 NeosyncApiAccountApiKey, _a1 error) *MockQuerier_CreateAccountApiKey_Call {
+func (_c *MockQuerier_CreateAccountApiKey_Call) Return(_a0 VydonApiAccountApiKey, _a1 error) *MockQuerier_CreateAccountApiKey_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateAccountApiKey_Call) RunAndReturn(run func(context.Context, DBTX, CreateAccountApiKeyParams) (NeosyncApiAccountApiKey, error)) *MockQuerier_CreateAccountApiKey_Call {
+func (_c *MockQuerier_CreateAccountApiKey_Call) RunAndReturn(run func(context.Context, DBTX, CreateAccountApiKeyParams) (VydonApiAccountApiKey, error)) *MockQuerier_CreateAccountApiKey_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateAccountHook provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateAccountHook(ctx context.Context, db DBTX, arg CreateAccountHookParams) (NeosyncApiAccountHook, error) {
+func (_m *MockQuerier) CreateAccountHook(ctx context.Context, db DBTX, arg CreateAccountHookParams) (VydonApiAccountHook, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateAccountHook")
 	}
 
-	var r0 NeosyncApiAccountHook
+	var r0 VydonApiAccountHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountHookParams) (NeosyncApiAccountHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountHookParams) (VydonApiAccountHook, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountHookParams) NeosyncApiAccountHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountHookParams) VydonApiAccountHook); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountHook)
+		r0 = ret.Get(0).(VydonApiAccountHook)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateAccountHookParams) error); ok {
@@ -246,33 +246,33 @@ func (_c *MockQuerier_CreateAccountHook_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_CreateAccountHook_Call) Return(_a0 NeosyncApiAccountHook, _a1 error) *MockQuerier_CreateAccountHook_Call {
+func (_c *MockQuerier_CreateAccountHook_Call) Return(_a0 VydonApiAccountHook, _a1 error) *MockQuerier_CreateAccountHook_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateAccountHook_Call) RunAndReturn(run func(context.Context, DBTX, CreateAccountHookParams) (NeosyncApiAccountHook, error)) *MockQuerier_CreateAccountHook_Call {
+func (_c *MockQuerier_CreateAccountHook_Call) RunAndReturn(run func(context.Context, DBTX, CreateAccountHookParams) (VydonApiAccountHook, error)) *MockQuerier_CreateAccountHook_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateAccountInvite provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateAccountInvite(ctx context.Context, db DBTX, arg CreateAccountInviteParams) (NeosyncApiAccountInvite, error) {
+func (_m *MockQuerier) CreateAccountInvite(ctx context.Context, db DBTX, arg CreateAccountInviteParams) (VydonApiAccountInvite, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateAccountInvite")
 	}
 
-	var r0 NeosyncApiAccountInvite
+	var r0 VydonApiAccountInvite
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountInviteParams) (NeosyncApiAccountInvite, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountInviteParams) (VydonApiAccountInvite, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountInviteParams) NeosyncApiAccountInvite); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateAccountInviteParams) VydonApiAccountInvite); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountInvite)
+		r0 = ret.Get(0).(VydonApiAccountInvite)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateAccountInviteParams) error); ok {
@@ -304,12 +304,12 @@ func (_c *MockQuerier_CreateAccountInvite_Call) Run(run func(ctx context.Context
 	return _c
 }
 
-func (_c *MockQuerier_CreateAccountInvite_Call) Return(_a0 NeosyncApiAccountInvite, _a1 error) *MockQuerier_CreateAccountInvite_Call {
+func (_c *MockQuerier_CreateAccountInvite_Call) Return(_a0 VydonApiAccountInvite, _a1 error) *MockQuerier_CreateAccountInvite_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateAccountInvite_Call) RunAndReturn(run func(context.Context, DBTX, CreateAccountInviteParams) (NeosyncApiAccountInvite, error)) *MockQuerier_CreateAccountInvite_Call {
+func (_c *MockQuerier_CreateAccountInvite_Call) RunAndReturn(run func(context.Context, DBTX, CreateAccountInviteParams) (VydonApiAccountInvite, error)) *MockQuerier_CreateAccountInvite_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -363,22 +363,22 @@ func (_c *MockQuerier_CreateAccountUserAssociation_Call) RunAndReturn(run func(c
 }
 
 // CreateConnection provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateConnection(ctx context.Context, db DBTX, arg CreateConnectionParams) (NeosyncApiConnection, error) {
+func (_m *MockQuerier) CreateConnection(ctx context.Context, db DBTX, arg CreateConnectionParams) (VydonApiConnection, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateConnection")
 	}
 
-	var r0 NeosyncApiConnection
+	var r0 VydonApiConnection
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateConnectionParams) (NeosyncApiConnection, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateConnectionParams) (VydonApiConnection, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateConnectionParams) NeosyncApiConnection); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateConnectionParams) VydonApiConnection); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiConnection)
+		r0 = ret.Get(0).(VydonApiConnection)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateConnectionParams) error); ok {
@@ -410,33 +410,33 @@ func (_c *MockQuerier_CreateConnection_Call) Run(run func(ctx context.Context, d
 	return _c
 }
 
-func (_c *MockQuerier_CreateConnection_Call) Return(_a0 NeosyncApiConnection, _a1 error) *MockQuerier_CreateConnection_Call {
+func (_c *MockQuerier_CreateConnection_Call) Return(_a0 VydonApiConnection, _a1 error) *MockQuerier_CreateConnection_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateConnection_Call) RunAndReturn(run func(context.Context, DBTX, CreateConnectionParams) (NeosyncApiConnection, error)) *MockQuerier_CreateConnection_Call {
+func (_c *MockQuerier_CreateConnection_Call) RunAndReturn(run func(context.Context, DBTX, CreateConnectionParams) (VydonApiConnection, error)) *MockQuerier_CreateConnection_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateIdentityProviderAssociation provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateIdentityProviderAssociation(ctx context.Context, db DBTX, arg CreateIdentityProviderAssociationParams) (NeosyncApiUserIdentityProviderAssociation, error) {
+func (_m *MockQuerier) CreateIdentityProviderAssociation(ctx context.Context, db DBTX, arg CreateIdentityProviderAssociationParams) (VydonApiUserIdentityProviderAssociation, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateIdentityProviderAssociation")
 	}
 
-	var r0 NeosyncApiUserIdentityProviderAssociation
+	var r0 VydonApiUserIdentityProviderAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateIdentityProviderAssociationParams) (NeosyncApiUserIdentityProviderAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateIdentityProviderAssociationParams) (VydonApiUserIdentityProviderAssociation, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateIdentityProviderAssociationParams) NeosyncApiUserIdentityProviderAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateIdentityProviderAssociationParams) VydonApiUserIdentityProviderAssociation); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiUserIdentityProviderAssociation)
+		r0 = ret.Get(0).(VydonApiUserIdentityProviderAssociation)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateIdentityProviderAssociationParams) error); ok {
@@ -468,33 +468,33 @@ func (_c *MockQuerier_CreateIdentityProviderAssociation_Call) Run(run func(ctx c
 	return _c
 }
 
-func (_c *MockQuerier_CreateIdentityProviderAssociation_Call) Return(_a0 NeosyncApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_CreateIdentityProviderAssociation_Call {
+func (_c *MockQuerier_CreateIdentityProviderAssociation_Call) Return(_a0 VydonApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_CreateIdentityProviderAssociation_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateIdentityProviderAssociation_Call) RunAndReturn(run func(context.Context, DBTX, CreateIdentityProviderAssociationParams) (NeosyncApiUserIdentityProviderAssociation, error)) *MockQuerier_CreateIdentityProviderAssociation_Call {
+func (_c *MockQuerier_CreateIdentityProviderAssociation_Call) RunAndReturn(run func(context.Context, DBTX, CreateIdentityProviderAssociationParams) (VydonApiUserIdentityProviderAssociation, error)) *MockQuerier_CreateIdentityProviderAssociation_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateJob provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateJob(ctx context.Context, db DBTX, arg CreateJobParams) (NeosyncApiJob, error) {
+func (_m *MockQuerier) CreateJob(ctx context.Context, db DBTX, arg CreateJobParams) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateJob")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobParams) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobParams) (VydonApiJob, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobParams) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobParams) VydonApiJob); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateJobParams) error); ok {
@@ -526,33 +526,33 @@ func (_c *MockQuerier_CreateJob_Call) Run(run func(ctx context.Context, db DBTX,
 	return _c
 }
 
-func (_c *MockQuerier_CreateJob_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_CreateJob_Call {
+func (_c *MockQuerier_CreateJob_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_CreateJob_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateJob_Call) RunAndReturn(run func(context.Context, DBTX, CreateJobParams) (NeosyncApiJob, error)) *MockQuerier_CreateJob_Call {
+func (_c *MockQuerier_CreateJob_Call) RunAndReturn(run func(context.Context, DBTX, CreateJobParams) (VydonApiJob, error)) *MockQuerier_CreateJob_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateJobConnectionDestination provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateJobConnectionDestination(ctx context.Context, db DBTX, arg CreateJobConnectionDestinationParams) (NeosyncApiJobDestinationConnectionAssociation, error) {
+func (_m *MockQuerier) CreateJobConnectionDestination(ctx context.Context, db DBTX, arg CreateJobConnectionDestinationParams) (VydonApiJobDestinationConnectionAssociation, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateJobConnectionDestination")
 	}
 
-	var r0 NeosyncApiJobDestinationConnectionAssociation
+	var r0 VydonApiJobDestinationConnectionAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobConnectionDestinationParams) (NeosyncApiJobDestinationConnectionAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobConnectionDestinationParams) (VydonApiJobDestinationConnectionAssociation, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobConnectionDestinationParams) NeosyncApiJobDestinationConnectionAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobConnectionDestinationParams) VydonApiJobDestinationConnectionAssociation); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJobDestinationConnectionAssociation)
+		r0 = ret.Get(0).(VydonApiJobDestinationConnectionAssociation)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateJobConnectionDestinationParams) error); ok {
@@ -584,12 +584,12 @@ func (_c *MockQuerier_CreateJobConnectionDestination_Call) Run(run func(ctx cont
 	return _c
 }
 
-func (_c *MockQuerier_CreateJobConnectionDestination_Call) Return(_a0 NeosyncApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_CreateJobConnectionDestination_Call {
+func (_c *MockQuerier_CreateJobConnectionDestination_Call) Return(_a0 VydonApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_CreateJobConnectionDestination_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateJobConnectionDestination_Call) RunAndReturn(run func(context.Context, DBTX, CreateJobConnectionDestinationParams) (NeosyncApiJobDestinationConnectionAssociation, error)) *MockQuerier_CreateJobConnectionDestination_Call {
+func (_c *MockQuerier_CreateJobConnectionDestination_Call) RunAndReturn(run func(context.Context, DBTX, CreateJobConnectionDestinationParams) (VydonApiJobDestinationConnectionAssociation, error)) *MockQuerier_CreateJobConnectionDestination_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -653,22 +653,22 @@ func (_c *MockQuerier_CreateJobConnectionDestinations_Call) RunAndReturn(run fun
 }
 
 // CreateJobHook provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateJobHook(ctx context.Context, db DBTX, arg CreateJobHookParams) (NeosyncApiJobHook, error) {
+func (_m *MockQuerier) CreateJobHook(ctx context.Context, db DBTX, arg CreateJobHookParams) (VydonApiJobHook, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateJobHook")
 	}
 
-	var r0 NeosyncApiJobHook
+	var r0 VydonApiJobHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobHookParams) (NeosyncApiJobHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobHookParams) (VydonApiJobHook, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobHookParams) NeosyncApiJobHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateJobHookParams) VydonApiJobHook); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJobHook)
+		r0 = ret.Get(0).(VydonApiJobHook)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateJobHookParams) error); ok {
@@ -700,33 +700,33 @@ func (_c *MockQuerier_CreateJobHook_Call) Run(run func(ctx context.Context, db D
 	return _c
 }
 
-func (_c *MockQuerier_CreateJobHook_Call) Return(_a0 NeosyncApiJobHook, _a1 error) *MockQuerier_CreateJobHook_Call {
+func (_c *MockQuerier_CreateJobHook_Call) Return(_a0 VydonApiJobHook, _a1 error) *MockQuerier_CreateJobHook_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateJobHook_Call) RunAndReturn(run func(context.Context, DBTX, CreateJobHookParams) (NeosyncApiJobHook, error)) *MockQuerier_CreateJobHook_Call {
+func (_c *MockQuerier_CreateJobHook_Call) RunAndReturn(run func(context.Context, DBTX, CreateJobHookParams) (VydonApiJobHook, error)) *MockQuerier_CreateJobHook_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateMachineUser provides a mock function with given fields: ctx, db
-func (_m *MockQuerier) CreateMachineUser(ctx context.Context, db DBTX) (NeosyncApiUser, error) {
+func (_m *MockQuerier) CreateMachineUser(ctx context.Context, db DBTX) (VydonApiUser, error) {
 	ret := _m.Called(ctx, db)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateMachineUser")
 	}
 
-	var r0 NeosyncApiUser
+	var r0 VydonApiUser
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX) (NeosyncApiUser, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX) (VydonApiUser, error)); ok {
 		return rf(ctx, db)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX) NeosyncApiUser); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX) VydonApiUser); ok {
 		r0 = rf(ctx, db)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiUser)
+		r0 = ret.Get(0).(VydonApiUser)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX) error); ok {
@@ -757,33 +757,33 @@ func (_c *MockQuerier_CreateMachineUser_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_CreateMachineUser_Call) Return(_a0 NeosyncApiUser, _a1 error) *MockQuerier_CreateMachineUser_Call {
+func (_c *MockQuerier_CreateMachineUser_Call) Return(_a0 VydonApiUser, _a1 error) *MockQuerier_CreateMachineUser_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateMachineUser_Call) RunAndReturn(run func(context.Context, DBTX) (NeosyncApiUser, error)) *MockQuerier_CreateMachineUser_Call {
+func (_c *MockQuerier_CreateMachineUser_Call) RunAndReturn(run func(context.Context, DBTX) (VydonApiUser, error)) *MockQuerier_CreateMachineUser_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateNonMachineUser provides a mock function with given fields: ctx, db
-func (_m *MockQuerier) CreateNonMachineUser(ctx context.Context, db DBTX) (NeosyncApiUser, error) {
+func (_m *MockQuerier) CreateNonMachineUser(ctx context.Context, db DBTX) (VydonApiUser, error) {
 	ret := _m.Called(ctx, db)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateNonMachineUser")
 	}
 
-	var r0 NeosyncApiUser
+	var r0 VydonApiUser
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX) (NeosyncApiUser, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX) (VydonApiUser, error)); ok {
 		return rf(ctx, db)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX) NeosyncApiUser); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX) VydonApiUser); ok {
 		r0 = rf(ctx, db)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiUser)
+		r0 = ret.Get(0).(VydonApiUser)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX) error); ok {
@@ -814,33 +814,33 @@ func (_c *MockQuerier_CreateNonMachineUser_Call) Run(run func(ctx context.Contex
 	return _c
 }
 
-func (_c *MockQuerier_CreateNonMachineUser_Call) Return(_a0 NeosyncApiUser, _a1 error) *MockQuerier_CreateNonMachineUser_Call {
+func (_c *MockQuerier_CreateNonMachineUser_Call) Return(_a0 VydonApiUser, _a1 error) *MockQuerier_CreateNonMachineUser_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateNonMachineUser_Call) RunAndReturn(run func(context.Context, DBTX) (NeosyncApiUser, error)) *MockQuerier_CreateNonMachineUser_Call {
+func (_c *MockQuerier_CreateNonMachineUser_Call) RunAndReturn(run func(context.Context, DBTX) (VydonApiUser, error)) *MockQuerier_CreateNonMachineUser_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreatePersonalAccount provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreatePersonalAccount(ctx context.Context, db DBTX, arg CreatePersonalAccountParams) (NeosyncApiAccount, error) {
+func (_m *MockQuerier) CreatePersonalAccount(ctx context.Context, db DBTX, arg CreatePersonalAccountParams) (VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreatePersonalAccount")
 	}
 
-	var r0 NeosyncApiAccount
+	var r0 VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreatePersonalAccountParams) (NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreatePersonalAccountParams) (VydonApiAccount, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreatePersonalAccountParams) NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreatePersonalAccountParams) VydonApiAccount); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccount)
+		r0 = ret.Get(0).(VydonApiAccount)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreatePersonalAccountParams) error); ok {
@@ -872,33 +872,33 @@ func (_c *MockQuerier_CreatePersonalAccount_Call) Run(run func(ctx context.Conte
 	return _c
 }
 
-func (_c *MockQuerier_CreatePersonalAccount_Call) Return(_a0 NeosyncApiAccount, _a1 error) *MockQuerier_CreatePersonalAccount_Call {
+func (_c *MockQuerier_CreatePersonalAccount_Call) Return(_a0 VydonApiAccount, _a1 error) *MockQuerier_CreatePersonalAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreatePersonalAccount_Call) RunAndReturn(run func(context.Context, DBTX, CreatePersonalAccountParams) (NeosyncApiAccount, error)) *MockQuerier_CreatePersonalAccount_Call {
+func (_c *MockQuerier_CreatePersonalAccount_Call) RunAndReturn(run func(context.Context, DBTX, CreatePersonalAccountParams) (VydonApiAccount, error)) *MockQuerier_CreatePersonalAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateSlackOAuthConnection provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateSlackOAuthConnection(ctx context.Context, db DBTX, arg CreateSlackOAuthConnectionParams) (NeosyncApiSlackOauthConnection, error) {
+func (_m *MockQuerier) CreateSlackOAuthConnection(ctx context.Context, db DBTX, arg CreateSlackOAuthConnectionParams) (VydonApiSlackOauthConnection, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateSlackOAuthConnection")
 	}
 
-	var r0 NeosyncApiSlackOauthConnection
+	var r0 VydonApiSlackOauthConnection
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateSlackOAuthConnectionParams) (NeosyncApiSlackOauthConnection, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateSlackOAuthConnectionParams) (VydonApiSlackOauthConnection, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateSlackOAuthConnectionParams) NeosyncApiSlackOauthConnection); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateSlackOAuthConnectionParams) VydonApiSlackOauthConnection); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiSlackOauthConnection)
+		r0 = ret.Get(0).(VydonApiSlackOauthConnection)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateSlackOAuthConnectionParams) error); ok {
@@ -930,33 +930,33 @@ func (_c *MockQuerier_CreateSlackOAuthConnection_Call) Run(run func(ctx context.
 	return _c
 }
 
-func (_c *MockQuerier_CreateSlackOAuthConnection_Call) Return(_a0 NeosyncApiSlackOauthConnection, _a1 error) *MockQuerier_CreateSlackOAuthConnection_Call {
+func (_c *MockQuerier_CreateSlackOAuthConnection_Call) Return(_a0 VydonApiSlackOauthConnection, _a1 error) *MockQuerier_CreateSlackOAuthConnection_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateSlackOAuthConnection_Call) RunAndReturn(run func(context.Context, DBTX, CreateSlackOAuthConnectionParams) (NeosyncApiSlackOauthConnection, error)) *MockQuerier_CreateSlackOAuthConnection_Call {
+func (_c *MockQuerier_CreateSlackOAuthConnection_Call) RunAndReturn(run func(context.Context, DBTX, CreateSlackOAuthConnectionParams) (VydonApiSlackOauthConnection, error)) *MockQuerier_CreateSlackOAuthConnection_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateTeamAccount provides a mock function with given fields: ctx, db, accountSlug
-func (_m *MockQuerier) CreateTeamAccount(ctx context.Context, db DBTX, accountSlug string) (NeosyncApiAccount, error) {
+func (_m *MockQuerier) CreateTeamAccount(ctx context.Context, db DBTX, accountSlug string) (VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, accountSlug)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateTeamAccount")
 	}
 
-	var r0 NeosyncApiAccount
+	var r0 VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (VydonApiAccount, error)); ok {
 		return rf(ctx, db, accountSlug)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) VydonApiAccount); ok {
 		r0 = rf(ctx, db, accountSlug)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccount)
+		r0 = ret.Get(0).(VydonApiAccount)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, string) error); ok {
@@ -988,33 +988,33 @@ func (_c *MockQuerier_CreateTeamAccount_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_CreateTeamAccount_Call) Return(_a0 NeosyncApiAccount, _a1 error) *MockQuerier_CreateTeamAccount_Call {
+func (_c *MockQuerier_CreateTeamAccount_Call) Return(_a0 VydonApiAccount, _a1 error) *MockQuerier_CreateTeamAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateTeamAccount_Call) RunAndReturn(run func(context.Context, DBTX, string) (NeosyncApiAccount, error)) *MockQuerier_CreateTeamAccount_Call {
+func (_c *MockQuerier_CreateTeamAccount_Call) RunAndReturn(run func(context.Context, DBTX, string) (VydonApiAccount, error)) *MockQuerier_CreateTeamAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // CreateUserDefinedTransformer provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) CreateUserDefinedTransformer(ctx context.Context, db DBTX, arg CreateUserDefinedTransformerParams) (NeosyncApiTransformer, error) {
+func (_m *MockQuerier) CreateUserDefinedTransformer(ctx context.Context, db DBTX, arg CreateUserDefinedTransformerParams) (VydonApiTransformer, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for CreateUserDefinedTransformer")
 	}
 
-	var r0 NeosyncApiTransformer
+	var r0 VydonApiTransformer
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateUserDefinedTransformerParams) (NeosyncApiTransformer, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateUserDefinedTransformerParams) (VydonApiTransformer, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateUserDefinedTransformerParams) NeosyncApiTransformer); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, CreateUserDefinedTransformerParams) VydonApiTransformer); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiTransformer)
+		r0 = ret.Get(0).(VydonApiTransformer)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, CreateUserDefinedTransformerParams) error); ok {
@@ -1046,12 +1046,12 @@ func (_c *MockQuerier_CreateUserDefinedTransformer_Call) Run(run func(ctx contex
 	return _c
 }
 
-func (_c *MockQuerier_CreateUserDefinedTransformer_Call) Return(_a0 NeosyncApiTransformer, _a1 error) *MockQuerier_CreateUserDefinedTransformer_Call {
+func (_c *MockQuerier_CreateUserDefinedTransformer_Call) Return(_a0 VydonApiTransformer, _a1 error) *MockQuerier_CreateUserDefinedTransformer_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_CreateUserDefinedTransformer_Call) RunAndReturn(run func(context.Context, DBTX, CreateUserDefinedTransformerParams) (NeosyncApiTransformer, error)) *MockQuerier_CreateUserDefinedTransformer_Call {
+func (_c *MockQuerier_CreateUserDefinedTransformer_Call) RunAndReturn(run func(context.Context, DBTX, CreateUserDefinedTransformerParams) (VydonApiTransformer, error)) *MockQuerier_CreateUserDefinedTransformer_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -1259,22 +1259,22 @@ func (_c *MockQuerier_DoesJobHaveConnectionId_Call) RunAndReturn(run func(contex
 }
 
 // GetAccount provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetAccount(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiAccount, error) {
+func (_m *MockQuerier) GetAccount(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccount")
 	}
 
-	var r0 NeosyncApiAccount
+	var r0 VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiAccount, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiAccount); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccount)
+		r0 = ret.Get(0).(VydonApiAccount)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -1306,33 +1306,33 @@ func (_c *MockQuerier_GetAccount_Call) Run(run func(ctx context.Context, db DBTX
 	return _c
 }
 
-func (_c *MockQuerier_GetAccount_Call) Return(_a0 NeosyncApiAccount, _a1 error) *MockQuerier_GetAccount_Call {
+func (_c *MockQuerier_GetAccount_Call) Return(_a0 VydonApiAccount, _a1 error) *MockQuerier_GetAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccount, error)) *MockQuerier_GetAccount_Call {
+func (_c *MockQuerier_GetAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiAccount, error)) *MockQuerier_GetAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAccountApiKeyById provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetAccountApiKeyById(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiAccountApiKey, error) {
+func (_m *MockQuerier) GetAccountApiKeyById(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiAccountApiKey, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccountApiKeyById")
 	}
 
-	var r0 NeosyncApiAccountApiKey
+	var r0 VydonApiAccountApiKey
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccountApiKey, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiAccountApiKey, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiAccountApiKey); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiAccountApiKey); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountApiKey)
+		r0 = ret.Get(0).(VydonApiAccountApiKey)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -1364,33 +1364,33 @@ func (_c *MockQuerier_GetAccountApiKeyById_Call) Run(run func(ctx context.Contex
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountApiKeyById_Call) Return(_a0 NeosyncApiAccountApiKey, _a1 error) *MockQuerier_GetAccountApiKeyById_Call {
+func (_c *MockQuerier_GetAccountApiKeyById_Call) Return(_a0 VydonApiAccountApiKey, _a1 error) *MockQuerier_GetAccountApiKeyById_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountApiKeyById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccountApiKey, error)) *MockQuerier_GetAccountApiKeyById_Call {
+func (_c *MockQuerier_GetAccountApiKeyById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiAccountApiKey, error)) *MockQuerier_GetAccountApiKeyById_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAccountApiKeyByKeyValue provides a mock function with given fields: ctx, db, keyValue
-func (_m *MockQuerier) GetAccountApiKeyByKeyValue(ctx context.Context, db DBTX, keyValue string) (NeosyncApiAccountApiKey, error) {
+func (_m *MockQuerier) GetAccountApiKeyByKeyValue(ctx context.Context, db DBTX, keyValue string) (VydonApiAccountApiKey, error) {
 	ret := _m.Called(ctx, db, keyValue)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccountApiKeyByKeyValue")
 	}
 
-	var r0 NeosyncApiAccountApiKey
+	var r0 VydonApiAccountApiKey
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (NeosyncApiAccountApiKey, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (VydonApiAccountApiKey, error)); ok {
 		return rf(ctx, db, keyValue)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) NeosyncApiAccountApiKey); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) VydonApiAccountApiKey); ok {
 		r0 = rf(ctx, db, keyValue)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountApiKey)
+		r0 = ret.Get(0).(VydonApiAccountApiKey)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, string) error); ok {
@@ -1422,34 +1422,34 @@ func (_c *MockQuerier_GetAccountApiKeyByKeyValue_Call) Run(run func(ctx context.
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountApiKeyByKeyValue_Call) Return(_a0 NeosyncApiAccountApiKey, _a1 error) *MockQuerier_GetAccountApiKeyByKeyValue_Call {
+func (_c *MockQuerier_GetAccountApiKeyByKeyValue_Call) Return(_a0 VydonApiAccountApiKey, _a1 error) *MockQuerier_GetAccountApiKeyByKeyValue_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountApiKeyByKeyValue_Call) RunAndReturn(run func(context.Context, DBTX, string) (NeosyncApiAccountApiKey, error)) *MockQuerier_GetAccountApiKeyByKeyValue_Call {
+func (_c *MockQuerier_GetAccountApiKeyByKeyValue_Call) RunAndReturn(run func(context.Context, DBTX, string) (VydonApiAccountApiKey, error)) *MockQuerier_GetAccountApiKeyByKeyValue_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAccountApiKeys provides a mock function with given fields: ctx, db, accountid
-func (_m *MockQuerier) GetAccountApiKeys(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]NeosyncApiAccountApiKey, error) {
+func (_m *MockQuerier) GetAccountApiKeys(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]VydonApiAccountApiKey, error) {
 	ret := _m.Called(ctx, db, accountid)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccountApiKeys")
 	}
 
-	var r0 []NeosyncApiAccountApiKey
+	var r0 []VydonApiAccountApiKey
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccountApiKey, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccountApiKey, error)); ok {
 		return rf(ctx, db, accountid)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiAccountApiKey); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiAccountApiKey); ok {
 		r0 = rf(ctx, db, accountid)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiAccountApiKey)
+			r0 = ret.Get(0).([]VydonApiAccountApiKey)
 		}
 	}
 
@@ -1482,33 +1482,33 @@ func (_c *MockQuerier_GetAccountApiKeys_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountApiKeys_Call) Return(_a0 []NeosyncApiAccountApiKey, _a1 error) *MockQuerier_GetAccountApiKeys_Call {
+func (_c *MockQuerier_GetAccountApiKeys_Call) Return(_a0 []VydonApiAccountApiKey, _a1 error) *MockQuerier_GetAccountApiKeys_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountApiKeys_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccountApiKey, error)) *MockQuerier_GetAccountApiKeys_Call {
+func (_c *MockQuerier_GetAccountApiKeys_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccountApiKey, error)) *MockQuerier_GetAccountApiKeys_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAccountHookById provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetAccountHookById(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiAccountHook, error) {
+func (_m *MockQuerier) GetAccountHookById(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiAccountHook, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccountHookById")
 	}
 
-	var r0 NeosyncApiAccountHook
+	var r0 VydonApiAccountHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccountHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiAccountHook, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiAccountHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiAccountHook); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountHook)
+		r0 = ret.Get(0).(VydonApiAccountHook)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -1540,34 +1540,34 @@ func (_c *MockQuerier_GetAccountHookById_Call) Run(run func(ctx context.Context,
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountHookById_Call) Return(_a0 NeosyncApiAccountHook, _a1 error) *MockQuerier_GetAccountHookById_Call {
+func (_c *MockQuerier_GetAccountHookById_Call) Return(_a0 VydonApiAccountHook, _a1 error) *MockQuerier_GetAccountHookById_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountHookById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccountHook, error)) *MockQuerier_GetAccountHookById_Call {
+func (_c *MockQuerier_GetAccountHookById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiAccountHook, error)) *MockQuerier_GetAccountHookById_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAccountHooksByAccount provides a mock function with given fields: ctx, db, accountID
-func (_m *MockQuerier) GetAccountHooksByAccount(ctx context.Context, db DBTX, accountID pgtype.UUID) ([]NeosyncApiAccountHook, error) {
+func (_m *MockQuerier) GetAccountHooksByAccount(ctx context.Context, db DBTX, accountID pgtype.UUID) ([]VydonApiAccountHook, error) {
 	ret := _m.Called(ctx, db, accountID)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccountHooksByAccount")
 	}
 
-	var r0 []NeosyncApiAccountHook
+	var r0 []VydonApiAccountHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccountHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccountHook, error)); ok {
 		return rf(ctx, db, accountID)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiAccountHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiAccountHook); ok {
 		r0 = rf(ctx, db, accountID)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiAccountHook)
+			r0 = ret.Get(0).([]VydonApiAccountHook)
 		}
 	}
 
@@ -1600,12 +1600,12 @@ func (_c *MockQuerier_GetAccountHooksByAccount_Call) Run(run func(ctx context.Co
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountHooksByAccount_Call) Return(_a0 []NeosyncApiAccountHook, _a1 error) *MockQuerier_GetAccountHooksByAccount_Call {
+func (_c *MockQuerier_GetAccountHooksByAccount_Call) Return(_a0 []VydonApiAccountHook, _a1 error) *MockQuerier_GetAccountHooksByAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountHooksByAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccountHook, error)) *MockQuerier_GetAccountHooksByAccount_Call {
+func (_c *MockQuerier_GetAccountHooksByAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccountHook, error)) *MockQuerier_GetAccountHooksByAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -1728,22 +1728,22 @@ func (_c *MockQuerier_GetAccountIds_Call) RunAndReturn(run func(context.Context,
 }
 
 // GetAccountInvite provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetAccountInvite(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiAccountInvite, error) {
+func (_m *MockQuerier) GetAccountInvite(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiAccountInvite, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccountInvite")
 	}
 
-	var r0 NeosyncApiAccountInvite
+	var r0 VydonApiAccountInvite
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccountInvite, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiAccountInvite, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiAccountInvite); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiAccountInvite); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountInvite)
+		r0 = ret.Get(0).(VydonApiAccountInvite)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -1775,33 +1775,33 @@ func (_c *MockQuerier_GetAccountInvite_Call) Run(run func(ctx context.Context, d
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountInvite_Call) Return(_a0 NeosyncApiAccountInvite, _a1 error) *MockQuerier_GetAccountInvite_Call {
+func (_c *MockQuerier_GetAccountInvite_Call) Return(_a0 VydonApiAccountInvite, _a1 error) *MockQuerier_GetAccountInvite_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountInvite_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccountInvite, error)) *MockQuerier_GetAccountInvite_Call {
+func (_c *MockQuerier_GetAccountInvite_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiAccountInvite, error)) *MockQuerier_GetAccountInvite_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAccountInviteByToken provides a mock function with given fields: ctx, db, token
-func (_m *MockQuerier) GetAccountInviteByToken(ctx context.Context, db DBTX, token string) (NeosyncApiAccountInvite, error) {
+func (_m *MockQuerier) GetAccountInviteByToken(ctx context.Context, db DBTX, token string) (VydonApiAccountInvite, error) {
 	ret := _m.Called(ctx, db, token)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccountInviteByToken")
 	}
 
-	var r0 NeosyncApiAccountInvite
+	var r0 VydonApiAccountInvite
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (NeosyncApiAccountInvite, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (VydonApiAccountInvite, error)); ok {
 		return rf(ctx, db, token)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) NeosyncApiAccountInvite); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) VydonApiAccountInvite); ok {
 		r0 = rf(ctx, db, token)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountInvite)
+		r0 = ret.Get(0).(VydonApiAccountInvite)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, string) error); ok {
@@ -1833,12 +1833,12 @@ func (_c *MockQuerier_GetAccountInviteByToken_Call) Run(run func(ctx context.Con
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountInviteByToken_Call) Return(_a0 NeosyncApiAccountInvite, _a1 error) *MockQuerier_GetAccountInviteByToken_Call {
+func (_c *MockQuerier_GetAccountInviteByToken_Call) Return(_a0 VydonApiAccountInvite, _a1 error) *MockQuerier_GetAccountInviteByToken_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountInviteByToken_Call) RunAndReturn(run func(context.Context, DBTX, string) (NeosyncApiAccountInvite, error)) *MockQuerier_GetAccountInviteByToken_Call {
+func (_c *MockQuerier_GetAccountInviteByToken_Call) RunAndReturn(run func(context.Context, DBTX, string) (VydonApiAccountInvite, error)) *MockQuerier_GetAccountInviteByToken_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -1904,22 +1904,22 @@ func (_c *MockQuerier_GetAccountOnboardingConfig_Call) RunAndReturn(run func(con
 }
 
 // GetAccountUserAssociation provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) GetAccountUserAssociation(ctx context.Context, db DBTX, arg GetAccountUserAssociationParams) (NeosyncApiAccountUserAssociation, error) {
+func (_m *MockQuerier) GetAccountUserAssociation(ctx context.Context, db DBTX, arg GetAccountUserAssociationParams) (VydonApiAccountUserAssociation, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccountUserAssociation")
 	}
 
-	var r0 NeosyncApiAccountUserAssociation
+	var r0 VydonApiAccountUserAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetAccountUserAssociationParams) (NeosyncApiAccountUserAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetAccountUserAssociationParams) (VydonApiAccountUserAssociation, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetAccountUserAssociationParams) NeosyncApiAccountUserAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetAccountUserAssociationParams) VydonApiAccountUserAssociation); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountUserAssociation)
+		r0 = ret.Get(0).(VydonApiAccountUserAssociation)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, GetAccountUserAssociationParams) error); ok {
@@ -1951,12 +1951,12 @@ func (_c *MockQuerier_GetAccountUserAssociation_Call) Run(run func(ctx context.C
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountUserAssociation_Call) Return(_a0 NeosyncApiAccountUserAssociation, _a1 error) *MockQuerier_GetAccountUserAssociation_Call {
+func (_c *MockQuerier_GetAccountUserAssociation_Call) Return(_a0 VydonApiAccountUserAssociation, _a1 error) *MockQuerier_GetAccountUserAssociation_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountUserAssociation_Call) RunAndReturn(run func(context.Context, DBTX, GetAccountUserAssociationParams) (NeosyncApiAccountUserAssociation, error)) *MockQuerier_GetAccountUserAssociation_Call {
+func (_c *MockQuerier_GetAccountUserAssociation_Call) RunAndReturn(run func(context.Context, DBTX, GetAccountUserAssociationParams) (VydonApiAccountUserAssociation, error)) *MockQuerier_GetAccountUserAssociation_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -2022,23 +2022,23 @@ func (_c *MockQuerier_GetAccountUsers_Call) RunAndReturn(run func(context.Contex
 }
 
 // GetAccountsByUser provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetAccountsByUser(ctx context.Context, db DBTX, id pgtype.UUID) ([]NeosyncApiAccount, error) {
+func (_m *MockQuerier) GetAccountsByUser(ctx context.Context, db DBTX, id pgtype.UUID) ([]VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAccountsByUser")
 	}
 
-	var r0 []NeosyncApiAccount
+	var r0 []VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccount, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiAccount); ok {
 		r0 = rf(ctx, db, id)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiAccount)
+			r0 = ret.Get(0).([]VydonApiAccount)
 		}
 	}
 
@@ -2071,34 +2071,34 @@ func (_c *MockQuerier_GetAccountsByUser_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountsByUser_Call) Return(_a0 []NeosyncApiAccount, _a1 error) *MockQuerier_GetAccountsByUser_Call {
+func (_c *MockQuerier_GetAccountsByUser_Call) Return(_a0 []VydonApiAccount, _a1 error) *MockQuerier_GetAccountsByUser_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAccountsByUser_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccount, error)) *MockQuerier_GetAccountsByUser_Call {
+func (_c *MockQuerier_GetAccountsByUser_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccount, error)) *MockQuerier_GetAccountsByUser_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetActiveAccountHooksByEvent provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) GetActiveAccountHooksByEvent(ctx context.Context, db DBTX, arg GetActiveAccountHooksByEventParams) ([]NeosyncApiAccountHook, error) {
+func (_m *MockQuerier) GetActiveAccountHooksByEvent(ctx context.Context, db DBTX, arg GetActiveAccountHooksByEventParams) ([]VydonApiAccountHook, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetActiveAccountHooksByEvent")
 	}
 
-	var r0 []NeosyncApiAccountHook
+	var r0 []VydonApiAccountHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetActiveAccountHooksByEventParams) ([]NeosyncApiAccountHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetActiveAccountHooksByEventParams) ([]VydonApiAccountHook, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetActiveAccountHooksByEventParams) []NeosyncApiAccountHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetActiveAccountHooksByEventParams) []VydonApiAccountHook); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiAccountHook)
+			r0 = ret.Get(0).([]VydonApiAccountHook)
 		}
 	}
 
@@ -2131,34 +2131,34 @@ func (_c *MockQuerier_GetActiveAccountHooksByEvent_Call) Run(run func(ctx contex
 	return _c
 }
 
-func (_c *MockQuerier_GetActiveAccountHooksByEvent_Call) Return(_a0 []NeosyncApiAccountHook, _a1 error) *MockQuerier_GetActiveAccountHooksByEvent_Call {
+func (_c *MockQuerier_GetActiveAccountHooksByEvent_Call) Return(_a0 []VydonApiAccountHook, _a1 error) *MockQuerier_GetActiveAccountHooksByEvent_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetActiveAccountHooksByEvent_Call) RunAndReturn(run func(context.Context, DBTX, GetActiveAccountHooksByEventParams) ([]NeosyncApiAccountHook, error)) *MockQuerier_GetActiveAccountHooksByEvent_Call {
+func (_c *MockQuerier_GetActiveAccountHooksByEvent_Call) RunAndReturn(run func(context.Context, DBTX, GetActiveAccountHooksByEventParams) ([]VydonApiAccountHook, error)) *MockQuerier_GetActiveAccountHooksByEvent_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetActiveAccountInvites provides a mock function with given fields: ctx, db, accountid
-func (_m *MockQuerier) GetActiveAccountInvites(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]NeosyncApiAccountInvite, error) {
+func (_m *MockQuerier) GetActiveAccountInvites(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]VydonApiAccountInvite, error) {
 	ret := _m.Called(ctx, db, accountid)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetActiveAccountInvites")
 	}
 
-	var r0 []NeosyncApiAccountInvite
+	var r0 []VydonApiAccountInvite
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccountInvite, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccountInvite, error)); ok {
 		return rf(ctx, db, accountid)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiAccountInvite); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiAccountInvite); ok {
 		r0 = rf(ctx, db, accountid)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiAccountInvite)
+			r0 = ret.Get(0).([]VydonApiAccountInvite)
 		}
 	}
 
@@ -2191,34 +2191,34 @@ func (_c *MockQuerier_GetActiveAccountInvites_Call) Run(run func(ctx context.Con
 	return _c
 }
 
-func (_c *MockQuerier_GetActiveAccountInvites_Call) Return(_a0 []NeosyncApiAccountInvite, _a1 error) *MockQuerier_GetActiveAccountInvites_Call {
+func (_c *MockQuerier_GetActiveAccountInvites_Call) Return(_a0 []VydonApiAccountInvite, _a1 error) *MockQuerier_GetActiveAccountInvites_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetActiveAccountInvites_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccountInvite, error)) *MockQuerier_GetActiveAccountInvites_Call {
+func (_c *MockQuerier_GetActiveAccountInvites_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccountInvite, error)) *MockQuerier_GetActiveAccountInvites_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetActiveJobHooks provides a mock function with given fields: ctx, db, jobID
-func (_m *MockQuerier) GetActiveJobHooks(ctx context.Context, db DBTX, jobID pgtype.UUID) ([]NeosyncApiJobHook, error) {
+func (_m *MockQuerier) GetActiveJobHooks(ctx context.Context, db DBTX, jobID pgtype.UUID) ([]VydonApiJobHook, error) {
 	ret := _m.Called(ctx, db, jobID)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetActiveJobHooks")
 	}
 
-	var r0 []NeosyncApiJobHook
+	var r0 []VydonApiJobHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobHook, error)); ok {
 		return rf(ctx, db, jobID)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiJobHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiJobHook); ok {
 		r0 = rf(ctx, db, jobID)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiJobHook)
+			r0 = ret.Get(0).([]VydonApiJobHook)
 		}
 	}
 
@@ -2251,34 +2251,34 @@ func (_c *MockQuerier_GetActiveJobHooks_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_GetActiveJobHooks_Call) Return(_a0 []NeosyncApiJobHook, _a1 error) *MockQuerier_GetActiveJobHooks_Call {
+func (_c *MockQuerier_GetActiveJobHooks_Call) Return(_a0 []VydonApiJobHook, _a1 error) *MockQuerier_GetActiveJobHooks_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetActiveJobHooks_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobHook, error)) *MockQuerier_GetActiveJobHooks_Call {
+func (_c *MockQuerier_GetActiveJobHooks_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobHook, error)) *MockQuerier_GetActiveJobHooks_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetActivePostSyncJobHooks provides a mock function with given fields: ctx, db, jobID
-func (_m *MockQuerier) GetActivePostSyncJobHooks(ctx context.Context, db DBTX, jobID pgtype.UUID) ([]NeosyncApiJobHook, error) {
+func (_m *MockQuerier) GetActivePostSyncJobHooks(ctx context.Context, db DBTX, jobID pgtype.UUID) ([]VydonApiJobHook, error) {
 	ret := _m.Called(ctx, db, jobID)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetActivePostSyncJobHooks")
 	}
 
-	var r0 []NeosyncApiJobHook
+	var r0 []VydonApiJobHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobHook, error)); ok {
 		return rf(ctx, db, jobID)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiJobHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiJobHook); ok {
 		r0 = rf(ctx, db, jobID)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiJobHook)
+			r0 = ret.Get(0).([]VydonApiJobHook)
 		}
 	}
 
@@ -2311,34 +2311,34 @@ func (_c *MockQuerier_GetActivePostSyncJobHooks_Call) Run(run func(ctx context.C
 	return _c
 }
 
-func (_c *MockQuerier_GetActivePostSyncJobHooks_Call) Return(_a0 []NeosyncApiJobHook, _a1 error) *MockQuerier_GetActivePostSyncJobHooks_Call {
+func (_c *MockQuerier_GetActivePostSyncJobHooks_Call) Return(_a0 []VydonApiJobHook, _a1 error) *MockQuerier_GetActivePostSyncJobHooks_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetActivePostSyncJobHooks_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobHook, error)) *MockQuerier_GetActivePostSyncJobHooks_Call {
+func (_c *MockQuerier_GetActivePostSyncJobHooks_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobHook, error)) *MockQuerier_GetActivePostSyncJobHooks_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetActivePreSyncJobHooks provides a mock function with given fields: ctx, db, jobID
-func (_m *MockQuerier) GetActivePreSyncJobHooks(ctx context.Context, db DBTX, jobID pgtype.UUID) ([]NeosyncApiJobHook, error) {
+func (_m *MockQuerier) GetActivePreSyncJobHooks(ctx context.Context, db DBTX, jobID pgtype.UUID) ([]VydonApiJobHook, error) {
 	ret := _m.Called(ctx, db, jobID)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetActivePreSyncJobHooks")
 	}
 
-	var r0 []NeosyncApiJobHook
+	var r0 []VydonApiJobHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobHook, error)); ok {
 		return rf(ctx, db, jobID)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiJobHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiJobHook); ok {
 		r0 = rf(ctx, db, jobID)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiJobHook)
+			r0 = ret.Get(0).([]VydonApiJobHook)
 		}
 	}
 
@@ -2371,33 +2371,33 @@ func (_c *MockQuerier_GetActivePreSyncJobHooks_Call) Run(run func(ctx context.Co
 	return _c
 }
 
-func (_c *MockQuerier_GetActivePreSyncJobHooks_Call) Return(_a0 []NeosyncApiJobHook, _a1 error) *MockQuerier_GetActivePreSyncJobHooks_Call {
+func (_c *MockQuerier_GetActivePreSyncJobHooks_Call) Return(_a0 []VydonApiJobHook, _a1 error) *MockQuerier_GetActivePreSyncJobHooks_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetActivePreSyncJobHooks_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobHook, error)) *MockQuerier_GetActivePreSyncJobHooks_Call {
+func (_c *MockQuerier_GetActivePreSyncJobHooks_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobHook, error)) *MockQuerier_GetActivePreSyncJobHooks_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetAnonymousUser provides a mock function with given fields: ctx, db
-func (_m *MockQuerier) GetAnonymousUser(ctx context.Context, db DBTX) (NeosyncApiUser, error) {
+func (_m *MockQuerier) GetAnonymousUser(ctx context.Context, db DBTX) (VydonApiUser, error) {
 	ret := _m.Called(ctx, db)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetAnonymousUser")
 	}
 
-	var r0 NeosyncApiUser
+	var r0 VydonApiUser
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX) (NeosyncApiUser, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX) (VydonApiUser, error)); ok {
 		return rf(ctx, db)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX) NeosyncApiUser); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX) VydonApiUser); ok {
 		r0 = rf(ctx, db)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiUser)
+		r0 = ret.Get(0).(VydonApiUser)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX) error); ok {
@@ -2428,34 +2428,34 @@ func (_c *MockQuerier_GetAnonymousUser_Call) Run(run func(ctx context.Context, d
 	return _c
 }
 
-func (_c *MockQuerier_GetAnonymousUser_Call) Return(_a0 NeosyncApiUser, _a1 error) *MockQuerier_GetAnonymousUser_Call {
+func (_c *MockQuerier_GetAnonymousUser_Call) Return(_a0 VydonApiUser, _a1 error) *MockQuerier_GetAnonymousUser_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetAnonymousUser_Call) RunAndReturn(run func(context.Context, DBTX) (NeosyncApiUser, error)) *MockQuerier_GetAnonymousUser_Call {
+func (_c *MockQuerier_GetAnonymousUser_Call) RunAndReturn(run func(context.Context, DBTX) (VydonApiUser, error)) *MockQuerier_GetAnonymousUser_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetBilledAccounts provides a mock function with given fields: ctx, db, accountids
-func (_m *MockQuerier) GetBilledAccounts(ctx context.Context, db DBTX, accountids []pgtype.UUID) ([]NeosyncApiAccount, error) {
+func (_m *MockQuerier) GetBilledAccounts(ctx context.Context, db DBTX, accountids []pgtype.UUID) ([]VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, accountids)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetBilledAccounts")
 	}
 
-	var r0 []NeosyncApiAccount
+	var r0 []VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) ([]NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) ([]VydonApiAccount, error)); ok {
 		return rf(ctx, db, accountids)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) []NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) []VydonApiAccount); ok {
 		r0 = rf(ctx, db, accountids)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiAccount)
+			r0 = ret.Get(0).([]VydonApiAccount)
 		}
 	}
 
@@ -2488,33 +2488,33 @@ func (_c *MockQuerier_GetBilledAccounts_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_GetBilledAccounts_Call) Return(_a0 []NeosyncApiAccount, _a1 error) *MockQuerier_GetBilledAccounts_Call {
+func (_c *MockQuerier_GetBilledAccounts_Call) Return(_a0 []VydonApiAccount, _a1 error) *MockQuerier_GetBilledAccounts_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetBilledAccounts_Call) RunAndReturn(run func(context.Context, DBTX, []pgtype.UUID) ([]NeosyncApiAccount, error)) *MockQuerier_GetBilledAccounts_Call {
+func (_c *MockQuerier_GetBilledAccounts_Call) RunAndReturn(run func(context.Context, DBTX, []pgtype.UUID) ([]VydonApiAccount, error)) *MockQuerier_GetBilledAccounts_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetConnectionById provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetConnectionById(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiConnection, error) {
+func (_m *MockQuerier) GetConnectionById(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiConnection, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetConnectionById")
 	}
 
-	var r0 NeosyncApiConnection
+	var r0 VydonApiConnection
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiConnection, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiConnection, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiConnection); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiConnection); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiConnection)
+		r0 = ret.Get(0).(VydonApiConnection)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -2546,33 +2546,33 @@ func (_c *MockQuerier_GetConnectionById_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_GetConnectionById_Call) Return(_a0 NeosyncApiConnection, _a1 error) *MockQuerier_GetConnectionById_Call {
+func (_c *MockQuerier_GetConnectionById_Call) Return(_a0 VydonApiConnection, _a1 error) *MockQuerier_GetConnectionById_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetConnectionById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiConnection, error)) *MockQuerier_GetConnectionById_Call {
+func (_c *MockQuerier_GetConnectionById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiConnection, error)) *MockQuerier_GetConnectionById_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetConnectionByNameAndAccount provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) GetConnectionByNameAndAccount(ctx context.Context, db DBTX, arg GetConnectionByNameAndAccountParams) (NeosyncApiConnection, error) {
+func (_m *MockQuerier) GetConnectionByNameAndAccount(ctx context.Context, db DBTX, arg GetConnectionByNameAndAccountParams) (VydonApiConnection, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetConnectionByNameAndAccount")
 	}
 
-	var r0 NeosyncApiConnection
+	var r0 VydonApiConnection
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetConnectionByNameAndAccountParams) (NeosyncApiConnection, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetConnectionByNameAndAccountParams) (VydonApiConnection, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetConnectionByNameAndAccountParams) NeosyncApiConnection); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetConnectionByNameAndAccountParams) VydonApiConnection); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiConnection)
+		r0 = ret.Get(0).(VydonApiConnection)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, GetConnectionByNameAndAccountParams) error); ok {
@@ -2604,34 +2604,34 @@ func (_c *MockQuerier_GetConnectionByNameAndAccount_Call) Run(run func(ctx conte
 	return _c
 }
 
-func (_c *MockQuerier_GetConnectionByNameAndAccount_Call) Return(_a0 NeosyncApiConnection, _a1 error) *MockQuerier_GetConnectionByNameAndAccount_Call {
+func (_c *MockQuerier_GetConnectionByNameAndAccount_Call) Return(_a0 VydonApiConnection, _a1 error) *MockQuerier_GetConnectionByNameAndAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetConnectionByNameAndAccount_Call) RunAndReturn(run func(context.Context, DBTX, GetConnectionByNameAndAccountParams) (NeosyncApiConnection, error)) *MockQuerier_GetConnectionByNameAndAccount_Call {
+func (_c *MockQuerier_GetConnectionByNameAndAccount_Call) RunAndReturn(run func(context.Context, DBTX, GetConnectionByNameAndAccountParams) (VydonApiConnection, error)) *MockQuerier_GetConnectionByNameAndAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetConnectionsByAccount provides a mock function with given fields: ctx, db, accountid
-func (_m *MockQuerier) GetConnectionsByAccount(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]NeosyncApiConnection, error) {
+func (_m *MockQuerier) GetConnectionsByAccount(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]VydonApiConnection, error) {
 	ret := _m.Called(ctx, db, accountid)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetConnectionsByAccount")
 	}
 
-	var r0 []NeosyncApiConnection
+	var r0 []VydonApiConnection
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiConnection, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiConnection, error)); ok {
 		return rf(ctx, db, accountid)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiConnection); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiConnection); ok {
 		r0 = rf(ctx, db, accountid)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiConnection)
+			r0 = ret.Get(0).([]VydonApiConnection)
 		}
 	}
 
@@ -2664,34 +2664,34 @@ func (_c *MockQuerier_GetConnectionsByAccount_Call) Run(run func(ctx context.Con
 	return _c
 }
 
-func (_c *MockQuerier_GetConnectionsByAccount_Call) Return(_a0 []NeosyncApiConnection, _a1 error) *MockQuerier_GetConnectionsByAccount_Call {
+func (_c *MockQuerier_GetConnectionsByAccount_Call) Return(_a0 []VydonApiConnection, _a1 error) *MockQuerier_GetConnectionsByAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetConnectionsByAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiConnection, error)) *MockQuerier_GetConnectionsByAccount_Call {
+func (_c *MockQuerier_GetConnectionsByAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiConnection, error)) *MockQuerier_GetConnectionsByAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetConnectionsByIds provides a mock function with given fields: ctx, db, dollar_1
-func (_m *MockQuerier) GetConnectionsByIds(ctx context.Context, db DBTX, dollar_1 []pgtype.UUID) ([]NeosyncApiConnection, error) {
+func (_m *MockQuerier) GetConnectionsByIds(ctx context.Context, db DBTX, dollar_1 []pgtype.UUID) ([]VydonApiConnection, error) {
 	ret := _m.Called(ctx, db, dollar_1)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetConnectionsByIds")
 	}
 
-	var r0 []NeosyncApiConnection
+	var r0 []VydonApiConnection
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) ([]NeosyncApiConnection, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) ([]VydonApiConnection, error)); ok {
 		return rf(ctx, db, dollar_1)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) []NeosyncApiConnection); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) []VydonApiConnection); ok {
 		r0 = rf(ctx, db, dollar_1)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiConnection)
+			r0 = ret.Get(0).([]VydonApiConnection)
 		}
 	}
 
@@ -2724,33 +2724,33 @@ func (_c *MockQuerier_GetConnectionsByIds_Call) Run(run func(ctx context.Context
 	return _c
 }
 
-func (_c *MockQuerier_GetConnectionsByIds_Call) Return(_a0 []NeosyncApiConnection, _a1 error) *MockQuerier_GetConnectionsByIds_Call {
+func (_c *MockQuerier_GetConnectionsByIds_Call) Return(_a0 []VydonApiConnection, _a1 error) *MockQuerier_GetConnectionsByIds_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetConnectionsByIds_Call) RunAndReturn(run func(context.Context, DBTX, []pgtype.UUID) ([]NeosyncApiConnection, error)) *MockQuerier_GetConnectionsByIds_Call {
+func (_c *MockQuerier_GetConnectionsByIds_Call) RunAndReturn(run func(context.Context, DBTX, []pgtype.UUID) ([]VydonApiConnection, error)) *MockQuerier_GetConnectionsByIds_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetJobById provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetJobById(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiJob, error) {
+func (_m *MockQuerier) GetJobById(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetJobById")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiJob, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiJob); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -2782,33 +2782,33 @@ func (_c *MockQuerier_GetJobById_Call) Run(run func(ctx context.Context, db DBTX
 	return _c
 }
 
-func (_c *MockQuerier_GetJobById_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_GetJobById_Call {
+func (_c *MockQuerier_GetJobById_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_GetJobById_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetJobById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiJob, error)) *MockQuerier_GetJobById_Call {
+func (_c *MockQuerier_GetJobById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiJob, error)) *MockQuerier_GetJobById_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetJobByNameAndAccount provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) GetJobByNameAndAccount(ctx context.Context, db DBTX, arg GetJobByNameAndAccountParams) (NeosyncApiJob, error) {
+func (_m *MockQuerier) GetJobByNameAndAccount(ctx context.Context, db DBTX, arg GetJobByNameAndAccountParams) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetJobByNameAndAccount")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetJobByNameAndAccountParams) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetJobByNameAndAccountParams) (VydonApiJob, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetJobByNameAndAccountParams) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetJobByNameAndAccountParams) VydonApiJob); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, GetJobByNameAndAccountParams) error); ok {
@@ -2840,33 +2840,33 @@ func (_c *MockQuerier_GetJobByNameAndAccount_Call) Run(run func(ctx context.Cont
 	return _c
 }
 
-func (_c *MockQuerier_GetJobByNameAndAccount_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_GetJobByNameAndAccount_Call {
+func (_c *MockQuerier_GetJobByNameAndAccount_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_GetJobByNameAndAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetJobByNameAndAccount_Call) RunAndReturn(run func(context.Context, DBTX, GetJobByNameAndAccountParams) (NeosyncApiJob, error)) *MockQuerier_GetJobByNameAndAccount_Call {
+func (_c *MockQuerier_GetJobByNameAndAccount_Call) RunAndReturn(run func(context.Context, DBTX, GetJobByNameAndAccountParams) (VydonApiJob, error)) *MockQuerier_GetJobByNameAndAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetJobConnectionDestination provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetJobConnectionDestination(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiJobDestinationConnectionAssociation, error) {
+func (_m *MockQuerier) GetJobConnectionDestination(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiJobDestinationConnectionAssociation, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetJobConnectionDestination")
 	}
 
-	var r0 NeosyncApiJobDestinationConnectionAssociation
+	var r0 VydonApiJobDestinationConnectionAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiJobDestinationConnectionAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiJobDestinationConnectionAssociation, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiJobDestinationConnectionAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiJobDestinationConnectionAssociation); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJobDestinationConnectionAssociation)
+		r0 = ret.Get(0).(VydonApiJobDestinationConnectionAssociation)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -2898,34 +2898,34 @@ func (_c *MockQuerier_GetJobConnectionDestination_Call) Run(run func(ctx context
 	return _c
 }
 
-func (_c *MockQuerier_GetJobConnectionDestination_Call) Return(_a0 NeosyncApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_GetJobConnectionDestination_Call {
+func (_c *MockQuerier_GetJobConnectionDestination_Call) Return(_a0 VydonApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_GetJobConnectionDestination_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetJobConnectionDestination_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiJobDestinationConnectionAssociation, error)) *MockQuerier_GetJobConnectionDestination_Call {
+func (_c *MockQuerier_GetJobConnectionDestination_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiJobDestinationConnectionAssociation, error)) *MockQuerier_GetJobConnectionDestination_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetJobConnectionDestinations provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetJobConnectionDestinations(ctx context.Context, db DBTX, id pgtype.UUID) ([]NeosyncApiJobDestinationConnectionAssociation, error) {
+func (_m *MockQuerier) GetJobConnectionDestinations(ctx context.Context, db DBTX, id pgtype.UUID) ([]VydonApiJobDestinationConnectionAssociation, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetJobConnectionDestinations")
 	}
 
-	var r0 []NeosyncApiJobDestinationConnectionAssociation
+	var r0 []VydonApiJobDestinationConnectionAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobDestinationConnectionAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobDestinationConnectionAssociation, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiJobDestinationConnectionAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiJobDestinationConnectionAssociation); ok {
 		r0 = rf(ctx, db, id)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiJobDestinationConnectionAssociation)
+			r0 = ret.Get(0).([]VydonApiJobDestinationConnectionAssociation)
 		}
 	}
 
@@ -2958,34 +2958,34 @@ func (_c *MockQuerier_GetJobConnectionDestinations_Call) Run(run func(ctx contex
 	return _c
 }
 
-func (_c *MockQuerier_GetJobConnectionDestinations_Call) Return(_a0 []NeosyncApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_GetJobConnectionDestinations_Call {
+func (_c *MockQuerier_GetJobConnectionDestinations_Call) Return(_a0 []VydonApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_GetJobConnectionDestinations_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetJobConnectionDestinations_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobDestinationConnectionAssociation, error)) *MockQuerier_GetJobConnectionDestinations_Call {
+func (_c *MockQuerier_GetJobConnectionDestinations_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobDestinationConnectionAssociation, error)) *MockQuerier_GetJobConnectionDestinations_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetJobConnectionDestinationsByJobIds provides a mock function with given fields: ctx, db, jobids
-func (_m *MockQuerier) GetJobConnectionDestinationsByJobIds(ctx context.Context, db DBTX, jobids []pgtype.UUID) ([]NeosyncApiJobDestinationConnectionAssociation, error) {
+func (_m *MockQuerier) GetJobConnectionDestinationsByJobIds(ctx context.Context, db DBTX, jobids []pgtype.UUID) ([]VydonApiJobDestinationConnectionAssociation, error) {
 	ret := _m.Called(ctx, db, jobids)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetJobConnectionDestinationsByJobIds")
 	}
 
-	var r0 []NeosyncApiJobDestinationConnectionAssociation
+	var r0 []VydonApiJobDestinationConnectionAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) ([]NeosyncApiJobDestinationConnectionAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) ([]VydonApiJobDestinationConnectionAssociation, error)); ok {
 		return rf(ctx, db, jobids)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) []NeosyncApiJobDestinationConnectionAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) []VydonApiJobDestinationConnectionAssociation); ok {
 		r0 = rf(ctx, db, jobids)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiJobDestinationConnectionAssociation)
+			r0 = ret.Get(0).([]VydonApiJobDestinationConnectionAssociation)
 		}
 	}
 
@@ -3018,33 +3018,33 @@ func (_c *MockQuerier_GetJobConnectionDestinationsByJobIds_Call) Run(run func(ct
 	return _c
 }
 
-func (_c *MockQuerier_GetJobConnectionDestinationsByJobIds_Call) Return(_a0 []NeosyncApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_GetJobConnectionDestinationsByJobIds_Call {
+func (_c *MockQuerier_GetJobConnectionDestinationsByJobIds_Call) Return(_a0 []VydonApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_GetJobConnectionDestinationsByJobIds_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetJobConnectionDestinationsByJobIds_Call) RunAndReturn(run func(context.Context, DBTX, []pgtype.UUID) ([]NeosyncApiJobDestinationConnectionAssociation, error)) *MockQuerier_GetJobConnectionDestinationsByJobIds_Call {
+func (_c *MockQuerier_GetJobConnectionDestinationsByJobIds_Call) RunAndReturn(run func(context.Context, DBTX, []pgtype.UUID) ([]VydonApiJobDestinationConnectionAssociation, error)) *MockQuerier_GetJobConnectionDestinationsByJobIds_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetJobHookById provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetJobHookById(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiJobHook, error) {
+func (_m *MockQuerier) GetJobHookById(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiJobHook, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetJobHookById")
 	}
 
-	var r0 NeosyncApiJobHook
+	var r0 VydonApiJobHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiJobHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiJobHook, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiJobHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiJobHook); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJobHook)
+		r0 = ret.Get(0).(VydonApiJobHook)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -3076,34 +3076,34 @@ func (_c *MockQuerier_GetJobHookById_Call) Run(run func(ctx context.Context, db 
 	return _c
 }
 
-func (_c *MockQuerier_GetJobHookById_Call) Return(_a0 NeosyncApiJobHook, _a1 error) *MockQuerier_GetJobHookById_Call {
+func (_c *MockQuerier_GetJobHookById_Call) Return(_a0 VydonApiJobHook, _a1 error) *MockQuerier_GetJobHookById_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetJobHookById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiJobHook, error)) *MockQuerier_GetJobHookById_Call {
+func (_c *MockQuerier_GetJobHookById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiJobHook, error)) *MockQuerier_GetJobHookById_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetJobHooksByJob provides a mock function with given fields: ctx, db, jobID
-func (_m *MockQuerier) GetJobHooksByJob(ctx context.Context, db DBTX, jobID pgtype.UUID) ([]NeosyncApiJobHook, error) {
+func (_m *MockQuerier) GetJobHooksByJob(ctx context.Context, db DBTX, jobID pgtype.UUID) ([]VydonApiJobHook, error) {
 	ret := _m.Called(ctx, db, jobID)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetJobHooksByJob")
 	}
 
-	var r0 []NeosyncApiJobHook
+	var r0 []VydonApiJobHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobHook, error)); ok {
 		return rf(ctx, db, jobID)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiJobHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiJobHook); ok {
 		r0 = rf(ctx, db, jobID)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiJobHook)
+			r0 = ret.Get(0).([]VydonApiJobHook)
 		}
 	}
 
@@ -3136,34 +3136,34 @@ func (_c *MockQuerier_GetJobHooksByJob_Call) Run(run func(ctx context.Context, d
 	return _c
 }
 
-func (_c *MockQuerier_GetJobHooksByJob_Call) Return(_a0 []NeosyncApiJobHook, _a1 error) *MockQuerier_GetJobHooksByJob_Call {
+func (_c *MockQuerier_GetJobHooksByJob_Call) Return(_a0 []VydonApiJobHook, _a1 error) *MockQuerier_GetJobHooksByJob_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetJobHooksByJob_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJobHook, error)) *MockQuerier_GetJobHooksByJob_Call {
+func (_c *MockQuerier_GetJobHooksByJob_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJobHook, error)) *MockQuerier_GetJobHooksByJob_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetJobsByAccount provides a mock function with given fields: ctx, db, accountid
-func (_m *MockQuerier) GetJobsByAccount(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]NeosyncApiJob, error) {
+func (_m *MockQuerier) GetJobsByAccount(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]VydonApiJob, error) {
 	ret := _m.Called(ctx, db, accountid)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetJobsByAccount")
 	}
 
-	var r0 []NeosyncApiJob
+	var r0 []VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJob, error)); ok {
 		return rf(ctx, db, accountid)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiJob); ok {
 		r0 = rf(ctx, db, accountid)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiJob)
+			r0 = ret.Get(0).([]VydonApiJob)
 		}
 	}
 
@@ -3196,33 +3196,33 @@ func (_c *MockQuerier_GetJobsByAccount_Call) Run(run func(ctx context.Context, d
 	return _c
 }
 
-func (_c *MockQuerier_GetJobsByAccount_Call) Return(_a0 []NeosyncApiJob, _a1 error) *MockQuerier_GetJobsByAccount_Call {
+func (_c *MockQuerier_GetJobsByAccount_Call) Return(_a0 []VydonApiJob, _a1 error) *MockQuerier_GetJobsByAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetJobsByAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiJob, error)) *MockQuerier_GetJobsByAccount_Call {
+func (_c *MockQuerier_GetJobsByAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiJob, error)) *MockQuerier_GetJobsByAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetPersonalAccountByUserId provides a mock function with given fields: ctx, db, userid
-func (_m *MockQuerier) GetPersonalAccountByUserId(ctx context.Context, db DBTX, userid pgtype.UUID) (NeosyncApiAccount, error) {
+func (_m *MockQuerier) GetPersonalAccountByUserId(ctx context.Context, db DBTX, userid pgtype.UUID) (VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, userid)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetPersonalAccountByUserId")
 	}
 
-	var r0 NeosyncApiAccount
+	var r0 VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiAccount, error)); ok {
 		return rf(ctx, db, userid)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiAccount); ok {
 		r0 = rf(ctx, db, userid)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccount)
+		r0 = ret.Get(0).(VydonApiAccount)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -3254,33 +3254,33 @@ func (_c *MockQuerier_GetPersonalAccountByUserId_Call) Run(run func(ctx context.
 	return _c
 }
 
-func (_c *MockQuerier_GetPersonalAccountByUserId_Call) Return(_a0 NeosyncApiAccount, _a1 error) *MockQuerier_GetPersonalAccountByUserId_Call {
+func (_c *MockQuerier_GetPersonalAccountByUserId_Call) Return(_a0 VydonApiAccount, _a1 error) *MockQuerier_GetPersonalAccountByUserId_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetPersonalAccountByUserId_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccount, error)) *MockQuerier_GetPersonalAccountByUserId_Call {
+func (_c *MockQuerier_GetPersonalAccountByUserId_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiAccount, error)) *MockQuerier_GetPersonalAccountByUserId_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetRunContextByKey provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) GetRunContextByKey(ctx context.Context, db DBTX, arg GetRunContextByKeyParams) (NeosyncApiRuncontext, error) {
+func (_m *MockQuerier) GetRunContextByKey(ctx context.Context, db DBTX, arg GetRunContextByKeyParams) (VydonApiRuncontext, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetRunContextByKey")
 	}
 
-	var r0 NeosyncApiRuncontext
+	var r0 VydonApiRuncontext
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetRunContextByKeyParams) (NeosyncApiRuncontext, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetRunContextByKeyParams) (VydonApiRuncontext, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetRunContextByKeyParams) NeosyncApiRuncontext); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetRunContextByKeyParams) VydonApiRuncontext); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiRuncontext)
+		r0 = ret.Get(0).(VydonApiRuncontext)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, GetRunContextByKeyParams) error); ok {
@@ -3312,34 +3312,34 @@ func (_c *MockQuerier_GetRunContextByKey_Call) Run(run func(ctx context.Context,
 	return _c
 }
 
-func (_c *MockQuerier_GetRunContextByKey_Call) Return(_a0 NeosyncApiRuncontext, _a1 error) *MockQuerier_GetRunContextByKey_Call {
+func (_c *MockQuerier_GetRunContextByKey_Call) Return(_a0 VydonApiRuncontext, _a1 error) *MockQuerier_GetRunContextByKey_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetRunContextByKey_Call) RunAndReturn(run func(context.Context, DBTX, GetRunContextByKeyParams) (NeosyncApiRuncontext, error)) *MockQuerier_GetRunContextByKey_Call {
+func (_c *MockQuerier_GetRunContextByKey_Call) RunAndReturn(run func(context.Context, DBTX, GetRunContextByKeyParams) (VydonApiRuncontext, error)) *MockQuerier_GetRunContextByKey_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetRunContextsByExternalIdSuffix provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) GetRunContextsByExternalIdSuffix(ctx context.Context, db DBTX, arg GetRunContextsByExternalIdSuffixParams) ([]NeosyncApiRuncontext, error) {
+func (_m *MockQuerier) GetRunContextsByExternalIdSuffix(ctx context.Context, db DBTX, arg GetRunContextsByExternalIdSuffixParams) ([]VydonApiRuncontext, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetRunContextsByExternalIdSuffix")
 	}
 
-	var r0 []NeosyncApiRuncontext
+	var r0 []VydonApiRuncontext
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetRunContextsByExternalIdSuffixParams) ([]NeosyncApiRuncontext, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetRunContextsByExternalIdSuffixParams) ([]VydonApiRuncontext, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetRunContextsByExternalIdSuffixParams) []NeosyncApiRuncontext); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, GetRunContextsByExternalIdSuffixParams) []VydonApiRuncontext); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiRuncontext)
+			r0 = ret.Get(0).([]VydonApiRuncontext)
 		}
 	}
 
@@ -3372,12 +3372,12 @@ func (_c *MockQuerier_GetRunContextsByExternalIdSuffix_Call) Run(run func(ctx co
 	return _c
 }
 
-func (_c *MockQuerier_GetRunContextsByExternalIdSuffix_Call) Return(_a0 []NeosyncApiRuncontext, _a1 error) *MockQuerier_GetRunContextsByExternalIdSuffix_Call {
+func (_c *MockQuerier_GetRunContextsByExternalIdSuffix_Call) Return(_a0 []VydonApiRuncontext, _a1 error) *MockQuerier_GetRunContextsByExternalIdSuffix_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetRunContextsByExternalIdSuffix_Call) RunAndReturn(run func(context.Context, DBTX, GetRunContextsByExternalIdSuffixParams) ([]NeosyncApiRuncontext, error)) *MockQuerier_GetRunContextsByExternalIdSuffix_Call {
+func (_c *MockQuerier_GetRunContextsByExternalIdSuffix_Call) RunAndReturn(run func(context.Context, DBTX, GetRunContextsByExternalIdSuffixParams) ([]VydonApiRuncontext, error)) *MockQuerier_GetRunContextsByExternalIdSuffix_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -3441,23 +3441,23 @@ func (_c *MockQuerier_GetSlackAccessToken_Call) RunAndReturn(run func(context.Co
 }
 
 // GetTeamAccountsByUserId provides a mock function with given fields: ctx, db, userid
-func (_m *MockQuerier) GetTeamAccountsByUserId(ctx context.Context, db DBTX, userid pgtype.UUID) ([]NeosyncApiAccount, error) {
+func (_m *MockQuerier) GetTeamAccountsByUserId(ctx context.Context, db DBTX, userid pgtype.UUID) ([]VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, userid)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetTeamAccountsByUserId")
 	}
 
-	var r0 []NeosyncApiAccount
+	var r0 []VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccount, error)); ok {
 		return rf(ctx, db, userid)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiAccount); ok {
 		r0 = rf(ctx, db, userid)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiAccount)
+			r0 = ret.Get(0).([]VydonApiAccount)
 		}
 	}
 
@@ -3490,12 +3490,12 @@ func (_c *MockQuerier_GetTeamAccountsByUserId_Call) Run(run func(ctx context.Con
 	return _c
 }
 
-func (_c *MockQuerier_GetTeamAccountsByUserId_Call) Return(_a0 []NeosyncApiAccount, _a1 error) *MockQuerier_GetTeamAccountsByUserId_Call {
+func (_c *MockQuerier_GetTeamAccountsByUserId_Call) Return(_a0 []VydonApiAccount, _a1 error) *MockQuerier_GetTeamAccountsByUserId_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetTeamAccountsByUserId_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiAccount, error)) *MockQuerier_GetTeamAccountsByUserId_Call {
+func (_c *MockQuerier_GetTeamAccountsByUserId_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiAccount, error)) *MockQuerier_GetTeamAccountsByUserId_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -3621,22 +3621,22 @@ func (_c *MockQuerier_GetTemporalConfigByUserAccount_Call) RunAndReturn(run func
 }
 
 // GetUser provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetUser(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiUser, error) {
+func (_m *MockQuerier) GetUser(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiUser, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetUser")
 	}
 
-	var r0 NeosyncApiUser
+	var r0 VydonApiUser
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiUser, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiUser, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiUser); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiUser); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiUser)
+		r0 = ret.Get(0).(VydonApiUser)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -3668,33 +3668,33 @@ func (_c *MockQuerier_GetUser_Call) Run(run func(ctx context.Context, db DBTX, i
 	return _c
 }
 
-func (_c *MockQuerier_GetUser_Call) Return(_a0 NeosyncApiUser, _a1 error) *MockQuerier_GetUser_Call {
+func (_c *MockQuerier_GetUser_Call) Return(_a0 VydonApiUser, _a1 error) *MockQuerier_GetUser_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetUser_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiUser, error)) *MockQuerier_GetUser_Call {
+func (_c *MockQuerier_GetUser_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiUser, error)) *MockQuerier_GetUser_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetUserAssociationByProviderSub provides a mock function with given fields: ctx, db, providerSub
-func (_m *MockQuerier) GetUserAssociationByProviderSub(ctx context.Context, db DBTX, providerSub string) (NeosyncApiUserIdentityProviderAssociation, error) {
+func (_m *MockQuerier) GetUserAssociationByProviderSub(ctx context.Context, db DBTX, providerSub string) (VydonApiUserIdentityProviderAssociation, error) {
 	ret := _m.Called(ctx, db, providerSub)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetUserAssociationByProviderSub")
 	}
 
-	var r0 NeosyncApiUserIdentityProviderAssociation
+	var r0 VydonApiUserIdentityProviderAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (NeosyncApiUserIdentityProviderAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (VydonApiUserIdentityProviderAssociation, error)); ok {
 		return rf(ctx, db, providerSub)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) NeosyncApiUserIdentityProviderAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) VydonApiUserIdentityProviderAssociation); ok {
 		r0 = rf(ctx, db, providerSub)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiUserIdentityProviderAssociation)
+		r0 = ret.Get(0).(VydonApiUserIdentityProviderAssociation)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, string) error); ok {
@@ -3726,33 +3726,33 @@ func (_c *MockQuerier_GetUserAssociationByProviderSub_Call) Run(run func(ctx con
 	return _c
 }
 
-func (_c *MockQuerier_GetUserAssociationByProviderSub_Call) Return(_a0 NeosyncApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_GetUserAssociationByProviderSub_Call {
+func (_c *MockQuerier_GetUserAssociationByProviderSub_Call) Return(_a0 VydonApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_GetUserAssociationByProviderSub_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetUserAssociationByProviderSub_Call) RunAndReturn(run func(context.Context, DBTX, string) (NeosyncApiUserIdentityProviderAssociation, error)) *MockQuerier_GetUserAssociationByProviderSub_Call {
+func (_c *MockQuerier_GetUserAssociationByProviderSub_Call) RunAndReturn(run func(context.Context, DBTX, string) (VydonApiUserIdentityProviderAssociation, error)) *MockQuerier_GetUserAssociationByProviderSub_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetUserByProviderSub provides a mock function with given fields: ctx, db, providerSub
-func (_m *MockQuerier) GetUserByProviderSub(ctx context.Context, db DBTX, providerSub string) (NeosyncApiUser, error) {
+func (_m *MockQuerier) GetUserByProviderSub(ctx context.Context, db DBTX, providerSub string) (VydonApiUser, error) {
 	ret := _m.Called(ctx, db, providerSub)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetUserByProviderSub")
 	}
 
-	var r0 NeosyncApiUser
+	var r0 VydonApiUser
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (NeosyncApiUser, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) (VydonApiUser, error)); ok {
 		return rf(ctx, db, providerSub)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) NeosyncApiUser); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, string) VydonApiUser); ok {
 		r0 = rf(ctx, db, providerSub)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiUser)
+		r0 = ret.Get(0).(VydonApiUser)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, string) error); ok {
@@ -3784,33 +3784,33 @@ func (_c *MockQuerier_GetUserByProviderSub_Call) Run(run func(ctx context.Contex
 	return _c
 }
 
-func (_c *MockQuerier_GetUserByProviderSub_Call) Return(_a0 NeosyncApiUser, _a1 error) *MockQuerier_GetUserByProviderSub_Call {
+func (_c *MockQuerier_GetUserByProviderSub_Call) Return(_a0 VydonApiUser, _a1 error) *MockQuerier_GetUserByProviderSub_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetUserByProviderSub_Call) RunAndReturn(run func(context.Context, DBTX, string) (NeosyncApiUser, error)) *MockQuerier_GetUserByProviderSub_Call {
+func (_c *MockQuerier_GetUserByProviderSub_Call) RunAndReturn(run func(context.Context, DBTX, string) (VydonApiUser, error)) *MockQuerier_GetUserByProviderSub_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetUserDefinedTransformerById provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) GetUserDefinedTransformerById(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiTransformer, error) {
+func (_m *MockQuerier) GetUserDefinedTransformerById(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiTransformer, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetUserDefinedTransformerById")
 	}
 
-	var r0 NeosyncApiTransformer
+	var r0 VydonApiTransformer
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiTransformer, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiTransformer, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiTransformer); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiTransformer); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiTransformer)
+		r0 = ret.Get(0).(VydonApiTransformer)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -3842,34 +3842,34 @@ func (_c *MockQuerier_GetUserDefinedTransformerById_Call) Run(run func(ctx conte
 	return _c
 }
 
-func (_c *MockQuerier_GetUserDefinedTransformerById_Call) Return(_a0 NeosyncApiTransformer, _a1 error) *MockQuerier_GetUserDefinedTransformerById_Call {
+func (_c *MockQuerier_GetUserDefinedTransformerById_Call) Return(_a0 VydonApiTransformer, _a1 error) *MockQuerier_GetUserDefinedTransformerById_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetUserDefinedTransformerById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiTransformer, error)) *MockQuerier_GetUserDefinedTransformerById_Call {
+func (_c *MockQuerier_GetUserDefinedTransformerById_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiTransformer, error)) *MockQuerier_GetUserDefinedTransformerById_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetUserDefinedTransformersByAccount provides a mock function with given fields: ctx, db, accountid
-func (_m *MockQuerier) GetUserDefinedTransformersByAccount(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]NeosyncApiTransformer, error) {
+func (_m *MockQuerier) GetUserDefinedTransformersByAccount(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]VydonApiTransformer, error) {
 	ret := _m.Called(ctx, db, accountid)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetUserDefinedTransformersByAccount")
 	}
 
-	var r0 []NeosyncApiTransformer
+	var r0 []VydonApiTransformer
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiTransformer, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiTransformer, error)); ok {
 		return rf(ctx, db, accountid)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiTransformer); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiTransformer); ok {
 		r0 = rf(ctx, db, accountid)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiTransformer)
+			r0 = ret.Get(0).([]VydonApiTransformer)
 		}
 	}
 
@@ -3902,34 +3902,34 @@ func (_c *MockQuerier_GetUserDefinedTransformersByAccount_Call) Run(run func(ctx
 	return _c
 }
 
-func (_c *MockQuerier_GetUserDefinedTransformersByAccount_Call) Return(_a0 []NeosyncApiTransformer, _a1 error) *MockQuerier_GetUserDefinedTransformersByAccount_Call {
+func (_c *MockQuerier_GetUserDefinedTransformersByAccount_Call) Return(_a0 []VydonApiTransformer, _a1 error) *MockQuerier_GetUserDefinedTransformersByAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetUserDefinedTransformersByAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiTransformer, error)) *MockQuerier_GetUserDefinedTransformersByAccount_Call {
+func (_c *MockQuerier_GetUserDefinedTransformersByAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiTransformer, error)) *MockQuerier_GetUserDefinedTransformersByAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetUserIdentitiesByTeamAccount provides a mock function with given fields: ctx, db, accountid
-func (_m *MockQuerier) GetUserIdentitiesByTeamAccount(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]NeosyncApiUserIdentityProviderAssociation, error) {
+func (_m *MockQuerier) GetUserIdentitiesByTeamAccount(ctx context.Context, db DBTX, accountid pgtype.UUID) ([]VydonApiUserIdentityProviderAssociation, error) {
 	ret := _m.Called(ctx, db, accountid)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetUserIdentitiesByTeamAccount")
 	}
 
-	var r0 []NeosyncApiUserIdentityProviderAssociation
+	var r0 []VydonApiUserIdentityProviderAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiUserIdentityProviderAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) ([]VydonApiUserIdentityProviderAssociation, error)); ok {
 		return rf(ctx, db, accountid)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []NeosyncApiUserIdentityProviderAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) []VydonApiUserIdentityProviderAssociation); ok {
 		r0 = rf(ctx, db, accountid)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiUserIdentityProviderAssociation)
+			r0 = ret.Get(0).([]VydonApiUserIdentityProviderAssociation)
 		}
 	}
 
@@ -3962,34 +3962,34 @@ func (_c *MockQuerier_GetUserIdentitiesByTeamAccount_Call) Run(run func(ctx cont
 	return _c
 }
 
-func (_c *MockQuerier_GetUserIdentitiesByTeamAccount_Call) Return(_a0 []NeosyncApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_GetUserIdentitiesByTeamAccount_Call {
+func (_c *MockQuerier_GetUserIdentitiesByTeamAccount_Call) Return(_a0 []VydonApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_GetUserIdentitiesByTeamAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetUserIdentitiesByTeamAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]NeosyncApiUserIdentityProviderAssociation, error)) *MockQuerier_GetUserIdentitiesByTeamAccount_Call {
+func (_c *MockQuerier_GetUserIdentitiesByTeamAccount_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) ([]VydonApiUserIdentityProviderAssociation, error)) *MockQuerier_GetUserIdentitiesByTeamAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetUserIdentityAssociationsByUserIds provides a mock function with given fields: ctx, db, dollar_1
-func (_m *MockQuerier) GetUserIdentityAssociationsByUserIds(ctx context.Context, db DBTX, dollar_1 []pgtype.UUID) ([]NeosyncApiUserIdentityProviderAssociation, error) {
+func (_m *MockQuerier) GetUserIdentityAssociationsByUserIds(ctx context.Context, db DBTX, dollar_1 []pgtype.UUID) ([]VydonApiUserIdentityProviderAssociation, error) {
 	ret := _m.Called(ctx, db, dollar_1)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetUserIdentityAssociationsByUserIds")
 	}
 
-	var r0 []NeosyncApiUserIdentityProviderAssociation
+	var r0 []VydonApiUserIdentityProviderAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) ([]NeosyncApiUserIdentityProviderAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) ([]VydonApiUserIdentityProviderAssociation, error)); ok {
 		return rf(ctx, db, dollar_1)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) []NeosyncApiUserIdentityProviderAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, []pgtype.UUID) []VydonApiUserIdentityProviderAssociation); ok {
 		r0 = rf(ctx, db, dollar_1)
 	} else {
 		if ret.Get(0) != nil {
-			r0 = ret.Get(0).([]NeosyncApiUserIdentityProviderAssociation)
+			r0 = ret.Get(0).([]VydonApiUserIdentityProviderAssociation)
 		}
 	}
 
@@ -4022,33 +4022,33 @@ func (_c *MockQuerier_GetUserIdentityAssociationsByUserIds_Call) Run(run func(ct
 	return _c
 }
 
-func (_c *MockQuerier_GetUserIdentityAssociationsByUserIds_Call) Return(_a0 []NeosyncApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_GetUserIdentityAssociationsByUserIds_Call {
+func (_c *MockQuerier_GetUserIdentityAssociationsByUserIds_Call) Return(_a0 []VydonApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_GetUserIdentityAssociationsByUserIds_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetUserIdentityAssociationsByUserIds_Call) RunAndReturn(run func(context.Context, DBTX, []pgtype.UUID) ([]NeosyncApiUserIdentityProviderAssociation, error)) *MockQuerier_GetUserIdentityAssociationsByUserIds_Call {
+func (_c *MockQuerier_GetUserIdentityAssociationsByUserIds_Call) RunAndReturn(run func(context.Context, DBTX, []pgtype.UUID) ([]VydonApiUserIdentityProviderAssociation, error)) *MockQuerier_GetUserIdentityAssociationsByUserIds_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // GetUserIdentityByUserId provides a mock function with given fields: ctx, db, userID
-func (_m *MockQuerier) GetUserIdentityByUserId(ctx context.Context, db DBTX, userID pgtype.UUID) (NeosyncApiUserIdentityProviderAssociation, error) {
+func (_m *MockQuerier) GetUserIdentityByUserId(ctx context.Context, db DBTX, userID pgtype.UUID) (VydonApiUserIdentityProviderAssociation, error) {
 	ret := _m.Called(ctx, db, userID)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetUserIdentityByUserId")
 	}
 
-	var r0 NeosyncApiUserIdentityProviderAssociation
+	var r0 VydonApiUserIdentityProviderAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiUserIdentityProviderAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiUserIdentityProviderAssociation, error)); ok {
 		return rf(ctx, db, userID)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiUserIdentityProviderAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiUserIdentityProviderAssociation); ok {
 		r0 = rf(ctx, db, userID)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiUserIdentityProviderAssociation)
+		r0 = ret.Get(0).(VydonApiUserIdentityProviderAssociation)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -4080,12 +4080,12 @@ func (_c *MockQuerier_GetUserIdentityByUserId_Call) Run(run func(ctx context.Con
 	return _c
 }
 
-func (_c *MockQuerier_GetUserIdentityByUserId_Call) Return(_a0 NeosyncApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_GetUserIdentityByUserId_Call {
+func (_c *MockQuerier_GetUserIdentityByUserId_Call) Return(_a0 VydonApiUserIdentityProviderAssociation, _a1 error) *MockQuerier_GetUserIdentityByUserId_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_GetUserIdentityByUserId_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiUserIdentityProviderAssociation, error)) *MockQuerier_GetUserIdentityByUserId_Call {
+func (_c *MockQuerier_GetUserIdentityByUserId_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiUserIdentityProviderAssociation, error)) *MockQuerier_GetUserIdentityByUserId_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -5035,22 +5035,22 @@ func (_c *MockQuerier_RemoveJobHookById_Call) RunAndReturn(run func(context.Cont
 }
 
 // SetAccountCreatedAt provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) SetAccountCreatedAt(ctx context.Context, db DBTX, arg SetAccountCreatedAtParams) (NeosyncApiAccount, error) {
+func (_m *MockQuerier) SetAccountCreatedAt(ctx context.Context, db DBTX, arg SetAccountCreatedAtParams) (VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for SetAccountCreatedAt")
 	}
 
-	var r0 NeosyncApiAccount
+	var r0 VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetAccountCreatedAtParams) (NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetAccountCreatedAtParams) (VydonApiAccount, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetAccountCreatedAtParams) NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetAccountCreatedAtParams) VydonApiAccount); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccount)
+		r0 = ret.Get(0).(VydonApiAccount)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, SetAccountCreatedAtParams) error); ok {
@@ -5082,33 +5082,33 @@ func (_c *MockQuerier_SetAccountCreatedAt_Call) Run(run func(ctx context.Context
 	return _c
 }
 
-func (_c *MockQuerier_SetAccountCreatedAt_Call) Return(_a0 NeosyncApiAccount, _a1 error) *MockQuerier_SetAccountCreatedAt_Call {
+func (_c *MockQuerier_SetAccountCreatedAt_Call) Return(_a0 VydonApiAccount, _a1 error) *MockQuerier_SetAccountCreatedAt_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_SetAccountCreatedAt_Call) RunAndReturn(run func(context.Context, DBTX, SetAccountCreatedAtParams) (NeosyncApiAccount, error)) *MockQuerier_SetAccountCreatedAt_Call {
+func (_c *MockQuerier_SetAccountCreatedAt_Call) RunAndReturn(run func(context.Context, DBTX, SetAccountCreatedAtParams) (VydonApiAccount, error)) *MockQuerier_SetAccountCreatedAt_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // SetAccountHookEnabled provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) SetAccountHookEnabled(ctx context.Context, db DBTX, arg SetAccountHookEnabledParams) (NeosyncApiAccountHook, error) {
+func (_m *MockQuerier) SetAccountHookEnabled(ctx context.Context, db DBTX, arg SetAccountHookEnabledParams) (VydonApiAccountHook, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for SetAccountHookEnabled")
 	}
 
-	var r0 NeosyncApiAccountHook
+	var r0 VydonApiAccountHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetAccountHookEnabledParams) (NeosyncApiAccountHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetAccountHookEnabledParams) (VydonApiAccountHook, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetAccountHookEnabledParams) NeosyncApiAccountHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetAccountHookEnabledParams) VydonApiAccountHook); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountHook)
+		r0 = ret.Get(0).(VydonApiAccountHook)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, SetAccountHookEnabledParams) error); ok {
@@ -5140,33 +5140,33 @@ func (_c *MockQuerier_SetAccountHookEnabled_Call) Run(run func(ctx context.Conte
 	return _c
 }
 
-func (_c *MockQuerier_SetAccountHookEnabled_Call) Return(_a0 NeosyncApiAccountHook, _a1 error) *MockQuerier_SetAccountHookEnabled_Call {
+func (_c *MockQuerier_SetAccountHookEnabled_Call) Return(_a0 VydonApiAccountHook, _a1 error) *MockQuerier_SetAccountHookEnabled_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_SetAccountHookEnabled_Call) RunAndReturn(run func(context.Context, DBTX, SetAccountHookEnabledParams) (NeosyncApiAccountHook, error)) *MockQuerier_SetAccountHookEnabled_Call {
+func (_c *MockQuerier_SetAccountHookEnabled_Call) RunAndReturn(run func(context.Context, DBTX, SetAccountHookEnabledParams) (VydonApiAccountHook, error)) *MockQuerier_SetAccountHookEnabled_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // SetAnonymousUser provides a mock function with given fields: ctx, db
-func (_m *MockQuerier) SetAnonymousUser(ctx context.Context, db DBTX) (NeosyncApiUser, error) {
+func (_m *MockQuerier) SetAnonymousUser(ctx context.Context, db DBTX) (VydonApiUser, error) {
 	ret := _m.Called(ctx, db)
 
 	if len(ret) == 0 {
 		panic("no return value specified for SetAnonymousUser")
 	}
 
-	var r0 NeosyncApiUser
+	var r0 VydonApiUser
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX) (NeosyncApiUser, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX) (VydonApiUser, error)); ok {
 		return rf(ctx, db)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX) NeosyncApiUser); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX) VydonApiUser); ok {
 		r0 = rf(ctx, db)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiUser)
+		r0 = ret.Get(0).(VydonApiUser)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX) error); ok {
@@ -5197,33 +5197,33 @@ func (_c *MockQuerier_SetAnonymousUser_Call) Run(run func(ctx context.Context, d
 	return _c
 }
 
-func (_c *MockQuerier_SetAnonymousUser_Call) Return(_a0 NeosyncApiUser, _a1 error) *MockQuerier_SetAnonymousUser_Call {
+func (_c *MockQuerier_SetAnonymousUser_Call) Return(_a0 VydonApiUser, _a1 error) *MockQuerier_SetAnonymousUser_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_SetAnonymousUser_Call) RunAndReturn(run func(context.Context, DBTX) (NeosyncApiUser, error)) *MockQuerier_SetAnonymousUser_Call {
+func (_c *MockQuerier_SetAnonymousUser_Call) RunAndReturn(run func(context.Context, DBTX) (VydonApiUser, error)) *MockQuerier_SetAnonymousUser_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // SetJobHookEnabled provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) SetJobHookEnabled(ctx context.Context, db DBTX, arg SetJobHookEnabledParams) (NeosyncApiJobHook, error) {
+func (_m *MockQuerier) SetJobHookEnabled(ctx context.Context, db DBTX, arg SetJobHookEnabledParams) (VydonApiJobHook, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for SetJobHookEnabled")
 	}
 
-	var r0 NeosyncApiJobHook
+	var r0 VydonApiJobHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobHookEnabledParams) (NeosyncApiJobHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobHookEnabledParams) (VydonApiJobHook, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobHookEnabledParams) NeosyncApiJobHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobHookEnabledParams) VydonApiJobHook); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJobHook)
+		r0 = ret.Get(0).(VydonApiJobHook)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, SetJobHookEnabledParams) error); ok {
@@ -5255,33 +5255,33 @@ func (_c *MockQuerier_SetJobHookEnabled_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_SetJobHookEnabled_Call) Return(_a0 NeosyncApiJobHook, _a1 error) *MockQuerier_SetJobHookEnabled_Call {
+func (_c *MockQuerier_SetJobHookEnabled_Call) Return(_a0 VydonApiJobHook, _a1 error) *MockQuerier_SetJobHookEnabled_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_SetJobHookEnabled_Call) RunAndReturn(run func(context.Context, DBTX, SetJobHookEnabledParams) (NeosyncApiJobHook, error)) *MockQuerier_SetJobHookEnabled_Call {
+func (_c *MockQuerier_SetJobHookEnabled_Call) RunAndReturn(run func(context.Context, DBTX, SetJobHookEnabledParams) (VydonApiJobHook, error)) *MockQuerier_SetJobHookEnabled_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // SetJobSyncOptions provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) SetJobSyncOptions(ctx context.Context, db DBTX, arg SetJobSyncOptionsParams) (NeosyncApiJob, error) {
+func (_m *MockQuerier) SetJobSyncOptions(ctx context.Context, db DBTX, arg SetJobSyncOptionsParams) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for SetJobSyncOptions")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobSyncOptionsParams) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobSyncOptionsParams) (VydonApiJob, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobSyncOptionsParams) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobSyncOptionsParams) VydonApiJob); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, SetJobSyncOptionsParams) error); ok {
@@ -5313,33 +5313,33 @@ func (_c *MockQuerier_SetJobSyncOptions_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_SetJobSyncOptions_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_SetJobSyncOptions_Call {
+func (_c *MockQuerier_SetJobSyncOptions_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_SetJobSyncOptions_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_SetJobSyncOptions_Call) RunAndReturn(run func(context.Context, DBTX, SetJobSyncOptionsParams) (NeosyncApiJob, error)) *MockQuerier_SetJobSyncOptions_Call {
+func (_c *MockQuerier_SetJobSyncOptions_Call) RunAndReturn(run func(context.Context, DBTX, SetJobSyncOptionsParams) (VydonApiJob, error)) *MockQuerier_SetJobSyncOptions_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // SetJobWorkflowOptions provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) SetJobWorkflowOptions(ctx context.Context, db DBTX, arg SetJobWorkflowOptionsParams) (NeosyncApiJob, error) {
+func (_m *MockQuerier) SetJobWorkflowOptions(ctx context.Context, db DBTX, arg SetJobWorkflowOptionsParams) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for SetJobWorkflowOptions")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobWorkflowOptionsParams) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobWorkflowOptionsParams) (VydonApiJob, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobWorkflowOptionsParams) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetJobWorkflowOptionsParams) VydonApiJob); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, SetJobWorkflowOptionsParams) error); ok {
@@ -5371,33 +5371,33 @@ func (_c *MockQuerier_SetJobWorkflowOptions_Call) Run(run func(ctx context.Conte
 	return _c
 }
 
-func (_c *MockQuerier_SetJobWorkflowOptions_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_SetJobWorkflowOptions_Call {
+func (_c *MockQuerier_SetJobWorkflowOptions_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_SetJobWorkflowOptions_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_SetJobWorkflowOptions_Call) RunAndReturn(run func(context.Context, DBTX, SetJobWorkflowOptionsParams) (NeosyncApiJob, error)) *MockQuerier_SetJobWorkflowOptions_Call {
+func (_c *MockQuerier_SetJobWorkflowOptions_Call) RunAndReturn(run func(context.Context, DBTX, SetJobWorkflowOptionsParams) (VydonApiJob, error)) *MockQuerier_SetJobWorkflowOptions_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // SetNewAccountStripeCustomerId provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) SetNewAccountStripeCustomerId(ctx context.Context, db DBTX, arg SetNewAccountStripeCustomerIdParams) (NeosyncApiAccount, error) {
+func (_m *MockQuerier) SetNewAccountStripeCustomerId(ctx context.Context, db DBTX, arg SetNewAccountStripeCustomerIdParams) (VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for SetNewAccountStripeCustomerId")
 	}
 
-	var r0 NeosyncApiAccount
+	var r0 VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetNewAccountStripeCustomerIdParams) (NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetNewAccountStripeCustomerIdParams) (VydonApiAccount, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetNewAccountStripeCustomerIdParams) NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, SetNewAccountStripeCustomerIdParams) VydonApiAccount); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccount)
+		r0 = ret.Get(0).(VydonApiAccount)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, SetNewAccountStripeCustomerIdParams) error); ok {
@@ -5429,12 +5429,12 @@ func (_c *MockQuerier_SetNewAccountStripeCustomerId_Call) Run(run func(ctx conte
 	return _c
 }
 
-func (_c *MockQuerier_SetNewAccountStripeCustomerId_Call) Return(_a0 NeosyncApiAccount, _a1 error) *MockQuerier_SetNewAccountStripeCustomerId_Call {
+func (_c *MockQuerier_SetNewAccountStripeCustomerId_Call) Return(_a0 VydonApiAccount, _a1 error) *MockQuerier_SetNewAccountStripeCustomerId_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_SetNewAccountStripeCustomerId_Call) RunAndReturn(run func(context.Context, DBTX, SetNewAccountStripeCustomerIdParams) (NeosyncApiAccount, error)) *MockQuerier_SetNewAccountStripeCustomerId_Call {
+func (_c *MockQuerier_SetNewAccountStripeCustomerId_Call) RunAndReturn(run func(context.Context, DBTX, SetNewAccountStripeCustomerIdParams) (VydonApiAccount, error)) *MockQuerier_SetNewAccountStripeCustomerId_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -5488,22 +5488,22 @@ func (_c *MockQuerier_SetRunContext_Call) RunAndReturn(run func(context.Context,
 }
 
 // UpdateAccountApiKeyValue provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateAccountApiKeyValue(ctx context.Context, db DBTX, arg UpdateAccountApiKeyValueParams) (NeosyncApiAccountApiKey, error) {
+func (_m *MockQuerier) UpdateAccountApiKeyValue(ctx context.Context, db DBTX, arg UpdateAccountApiKeyValueParams) (VydonApiAccountApiKey, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateAccountApiKeyValue")
 	}
 
-	var r0 NeosyncApiAccountApiKey
+	var r0 VydonApiAccountApiKey
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountApiKeyValueParams) (NeosyncApiAccountApiKey, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountApiKeyValueParams) (VydonApiAccountApiKey, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountApiKeyValueParams) NeosyncApiAccountApiKey); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountApiKeyValueParams) VydonApiAccountApiKey); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountApiKey)
+		r0 = ret.Get(0).(VydonApiAccountApiKey)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateAccountApiKeyValueParams) error); ok {
@@ -5535,33 +5535,33 @@ func (_c *MockQuerier_UpdateAccountApiKeyValue_Call) Run(run func(ctx context.Co
 	return _c
 }
 
-func (_c *MockQuerier_UpdateAccountApiKeyValue_Call) Return(_a0 NeosyncApiAccountApiKey, _a1 error) *MockQuerier_UpdateAccountApiKeyValue_Call {
+func (_c *MockQuerier_UpdateAccountApiKeyValue_Call) Return(_a0 VydonApiAccountApiKey, _a1 error) *MockQuerier_UpdateAccountApiKeyValue_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateAccountApiKeyValue_Call) RunAndReturn(run func(context.Context, DBTX, UpdateAccountApiKeyValueParams) (NeosyncApiAccountApiKey, error)) *MockQuerier_UpdateAccountApiKeyValue_Call {
+func (_c *MockQuerier_UpdateAccountApiKeyValue_Call) RunAndReturn(run func(context.Context, DBTX, UpdateAccountApiKeyValueParams) (VydonApiAccountApiKey, error)) *MockQuerier_UpdateAccountApiKeyValue_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateAccountHook provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateAccountHook(ctx context.Context, db DBTX, arg UpdateAccountHookParams) (NeosyncApiAccountHook, error) {
+func (_m *MockQuerier) UpdateAccountHook(ctx context.Context, db DBTX, arg UpdateAccountHookParams) (VydonApiAccountHook, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateAccountHook")
 	}
 
-	var r0 NeosyncApiAccountHook
+	var r0 VydonApiAccountHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountHookParams) (NeosyncApiAccountHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountHookParams) (VydonApiAccountHook, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountHookParams) NeosyncApiAccountHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountHookParams) VydonApiAccountHook); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountHook)
+		r0 = ret.Get(0).(VydonApiAccountHook)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateAccountHookParams) error); ok {
@@ -5593,33 +5593,33 @@ func (_c *MockQuerier_UpdateAccountHook_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_UpdateAccountHook_Call) Return(_a0 NeosyncApiAccountHook, _a1 error) *MockQuerier_UpdateAccountHook_Call {
+func (_c *MockQuerier_UpdateAccountHook_Call) Return(_a0 VydonApiAccountHook, _a1 error) *MockQuerier_UpdateAccountHook_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateAccountHook_Call) RunAndReturn(run func(context.Context, DBTX, UpdateAccountHookParams) (NeosyncApiAccountHook, error)) *MockQuerier_UpdateAccountHook_Call {
+func (_c *MockQuerier_UpdateAccountHook_Call) RunAndReturn(run func(context.Context, DBTX, UpdateAccountHookParams) (VydonApiAccountHook, error)) *MockQuerier_UpdateAccountHook_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateAccountInviteToAccepted provides a mock function with given fields: ctx, db, id
-func (_m *MockQuerier) UpdateAccountInviteToAccepted(ctx context.Context, db DBTX, id pgtype.UUID) (NeosyncApiAccountInvite, error) {
+func (_m *MockQuerier) UpdateAccountInviteToAccepted(ctx context.Context, db DBTX, id pgtype.UUID) (VydonApiAccountInvite, error) {
 	ret := _m.Called(ctx, db, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateAccountInviteToAccepted")
 	}
 
-	var r0 NeosyncApiAccountInvite
+	var r0 VydonApiAccountInvite
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccountInvite, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) (VydonApiAccountInvite, error)); ok {
 		return rf(ctx, db, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) NeosyncApiAccountInvite); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, pgtype.UUID) VydonApiAccountInvite); ok {
 		r0 = rf(ctx, db, id)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountInvite)
+		r0 = ret.Get(0).(VydonApiAccountInvite)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, pgtype.UUID) error); ok {
@@ -5651,33 +5651,33 @@ func (_c *MockQuerier_UpdateAccountInviteToAccepted_Call) Run(run func(ctx conte
 	return _c
 }
 
-func (_c *MockQuerier_UpdateAccountInviteToAccepted_Call) Return(_a0 NeosyncApiAccountInvite, _a1 error) *MockQuerier_UpdateAccountInviteToAccepted_Call {
+func (_c *MockQuerier_UpdateAccountInviteToAccepted_Call) Return(_a0 VydonApiAccountInvite, _a1 error) *MockQuerier_UpdateAccountInviteToAccepted_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateAccountInviteToAccepted_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (NeosyncApiAccountInvite, error)) *MockQuerier_UpdateAccountInviteToAccepted_Call {
+func (_c *MockQuerier_UpdateAccountInviteToAccepted_Call) RunAndReturn(run func(context.Context, DBTX, pgtype.UUID) (VydonApiAccountInvite, error)) *MockQuerier_UpdateAccountInviteToAccepted_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateAccountOnboardingConfig provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateAccountOnboardingConfig(ctx context.Context, db DBTX, arg UpdateAccountOnboardingConfigParams) (NeosyncApiAccount, error) {
+func (_m *MockQuerier) UpdateAccountOnboardingConfig(ctx context.Context, db DBTX, arg UpdateAccountOnboardingConfigParams) (VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateAccountOnboardingConfig")
 	}
 
-	var r0 NeosyncApiAccount
+	var r0 VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountOnboardingConfigParams) (NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountOnboardingConfigParams) (VydonApiAccount, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountOnboardingConfigParams) NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateAccountOnboardingConfigParams) VydonApiAccount); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccount)
+		r0 = ret.Get(0).(VydonApiAccount)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateAccountOnboardingConfigParams) error); ok {
@@ -5709,33 +5709,33 @@ func (_c *MockQuerier_UpdateAccountOnboardingConfig_Call) Run(run func(ctx conte
 	return _c
 }
 
-func (_c *MockQuerier_UpdateAccountOnboardingConfig_Call) Return(_a0 NeosyncApiAccount, _a1 error) *MockQuerier_UpdateAccountOnboardingConfig_Call {
+func (_c *MockQuerier_UpdateAccountOnboardingConfig_Call) Return(_a0 VydonApiAccount, _a1 error) *MockQuerier_UpdateAccountOnboardingConfig_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateAccountOnboardingConfig_Call) RunAndReturn(run func(context.Context, DBTX, UpdateAccountOnboardingConfigParams) (NeosyncApiAccount, error)) *MockQuerier_UpdateAccountOnboardingConfig_Call {
+func (_c *MockQuerier_UpdateAccountOnboardingConfig_Call) RunAndReturn(run func(context.Context, DBTX, UpdateAccountOnboardingConfigParams) (VydonApiAccount, error)) *MockQuerier_UpdateAccountOnboardingConfig_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateActiveAccountInvitesToExpired provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateActiveAccountInvitesToExpired(ctx context.Context, db DBTX, arg UpdateActiveAccountInvitesToExpiredParams) (NeosyncApiAccountInvite, error) {
+func (_m *MockQuerier) UpdateActiveAccountInvitesToExpired(ctx context.Context, db DBTX, arg UpdateActiveAccountInvitesToExpiredParams) (VydonApiAccountInvite, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateActiveAccountInvitesToExpired")
 	}
 
-	var r0 NeosyncApiAccountInvite
+	var r0 VydonApiAccountInvite
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateActiveAccountInvitesToExpiredParams) (NeosyncApiAccountInvite, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateActiveAccountInvitesToExpiredParams) (VydonApiAccountInvite, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateActiveAccountInvitesToExpiredParams) NeosyncApiAccountInvite); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateActiveAccountInvitesToExpiredParams) VydonApiAccountInvite); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccountInvite)
+		r0 = ret.Get(0).(VydonApiAccountInvite)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateActiveAccountInvitesToExpiredParams) error); ok {
@@ -5767,33 +5767,33 @@ func (_c *MockQuerier_UpdateActiveAccountInvitesToExpired_Call) Run(run func(ctx
 	return _c
 }
 
-func (_c *MockQuerier_UpdateActiveAccountInvitesToExpired_Call) Return(_a0 NeosyncApiAccountInvite, _a1 error) *MockQuerier_UpdateActiveAccountInvitesToExpired_Call {
+func (_c *MockQuerier_UpdateActiveAccountInvitesToExpired_Call) Return(_a0 VydonApiAccountInvite, _a1 error) *MockQuerier_UpdateActiveAccountInvitesToExpired_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateActiveAccountInvitesToExpired_Call) RunAndReturn(run func(context.Context, DBTX, UpdateActiveAccountInvitesToExpiredParams) (NeosyncApiAccountInvite, error)) *MockQuerier_UpdateActiveAccountInvitesToExpired_Call {
+func (_c *MockQuerier_UpdateActiveAccountInvitesToExpired_Call) RunAndReturn(run func(context.Context, DBTX, UpdateActiveAccountInvitesToExpiredParams) (VydonApiAccountInvite, error)) *MockQuerier_UpdateActiveAccountInvitesToExpired_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateConnection provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateConnection(ctx context.Context, db DBTX, arg UpdateConnectionParams) (NeosyncApiConnection, error) {
+func (_m *MockQuerier) UpdateConnection(ctx context.Context, db DBTX, arg UpdateConnectionParams) (VydonApiConnection, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateConnection")
 	}
 
-	var r0 NeosyncApiConnection
+	var r0 VydonApiConnection
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateConnectionParams) (NeosyncApiConnection, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateConnectionParams) (VydonApiConnection, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateConnectionParams) NeosyncApiConnection); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateConnectionParams) VydonApiConnection); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiConnection)
+		r0 = ret.Get(0).(VydonApiConnection)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateConnectionParams) error); ok {
@@ -5825,33 +5825,33 @@ func (_c *MockQuerier_UpdateConnection_Call) Run(run func(ctx context.Context, d
 	return _c
 }
 
-func (_c *MockQuerier_UpdateConnection_Call) Return(_a0 NeosyncApiConnection, _a1 error) *MockQuerier_UpdateConnection_Call {
+func (_c *MockQuerier_UpdateConnection_Call) Return(_a0 VydonApiConnection, _a1 error) *MockQuerier_UpdateConnection_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateConnection_Call) RunAndReturn(run func(context.Context, DBTX, UpdateConnectionParams) (NeosyncApiConnection, error)) *MockQuerier_UpdateConnection_Call {
+func (_c *MockQuerier_UpdateConnection_Call) RunAndReturn(run func(context.Context, DBTX, UpdateConnectionParams) (VydonApiConnection, error)) *MockQuerier_UpdateConnection_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateJobConnectionDestination provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateJobConnectionDestination(ctx context.Context, db DBTX, arg UpdateJobConnectionDestinationParams) (NeosyncApiJobDestinationConnectionAssociation, error) {
+func (_m *MockQuerier) UpdateJobConnectionDestination(ctx context.Context, db DBTX, arg UpdateJobConnectionDestinationParams) (VydonApiJobDestinationConnectionAssociation, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateJobConnectionDestination")
 	}
 
-	var r0 NeosyncApiJobDestinationConnectionAssociation
+	var r0 VydonApiJobDestinationConnectionAssociation
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobConnectionDestinationParams) (NeosyncApiJobDestinationConnectionAssociation, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobConnectionDestinationParams) (VydonApiJobDestinationConnectionAssociation, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobConnectionDestinationParams) NeosyncApiJobDestinationConnectionAssociation); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobConnectionDestinationParams) VydonApiJobDestinationConnectionAssociation); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJobDestinationConnectionAssociation)
+		r0 = ret.Get(0).(VydonApiJobDestinationConnectionAssociation)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateJobConnectionDestinationParams) error); ok {
@@ -5883,33 +5883,33 @@ func (_c *MockQuerier_UpdateJobConnectionDestination_Call) Run(run func(ctx cont
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobConnectionDestination_Call) Return(_a0 NeosyncApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_UpdateJobConnectionDestination_Call {
+func (_c *MockQuerier_UpdateJobConnectionDestination_Call) Return(_a0 VydonApiJobDestinationConnectionAssociation, _a1 error) *MockQuerier_UpdateJobConnectionDestination_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobConnectionDestination_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobConnectionDestinationParams) (NeosyncApiJobDestinationConnectionAssociation, error)) *MockQuerier_UpdateJobConnectionDestination_Call {
+func (_c *MockQuerier_UpdateJobConnectionDestination_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobConnectionDestinationParams) (VydonApiJobDestinationConnectionAssociation, error)) *MockQuerier_UpdateJobConnectionDestination_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateJobHook provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateJobHook(ctx context.Context, db DBTX, arg UpdateJobHookParams) (NeosyncApiJobHook, error) {
+func (_m *MockQuerier) UpdateJobHook(ctx context.Context, db DBTX, arg UpdateJobHookParams) (VydonApiJobHook, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateJobHook")
 	}
 
-	var r0 NeosyncApiJobHook
+	var r0 VydonApiJobHook
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobHookParams) (NeosyncApiJobHook, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobHookParams) (VydonApiJobHook, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobHookParams) NeosyncApiJobHook); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobHookParams) VydonApiJobHook); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJobHook)
+		r0 = ret.Get(0).(VydonApiJobHook)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateJobHookParams) error); ok {
@@ -5941,33 +5941,33 @@ func (_c *MockQuerier_UpdateJobHook_Call) Run(run func(ctx context.Context, db D
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobHook_Call) Return(_a0 NeosyncApiJobHook, _a1 error) *MockQuerier_UpdateJobHook_Call {
+func (_c *MockQuerier_UpdateJobHook_Call) Return(_a0 VydonApiJobHook, _a1 error) *MockQuerier_UpdateJobHook_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobHook_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobHookParams) (NeosyncApiJobHook, error)) *MockQuerier_UpdateJobHook_Call {
+func (_c *MockQuerier_UpdateJobHook_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobHookParams) (VydonApiJobHook, error)) *MockQuerier_UpdateJobHook_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateJobMappings provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateJobMappings(ctx context.Context, db DBTX, arg UpdateJobMappingsParams) (NeosyncApiJob, error) {
+func (_m *MockQuerier) UpdateJobMappings(ctx context.Context, db DBTX, arg UpdateJobMappingsParams) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateJobMappings")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobMappingsParams) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobMappingsParams) (VydonApiJob, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobMappingsParams) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobMappingsParams) VydonApiJob); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateJobMappingsParams) error); ok {
@@ -5999,33 +5999,33 @@ func (_c *MockQuerier_UpdateJobMappings_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobMappings_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_UpdateJobMappings_Call {
+func (_c *MockQuerier_UpdateJobMappings_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_UpdateJobMappings_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobMappings_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobMappingsParams) (NeosyncApiJob, error)) *MockQuerier_UpdateJobMappings_Call {
+func (_c *MockQuerier_UpdateJobMappings_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobMappingsParams) (VydonApiJob, error)) *MockQuerier_UpdateJobMappings_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateJobSchedule provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateJobSchedule(ctx context.Context, db DBTX, arg UpdateJobScheduleParams) (NeosyncApiJob, error) {
+func (_m *MockQuerier) UpdateJobSchedule(ctx context.Context, db DBTX, arg UpdateJobScheduleParams) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateJobSchedule")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobScheduleParams) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobScheduleParams) (VydonApiJob, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobScheduleParams) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobScheduleParams) VydonApiJob); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateJobScheduleParams) error); ok {
@@ -6057,33 +6057,33 @@ func (_c *MockQuerier_UpdateJobSchedule_Call) Run(run func(ctx context.Context, 
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobSchedule_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_UpdateJobSchedule_Call {
+func (_c *MockQuerier_UpdateJobSchedule_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_UpdateJobSchedule_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobSchedule_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobScheduleParams) (NeosyncApiJob, error)) *MockQuerier_UpdateJobSchedule_Call {
+func (_c *MockQuerier_UpdateJobSchedule_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobScheduleParams) (VydonApiJob, error)) *MockQuerier_UpdateJobSchedule_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateJobSource provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateJobSource(ctx context.Context, db DBTX, arg UpdateJobSourceParams) (NeosyncApiJob, error) {
+func (_m *MockQuerier) UpdateJobSource(ctx context.Context, db DBTX, arg UpdateJobSourceParams) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateJobSource")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobSourceParams) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobSourceParams) (VydonApiJob, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobSourceParams) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobSourceParams) VydonApiJob); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateJobSourceParams) error); ok {
@@ -6115,33 +6115,33 @@ func (_c *MockQuerier_UpdateJobSource_Call) Run(run func(ctx context.Context, db
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobSource_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_UpdateJobSource_Call {
+func (_c *MockQuerier_UpdateJobSource_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_UpdateJobSource_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobSource_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobSourceParams) (NeosyncApiJob, error)) *MockQuerier_UpdateJobSource_Call {
+func (_c *MockQuerier_UpdateJobSource_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobSourceParams) (VydonApiJob, error)) *MockQuerier_UpdateJobSource_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateJobTypeConfig provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateJobTypeConfig(ctx context.Context, db DBTX, arg UpdateJobTypeConfigParams) (NeosyncApiJob, error) {
+func (_m *MockQuerier) UpdateJobTypeConfig(ctx context.Context, db DBTX, arg UpdateJobTypeConfigParams) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateJobTypeConfig")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobTypeConfigParams) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobTypeConfigParams) (VydonApiJob, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobTypeConfigParams) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobTypeConfigParams) VydonApiJob); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateJobTypeConfigParams) error); ok {
@@ -6173,33 +6173,33 @@ func (_c *MockQuerier_UpdateJobTypeConfig_Call) Run(run func(ctx context.Context
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobTypeConfig_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_UpdateJobTypeConfig_Call {
+func (_c *MockQuerier_UpdateJobTypeConfig_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_UpdateJobTypeConfig_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobTypeConfig_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobTypeConfigParams) (NeosyncApiJob, error)) *MockQuerier_UpdateJobTypeConfig_Call {
+func (_c *MockQuerier_UpdateJobTypeConfig_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobTypeConfigParams) (VydonApiJob, error)) *MockQuerier_UpdateJobTypeConfig_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateJobVirtualForeignKeys provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateJobVirtualForeignKeys(ctx context.Context, db DBTX, arg UpdateJobVirtualForeignKeysParams) (NeosyncApiJob, error) {
+func (_m *MockQuerier) UpdateJobVirtualForeignKeys(ctx context.Context, db DBTX, arg UpdateJobVirtualForeignKeysParams) (VydonApiJob, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateJobVirtualForeignKeys")
 	}
 
-	var r0 NeosyncApiJob
+	var r0 VydonApiJob
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobVirtualForeignKeysParams) (NeosyncApiJob, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobVirtualForeignKeysParams) (VydonApiJob, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobVirtualForeignKeysParams) NeosyncApiJob); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateJobVirtualForeignKeysParams) VydonApiJob); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiJob)
+		r0 = ret.Get(0).(VydonApiJob)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateJobVirtualForeignKeysParams) error); ok {
@@ -6231,33 +6231,33 @@ func (_c *MockQuerier_UpdateJobVirtualForeignKeys_Call) Run(run func(ctx context
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobVirtualForeignKeys_Call) Return(_a0 NeosyncApiJob, _a1 error) *MockQuerier_UpdateJobVirtualForeignKeys_Call {
+func (_c *MockQuerier_UpdateJobVirtualForeignKeys_Call) Return(_a0 VydonApiJob, _a1 error) *MockQuerier_UpdateJobVirtualForeignKeys_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateJobVirtualForeignKeys_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobVirtualForeignKeysParams) (NeosyncApiJob, error)) *MockQuerier_UpdateJobVirtualForeignKeys_Call {
+func (_c *MockQuerier_UpdateJobVirtualForeignKeys_Call) RunAndReturn(run func(context.Context, DBTX, UpdateJobVirtualForeignKeysParams) (VydonApiJob, error)) *MockQuerier_UpdateJobVirtualForeignKeys_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateTemporalConfigByAccount provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateTemporalConfigByAccount(ctx context.Context, db DBTX, arg UpdateTemporalConfigByAccountParams) (NeosyncApiAccount, error) {
+func (_m *MockQuerier) UpdateTemporalConfigByAccount(ctx context.Context, db DBTX, arg UpdateTemporalConfigByAccountParams) (VydonApiAccount, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateTemporalConfigByAccount")
 	}
 
-	var r0 NeosyncApiAccount
+	var r0 VydonApiAccount
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateTemporalConfigByAccountParams) (NeosyncApiAccount, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateTemporalConfigByAccountParams) (VydonApiAccount, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateTemporalConfigByAccountParams) NeosyncApiAccount); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateTemporalConfigByAccountParams) VydonApiAccount); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiAccount)
+		r0 = ret.Get(0).(VydonApiAccount)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateTemporalConfigByAccountParams) error); ok {
@@ -6289,33 +6289,33 @@ func (_c *MockQuerier_UpdateTemporalConfigByAccount_Call) Run(run func(ctx conte
 	return _c
 }
 
-func (_c *MockQuerier_UpdateTemporalConfigByAccount_Call) Return(_a0 NeosyncApiAccount, _a1 error) *MockQuerier_UpdateTemporalConfigByAccount_Call {
+func (_c *MockQuerier_UpdateTemporalConfigByAccount_Call) Return(_a0 VydonApiAccount, _a1 error) *MockQuerier_UpdateTemporalConfigByAccount_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateTemporalConfigByAccount_Call) RunAndReturn(run func(context.Context, DBTX, UpdateTemporalConfigByAccountParams) (NeosyncApiAccount, error)) *MockQuerier_UpdateTemporalConfigByAccount_Call {
+func (_c *MockQuerier_UpdateTemporalConfigByAccount_Call) RunAndReturn(run func(context.Context, DBTX, UpdateTemporalConfigByAccountParams) (VydonApiAccount, error)) *MockQuerier_UpdateTemporalConfigByAccount_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // UpdateUserDefinedTransformer provides a mock function with given fields: ctx, db, arg
-func (_m *MockQuerier) UpdateUserDefinedTransformer(ctx context.Context, db DBTX, arg UpdateUserDefinedTransformerParams) (NeosyncApiTransformer, error) {
+func (_m *MockQuerier) UpdateUserDefinedTransformer(ctx context.Context, db DBTX, arg UpdateUserDefinedTransformerParams) (VydonApiTransformer, error) {
 	ret := _m.Called(ctx, db, arg)
 
 	if len(ret) == 0 {
 		panic("no return value specified for UpdateUserDefinedTransformer")
 	}
 
-	var r0 NeosyncApiTransformer
+	var r0 VydonApiTransformer
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateUserDefinedTransformerParams) (NeosyncApiTransformer, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateUserDefinedTransformerParams) (VydonApiTransformer, error)); ok {
 		return rf(ctx, db, arg)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateUserDefinedTransformerParams) NeosyncApiTransformer); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, DBTX, UpdateUserDefinedTransformerParams) VydonApiTransformer); ok {
 		r0 = rf(ctx, db, arg)
 	} else {
-		r0 = ret.Get(0).(NeosyncApiTransformer)
+		r0 = ret.Get(0).(VydonApiTransformer)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, DBTX, UpdateUserDefinedTransformerParams) error); ok {
@@ -6347,12 +6347,12 @@ func (_c *MockQuerier_UpdateUserDefinedTransformer_Call) Run(run func(ctx contex
 	return _c
 }
 
-func (_c *MockQuerier_UpdateUserDefinedTransformer_Call) Return(_a0 NeosyncApiTransformer, _a1 error) *MockQuerier_UpdateUserDefinedTransformer_Call {
+func (_c *MockQuerier_UpdateUserDefinedTransformer_Call) Return(_a0 VydonApiTransformer, _a1 error) *MockQuerier_UpdateUserDefinedTransformer_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
 
-func (_c *MockQuerier_UpdateUserDefinedTransformer_Call) RunAndReturn(run func(context.Context, DBTX, UpdateUserDefinedTransformerParams) (NeosyncApiTransformer, error)) *MockQuerier_UpdateUserDefinedTransformer_Call {
+func (_c *MockQuerier_UpdateUserDefinedTransformer_Call) RunAndReturn(run func(context.Context, DBTX, UpdateUserDefinedTransformerParams) (VydonApiTransformer, error)) *MockQuerier_UpdateUserDefinedTransformer_Call {
 	_c.Call.Return(run)
 	return _c
 }

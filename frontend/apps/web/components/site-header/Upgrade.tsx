@@ -35,7 +35,7 @@ export default function Upgrade(props: UpgradeProps): ReactElement | null {
   const { data: systemInfo } = useQuery(
     UserAccountService.method.getSystemInformation
   );
-  // always surface the upgrade button for non-vydoncloud users
+  // always surface the upgrade button for non-vydon users
   if (!systemInfo?.license?.isValid && !systemInfo?.license?.isVydonCloud) {
     return <UpgradeButton href={calendlyLink} target="_blank" />;
   }

@@ -24,7 +24,7 @@ type Service struct {
 
 type Config struct {
 	IsAuthEnabled            bool
-	IsNeosyncCloud           bool
+	IsVydonCloud           bool
 	DefaultMaxAllowedRecords *int64
 }
 

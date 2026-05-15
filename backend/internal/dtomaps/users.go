@@ -21,7 +21,7 @@ func ToAccountTypeDto(aType vydondb.AccountType) mgmtv1alpha1.UserAccountType {
 	}
 }
 
-func ToAccountInviteDto(input *db_queries.NeosyncApiAccountInvite) *mgmtv1alpha1.AccountInvite {
+func ToAccountInviteDto(input *db_queries.VydonApiAccountInvite) *mgmtv1alpha1.AccountInvite {
 	return &mgmtv1alpha1.AccountInvite{
 		Id:           vydondb.UUIDString(input.ID),
 		AccountId:    vydondb.UUIDString(input.AccountID),
@@ -42,7 +42,7 @@ func toRoleDto(role pgtype.Int4) mgmtv1alpha1.AccountRole {
 	}
 	return mgmtv1alpha1.AccountRole(role.Int32)
 }
-func ToUserAccount(input *db_queries.NeosyncApiAccount) *mgmtv1alpha1.UserAccount {
+func ToUserAccount(input *db_queries.VydonApiAccount) *mgmtv1alpha1.UserAccount {
 	return &mgmtv1alpha1.UserAccount{
 		Id:                  vydondb.UUIDString(input.ID),
 		Name:                input.AccountSlug,

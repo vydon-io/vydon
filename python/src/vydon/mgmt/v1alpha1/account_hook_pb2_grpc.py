@@ -136,7 +136,7 @@ class AccountHookServiceServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetSlackConnectionUrl(self, request, context):
-        """Retrieves the Slack connection url that allows a user to connect their Slack workspace to Neosync.
+        """Retrieves the Slack connection url that allows a user to connect their Slack workspace to Vydon.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')

@@ -931,7 +931,7 @@ func (x *Connection) GetAccountId() string {
 	return ""
 }
 
-// Configuration for all of the supported Neosync connection types
+// Configuration for all of the supported Vydon connection types
 type ConnectionConfig struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache

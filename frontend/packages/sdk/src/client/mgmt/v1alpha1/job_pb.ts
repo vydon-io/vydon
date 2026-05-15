@@ -205,7 +205,7 @@ export const JobDestinationSchema: GenMessage<JobDestination> = /*@__PURE__*/
  */
 export type AiGenerateSourceOptions = Message<"mgmt.v1alpha1.AiGenerateSourceOptions"> & {
   /**
-   * The connection id that corresponds with an AI-based Neosync connection
+   * The connection id that corresponds with an AI-based Vydon connection
    *
    * @generated from field: string ai_connection_id = 1;
    */
@@ -543,14 +543,14 @@ export type PostgresSourceConnectionOptions = Message<"mgmt.v1alpha1.PostgresSou
   subsetByForeignKeyConstraints: boolean;
 
   /**
-   * Provide a strategy of what to do in the event Neosync encounters an unmapped column for the job's mapped tables.
+   * Provide a strategy of what to do in the event Vydon encounters an unmapped column for the job's mapped tables.
    *
    * @generated from field: mgmt.v1alpha1.PostgresSourceConnectionOptions.NewColumnAdditionStrategy new_column_addition_strategy = 5;
    */
   newColumnAdditionStrategy?: PostgresSourceConnectionOptions_NewColumnAdditionStrategy;
 
   /**
-   * Provide a strategy of what to do in the event Neosync encounters a column that is removed from the source table.
+   * Provide a strategy of what to do in the event Vydon encounters a column that is removed from the source table.
    *
    * @generated from field: mgmt.v1alpha1.PostgresSourceConnectionOptions.ColumnRemovalStrategy column_removal_strategy = 6;
    */
@@ -803,14 +803,14 @@ export type MysqlSourceConnectionOptions = Message<"mgmt.v1alpha1.MysqlSourceCon
   subsetByForeignKeyConstraints: boolean;
 
   /**
-   * Provide a strategy of what to do in the event Neosync encounters a column that is removed from the source table.
+   * Provide a strategy of what to do in the event Vydon encounters a column that is removed from the source table.
    *
    * @generated from field: mgmt.v1alpha1.MysqlSourceConnectionOptions.ColumnRemovalStrategy column_removal_strategy = 5;
    */
   columnRemovalStrategy?: MysqlSourceConnectionOptions_ColumnRemovalStrategy;
 
   /**
-   * Provide a strategy of what to do in the event Neosync encounters an unmapped column for the job's mapped tables.
+   * Provide a strategy of what to do in the event Vydon encounters an unmapped column for the job's mapped tables.
    *
    * @generated from field: mgmt.v1alpha1.MysqlSourceConnectionOptions.NewColumnAdditionStrategy new_column_addition_strategy = 6;
    */
@@ -1063,14 +1063,14 @@ export type MssqlSourceConnectionOptions = Message<"mgmt.v1alpha1.MssqlSourceCon
   subsetByForeignKeyConstraints: boolean;
 
   /**
-   * Provide a strategy of what to do in the event Neosync encounters a column that is removed from the source table.
+   * Provide a strategy of what to do in the event Vydon encounters a column that is removed from the source table.
    *
    * @generated from field: mgmt.v1alpha1.MssqlSourceConnectionOptions.ColumnRemovalStrategy column_removal_strategy = 5;
    */
   columnRemovalStrategy?: MssqlSourceConnectionOptions_ColumnRemovalStrategy;
 
   /**
-   * Provide a strategy of what to do in the event Neosync encounters an unmapped column for the job's mapped tables.
+   * Provide a strategy of what to do in the event Vydon encounters an unmapped column for the job's mapped tables.
    *
    * @generated from field: mgmt.v1alpha1.MssqlSourceConnectionOptions.NewColumnAdditionStrategy new_column_addition_strategy = 6;
    */
@@ -4958,7 +4958,7 @@ export const VirtualForeignConstraintSchema: GenMessage<VirtualForeignConstraint
  */
 export type RunContextKey = Message<"mgmt.v1alpha1.RunContextKey"> & {
   /**
-   * The Neosync Run ID
+   * The Vydon Run ID
    *
    * @generated from field: string job_run_id = 1;
    */
@@ -4972,7 +4972,7 @@ export type RunContextKey = Message<"mgmt.v1alpha1.RunContextKey"> & {
   externalId: string;
 
   /**
-   * The Neosync Account ID
+   * The Vydon Account ID
    *
    * @generated from field: string account_id = 3;
    */
@@ -5281,7 +5281,7 @@ export type JobHookConfig_JobSqlHook = Message<"mgmt.v1alpha1.JobHookConfig.JobS
   query: string;
 
   /**
-   * Unique identifier of the Neosync connection to run this hook for. Must be a connection id that is present in the job.
+   * Unique identifier of the Vydon connection to run this hook for. Must be a connection id that is present in the job.
    *
    * @generated from field: string connection_id = 2;
    */

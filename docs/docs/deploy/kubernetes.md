@@ -220,7 +220,7 @@ spec:
   template:
     metadata:
       annotations:
-        ad.datadoghq.com/nucleus-api.logs: '[{"source":"nucleus-vydon-api","service":"{{ template "vydon-api.fullname" . }}"}]'
+        ad.datadoghq.com/vydon-api.logs: '[{"source":"vydon-vydon-api","service":"{{ template "vydon-api.fullname" . }}"}]'
       labels:
         admission.datadoghq.com/enabled: 'true'
         tags.datadoghq.com/env: { { .Values.vydonEnv } }

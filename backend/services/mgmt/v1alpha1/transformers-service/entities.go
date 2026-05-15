@@ -11,7 +11,7 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
 	"github.com/vydon-io/vydon/internal/rbac"
-	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 var (
@@ -23,7 +23,7 @@ func (s *Service) GetTransformPiiEntities(
 	req *connect.Request[mgmtv1alpha1.GetTransformPiiEntitiesRequest],
 ) (*connect.Response[mgmtv1alpha1.GetTransformPiiEntitiesResponse], error) {
 	if !s.cfg.IsPresidioEnabled {
-		return nil, nucleuserrors.NewNotImplemented(
+		return nil, vydonerrors.NewNotImplemented(
 			fmt.Sprintf(
 				"%s is not implemented",
 				strings.TrimPrefix(
@@ -34,7 +34,7 @@ func (s *Service) GetTransformPiiEntities(
 		)
 	}
 	if s.entityclient == nil {
-		return nil, nucleuserrors.NewInternalError("entity service is enabled but client was nil.")
+		return nil, vydonerrors.NewInternalError("entity service is enabled but client was nil.")
 	}
 	user, err := s.userdataclient.GetUser(ctx)
 	if err != nil {

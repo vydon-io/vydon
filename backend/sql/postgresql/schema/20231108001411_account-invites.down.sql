@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS neosync_api.account_invites;
+DROP TABLE IF EXISTS vydon_api.account_invites;

@@ -7,7 +7,7 @@ from mgmt.v1alpha1 import connection_pb2 as mgmt_dot_v1alpha1_dot_connection__pb
 
 class ConnectionServiceStub(object):
     """Service for managing datasource connections.
-    This is a primary data model in Neosync and is used in reference when hooking up Jobs to synchronize and generate data.
+    This is a primary data model in Vydon and is used in reference when hooking up Jobs to synchronize and generate data.
     """
 
     def __init__(self, channel):
@@ -75,7 +75,7 @@ class ConnectionServiceStub(object):
 
 class ConnectionServiceServicer(object):
     """Service for managing datasource connections.
-    This is a primary data model in Neosync and is used in reference when hooking up Jobs to synchronize and generate data.
+    This is a primary data model in Vydon and is used in reference when hooking up Jobs to synchronize and generate data.
     """
 
     def GetConnections(self, request, context):
@@ -226,7 +226,7 @@ def add_ConnectionServiceServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class ConnectionService(object):
     """Service for managing datasource connections.
-    This is a primary data model in Neosync and is used in reference when hooking up Jobs to synchronize and generate data.
+    This is a primary data model in Vydon and is used in reference when hooking up Jobs to synchronize and generate data.
     """
 
     @staticmethod

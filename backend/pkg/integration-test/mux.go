@@ -74,7 +74,7 @@ const (
 	// OSS, Unauthenticated, Unlicensed
 	openSourceUnauthenticatedUnlicensedPostfix = "/oss-unauthenticated-unlicensed"
 	// NeoCloud, Licensed, Authenticated
-	neoCloudAuthenticatedLicensedPostfix = "/vydoncloud-authenticated"
+	neoCloudAuthenticatedLicensedPostfix = "/vydon-authenticated"
 )
 
 func (s *VydonApiTestClient) setupOssUnauthenticatedLicensedMux(
@@ -84,7 +84,7 @@ func (s *VydonApiTestClient) setupOssUnauthenticatedLicensedMux(
 ) (*http.ServeMux, error) {
 	isLicensed := true
 	isAuthEnabled := false
-	isNeosyncCloud := false
+	isVydonCloud := false
 	enforcedRbacClient, err := s.getEnforcedRbacClient(ctx, pgcontainer)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get enforced rbac client: %w", err)
@@ -93,7 +93,7 @@ func (s *VydonApiTestClient) setupOssUnauthenticatedLicensedMux(
 		pgcontainer,
 		isAuthEnabled,
 		isLicensed,
-		isNeosyncCloud,
+		isVydonCloud,
 		enforcedRbacClient,
 		logger,
 	)
@@ -106,7 +106,7 @@ func (s *VydonApiTestClient) setupOssLicensedAuthMux(
 ) (*http.ServeMux, error) {
 	isLicensed := true
 	isAuthEnabled := true
-	isNeosyncCloud := false
+	isVydonCloud := false
 	enforcedRbacClient, err := s.getEnforcedRbacClient(ctx, pgcontainer)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get enforced rbac client: %w", err)
@@ -115,7 +115,7 @@ func (s *VydonApiTestClient) setupOssLicensedAuthMux(
 		pgcontainer,
 		isAuthEnabled,
 		isLicensed,
-		isNeosyncCloud,
+		isVydonCloud,
 		enforcedRbacClient,
 		logger,
 	)
@@ -127,13 +127,13 @@ func (s *VydonApiTestClient) setupOssUnlicensedMux(
 ) (*http.ServeMux, error) {
 	isLicensed := false
 	isAuthEnabled := false
-	isNeosyncCloud := false
+	isVydonCloud := false
 	permissiveRbacClient := rbac.NewAllowAllClient()
 	return s.setupMux(
 		pgcontainer,
 		isAuthEnabled,
 		isLicensed,
-		isNeosyncCloud,
+		isVydonCloud,
 		permissiveRbacClient,
 		logger,
 	)
@@ -146,7 +146,7 @@ func (s *VydonApiTestClient) setupNeoCloudMux(
 ) (*http.ServeMux, error) {
 	isLicensed := true
 	isAuthEnabled := true
-	isNeosyncCloud := true
+	isVydonCloud := true
 	enforcedRbacClient, err := s.getEnforcedRbacClient(ctx, pgcontainer)
 	if err != nil {
 		return nil, fmt.Errorf("unable to get enforced rbac client: %w", err)
@@ -155,7 +155,7 @@ func (s *VydonApiTestClient) setupNeoCloudMux(
 		pgcontainer,
 		isAuthEnabled,
 		isLicensed,
-		isNeosyncCloud,
+		isVydonCloud,
 		enforcedRbacClient,
 		logger,
 	)
@@ -165,11 +165,11 @@ func (s *VydonApiTestClient) setupMux(
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	isAuthEnabled bool,
 	isLicensed bool,
-	isNeosyncCloud bool,
+	isVydonCloud bool,
 	rbacClient rbac.Interface,
 	logger *slog.Logger,
 ) (*http.ServeMux, error) {
-	isPresidioEnabled := isLicensed || isNeosyncCloud
+	isPresidioEnabled := isLicensed || isVydonCloud
 
 	maxAllowed := int64(10000)
 	var license *testutil.FakeEELicense
@@ -182,7 +182,7 @@ func (s *VydonApiTestClient) setupMux(
 	vydonDb := vydondb.New(pgcontainer.DB, db_queries.New())
 
 	var billingclient billing.Interface
-	if isNeosyncCloud {
+	if isVydonCloud {
 		billingclient = s.Mocks.Billingclient
 	} else {
 		billingclient = nil
@@ -191,7 +191,7 @@ func (s *VydonApiTestClient) setupMux(
 	userService := v1alpha1_useraccountservice.New(
 		&v1alpha1_useraccountservice.Config{
 			IsAuthEnabled:            isAuthEnabled,
-			IsNeosyncCloud:           isNeosyncCloud,
+			IsVydonCloud:           isVydonCloud,
 			DefaultMaxAllowedRecords: &maxAllowed,
 		},
 		vydondb.New(pgcontainer.DB, db_queries.New()),
@@ -217,7 +217,7 @@ func (s *VydonApiTestClient) setupMux(
 	sqlmanagerclient := NewTestSqlManagerClient()
 
 	connectionService := v1alpha1_connectionservice.New(
-		&v1alpha1_connectionservice.Config{IsNeosyncCloud: isNeosyncCloud},
+		&v1alpha1_connectionservice.Config{IsVydonCloud: isVydonCloud},
 		vydonDb,
 		userclient,
 		mongoconnect.NewConnector(),
@@ -261,7 +261,7 @@ func (s *VydonApiTestClient) setupMux(
 	)
 
 	jobService := v1alpha1_jobservice.New(
-		&v1alpha1_jobservice.Config{IsAuthEnabled: isAuthEnabled, IsNeosyncCloud: isNeosyncCloud},
+		&v1alpha1_jobservice.Config{IsAuthEnabled: isAuthEnabled, IsVydonCloud: isVydonCloud},
 		vydonDb,
 		s.Mocks.TemporalClientManager,
 		connectionService,
@@ -278,7 +278,7 @@ func (s *VydonApiTestClient) setupMux(
 		&v1alpha_anonymizationservice.Config{
 			IsPresidioEnabled: isPresidioEnabled,
 			IsAuthEnabled:     isAuthEnabled,
-			IsNeosyncCloud:    isNeosyncCloud,
+			IsVydonCloud:    isVydonCloud,
 		},
 		nil, // meter
 		userclient,

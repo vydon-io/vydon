@@ -9,7 +9,7 @@ import (
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 )
 
-type NeosyncApiAccount struct {
+type VydonApiAccount struct {
 	ID                pgtype.UUID
 	CreatedAt         pgtype.Timestamp
 	UpdatedAt         pgtype.Timestamp
@@ -21,7 +21,7 @@ type NeosyncApiAccount struct {
 	StripeCustomerID  pgtype.Text
 }
 
-type NeosyncApiAccountApiKey struct {
+type VydonApiAccountApiKey struct {
 	ID          pgtype.UUID
 	AccountID   pgtype.UUID
 	KeyValue    string
@@ -35,7 +35,7 @@ type NeosyncApiAccountApiKey struct {
 }
 
 // Stores hooks that can be configured to run as part of an account
-type NeosyncApiAccountHook struct {
+type VydonApiAccountHook struct {
 	ID              pgtype.UUID
 	Name            string
 	Description     string
@@ -50,7 +50,7 @@ type NeosyncApiAccountHook struct {
 	HookType        pgtype.Text
 }
 
-type NeosyncApiAccountInvite struct {
+type VydonApiAccountInvite struct {
 	ID           pgtype.UUID
 	AccountID    pgtype.UUID
 	SenderUserID pgtype.UUID
@@ -63,7 +63,7 @@ type NeosyncApiAccountInvite struct {
 	Role         pgtype.Int4
 }
 
-type NeosyncApiAccountUserAssociation struct {
+type VydonApiAccountUserAssociation struct {
 	ID        pgtype.UUID
 	AccountID pgtype.UUID
 	UserID    pgtype.UUID
@@ -71,7 +71,7 @@ type NeosyncApiAccountUserAssociation struct {
 	UpdatedAt pgtype.Timestamp
 }
 
-type NeosyncApiCasbinRule struct {
+type VydonApiCasbinRule struct {
 	PType     string
 	V0        string
 	V1        string
@@ -83,7 +83,7 @@ type NeosyncApiCasbinRule struct {
 	UpdatedAt pgtype.Timestamptz
 }
 
-type NeosyncApiConnection struct {
+type VydonApiConnection struct {
 	ID               pgtype.UUID
 	CreatedAt        pgtype.Timestamp
 	UpdatedAt        pgtype.Timestamp
@@ -94,7 +94,7 @@ type NeosyncApiConnection struct {
 	UpdatedByID      pgtype.UUID
 }
 
-type NeosyncApiJob struct {
+type VydonApiJob struct {
 	ID                 pgtype.UUID
 	CreatedAt          pgtype.Timestamp
 	UpdatedAt          pgtype.Timestamp
@@ -112,7 +112,7 @@ type NeosyncApiJob struct {
 	JobtypeConfig      []byte
 }
 
-type NeosyncApiJobDestinationConnectionAssociation struct {
+type VydonApiJobDestinationConnectionAssociation struct {
 	ID           pgtype.UUID
 	CreatedAt    pgtype.Timestamp
 	UpdatedAt    pgtype.Timestamp
@@ -122,7 +122,7 @@ type NeosyncApiJobDestinationConnectionAssociation struct {
 }
 
 // Stores hooks that can be configured to run as part of a job
-type NeosyncApiJobHook struct {
+type VydonApiJobHook struct {
 	ID              pgtype.UUID
 	Name            string
 	Description     string
@@ -138,7 +138,7 @@ type NeosyncApiJobHook struct {
 	ConnectionID    pgtype.UUID
 }
 
-type NeosyncApiRuncontext struct {
+type VydonApiRuncontext struct {
 	WorkflowID  string
 	ExternalID  string
 	AccountID   pgtype.UUID
@@ -150,7 +150,7 @@ type NeosyncApiRuncontext struct {
 }
 
 // Stores Slack OAuth connections for a given account
-type NeosyncApiSlackOauthConnection struct {
+type VydonApiSlackOauthConnection struct {
 	ID              pgtype.UUID
 	AccountID       pgtype.UUID
 	OauthV2Response []byte
@@ -160,7 +160,7 @@ type NeosyncApiSlackOauthConnection struct {
 	UpdatedByUserID pgtype.UUID
 }
 
-type NeosyncApiTransformer struct {
+type VydonApiTransformer struct {
 	ID                pgtype.UUID
 	CreatedAt         pgtype.Timestamp
 	UpdatedAt         pgtype.Timestamp
@@ -173,14 +173,14 @@ type NeosyncApiTransformer struct {
 	Source            int32
 }
 
-type NeosyncApiUser struct {
+type VydonApiUser struct {
 	ID        pgtype.UUID
 	CreatedAt pgtype.Timestamp
 	UpdatedAt pgtype.Timestamp
 	UserType  int16
 }
 
-type NeosyncApiUserIdentityProviderAssociation struct {
+type VydonApiUserIdentityProviderAssociation struct {
 	ID          pgtype.UUID
 	UserID      pgtype.UUID
 	ProviderSub string

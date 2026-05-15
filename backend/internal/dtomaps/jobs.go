@@ -12,8 +12,8 @@ import (
 )
 
 func ToJobDto(
-	inputJob *db_queries.NeosyncApiJob,
-	inputDestConnections []db_queries.NeosyncApiJobDestinationConnectionAssociation,
+	inputJob *db_queries.VydonApiJob,
+	inputDestConnections []db_queries.VydonApiJobDestinationConnectionAssociation,
 ) (*mgmtv1alpha1.Job, error) {
 	mappings := []*mgmtv1alpha1.JobMapping{}
 	for _, mapping := range inputJob.Mappings {
@@ -81,7 +81,7 @@ func ToJobDto(
 }
 
 func toDestinationDto(
-	input *db_queries.NeosyncApiJobDestinationConnectionAssociation,
+	input *db_queries.VydonApiJobDestinationConnectionAssociation,
 ) *mgmtv1alpha1.JobDestination {
 	return &mgmtv1alpha1.JobDestination{
 		ConnectionId: vydondb.UUIDString(input.ConnectionID),

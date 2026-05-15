@@ -206,7 +206,7 @@ func Test_TransformCharacterSubstitutionTransformer(t *testing.T) {
 }
 
 func Test_TransformCharacterSubsitutitionRegexEmail(t *testing.T) {
-	emailregex := `(gmail\.com|yahoo\.com|nucleus\.com)$`
+	emailregex := `(gmail\.com|yahoo\.com|vydon\.com)$`
 
 	testEmail := "nick@gmail.com"
 

@@ -8,7 +8,7 @@ import (
 )
 
 func ToAccountApiKeyDto(
-	input *db_queries.NeosyncApiAccountApiKey,
+	input *db_queries.VydonApiAccountApiKey,
 	cleartextKeyValue *string,
 ) *mgmtv1alpha1.AccountApiKey {
 	return &mgmtv1alpha1.AccountApiKey{
