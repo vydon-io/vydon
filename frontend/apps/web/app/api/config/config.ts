@@ -1,6 +1,6 @@
 import { SystemAppConfig } from '@/app/config/app-config';
 
-export const PUBLIC_PATHNAME = '/api/neosync';
+export const PUBLIC_PATHNAME = '/api/vydon';
 
 // This will only be hydrated with env vars if invoked on the server
 // Unfortunately, during a standalone build, this method is invoked and the values here are used as environment variables.
@@ -8,7 +8,7 @@ export const PUBLIC_PATHNAME = '/api/neosync';
 // This only seems to be an issue with the root layout.tsx, where as all sub pages cause a re-render of the root layout
 // which causes them to be their correct values. However, if navigating to "/", the root layout isn't re-rendered and is given the defaults.
 export function getSystemAppConfig(): SystemAppConfig {
-  const isNeosyncCloud = process.env.VYDON_CLOUD === 'true';
+  const isVydonCloud = process.env.VYDON_CLOUD === 'true';
   return {
     isAuthEnabled: process.env.AUTH_ENABLED === 'true',
     publicAppBaseUrl:
@@ -22,7 +22,7 @@ export function getSystemAppConfig(): SystemAppConfig {
       enabled: isAnalyticsEnabled() && !!process.env.UNIFY_KEY,
       key: process.env.UNIFY_KEY,
     },
-    isNeosyncCloud,
+    isVydonCloud,
     isStripeEnabled: process.env.STRIPE_ENABLED === 'true',
     enableRunLogs: process.env.ENABLE_RUN_LOGS === 'true',
     signInProviderId: process.env.AUTH_PROVIDER_ID,
@@ -30,15 +30,15 @@ export function getSystemAppConfig(): SystemAppConfig {
     calendlyUpgradeLink:
       process.env.CALENDLY_UPGRADE_LINK ?? 'https://calendly.com/evis1/30min',
     isGcpCloudStorageConnectionsEnabled: isGcpConnectionsEnabled(),
-    neosyncApiBaseUrl:
+    vydonApiBaseUrl:
       process.env.VYDON_API_BASE_URL ?? 'http://localhost:8080',
-    publicNeosyncApiBaseUrl: PUBLIC_PATHNAME, // ensures that this always points to the same domain
+    publicVydonApiBaseUrl: PUBLIC_PATHNAME, // ensures that this always points to the same domain
     isJobHooksEnabled: process.env.JOBHOOKS_ENABLED === 'true',
     isAccountHooksEnabled:
-      isNeosyncCloud || process.env.ACCOUNT_HOOKS_ENABLED === 'true',
+      isVydonCloud || process.env.ACCOUNT_HOOKS_ENABLED === 'true',
     isSlackAccountHookEnabled:
       process.env.SLACK_ACCOUNT_HOOKS_ENABLED === 'true',
-    isRbacEnabled: isNeosyncCloud || process.env.RBAC_ENABLED === 'true',
+    isRbacEnabled: isVydonCloud || process.env.RBAC_ENABLED === 'true',
     gtag: {
       enabled: isAnalyticsEnabled() && !!process.env.GTAG,
       key: process.env.GTAG,

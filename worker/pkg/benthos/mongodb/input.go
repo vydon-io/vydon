@@ -1,4 +1,4 @@
-package neosync_benthos_mongodb
+package vydon_benthos_mongodb
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 
 	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper/builder"
 	mongodbmapper "github.com/vydon-io/vydon/internal/database-record-mapper/mongodb"
-	neosync_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
+	vydon_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
 	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
@@ -98,7 +98,7 @@ func newMongoInput(
 		sort             map[string]int
 	)
 
-	neosyncConnectionId, err := conf.FieldString(commonFieldClientConnectionId)
+	vydonConnectionId, err := conf.FieldString(commonFieldClientConnectionId)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func newMongoInput(
 		}
 	}
 
-	mClient, err := clientProvider.GetClient(context.Background(), neosyncConnectionId)
+	mClient, err := clientProvider.GetClient(context.Background(), vydonConnectionId)
 	if err != nil {
 		return nil, err
 	}
@@ -249,7 +249,7 @@ func (m *mongoInput) ReadBatch(ctx context.Context) (service.MessageBatch, servi
 				msg.MetaSet("key_type_map", string(keyTypeMapJSON))
 			}
 
-			msg.MetaSetMut(neosync_benthos_metadata.MetaTypeMapStr, keyTypeMap)
+			msg.MetaSetMut(vydon_benthos_metadata.MetaTypeMapStr, keyTypeMap)
 			msg.SetStructuredMut(standardMap)
 		}
 

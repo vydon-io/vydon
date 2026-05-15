@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	AccountIdLabel     = "neosyncAccountId"
-	JobIdLabel         = "neosyncJobId"
+	AccountIdLabel     = "vydonAccountId"
+	JobIdLabel         = "vydonJobId"
 	TemporalWorkflowId = "temporalWorkflowId"
 	TemporalRunId      = "temporalRunId"
 
@@ -19,12 +19,12 @@ const (
 	JobTypeLabel        = "jobType"
 	IsUpdateConfigLabel = "isUpdateConfig"
 
-	NeosyncDateLabel  = "date"
-	NeosyncDateFormat = "2006-01-02"
+	VydonDateLabel  = "date"
+	VydonDateFormat = "2006-01-02"
 
 	TemporalWorkflowIdEnvKey = "TEMPORAL_WORKFLOW_ID"
 	TemporalRunIdEnvKey      = "TEMPORAL_ENV_ID"
-	NeosyncDateEnvKey        = "VYDON_DATE"
+	VydonDateEnvKey        = "VYDON_DATE"
 )
 
 func NewEqLabel(key, value string) MetricLabel {

@@ -1,4 +1,4 @@
-package neosync_benthos_sql
+package vydon_benthos_sql
 
 import (
 	"context"

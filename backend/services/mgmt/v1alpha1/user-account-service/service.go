@@ -7,13 +7,13 @@ import (
 	"github.com/vydon-io/vydon/internal/billing"
 	"github.com/vydon-io/vydon/internal/license"
 	"github.com/vydon-io/vydon/internal/rbac"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/vydon-io/vydon/internal/temporal/clientmanager"
 )
 
 type Service struct {
 	cfg                    *Config
-	db                     *neosyncdb.NeosyncDb
+	db                     *vydondb.VydonDb
 	temporalConfigProvider clientmanager.ConfigProvider
 	authclient             auth_client.Interface
 	authadminclient        authmgmt.Interface
@@ -30,7 +30,7 @@ type Config struct {
 
 func New(
 	cfg *Config,
-	db *neosyncdb.NeosyncDb,
+	db *vydondb.VydonDb,
 	temporalConfigProvider clientmanager.ConfigProvider,
 	authclient auth_client.Interface,
 	authadminclient authmgmt.Interface,

@@ -11,7 +11,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:transform:transformFullName
+// +vydonTransformerBuilder:transform:transformFullName
 
 func init() {
 	spec := bloblang.NewPluginSpec().

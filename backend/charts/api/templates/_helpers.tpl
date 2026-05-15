@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "neosync-api.name" -}}
+{{- define "vydon-api.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "neosync-api.fullname" -}}
+{{- define "vydon-api.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "neosync-api.chart" -}}
+{{- define "vydon-api.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "neosync-api.labels" -}}
-helm.sh/chart: {{ include "neosync-api.chart" . }}
-{{ include "neosync-api.selectorLabels" . }}
+{{- define "vydon-api.labels" -}}
+helm.sh/chart: {{ include "vydon-api.chart" . }}
+{{ include "vydon-api.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "neosync-api.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "neosync-api.name" . }}
+{{- define "vydon-api.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "vydon-api.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "neosync-api.serviceAccountName" -}}
+{{- define "vydon-api.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "neosync-api.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "vydon-api.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -64,7 +64,7 @@ Create the name of the service account to use
 {{/*
 Generate the stringData section for environment variables
 */}}
-{{- define "neosync-api.env-vars" -}}
+{{- define "vydon-api.env-vars" -}}
 DB_HOST: {{ .Values.db.host }}
 DB_PORT: {{ .Values.db.port | quote }}
 DB_NAME: {{ .Values.db.name }}
@@ -81,8 +81,8 @@ PORT: {{ .Values.containerPort | quote }}
 {{- if .Values.otel.enabled }}
 OTEL_EXPORTER_OTLP_PORT: {{ .Values.otel.otlpPort | quote }} # sends to gRPC receiver
 {{- end }}
-{{- if .Values.nucleusEnv }}
-NUCLEUS_ENV: {{ .Values.nucleusEnv }}
+{{- if .Values.vydonEnv }}
+VYDON_ENV: {{ .Values.vydonEnv }}
 {{- end }}
 {{- if and .Values.auth .Values.auth.enabled }}
 AUTH_ENABLED: {{ .Values.auth.enabled | default "false" | quote }}
@@ -141,9 +141,9 @@ AUTH_API_BASEURL: {{ .Values.auth.api.baseUrl }}
 {{- if and .Values.auth .Values.auth.api .Values.auth.api.provider }}
 AUTH_API_PROVIDER: {{ .Values.auth.api.provider }}
 {{- end }}
-NEOSYNC_CLOUD: {{ .Values.neosyncCloud.enabled | default "false" | quote }}
-{{- if .Values.neosyncCloud.enabled }}
-NEOSYNC_CLOUD_ALLOWED_WORKER_API_KEYS: {{ join "," .Values.neosyncCloud.workerApiKeys }}
+VYDON_CLOUD: {{ .Values.vydonCloud.enabled | default "false" | quote }}
+{{- if .Values.vydonCloud.enabled }}
+VYDON_CLOUD_ALLOWED_WORKER_API_KEYS: {{ join "," .Values.vydonCloud.workerApiKeys }}
 {{- end }}
 KUBERNETES_ENABLED: {{ .Values.kubernetes.enabled | default "true" | quote }}
 KUBERNETES_NAMESPACE: {{ .Values.kubernetes.namespace | default .Release.Namespace }}
@@ -182,7 +182,7 @@ EE_LICENSE: {{ .Values.ee.license | quote }}
 {{/*
 Generate the stringData section for environment variables
 */}}
-{{- define "neosync-api.migration-env-vars" -}}
+{{- define "vydon-api.migration-env-vars" -}}
 DB_HOST: {{ .Values.migrations.db.host }}
 DB_PORT: {{ .Values.migrations.db.port | quote }}
 DB_NAME: {{ .Values.migrations.db.name }}

@@ -11,7 +11,7 @@ import (
 	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	tcneosyncapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
+	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	sqlmanager_postgres "github.com/vydon-io/vydon/backend/pkg/sqlmanager/postgres"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	"github.com/vydon-io/vydon/internal/gotypeutil"
@@ -153,12 +153,12 @@ func test_postgres_types(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	alltypesSchema := "alltypes"
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.Go(func() error {
@@ -167,7 +167,7 @@ func test_postgres_types(
 	errgrp.Go(func() error { return postgres.Target.CreateSchemas(errctx, []string{alltypesSchema}) })
 	err := errgrp.Wait()
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	alltypesMappings := pg_alltypes.GetDefaultSyncJobMappings(alltypesSchema)
 
@@ -184,7 +184,7 @@ func test_postgres_types(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: all_types")
@@ -232,12 +232,12 @@ func test_postgres_passthrough_on_new_column_addition(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	alltypesSchema := "alltypes_passthrough"
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.Go(func() error {
@@ -246,7 +246,7 @@ func test_postgres_passthrough_on_new_column_addition(
 	errgrp.Go(func() error { return postgres.Target.CreateSchemas(errctx, []string{alltypesSchema}) })
 	err := errgrp.Wait()
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	expectedResults := []struct {
 		schema   string
@@ -289,7 +289,7 @@ func test_postgres_passthrough_on_new_column_addition(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: all_types")
@@ -326,12 +326,12 @@ func test_postgres_primary_key_transformations(
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
 	redis *tcredis.RedisTestContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "primary_$key_sdef"
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.Go(func() error {
@@ -342,7 +342,7 @@ func test_postgres_primary_key_transformations(
 	})
 	err := errgrp.Wait()
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	defaultMappings := pg_uuids.GetDefaultSyncJobMappings(schema)
 	updatedJobmappings := []*mgmtv1alpha1.JobMapping{}
@@ -394,7 +394,7 @@ func test_postgres_primary_key_transformations(
 		VirtualForeignKeys: pg_humanresources.GetVirtualForeignKeys(schema),
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithRedis(redis.URL))
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithRedis(redis.URL))
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: primary_key_transformations")
@@ -440,12 +440,12 @@ func test_postgres_edgecases(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "CaPiTaL"
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.Go(func() error {
@@ -456,7 +456,7 @@ func test_postgres_edgecases(
 	})
 	err := errgrp.Wait()
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	edgecasesMappings := pg_edgecases.GetDefaultSyncJobMappings(schema)
 
@@ -473,7 +473,7 @@ func test_postgres_edgecases(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: edgecases")
@@ -511,12 +511,12 @@ func test_postgres_virtual_foreign_keys(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "vfk_hr"
 	subsetSchema := "vfk_hr_subset"
 	errgrp, errctx := errgroup.WithContext(ctx)
@@ -535,7 +535,7 @@ func test_postgres_virtual_foreign_keys(
 	})
 	err := errgrp.Wait()
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	humanresourcesMappings := pg_humanresources.GetDefaultSyncJobMappings(schema)
 	subsetHumanresourcesMappings := pg_humanresources.GetDefaultSyncJobMappings(subsetSchema)
@@ -560,7 +560,7 @@ func test_postgres_virtual_foreign_keys(
 		VirtualForeignKeys: slices.Concat(virtualForeignKeys, subsetVirtualForeignKeys),
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: virtual-foreign-keys")
@@ -603,12 +603,12 @@ func test_postgres_javascript_transformers(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	transformersSchema := "transformers"
 	generatorsSchema := "generators"
 	errgrp, errctx := errgroup.WithContext(ctx)
@@ -623,7 +623,7 @@ func test_postgres_javascript_transformers(
 	})
 	err := errgrp.Wait()
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	transformersMappings := getJsTransformerJobmappings(pg_transformers.GetDefaultSyncJobMappings(transformersSchema))
 	generatorsMappings := getJsGeneratorJobmappings(pg_transformers.GetDefaultSyncJobMappings(generatorsSchema))
@@ -641,7 +641,7 @@ func test_postgres_javascript_transformers(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: javascript-transformers")
@@ -670,33 +670,33 @@ func test_postgres_javascript_transformers(
 
 func getJsGeneratorJobmappings(jobmappings []*mgmtv1alpha1.JobMapping) []*mgmtv1alpha1.JobMapping {
 	colTransformerMap := map[string]*mgmtv1alpha1.JobMappingTransformer{
-		"e164_phone_number":   getJavascriptTransformerConfig("return neosync.generateInternationalPhoneNumber({ min: 9, max: 15});"),
-		"email":               getJavascriptTransformerConfig("return neosync.generateEmail({ maxLength: 255});"),
-		"str":                 getJavascriptTransformerConfig("return neosync.generateRandomString({ min: 1, max: 50});"),
-		"measurement":         getJavascriptTransformerConfig("return neosync.generateFloat64({ min: 3.14, max: 300.10});"),
-		"int64":               getJavascriptTransformerConfig("return neosync.generateInt64({ min: 1, max: 50});"),
-		"int64_phone_number":  getJavascriptTransformerConfig("return neosync.generateInt64PhoneNumber({});"),
-		"string_phone_number": getJavascriptTransformerConfig("return neosync.generateStringPhoneNumber({ min: 1, max: 15});"),
-		"first_name":          getJavascriptTransformerConfig("return neosync.generateFirstName({ maxLength: 25});"),
-		"last_name":           getJavascriptTransformerConfig("return neosync.generateLastName({ maxLength: 25});"),
-		"full_name":           getJavascriptTransformerConfig("return neosync.generateFullName({ maxLength: 25});"),
-		"character_scramble":  getJavascriptTransformerConfig("return neosync.generateCity({ maxLength: 100});"),
-		"bool":                getJavascriptTransformerConfig("return neosync.generateBool({});"),
-		"card_number":         getJavascriptTransformerConfig("return neosync.generateCardNumber({ validLuhn: true });"),
-		"categorical":         getJavascriptTransformerConfig("return neosync.generateCategorical({ categories: 'dog,cat,horse'});"),
-		"city":                getJavascriptTransformerConfig("return neosync.generateCity({ maxLength: 100 });"),
-		"full_address":        getJavascriptTransformerConfig("return neosync.generateFullAddress({ maxLength: 100 });"),
-		"gender":              getJavascriptTransformerConfig("return neosync.generateGender({});"),
-		"international_phone": getJavascriptTransformerConfig("return neosync.generateInternationalPhoneNumber({ min: 9, max: 14});"),
-		"sha256":              getJavascriptTransformerConfig("return neosync.generateSHA256Hash({});"),
-		"ssn":                 getJavascriptTransformerConfig("return neosync.generateSSN({});"),
-		"state":               getJavascriptTransformerConfig("return neosync.generateState({});"),
-		"street_address":      getJavascriptTransformerConfig("return neosync.generateStreetAddress({ maxLength: 100 });"),
-		"unix_time":           getJavascriptTransformerConfig("return neosync.generateUnixTimestamp({});"),
-		"username":            getJavascriptTransformerConfig("return neosync.generateUsername({ maxLength: 100 });"),
-		"utc_timestamp":       getJavascriptTransformerConfig("return neosync.generateUTCTimestamp({});"),
-		"uuid":                getJavascriptTransformerConfig("return neosync.generateUUID({});"),
-		"zipcode":             getJavascriptTransformerConfig("return neosync.generateZipcode({});"),
+		"e164_phone_number":   getJavascriptTransformerConfig("return vydon.generateInternationalPhoneNumber({ min: 9, max: 15});"),
+		"email":               getJavascriptTransformerConfig("return vydon.generateEmail({ maxLength: 255});"),
+		"str":                 getJavascriptTransformerConfig("return vydon.generateRandomString({ min: 1, max: 50});"),
+		"measurement":         getJavascriptTransformerConfig("return vydon.generateFloat64({ min: 3.14, max: 300.10});"),
+		"int64":               getJavascriptTransformerConfig("return vydon.generateInt64({ min: 1, max: 50});"),
+		"int64_phone_number":  getJavascriptTransformerConfig("return vydon.generateInt64PhoneNumber({});"),
+		"string_phone_number": getJavascriptTransformerConfig("return vydon.generateStringPhoneNumber({ min: 1, max: 15});"),
+		"first_name":          getJavascriptTransformerConfig("return vydon.generateFirstName({ maxLength: 25});"),
+		"last_name":           getJavascriptTransformerConfig("return vydon.generateLastName({ maxLength: 25});"),
+		"full_name":           getJavascriptTransformerConfig("return vydon.generateFullName({ maxLength: 25});"),
+		"character_scramble":  getJavascriptTransformerConfig("return vydon.generateCity({ maxLength: 100});"),
+		"bool":                getJavascriptTransformerConfig("return vydon.generateBool({});"),
+		"card_number":         getJavascriptTransformerConfig("return vydon.generateCardNumber({ validLuhn: true });"),
+		"categorical":         getJavascriptTransformerConfig("return vydon.generateCategorical({ categories: 'dog,cat,horse'});"),
+		"city":                getJavascriptTransformerConfig("return vydon.generateCity({ maxLength: 100 });"),
+		"full_address":        getJavascriptTransformerConfig("return vydon.generateFullAddress({ maxLength: 100 });"),
+		"gender":              getJavascriptTransformerConfig("return vydon.generateGender({});"),
+		"international_phone": getJavascriptTransformerConfig("return vydon.generateInternationalPhoneNumber({ min: 9, max: 14});"),
+		"sha256":              getJavascriptTransformerConfig("return vydon.generateSHA256Hash({});"),
+		"ssn":                 getJavascriptTransformerConfig("return vydon.generateSSN({});"),
+		"state":               getJavascriptTransformerConfig("return vydon.generateState({});"),
+		"street_address":      getJavascriptTransformerConfig("return vydon.generateStreetAddress({ maxLength: 100 });"),
+		"unix_time":           getJavascriptTransformerConfig("return vydon.generateUnixTimestamp({});"),
+		"username":            getJavascriptTransformerConfig("return vydon.generateUsername({ maxLength: 100 });"),
+		"utc_timestamp":       getJavascriptTransformerConfig("return vydon.generateUTCTimestamp({});"),
+		"uuid":                getJavascriptTransformerConfig("return vydon.generateUUID({});"),
+		"zipcode":             getJavascriptTransformerConfig("return vydon.generateZipcode({});"),
 	}
 	updatedJobmappings := []*mgmtv1alpha1.JobMapping{}
 	for _, jm := range jobmappings {
@@ -716,17 +716,17 @@ func getJsGeneratorJobmappings(jobmappings []*mgmtv1alpha1.JobMapping) []*mgmtv1
 
 func getJsTransformerJobmappings(jobmappings []*mgmtv1alpha1.JobMapping) []*mgmtv1alpha1.JobMapping {
 	colTransformerMap := map[string]*mgmtv1alpha1.JobMappingTransformer{
-		"e164_phone_number":   getJavascriptTransformerConfig("return neosync.transformE164PhoneNumber(value, { preserveLength: true, maxLength: 20});"),
-		"email":               getJavascriptTransformerConfig("return neosync.transformEmail(value, { preserveLength: true, maxLength: 255});"),
-		"str":                 getJavascriptTransformerConfig("return neosync.transformString(value, { preserveLength: true, maxLength: 30});"),
-		"measurement":         getJavascriptTransformerConfig("return neosync.transformFloat64(value, { randomizationRangeMin: 3.14, randomizationRangeMax: 300.10});"),
-		"int64":               getJavascriptTransformerConfig("return neosync.transformInt64(value, { randomizationRangeMin: 1, randomizationRangeMax: 300});"),
-		"int64_phone_number":  getJavascriptTransformerConfig("return neosync.transformInt64PhoneNumber(value, { preserveLength: true});"),
-		"string_phone_number": getJavascriptTransformerConfig("return neosync.transformStringPhoneNumber(value, { preserveLength: true, maxLength: 200});"),
-		"first_name":          getJavascriptTransformerConfig("return neosync.transformFirstName(value, { preserveLength: true, maxLength: 25});"),
-		"last_name":           getJavascriptTransformerConfig("return neosync.transformLastName(value, { preserveLength: true, maxLength: 25});"),
-		"full_name":           getJavascriptTransformerConfig("return neosync.transformFullName(value, { preserveLength: true, maxLength: 25});"),
-		"character_scramble":  getJavascriptTransformerConfig("return neosync.transformCharacterScramble(value, { preserveLength: false, maxLength: 100});"),
+		"e164_phone_number":   getJavascriptTransformerConfig("return vydon.transformE164PhoneNumber(value, { preserveLength: true, maxLength: 20});"),
+		"email":               getJavascriptTransformerConfig("return vydon.transformEmail(value, { preserveLength: true, maxLength: 255});"),
+		"str":                 getJavascriptTransformerConfig("return vydon.transformString(value, { preserveLength: true, maxLength: 30});"),
+		"measurement":         getJavascriptTransformerConfig("return vydon.transformFloat64(value, { randomizationRangeMin: 3.14, randomizationRangeMax: 300.10});"),
+		"int64":               getJavascriptTransformerConfig("return vydon.transformInt64(value, { randomizationRangeMin: 1, randomizationRangeMax: 300});"),
+		"int64_phone_number":  getJavascriptTransformerConfig("return vydon.transformInt64PhoneNumber(value, { preserveLength: true});"),
+		"string_phone_number": getJavascriptTransformerConfig("return vydon.transformStringPhoneNumber(value, { preserveLength: true, maxLength: 200});"),
+		"first_name":          getJavascriptTransformerConfig("return vydon.transformFirstName(value, { preserveLength: true, maxLength: 25});"),
+		"last_name":           getJavascriptTransformerConfig("return vydon.transformLastName(value, { preserveLength: true, maxLength: 25});"),
+		"full_name":           getJavascriptTransformerConfig("return vydon.transformFullName(value, { preserveLength: true, maxLength: 25});"),
+		"character_scramble":  getJavascriptTransformerConfig("return vydon.transformCharacterScramble(value, { preserveLength: false, maxLength: 100});"),
 	}
 	updatedJobmappings := []*mgmtv1alpha1.JobMapping{}
 	for _, jm := range jobmappings {
@@ -754,12 +754,12 @@ func test_postgres_skip_foreign_keys_violations(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "fk_violations"
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.Go(func() error {
@@ -770,7 +770,7 @@ func test_postgres_skip_foreign_keys_violations(
 	})
 	err := errgrp.Wait()
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	jobmappings := pg_foreignkey_violations.GetDefaultSyncJobMappings(schema)
 
@@ -788,7 +788,7 @@ func test_postgres_skip_foreign_keys_violations(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: skip-foreign-keys-violations")
@@ -824,12 +824,12 @@ func test_postgres_foreign_keys_violations_error(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "fk_violations_error"
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.Go(func() error {
@@ -840,7 +840,7 @@ func test_postgres_foreign_keys_violations_error(
 	})
 	err := errgrp.Wait()
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	jobmappings := pg_foreignkey_violations.GetDefaultSyncJobMappings(schema)
 
@@ -858,7 +858,7 @@ func test_postgres_foreign_keys_violations_error(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: foreign-keys-violations-error")
 	err = testworkflow.TestEnv.GetWorkflowError()
@@ -873,12 +873,12 @@ func test_postgres_subsetting(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "subsetting"
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.Go(func() error {
@@ -889,7 +889,7 @@ func test_postgres_subsetting(
 	})
 	err := errgrp.Wait()
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	jobmappings := pg_subsetting.GetDefaultSyncJobMappings(schema)
 
@@ -917,7 +917,7 @@ func test_postgres_subsetting(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithMaxIterations(2), WithPageLimit(3))
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithMaxIterations(2), WithPageLimit(3))
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: skip-foreign-keys-violations")
@@ -968,16 +968,16 @@ func test_postgres_generate_workflow(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "generate"
 	err := postgres.Target.RunCreateStmtsInSchema(ctx, testdataFolder, []string{"alltypes/create-tables.sql"}, schema)
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	table := "all_data_types"
 	mappings := []*mgmtv1alpha1.JobMapping{
@@ -1034,7 +1034,7 @@ func test_postgres_generate_workflow(
 	}))
 	require.NoError(t, err)
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.Msg.GetJob().GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: generate")
@@ -1071,16 +1071,16 @@ func test_postgres_small_batch_size(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "small_batch"
 	err := postgres.Source.RunCreateStmtsInSchema(ctx, testdataFolder, []string{"uuids/create-tables.sql", "humanresources/create-tables.sql", "humanresources/create-constraints.sql"}, schema)
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	defaultMappings := pg_uuids.GetDefaultSyncJobMappings(schema)
 	transformHumanresourcesMappings := pg_humanresources.GetDefaultSyncJobMappings(schema)
@@ -1101,7 +1101,7 @@ func test_postgres_small_batch_size(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithPageLimit(5), WithMaxIterations(2))
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithPageLimit(5), WithMaxIterations(2))
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: tablesync_pages")
@@ -1161,12 +1161,12 @@ func test_postgres_complex(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	folder := testdataFolder + "/complex"
 	err := postgres.Source.RunSqlFiles(ctx, &folder, []string{"create-tables.sql", "inserts.sql"})
 	require.NoError(t, err)
@@ -1174,7 +1174,7 @@ func test_postgres_complex(
 	jobmappings := pg_complex.GetDefaultSyncJobMappings()
 
 	t.Run("sync", func(t *testing.T) {
-		neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+		vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 		job := createPostgresSyncJob(t, ctx, jobclient, &createJobConfig{
 			AccountId:   accountId,
@@ -1190,7 +1190,7 @@ func test_postgres_complex(
 			},
 		})
 
-		testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithMaxIterations(10), WithPageLimit(100))
+		testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithMaxIterations(10), WithPageLimit(100))
 		testworkflow.RequireActivitiesCompletedSuccessfully(t)
 		testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 		require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: space-mission")
@@ -1292,7 +1292,7 @@ func test_postgres_complex(
 			"scientific_data.experiments": "experiment_id < 5",
 		}
 
-		neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+		vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 		job := createPostgresSyncJob(t, ctx, jobclient, &createJobConfig{
 			AccountId:   accountId,
 			SourceConn:  sourceConn,
@@ -1308,7 +1308,7 @@ func test_postgres_complex(
 			},
 		})
 
-		testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithMaxIterations(10), WithPageLimit(100))
+		testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithMaxIterations(10), WithPageLimit(100))
 		testworkflow.RequireActivitiesCompletedSuccessfully(t)
 		testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 		require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: space-mission-subset")
@@ -1397,17 +1397,17 @@ func test_postgres_schema_reconciliation(
 	t *testing.T,
 	ctx context.Context,
 	postgres *tcpostgres.PostgresTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 	shouldTruncate bool,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := fmt.Sprintf("schema_drift_%t", shouldTruncate)
 	err := postgres.Source.RunCreateStmtsInSchema(ctx, testdataFolder, []string{"schema-init/create-tables.sql"}, schema)
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-postgres-sync")
+	vydonApi.MockTemporalForCreateJob("test-postgres-sync")
 
 	job := createPostgresSyncJob(t, ctx, jobclient, &createJobConfig{
 		AccountId:   accountId,
@@ -1424,7 +1424,7 @@ func test_postgres_schema_reconciliation(
 	})
 	destinationId := job.GetDestinations()[0].GetId()
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithPostgresSchemaDrift(), WithMaxIterations(100), WithPageLimit(10000))
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithPostgresSchemaDrift(), WithMaxIterations(100), WithPageLimit(10000))
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: schema_drift")
@@ -1472,7 +1472,7 @@ func test_postgres_schema_reconciliation(
 	updatedMappings = append(updatedMappings, pg_schema_init.GetAlteredSyncJobMappings(schema)...)
 	job = updateJobMappings(t, ctx, jobclient, job.GetId(), updatedMappings, job.GetSource())
 
-	testworkflow = NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithPostgresSchemaDrift(), WithMaxIterations(100), WithPageLimit(1000))
+	testworkflow = NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithPostgresSchemaDrift(), WithMaxIterations(100), WithPageLimit(1000))
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: postgres-schema-reconciliation-run-2")

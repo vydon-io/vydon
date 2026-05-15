@@ -1,38 +1,38 @@
 ---
 title: sync
-description: Learn how to sync data to a local destination with the neosync sync CLI command.
+description: Learn how to sync data to a local destination with the vydon sync CLI command.
 id: sync
 hide_title: false
 slug: /cli/sync
 ---
 
-# neosync sync
+# vydon sync
 
 ## Overview
 
-Learn how to sync data to a local destination with the neosync sync CLI command.
+Learn how to sync data to a local destination with the vydon sync CLI command.
 
-The `neosync sync` command is used to sync data from a neosync connection to a local destination.
+The `vydon sync` command is used to sync data from a vydon connection to a local destination.
 Supported sources are currently postgres, mysql connections and AWS S3 Sync Job.
 Supported are currently postgres and mysql.
 
 ## Usage
 
 ```bash
-neosync sync
+vydon sync
 ```
 
 ## Options
 
-The following options can be passed using the `neosync sync` command:
+The following options can be passed using the `vydon sync` command:
 
 ### General Options
 
-- `--api-key` - Neosync API Key. Takes precedence over `$NEOSYNC_API_KEY`
-- `--config` - Path to yaml config. Defaults to `neosync.yaml` in current directory.
-- `--connection-id` - Neosync connection id for sync data source. Takes precedence over config.
-- `--job-id` - Neosync job id for sync data source. For [AWS S3, GCP Cloud Storage] jobs only. Takes precedence over config.
-- `--job-run-id` - Neosync job run id for sync data source. For [AWS S3, GCP Cloud Storage] jobs only. Takes precedence over config.
+- `--api-key` - Vydon API Key. Takes precedence over `$VYDON_API_KEY`
+- `--config` - Path to yaml config. Defaults to `vydon.yaml` in current directory.
+- `--connection-id` - Vydon connection id for sync data source. Takes precedence over config.
+- `--job-id` - Vydon job id for sync data source. For [AWS S3, GCP Cloud Storage] jobs only. Takes precedence over config.
+- `--job-run-id` - Vydon job run id for sync data source. For [AWS S3, GCP Cloud Storage] jobs only. Takes precedence over config.
 - `--output` - Sets output type (auto, plain, tty). (default `auto`).
 - `--debug` - Sets the log level to debug and prints much more information. Works best with `--output plain`.
 
@@ -74,7 +74,7 @@ The following options can be passed using the `neosync sync` command:
 To persist settings, a yaml config may be enabled. It can be provided like so:
 
 ```
-neosync sync --config ./path/to/config.yaml
+vydon sync --config ./path/to/config.yaml
 ```
 
 > **NB:** Flags will take precedence over values provided in the config.
@@ -122,8 +122,8 @@ aws-dynamodb-destination:
 
 ## Circular Dependencies
 
-**Support for Circular Dependencies**: The CLI sync feature in Neosync is capable of managing both self-referencing circular dependencies and those involving multiple tables.
-In scenarios where the source data is not from a SQL database (like AWS S3) but the destination is a SQL database, Neosync utilizes the foreign key constraints of the destination
+**Support for Circular Dependencies**: The CLI sync feature in Vydon is capable of managing both self-referencing circular dependencies and those involving multiple tables.
+In scenarios where the source data is not from a SQL database (like AWS S3) but the destination is a SQL database, Vydon utilizes the foreign key constraints of the destination
 SQL database to effectively insert data. This approach ensures data integrity and respects the relational structure of the SQL database.
 
 **Nullable Columns:** For circular dependencies to work, at least one table involved in the dependency must have a column that is nullable.
@@ -134,6 +134,6 @@ SQL database to effectively insert data. This approach ensures data integrity an
 
 ## Syncing from AWS S3
 
-To synchronize data from a Neosync job with AWS S3 as the destination, you must provide either a job ID or job run ID. Using a job ID will sync data from the most recent job run.
+To synchronize data from a Vydon job with AWS S3 as the destination, you must provide either a job ID or job run ID. Using a job ID will sync data from the most recent job run.
 During this process, the table constraints from the `destination-connection-url` database are used to determine the correct order for syncing the data. This ensures that the data is
 synchronized in a way that respects the relational structure and integrity of the local database.

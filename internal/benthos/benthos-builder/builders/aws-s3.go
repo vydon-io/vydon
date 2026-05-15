@@ -10,7 +10,7 @@ import (
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
 	"github.com/vydon-io/vydon/internal/runconfigs"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 type awsS3SyncBuilder struct {
@@ -57,7 +57,7 @@ func (b *awsS3SyncBuilder) BuildDestinationConfig(
 		"workflows",
 		params.JobRunId,
 		"activities",
-		neosync_benthos.BuildBenthosTable(benthosConfig.TableSchema, benthosConfig.TableName),
+		vydon_benthos.BuildBenthosTable(benthosConfig.TableSchema, benthosConfig.TableName),
 		"data",
 		`records-${!count("files")}-${!timestamp_unix_nano()}.jsonl.gz`,
 	)
@@ -81,23 +81,23 @@ func (b *awsS3SyncBuilder) BuildDestinationConfig(
 		storageClass = convertToS3StorageClass(destinationOpts.GetStorageClass()).String()
 	}
 
-	config.Outputs = append(config.Outputs, neosync_benthos.Outputs{
-		Fallback: []neosync_benthos.Outputs{
+	config.Outputs = append(config.Outputs, vydon_benthos.Outputs{
+		Fallback: []vydon_benthos.Outputs{
 			{
-				AwsS3: &neosync_benthos.AwsS3Insert{
+				AwsS3: &vydon_benthos.AwsS3Insert{
 					Bucket:       connAwsS3Config.Bucket,
 					MaxInFlight:  int(batchingConfig.MaxInFlight),
 					Timeout:      timeout,
 					StorageClass: storageClass,
 					Path:         strings.Join(s3pathpieces, "/"),
 					ContentType:  "application/gzip",
-					Batching: &neosync_benthos.Batching{
+					Batching: &vydon_benthos.Batching{
 						Count:  batchingConfig.BatchCount,
 						Period: batchingConfig.BatchPeriod,
-						Processors: []*neosync_benthos.BatchProcessor{
-							{NeosyncToJson: &neosync_benthos.NeosyncToJsonConfig{}},
-							{Archive: &neosync_benthos.ArchiveProcessor{Format: "lines"}},
-							{Compress: &neosync_benthos.CompressProcessor{Algorithm: "gzip"}},
+						Processors: []*vydon_benthos.BatchProcessor{
+							{VydonToJson: &vydon_benthos.VydonToJsonConfig{}},
+							{Archive: &vydon_benthos.ArchiveProcessor{Format: "lines"}},
+							{Compress: &vydon_benthos.CompressProcessor{Algorithm: "gzip"}},
 						},
 					},
 					Credentials: buildBenthosS3Credentials(connAwsS3Config.Credentials),
@@ -106,9 +106,9 @@ func (b *awsS3SyncBuilder) BuildDestinationConfig(
 				},
 			},
 			// kills activity depending on error
-			{Error: &neosync_benthos.ErrorOutputConfig{
+			{Error: &vydon_benthos.ErrorOutputConfig{
 				ErrorMsg: `${! meta("fallback_error")}`,
-				Batching: &neosync_benthos.Batching{
+				Batching: &vydon_benthos.Batching{
 					Period: batchingConfig.BatchPeriod,
 					Count:  batchingConfig.BatchCount,
 				},

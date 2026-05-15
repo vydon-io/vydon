@@ -38,7 +38,7 @@ const ALL_PLANS: Plan[] = [
   {
     name: 'Trial',
     description:
-      'The easiest way to try out Neosync and see if it is right for your organization.',
+      'The easiest way to try out Vydon and see if it is right for your organization.',
     price: 'Free 14-day Trial',
     buttonText: 'Start free trial',
     features: [
@@ -49,7 +49,7 @@ const ALL_PLANS: Plan[] = [
       'Data Anonymization',
       'Synthetic Data Generation',
       'US Region',
-      'Neosync Infrastructure',
+      'Vydon Infrastructure',
       'Community Discord',
     ],
     planType: UserAccountType.PERSONAL,
@@ -57,7 +57,7 @@ const ALL_PLANS: Plan[] = [
   {
     name: 'Team',
     description:
-      'The simplest and fastest way to get started with Neosync for Teams.',
+      'The simplest and fastest way to get started with Vydon for Teams.',
     price: 'Pay-as-you-go',
     buttonText: 'Get Started',
     features: [
@@ -73,7 +73,7 @@ const ALL_PLANS: Plan[] = [
   {
     name: 'Enterprise',
     description:
-      'Best for organizations who want to self-host Neosync and are operating at scale.',
+      'Best for organizations who want to self-host Vydon and are operating at scale.',
     price: 'Custom',
     buttonText: `Let's talk`,
     features: [
@@ -81,7 +81,7 @@ const ALL_PLANS: Plan[] = [
       'SSO',
       'RBAC',
       'Webhooks',
-      'Self-hosted or Neosync Infrastructure',
+      'Self-hosted or Vydon Infrastructure',
       'Audit Logs',
       'Streaming Mode',
       'White-glove implementation',
@@ -99,7 +99,7 @@ export default function Billing(): ReactElement {
     return <Skeleton />;
   }
 
-  if (!systemAppConfigData?.isNeosyncCloud) {
+  if (!systemAppConfigData?.isVydonCloud) {
     return <Error statusCode={404} />;
   }
 
@@ -402,7 +402,7 @@ function CreateNewTeamButton(): ReactElement {
           Create Team
         </Button>
       }
-      showSubscriptionInfo={true} // This is only rendered in neosync cloud
+      showSubscriptionInfo={true} // This is only rendered in vydon cloud
       showConvertPersonalToTeamOption={
         account?.type === UserAccountType.PERSONAL
       }

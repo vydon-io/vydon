@@ -16,7 +16,7 @@ import (
 
 var ErrUnsupported = errors.New("pii text transformer is not supported in the open-source vydon distribution")
 
-type NeosyncOperatorApi interface {
+type VydonOperatorApi interface {
 	Transform(ctx context.Context, config *mgmtv1alpha1.TransformerConfig, value string) (string, error)
 }
 
@@ -24,7 +24,7 @@ func TransformPiiText(
 	_ context.Context,
 	_ presidio.AnalyzeInterface,
 	_ presidio.AnonymizeInterface,
-	_ NeosyncOperatorApi,
+	_ VydonOperatorApi,
 	_ *mgmtv1alpha1.TransformPiiText,
 	value string,
 	_ *slog.Logger,
@@ -32,7 +32,7 @@ func TransformPiiText(
 	return value, ErrUnsupported
 }
 
-type MockNeosyncOperatorApi struct {
+type MockVydonOperatorApi struct {
 	mock.Mock
 }
 
@@ -41,14 +41,14 @@ type mockT interface {
 	Cleanup(func())
 }
 
-func NewMockNeosyncOperatorApi(t mockT) *MockNeosyncOperatorApi {
-	m := &MockNeosyncOperatorApi{}
+func NewMockVydonOperatorApi(t mockT) *MockVydonOperatorApi {
+	m := &MockVydonOperatorApi{}
 	m.Mock.Test(t)
 	t.Cleanup(func() { m.AssertExpectations(t) })
 	return m
 }
 
-func (m *MockNeosyncOperatorApi) Transform(ctx context.Context, config *mgmtv1alpha1.TransformerConfig, value string) (string, error) {
+func (m *MockVydonOperatorApi) Transform(ctx context.Context, config *mgmtv1alpha1.TransformerConfig, value string) (string, error) {
 	args := m.Called(ctx, config, value)
 	return args.String(0), args.Error(1)
 }

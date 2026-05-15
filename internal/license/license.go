@@ -1,5 +1,5 @@
 // Package license provides a permissive license shim for the OSS
-// distribution. The original Neosync fork supported a paid Enterprise
+// distribution. The original Vydon fork supported a paid Enterprise
 // Edition gated by a signed license file. Vydon ships under MIT with
 // no proprietary gates, so every license check returns true.
 //

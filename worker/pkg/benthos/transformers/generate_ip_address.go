@@ -12,7 +12,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateIpAddress
+// +vydonTransformerBuilder:generate:generateIpAddress
 
 type IpType string
 

@@ -1,4 +1,4 @@
-package neosyncotel
+package vydonotel
 
 import (
 	"context"

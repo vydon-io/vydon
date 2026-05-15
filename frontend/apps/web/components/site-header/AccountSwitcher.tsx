@@ -83,14 +83,14 @@ export default function AccountSwitcher(_: Props): ReactElement | null {
             setShowNewTeamDialog(true);
           }}
           showCreateTeamDialog={
-            !systemAppConfigData?.isNeosyncCloud ||
-            (systemAppConfigData.isNeosyncCloud &&
+            !systemAppConfigData?.isVydonCloud ||
+            (systemAppConfigData.isVydonCloud &&
               systemAppConfigData.isStripeEnabled)
           }
         />
       }
       showSubscriptionInfo={
-        (systemAppConfigData?.isNeosyncCloud ?? false) &&
+        (systemAppConfigData?.isVydonCloud ?? false) &&
         (systemAppConfigData?.isStripeEnabled ?? false)
       }
       showConvertPersonalToTeamOption={

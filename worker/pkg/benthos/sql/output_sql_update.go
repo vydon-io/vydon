@@ -1,4 +1,4 @@
-package neosync_benthos_sql
+package vydon_benthos_sql
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	_ "github.com/doug-martin/goqu/v9/dialect/mysql"
 	_ "github.com/doug-martin/goqu/v9/dialect/postgres"
 	"github.com/vydon-io/vydon/backend/pkg/sqldbtx"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	querybuilder "github.com/vydon-io/vydon/worker/pkg/query-builder"
 	"github.com/redpanda-data/benthos/v4/public/service"
 )
@@ -186,7 +186,7 @@ func (s *pooledUpdateOutput) WriteBatch(ctx context.Context, batch service.Messa
 		}
 		if _, err := db.ExecContext(ctx, query); err != nil {
 			if !s.skipForeignKeyViolations ||
-				!neosync_benthos.IsForeignKeyViolationError(err.Error()) {
+				!vydon_benthos.IsForeignKeyViolationError(err.Error()) {
 				return err
 			}
 		}

@@ -1,4 +1,4 @@
-package neosync_benthos_mongodb
+package vydon_benthos_mongodb
 
 import (
 	"context"
@@ -119,7 +119,7 @@ func newOutputWriter(
 	db = &outputWriter{
 		log: res.Logger(),
 	}
-	neosyncConnectionid, err := conf.FieldString(commonFieldClientConnectionId)
+	vydonConnectionid, err := conf.FieldString(commonFieldClientConnectionId)
 	if err != nil {
 		return nil, err
 	}
@@ -127,7 +127,7 @@ func newOutputWriter(
 	if err != nil {
 		return nil, err
 	}
-	mClient, err := clientProvider.GetClient(context.Background(), neosyncConnectionid)
+	mClient, err := clientProvider.GetClient(context.Background(), vydonConnectionid)
 	if err != nil {
 		return nil, err
 	}

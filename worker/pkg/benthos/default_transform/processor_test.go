@@ -1,4 +1,4 @@
-package neosync_benthos_defaulttransform
+package vydon_benthos_defaulttransform
 
 import (
 	"testing"

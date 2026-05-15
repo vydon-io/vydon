@@ -19,8 +19,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
-	neosync_benthos_transformers "github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos_transformers "github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 )
 
 const (
@@ -234,7 +234,7 @@ func TestShouldHaltOnSchemaAddition(t *testing.T) {
 				"id":         &sqlmanager_shared.DatabaseSchemaRow{},
 				"created_by": &sqlmanager_shared.DatabaseSchemaRow{},
 			},
-			"neosync_api.accounts": {
+			"vydon_api.accounts": {
 				"id":   &sqlmanager_shared.DatabaseSchemaRow{},
 				"name": &sqlmanager_shared.DatabaseSchemaRow{},
 			},
@@ -491,42 +491,42 @@ func Test_buildBenthosS3Credentials(t *testing.T) {
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{}),
-		&neosync_benthos.AwsCredentials{},
+		&vydon_benthos.AwsCredentials{},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{Profile: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Profile: "foo"},
+		&vydon_benthos.AwsCredentials{Profile: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{AccessKeyId: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Id: "foo"},
+		&vydon_benthos.AwsCredentials{Id: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{SecretAccessKey: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Secret: "foo"},
+		&vydon_benthos.AwsCredentials{Secret: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{SessionToken: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Token: "foo"},
+		&vydon_benthos.AwsCredentials{Token: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{FromEc2Role: shared.Ptr(true)}),
-		&neosync_benthos.AwsCredentials{FromEc2Role: true},
+		&vydon_benthos.AwsCredentials{FromEc2Role: true},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{RoleArn: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Role: "foo"},
+		&vydon_benthos.AwsCredentials{Role: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{RoleExternalId: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{RoleExternalId: "foo"},
+		&vydon_benthos.AwsCredentials{RoleExternalId: "foo"},
 	)
 	require.Equal(
 		t,
@@ -539,7 +539,7 @@ func Test_buildBenthosS3Credentials(t *testing.T) {
 			RoleArn:         shared.Ptr("role"),
 			RoleExternalId:  shared.Ptr("foo"),
 		}),
-		&neosync_benthos.AwsCredentials{
+		&vydon_benthos.AwsCredentials{
 			Profile:        "profile",
 			Id:             "access-key",
 			Secret:         "secret",
@@ -967,8 +967,8 @@ func Test_computeMutationFunction_Validate_Bloblang_Output(t *testing.T) {
 	}
 
 	blobenv := bloblang.NewEnvironment()
-	neosync_benthos_transformers.RegisterTransformIdentityScramble(blobenv, nil)
-	neosync_benthos_transformers.RegisterTransformPiiText(blobenv, nil)
+	vydon_benthos_transformers.RegisterTransformIdentityScramble(blobenv, nil)
+	vydon_benthos_transformers.RegisterTransformPiiText(blobenv, nil)
 
 	for _, transformer := range transformers {
 		t.Run(fmt.Sprintf("%s_%T_lint", t.Name(), transformer.Config.Config), func(t *testing.T) {
@@ -1126,8 +1126,8 @@ func Test_computeMutationFunction_Validate_Bloblang_Output_EmptyConfigs(t *testi
 	}
 
 	blobenv := bloblang.NewEnvironment()
-	neosync_benthos_transformers.RegisterTransformIdentityScramble(blobenv, nil)
-	neosync_benthos_transformers.RegisterTransformPiiText(blobenv, nil)
+	vydon_benthos_transformers.RegisterTransformIdentityScramble(blobenv, nil)
+	vydon_benthos_transformers.RegisterTransformPiiText(blobenv, nil)
 
 	for _, transformer := range transformers {
 		t.Run(fmt.Sprintf("%s_%T_lint", t.Name(), transformer.Config.Config), func(t *testing.T) {

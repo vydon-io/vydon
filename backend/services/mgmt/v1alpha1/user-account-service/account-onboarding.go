@@ -9,7 +9,7 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 	"github.com/vydon-io/vydon/internal/rbac"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 func (s *Service) GetAccountOnboardingConfig(
@@ -30,7 +30,7 @@ func (s *Service) GetAccountOnboardingConfig(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (s *Service) SetAccountOnboardingConfig(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}

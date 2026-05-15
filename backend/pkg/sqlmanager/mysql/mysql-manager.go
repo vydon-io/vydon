@@ -14,7 +14,7 @@ import (
 	"github.com/doug-martin/goqu/v9"
 	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -41,9 +41,9 @@ func (m *MysqlManager) GetDatabaseSchema(
 	ctx context.Context,
 ) ([]*sqlmanager_shared.DatabaseSchemaRow, error) {
 	dbSchemas, err := m.querier.GetDatabaseSchema(ctx, m.pool)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.DatabaseSchemaRow{}, nil
 	}
 	result := []*sqlmanager_shared.DatabaseSchemaRow{}
@@ -313,9 +313,9 @@ func (m *MysqlManager) GetTableConstraintsBySchema(
 	}
 
 	rows, err := m.querier.GetTableConstraintsBySchemas(ctx, m.pool, schemas)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return &sqlmanager_shared.TableConstraints{}, nil
 	}
 
@@ -407,9 +407,9 @@ func jsonRawToSlice[T any](j json.RawMessage) ([]T, error) {
 
 func (m *MysqlManager) GetRolePermissionsMap(ctx context.Context) (map[string][]string, error) {
 	rows, err := m.querier.GetMysqlRolePermissions(ctx, m.pool)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return map[string][]string{}, nil
 	}
 
@@ -1071,9 +1071,9 @@ func (m *MysqlManager) GetSchemaTableTriggers(
 					Tables: tables,
 				},
 			)
-			if err != nil && !neosyncdb.IsNoRows(err) {
+			if err != nil && !vydondb.IsNoRows(err) {
 				return err
-			} else if err != nil && neosyncdb.IsNoRows(err) {
+			} else if err != nil && vydondb.IsNoRows(err) {
 				return nil
 			}
 
@@ -1203,9 +1203,9 @@ func (m *MysqlManager) getFunctionsBySchemas(
 	schemas []string,
 ) ([]*sqlmanager_shared.DataType, error) {
 	rows, err := m.querier.GetCustomFunctionsBySchemas(ctx, m.pool, schemas)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.DataType{}, nil
 	}
 
@@ -1258,7 +1258,7 @@ func wrapIdempotentConstraint(
 	constraintname,
 	constraintStmt string,
 ) string {
-	procedureName := fmt.Sprintf("NeosyncAddConstraint_%s", hashInput(schema, table, constraintname))[:64]
+	procedureName := fmt.Sprintf("VydonAddConstraint_%s", hashInput(schema, table, constraintname))[:64]
 	stmt := fmt.Sprintf(`
 CREATE PROCEDURE %[1]s()
 BEGIN
@@ -1327,7 +1327,7 @@ func wrapIdempotentIndex(
 			columnInput = append(columnInput, EscapeMysqlColumn(col))
 		}
 	}
-	procedureName := fmt.Sprintf("NeosyncAddIndex_%s", hashInput(hashParams...))[:64]
+	procedureName := fmt.Sprintf("VydonAddIndex_%s", hashInput(hashParams...))[:64]
 	indexStmt := createIndexStmt(schema, table, idxInfo, columnInput)
 	stmt := fmt.Sprintf(`
 CREATE PROCEDURE %[1]s()

@@ -10,7 +10,7 @@ import (
 	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
 	bb_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
 	"github.com/vydon-io/vydon/internal/runconfigs"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 type mongodbSyncBuilder struct {
@@ -35,11 +35,11 @@ func (b *mongodbSyncBuilder) BuildSourceConfigs(
 
 	benthosConfigs := []*bb_internal.BenthosSourceConfig{}
 	for _, tableMapping := range groupedMappings {
-		bc := &neosync_benthos.BenthosConfig{
-			StreamConfig: neosync_benthos.StreamConfig{
-				Input: &neosync_benthos.InputConfig{
-					Inputs: neosync_benthos.Inputs{
-						PooledMongoDB: &neosync_benthos.InputMongoDb{
+		bc := &vydon_benthos.BenthosConfig{
+			StreamConfig: vydon_benthos.StreamConfig{
+				Input: &vydon_benthos.InputConfig{
+					Inputs: vydon_benthos.Inputs{
+						PooledMongoDB: &vydon_benthos.InputMongoDb{
 							ConnectionId: params.SourceConnection.GetId(),
 							Database:     tableMapping.Schema,
 							Collection:   tableMapping.Table,
@@ -47,15 +47,15 @@ func (b *mongodbSyncBuilder) BuildSourceConfigs(
 						},
 					},
 				},
-				Pipeline: &neosync_benthos.PipelineConfig{
+				Pipeline: &vydon_benthos.PipelineConfig{
 					Threads:    -1,
-					Processors: []neosync_benthos.ProcessorConfig{},
+					Processors: []vydon_benthos.ProcessorConfig{},
 				},
-				Output: &neosync_benthos.OutputConfig{
-					Outputs: neosync_benthos.Outputs{
-						Broker: &neosync_benthos.OutputBrokerConfig{
+				Output: &vydon_benthos.OutputConfig{
+					Outputs: vydon_benthos.Outputs{
+						Broker: &vydon_benthos.OutputBrokerConfig{
 							Pattern: "fan_out",
-							Outputs: []neosync_benthos.Outputs{},
+							Outputs: []vydon_benthos.Outputs{},
 						},
 					},
 				},
@@ -138,7 +138,7 @@ func (b *mongodbSyncBuilder) BuildDestinationConfig(
 	)
 	config.Outputs = append(
 		config.Outputs,
-		neosync_benthos.Outputs{PooledMongoDB: &neosync_benthos.OutputMongoDb{
+		vydon_benthos.Outputs{PooledMongoDB: &vydon_benthos.OutputMongoDb{
 			ConnectionId: params.DestConnection.GetId(),
 
 			Database:   benthosConfig.TableSchema,
@@ -153,7 +153,7 @@ func (b *mongodbSyncBuilder) BuildDestinationConfig(
 			FilterMap: `
 			root._id = this._id
 		`,
-			WriteConcern: &neosync_benthos.MongoWriteConcern{
+			WriteConcern: &vydon_benthos.MongoWriteConcern{
 				W: "1",
 			},
 		},

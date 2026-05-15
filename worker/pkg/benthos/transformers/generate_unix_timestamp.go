@@ -10,7 +10,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateUnixTimestamp
+// +vydonTransformerBuilder:generate:generateUnixTimestamp
 
 func init() {
 	spec := bloblang.NewPluginSpec().

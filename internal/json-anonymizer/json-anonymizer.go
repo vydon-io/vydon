@@ -400,7 +400,7 @@ func initTransformerExecutors(
 			transformer_executor.WithTransformPiiTextConfig(
 				anonymizeConfig.analyze,
 				anonymizeConfig.anonymize,
-				newNeosyncOperatorApi(execOpts),
+				newVydonOperatorApi(execOpts),
 				anonymizeConfig.defaultLanguage,
 			),
 		)
@@ -446,7 +446,7 @@ func initDefaultTransformerExecutors(
 			transformer_executor.WithTransformPiiTextConfig(
 				anonymizeConfig.analyze,
 				anonymizeConfig.anonymize,
-				newNeosyncOperatorApi(execOpts),
+				newVydonOperatorApi(execOpts),
 				anonymizeConfig.defaultLanguage,
 			),
 		)

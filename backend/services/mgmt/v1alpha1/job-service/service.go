@@ -6,13 +6,13 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
 	"github.com/vydon-io/vydon/internal/connectiondata"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	clientmanager "github.com/vydon-io/vydon/internal/temporal/clientmanager"
 )
 
 type Service struct {
 	cfg               *Config
-	db                *neosyncdb.NeosyncDb
+	db                *vydondb.VydonDb
 	connectionService mgmtv1alpha1connect.ConnectionServiceClient
 	userdataclient    userdata.Interface
 	sqlmanager        sql_manager.SqlManagerClient
@@ -59,7 +59,7 @@ type RunLogConfig struct {
 
 func New(
 	cfg *Config,
-	db *neosyncdb.NeosyncDb,
+	db *vydondb.VydonDb,
 	temporalWfManager clientmanager.Interface,
 	connectionService mgmtv1alpha1connect.ConnectionServiceClient,
 	sqlmanager sql_manager.SqlManagerClient,

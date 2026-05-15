@@ -12,7 +12,7 @@ import (
 
 	benthosbuilder_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
 	http_client "github.com/vydon-io/vydon/internal/http/client"
-	neosync_redis "github.com/vydon-io/vydon/internal/redis"
+	vydon_redis "github.com/vydon-io/vydon/internal/redis"
 	"github.com/spf13/viper"
 )
 
@@ -54,21 +54,21 @@ type WorkflowMetadata struct {
 // Holds the environment variable name and the connection id that should replace it at runtime when the Sync activity is launched
 type BenthosDsn struct {
 	EnvVarKey string
-	// Neosync Connection Id
+	// Vydon Connection Id
 	ConnectionId string
 }
 
-// Returns the neosync url found in the environment, otherwise defaults to localhost
-func GetNeosyncUrl() string {
-	neosyncUrl := viper.GetString("VYDON_URL")
-	if neosyncUrl == "" {
+// Returns the vydon url found in the environment, otherwise defaults to localhost
+func GetVydonUrl() string {
+	vydonUrl := viper.GetString("VYDON_URL")
+	if vydonUrl == "" {
 		return "http://localhost:8080"
 	}
-	return neosyncUrl
+	return vydonUrl
 }
 
-// Returns an instance of *http.Client that includes the Neosync API Token if one was found in the environment
-func GetNeosyncHttpClient() *http.Client {
+// Returns an instance of *http.Client that includes the Vydon API Token if one was found in the environment
+func GetVydonHttpClient() *http.Client {
 	apikey := viper.GetString("VYDON_API_KEY")
 	return http_client.NewWithBearerAuth(&apikey)
 }
@@ -168,7 +168,7 @@ func GetSchemaTablesMapFromMappings(mappings []*mgmtv1alpha1.JobMapping) map[str
 	return output
 }
 
-func GetRedisConfig() *neosync_redis.RedisConfig {
+func GetRedisConfig() *vydon_redis.RedisConfig {
 	redisUrl := viper.GetString("REDIS_URL")
 	if redisUrl == "" {
 		return nil
@@ -188,11 +188,11 @@ func GetRedisConfig() *neosync_redis.RedisConfig {
 	if masterEv != "" {
 		master = &masterEv
 	}
-	return &neosync_redis.RedisConfig{
+	return &vydon_redis.RedisConfig{
 		Url:    redisUrl,
 		Kind:   kind,
 		Master: master,
-		Tls: &neosync_redis.RedisTlsConfig{
+		Tls: &vydon_redis.RedisTlsConfig{
 			Enabled:               viper.GetBool("REDIS_TLS_ENABLED"),
 			SkipCertVerify:        viper.GetBool("REDIS_TLS_SKIP_CERT_VERIFY"),
 			EnableRenegotiation:   viper.GetBool("REDIS_TLS_ENABLE_RENEGOTIATION"),

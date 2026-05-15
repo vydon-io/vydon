@@ -1,12 +1,12 @@
 apiVersion: ctlptl.dev/v1alpha1
 kind: Registry
-name: neosync-dev-registry
+name: vydon-dev-registry
 ---
 apiVersion: ctlptl.dev/v1alpha1
 kind: Cluster
 product: kind
-registry: neosync-dev-registry
-name: kind-neosync-dev # must have kind- prefix
+registry: vydon-dev-registry
+name: kind-vydon-dev # must have kind- prefix
 kindV1Alpha4Cluster:
   nodes:
   - role: control-plane
@@ -18,4 +18,4 @@ kindV1Alpha4Cluster:
           node-labels: "ingress-ready=true"
     extraMounts:
     - hostPath: {VYDON_DEV_HOSTPATH}
-      containerPath: /neosync
+      containerPath: /vydon

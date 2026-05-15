@@ -1,4 +1,4 @@
-package neosync_benthos_sql
+package vydon_benthos_sql
 
 import (
 	"context"
@@ -15,7 +15,7 @@ import (
 	"github.com/lib/pq"
 	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	querybuilder "github.com/vydon-io/vydon/worker/pkg/query-builder"
 	"github.com/redpanda-data/benthos/v4/public/service"
 )
@@ -283,7 +283,7 @@ func (s *pooledInsertOutput) WriteBatch(ctx context.Context, batch service.Messa
 		return fmt.Errorf("failed to build insert query: %w", err)
 	}
 	if _, err := db.ExecContext(ctx, insertQuery, args...); err != nil {
-		shouldRetry := neosync_benthos.ShouldRetryInsert(err.Error(), s.skipForeignKeyViolations)
+		shouldRetry := vydon_benthos.ShouldRetryInsert(err.Error(), s.skipForeignKeyViolations)
 		if !shouldRetry {
 			return fmt.Errorf("failed to execute insert query: %w", err)
 		}
@@ -325,9 +325,9 @@ func retryInsertRowByRow(
 		}
 		_, err = db.ExecContext(ctx, insertQuery, args...)
 		if err != nil {
-			if !neosync_benthos.ShouldRetryInsert(err.Error(), skipForeignKeyViolations) {
+			if !vydon_benthos.ShouldRetryInsert(err.Error(), skipForeignKeyViolations) {
 				return fmt.Errorf("failed to retry insert query: %w", err)
-			} else if neosync_benthos.IsForeignKeyViolationError(err.Error()) {
+			} else if vydon_benthos.IsForeignKeyViolationError(err.Error()) {
 				fkErrorCount++
 			} else {
 				otherErrorCount++
@@ -378,7 +378,7 @@ func (s *pooledInsertOutput) postgresUpsert(
 		_, err = db.ExecContext(ctx, insertQuery, args...)
 		if err != nil {
 			// skip foreign key violations
-			if s.skipForeignKeyViolations && neosync_benthos.IsForeignKeyViolationError(err.Error()) {
+			if s.skipForeignKeyViolations && vydon_benthos.IsForeignKeyViolationError(err.Error()) {
 				continue
 			}
 			if isPostgresUniqueViolation(err) {

@@ -24,7 +24,7 @@ export interface SchemaConstraintHandler {
   getIsVirtualForeignKey(key: ColumnKey): [boolean, string[]];
   getIsNullable(key: ColumnKey): boolean;
   getDataType(key: ColumnKey): string;
-  getConvertedDataType(key: ColumnKey): TransformerDataType; // Returns the databases data types transformed to the Neosync Transformer Data Types
+  getConvertedDataType(key: ColumnKey): TransformerDataType; // Returns the databases data types transformed to the Vydon Transformer Data Types
   getIsInSchema(key: ColumnKey): boolean;
   getIsUniqueConstraint(key: ColumnKey): boolean;
   getHasDefault(key: ColumnKey): boolean;

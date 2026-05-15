@@ -16,7 +16,7 @@ import (
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
 	job_util "github.com/vydon-io/vydon/internal/job"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 	"golang.org/x/sync/errgroup"
 )
@@ -78,7 +78,7 @@ func getUniqueColMappingsMap(
 ) map[string]map[string]struct{} {
 	tableColMappings := map[string]map[string]struct{}{}
 	for _, mapping := range mappings {
-		key := neosync_benthos.BuildBenthosTable(mapping.Schema, mapping.Table)
+		key := vydon_benthos.BuildBenthosTable(mapping.Schema, mapping.Table)
 		if _, ok := tableColMappings[key]; ok {
 			tableColMappings[key][mapping.Column] = struct{}{}
 		} else {
@@ -152,7 +152,7 @@ func groupSqlJobSourceOptionsByTable(
 	for _, schemaOpt := range sqlSourceOpts.SchemaOpt {
 		for tidx := range schemaOpt.Tables {
 			tableOpt := schemaOpt.Tables[tidx]
-			key := neosync_benthos.BuildBenthosTable(schemaOpt.Schema, tableOpt.Table)
+			key := vydon_benthos.BuildBenthosTable(schemaOpt.Schema, tableOpt.Table)
 			groupedMappings[key] = &sqlSourceTableOptions{
 				WhereClause: tableOpt.WhereClause,
 			}
@@ -206,7 +206,7 @@ func groupMappingsByTable(
 	groupedMappings := map[string][]*mgmtv1alpha1.JobMapping{}
 
 	for _, mapping := range mappings {
-		key := neosync_benthos.BuildBenthosTable(mapping.Schema, mapping.Table)
+		key := vydon_benthos.BuildBenthosTable(mapping.Schema, mapping.Table)
 		groupedMappings[key] = append(groupedMappings[key], mapping)
 	}
 
@@ -225,7 +225,7 @@ func groupMappingsByTable(
 func getTableMappingsMap(groupedMappings []*tableMapping) map[string]*tableMapping {
 	groupedTableMapping := map[string]*tableMapping{}
 	for _, tm := range groupedMappings {
-		groupedTableMapping[neosync_benthos.BuildBenthosTable(tm.Schema, tm.Table)] = tm
+		groupedTableMapping[vydon_benthos.BuildBenthosTable(tm.Schema, tm.Table)] = tm
 	}
 	return groupedTableMapping
 }
@@ -415,8 +415,8 @@ func getColumnDefaultProperties(
 	cols []string,
 	colInfo map[string]*sqlmanager_shared.DatabaseSchemaRow,
 	colTransformers map[string]*mgmtv1alpha1.JobMappingTransformer,
-) (map[string]*neosync_benthos.ColumnDefaultProperties, error) {
-	colDefaults := map[string]*neosync_benthos.ColumnDefaultProperties{}
+) (map[string]*vydon_benthos.ColumnDefaultProperties, error) {
+	colDefaults := map[string]*vydon_benthos.ColumnDefaultProperties{}
 	for _, cName := range cols {
 		info, ok := colInfo[cName]
 		if !ok {
@@ -449,7 +449,7 @@ func getColumnDefaultProperties(
 		if !needsReset && !needsOverride && !hasDefaultTransformer {
 			continue
 		}
-		colDefaults[cName] = &neosync_benthos.ColumnDefaultProperties{
+		colDefaults[cName] = &vydon_benthos.ColumnDefaultProperties{
 			NeedsReset:            needsReset,
 			NeedsOverride:         needsOverride,
 			HasDefaultTransformer: hasDefaultTransformer,
@@ -1532,7 +1532,7 @@ func extractMysqlTypeParams(dataType string) []string {
 }
 
 func shouldOverrideColumnDefault(
-	columnDefaults map[string]*neosync_benthos.ColumnDefaultProperties,
+	columnDefaults map[string]*vydon_benthos.ColumnDefaultProperties,
 ) bool {
 	for _, cd := range columnDefaults {
 		if cd != nil && !cd.HasDefaultTransformer && cd.NeedsOverride {
@@ -1546,28 +1546,28 @@ func getSqlBatchProcessors(
 	driver string,
 	columns []string,
 	columnDataTypes map[string]string,
-	columnDefaultProperties map[string]*neosync_benthos.ColumnDefaultProperties,
-) (*neosync_benthos.BatchProcessor, error) {
+	columnDefaultProperties map[string]*vydon_benthos.ColumnDefaultProperties,
+) (*vydon_benthos.BatchProcessor, error) {
 	switch driver {
 	case sqlmanager_shared.PostgresDriver:
-		return &neosync_benthos.BatchProcessor{
-			NeosyncToPgx: &neosync_benthos.NeosyncToPgxConfig{
+		return &vydon_benthos.BatchProcessor{
+			VydonToPgx: &vydon_benthos.VydonToPgxConfig{
 				Columns:                 columns,
 				ColumnDataTypes:         columnDataTypes,
 				ColumnDefaultProperties: columnDefaultProperties,
 			},
 		}, nil
 	case sqlmanager_shared.MysqlDriver:
-		return &neosync_benthos.BatchProcessor{
-			NeosyncToMysql: &neosync_benthos.NeosyncToMysqlConfig{
+		return &vydon_benthos.BatchProcessor{
+			VydonToMysql: &vydon_benthos.VydonToMysqlConfig{
 				Columns:                 columns,
 				ColumnDataTypes:         columnDataTypes,
 				ColumnDefaultProperties: columnDefaultProperties,
 			},
 		}, nil
 	case sqlmanager_shared.MssqlDriver:
-		return &neosync_benthos.BatchProcessor{
-			NeosyncToMssql: &neosync_benthos.NeosyncToMssqlConfig{
+		return &vydon_benthos.BatchProcessor{
+			VydonToMssql: &vydon_benthos.VydonToMssqlConfig{
 				Columns:                 columns,
 				ColumnDataTypes:         columnDataTypes,
 				ColumnDefaultProperties: columnDefaultProperties,

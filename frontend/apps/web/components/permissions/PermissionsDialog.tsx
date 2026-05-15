@@ -58,8 +58,8 @@ export default function PermissionsDialog(props: Props): ReactElement {
             {isValidating ? <Spinner /> : null}
           </div>
           <DialogDescription className="text-muted-foreground text-sm">
-            Review the permissions that Neosync needs for your connection.{' '}
-            <LearnMoreLink href="https://docs.neosync.dev/connections/postgres#permissions" />{' '}
+            Review the permissions that Vydon needs for your connection.{' '}
+            <LearnMoreLink href="https://docs.vydon.dev/connections/postgres#permissions" />{' '}
           </DialogDescription>
         </DialogHeader>
         <PermissionsDataTable

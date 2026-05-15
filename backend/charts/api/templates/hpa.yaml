@@ -2,15 +2,15 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "neosync-api.fullname" . }}
+  name: {{ include "vydon-api.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "neosync-api.labels" . | nindent 4 }}
+    {{- include "vydon-api.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "neosync-api.fullname" . }}
+    name: {{ include "vydon-api.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

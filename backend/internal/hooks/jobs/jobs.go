@@ -10,7 +10,7 @@ import (
 
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/internal/userdata"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 var ErrUnsupported = errors.New("job hooks are not supported in the open-source vydon distribution")
@@ -34,7 +34,7 @@ type Service struct{}
 
 var _ Interface = (*Service)(nil)
 
-func New(_ *neosyncdb.NeosyncDb, _ userdata.Interface, _ ...Option) *Service {
+func New(_ *vydondb.VydonDb, _ userdata.Interface, _ ...Option) *Service {
 	return &Service{}
 }
 

@@ -28,7 +28,7 @@ export function AccountStatusHandler(props: Props) {
   }
 
   const showTrialCountdown =
-    systemAppConfig.isNeosyncCloud &&
+    systemAppConfig.isVydonCloud &&
     (data?.accountStatus == AccountStatus.ACCOUNT_TRIAL_ACTIVE ||
       data?.accountStatus == AccountStatus.ACCOUNT_TRIAL_EXPIRED);
 

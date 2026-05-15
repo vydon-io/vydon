@@ -49,8 +49,8 @@ type Presidiomocks struct {
 	Entities   *presidioapi.MockEntityInterface
 }
 
-type NeosyncApiTestClient struct {
-	NeosyncQuerier db_queries.Querier
+type VydonApiTestClient struct {
+	VydonQuerier db_queries.Querier
 	systemQuerier  pg_queries.Querier
 
 	Pgcontainer   *tcpostgres.PostgresTestContainer
@@ -59,26 +59,26 @@ type NeosyncApiTestClient struct {
 	httpsrv *httptest.Server
 
 	// OSS, Unauthenticated, Licensed
-	OSSUnauthenticatedLicensedClients *NeosyncClients
+	OSSUnauthenticatedLicensedClients *VydonClients
 	// OSS, Authenticated, Licensed
-	OSSAuthenticatedLicensedClients *NeosyncClients
+	OSSAuthenticatedLicensedClients *VydonClients
 	// OSS, Unauthenticated, Unlicensed
-	OSSUnauthenticatedUnlicensedClients *NeosyncClients
+	OSSUnauthenticatedUnlicensedClients *VydonClients
 	// NeoCloud, Authenticated, Licensed
-	NeosyncCloudAuthenticatedLicensedClients *NeosyncClients
+	NeosyncCloudAuthenticatedLicensedClients *VydonClients
 
 	Mocks *Mocks
 }
 
-// Option is a functional option for configuring Neosync Api Test Client
-type Option func(*NeosyncApiTestClient)
+// Option is a functional option for configuring Vydon Api Test Client
+type Option func(*VydonApiTestClient)
 
-func NewNeosyncApiTestClient(
+func NewVydonApiTestClient(
 	ctx context.Context,
 	t testing.TB,
 	opts ...Option,
-) (*NeosyncApiTestClient, error) {
-	neoApi := &NeosyncApiTestClient{
+) (*VydonApiTestClient, error) {
+	neoApi := &VydonApiTestClient{
 		migrationsDir: "../../../../sql/postgresql/schema",
 	}
 	for _, opt := range opts {
@@ -91,21 +91,21 @@ func NewNeosyncApiTestClient(
 	return neoApi, nil
 }
 
-// Sets neosync database migrations directory path
+// Sets vydon database migrations directory path
 func WithMigrationsDirectory(directoryPath string) Option {
-	return func(a *NeosyncApiTestClient) {
+	return func(a *VydonApiTestClient) {
 		a.migrationsDir = directoryPath
 	}
 }
 
-func (s *NeosyncApiTestClient) Setup(ctx context.Context, t testing.TB) error {
+func (s *VydonApiTestClient) Setup(ctx context.Context, t testing.TB) error {
 	pgcontainer, err := tcpostgres.NewPostgresTestContainer(ctx)
 	if err != nil {
 		return err
 	}
 
 	s.Pgcontainer = pgcontainer
-	s.NeosyncQuerier = db_queries.New()
+	s.VydonQuerier = db_queries.New()
 	s.systemQuerier = pg_queries.New()
 
 	s.Mocks = &Mocks{
@@ -175,23 +175,23 @@ func (s *NeosyncApiTestClient) Setup(ctx context.Context, t testing.TB) error {
 		http.NotFound(w, r)
 	})
 
-	s.OSSUnauthenticatedLicensedClients = newNeosyncClients(
+	s.OSSUnauthenticatedLicensedClients = newVydonClients(
 		s.httpsrv.URL + openSourceUnauthenticatedLicensedPostfix,
 	)
-	s.OSSAuthenticatedLicensedClients = newNeosyncClients(
+	s.OSSAuthenticatedLicensedClients = newVydonClients(
 		s.httpsrv.URL + openSourceAuthenticatedLicensedPostfix,
 	)
-	s.OSSUnauthenticatedUnlicensedClients = newNeosyncClients(
+	s.OSSUnauthenticatedUnlicensedClients = newVydonClients(
 		s.httpsrv.URL + openSourceUnauthenticatedUnlicensedPostfix,
 	)
-	s.NeosyncCloudAuthenticatedLicensedClients = newNeosyncClients(
+	s.NeosyncCloudAuthenticatedLicensedClients = newVydonClients(
 		s.httpsrv.URL + neoCloudAuthenticatedLicensedPostfix,
 	)
 
 	return nil
 }
 
-func (s *NeosyncApiTestClient) MockTemporalForCreateJob(returnId string) {
+func (s *VydonApiTestClient) MockTemporalForCreateJob(returnId string) {
 	s.Mocks.TemporalClientManager.
 		On(
 			"DoesAccountHaveNamespace", mock.Anything, mock.Anything, mock.Anything,
@@ -213,7 +213,7 @@ func (s *NeosyncApiTestClient) MockTemporalForCreateJob(returnId string) {
 }
 
 // Used for any API call that uses GetJobRun() as this mocks the response from Temporal for that execution
-func (s *NeosyncApiTestClient) MockTemporalForDescribeWorkflowExecution(
+func (s *VydonApiTestClient) MockTemporalForDescribeWorkflowExecution(
 	accountId, jobId, jobRunId, workflowName string,
 ) {
 	s.Mocks.TemporalClientManager.EXPECT().
@@ -243,7 +243,7 @@ func (s *NeosyncApiTestClient) MockTemporalForDescribeWorkflowExecution(
 		}, nil).
 		Once()
 }
-func (s *NeosyncApiTestClient) InitializeTest(ctx context.Context, t testing.TB) error {
+func (s *VydonApiTestClient) InitializeTest(ctx context.Context, t testing.TB) error {
 	err := neomigrate.Up(ctx, s.Pgcontainer.URL, s.migrationsDir, testutil.GetTestLogger(t))
 	if err != nil {
 		return err
@@ -251,11 +251,11 @@ func (s *NeosyncApiTestClient) InitializeTest(ctx context.Context, t testing.TB)
 	return nil
 }
 
-func (s *NeosyncApiTestClient) CleanupTest(ctx context.Context) error {
+func (s *VydonApiTestClient) CleanupTest(ctx context.Context) error {
 	// Dropping here because 1) more efficient and 2) we have a bad down migration
 	// _jobs-connection-id-null.down that breaks due to having a null connection_id column.
 	// we should do something about that at some point. Running this single drop is easier though
-	_, err := s.Pgcontainer.DB.Exec(ctx, "DROP SCHEMA IF EXISTS neosync_api CASCADE")
+	_, err := s.Pgcontainer.DB.Exec(ctx, "DROP SCHEMA IF EXISTS vydon_api CASCADE")
 	if err != nil {
 		return err
 	}
@@ -266,9 +266,9 @@ func (s *NeosyncApiTestClient) CleanupTest(ctx context.Context) error {
 	return nil
 }
 
-func (s *NeosyncApiTestClient) TearDown(ctx context.Context) error {
+func (s *VydonApiTestClient) TearDown(ctx context.Context) error {
 	if s.Pgcontainer != nil {
-		_, err := s.Pgcontainer.DB.Exec(ctx, "DROP SCHEMA IF EXISTS neosync_api CASCADE")
+		_, err := s.Pgcontainer.DB.Exec(ctx, "DROP SCHEMA IF EXISTS vydon_api CASCADE")
 		if err != nil {
 			return err
 		}

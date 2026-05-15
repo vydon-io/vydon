@@ -7,12 +7,12 @@ import (
 	http_client "github.com/vydon-io/vydon/internal/http/client"
 )
 
-type NeosyncClients struct {
+type VydonClients struct {
 	httpUrl string
 }
 
-func newNeosyncClients(httpUrl string) *NeosyncClients {
-	return &NeosyncClients{
+func newVydonClients(httpUrl string) *VydonClients {
+	return &VydonClients{
 		httpUrl: httpUrl,
 	}
 }
@@ -29,47 +29,47 @@ func WithUserId(userId string) ClientConfigOption {
 	}
 }
 
-func (s *NeosyncClients) Users(
+func (s *VydonClients) Users(
 	opts ...ClientConfigOption,
 ) mgmtv1alpha1connect.UserAccountServiceClient {
 	config := getHydratedClientConfig(opts...)
 	return mgmtv1alpha1connect.NewUserAccountServiceClient(getHttpClient(config), s.httpUrl)
 }
 
-func (s *NeosyncClients) Connections(
+func (s *VydonClients) Connections(
 	opts ...ClientConfigOption,
 ) mgmtv1alpha1connect.ConnectionServiceClient {
 	config := getHydratedClientConfig(opts...)
 	return mgmtv1alpha1connect.NewConnectionServiceClient(getHttpClient(config), s.httpUrl)
 }
 
-func (s *NeosyncClients) Anonymize(
+func (s *VydonClients) Anonymize(
 	opts ...ClientConfigOption,
 ) mgmtv1alpha1connect.AnonymizationServiceClient {
 	config := getHydratedClientConfig(opts...)
 	return mgmtv1alpha1connect.NewAnonymizationServiceClient(getHttpClient(config), s.httpUrl)
 }
 
-func (s *NeosyncClients) Jobs(opts ...ClientConfigOption) mgmtv1alpha1connect.JobServiceClient {
+func (s *VydonClients) Jobs(opts ...ClientConfigOption) mgmtv1alpha1connect.JobServiceClient {
 	config := getHydratedClientConfig(opts...)
 	return mgmtv1alpha1connect.NewJobServiceClient(getHttpClient(config), s.httpUrl)
 }
 
-func (s *NeosyncClients) Transformers(
+func (s *VydonClients) Transformers(
 	opts ...ClientConfigOption,
 ) mgmtv1alpha1connect.TransformersServiceClient {
 	config := getHydratedClientConfig(opts...)
 	return mgmtv1alpha1connect.NewTransformersServiceClient(getHttpClient(config), s.httpUrl)
 }
 
-func (s *NeosyncClients) ConnectionData(
+func (s *VydonClients) ConnectionData(
 	opts ...ClientConfigOption,
 ) mgmtv1alpha1connect.ConnectionDataServiceClient {
 	config := getHydratedClientConfig(opts...)
 	return mgmtv1alpha1connect.NewConnectionDataServiceClient(getHttpClient(config), s.httpUrl)
 }
 
-func (s *NeosyncClients) AccountHooks(
+func (s *VydonClients) AccountHooks(
 	opts ...ClientConfigOption,
 ) mgmtv1alpha1connect.AccountHookServiceClient {
 	config := getHydratedClientConfig(opts...)

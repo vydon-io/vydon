@@ -12,7 +12,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:transform:transformCharacterScramble
+// +vydonTransformerBuilder:transform:transformCharacterScramble
 
 const (
 	letterList      = "abcdefghijklmnopqrstuvwxyz"

@@ -1,4 +1,4 @@
-package neosync_benthos_dynamodb
+package vydon_benthos_dynamodb
 
 import (
 	"context"
@@ -17,8 +17,8 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/cenkalti/backoff/v4"
 
-	neosync_types "github.com/vydon-io/vydon/internal/types"
-	neosync_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
+	vydon_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
 	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
@@ -386,9 +386,9 @@ func (d *dynamoDBWriter) Close(context.Context) error {
 	return nil
 }
 
-func getKeyTypMap(p *service.Message) (map[string]neosync_types.KeyType, error) {
-	keyTypeMap := map[string]neosync_types.KeyType{}
-	meta, ok := p.MetaGetMut(neosync_benthos_metadata.MetaTypeMapStr)
+func getKeyTypMap(p *service.Message) (map[string]vydon_types.KeyType, error) {
+	keyTypeMap := map[string]vydon_types.KeyType{}
+	meta, ok := p.MetaGetMut(vydon_benthos_metadata.MetaTypeMapStr)
 	if ok {
 		kt, err := convertToMapStringKeyType(meta)
 		if err != nil {
@@ -399,8 +399,8 @@ func getKeyTypMap(p *service.Message) (map[string]neosync_types.KeyType, error) 
 	return keyTypeMap, nil
 }
 
-func convertToMapStringKeyType(i any) (map[string]neosync_types.KeyType, error) {
-	if m, ok := i.(map[string]neosync_types.KeyType); ok {
+func convertToMapStringKeyType(i any) (map[string]vydon_types.KeyType, error) {
+	if m, ok := i.(map[string]vydon_types.KeyType); ok {
 		return m, nil
 	}
 
@@ -479,11 +479,11 @@ func fieldDurationOrEmptyStr(pConf *service.ParsedConfig, path ...string) (time.
 func marshalToAttributeValue(
 	key string,
 	root any,
-	keyTypeMap map[string]neosync_types.KeyType,
+	keyTypeMap map[string]vydon_types.KeyType,
 ) (types.AttributeValue, error) {
 	if typeStr, ok := keyTypeMap[key]; ok {
 		switch typeStr {
-		case neosync_types.StringSet:
+		case vydon_types.StringSet:
 			s, err := convertToStringSlice(root)
 			if err != nil {
 				return nil, fmt.Errorf("failed to convert string set for key %s: %w", key, err)
@@ -491,7 +491,7 @@ func marshalToAttributeValue(
 			return &types.AttributeValueMemberSS{
 				Value: s,
 			}, nil
-		case neosync_types.NumberSet:
+		case vydon_types.NumberSet:
 			s, err := convertToStringSlice(root)
 			if err != nil {
 				return nil, fmt.Errorf("failed to convert number set for key %s: %w", key, err)
@@ -587,7 +587,7 @@ func formatFloat(f float64) string {
 func marshalJSONToDynamoDBAttribute(
 	key, path string,
 	root any,
-	keyTypeMap map[string]neosync_types.KeyType,
+	keyTypeMap map[string]vydon_types.KeyType,
 ) (types.AttributeValue, error) {
 	gObj := gabs.Wrap(root)
 	if path != "" {

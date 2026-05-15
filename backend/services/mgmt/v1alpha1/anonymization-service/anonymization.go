@@ -15,7 +15,7 @@ import (
 	"github.com/vydon-io/vydon/backend/pkg/metrics"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
 	jsonanonymizer "github.com/vydon-io/vydon/internal/json-anonymizer"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/metric"
 	"go.opentelemetry.io/otel/trace"
@@ -35,7 +35,7 @@ func (s *Service) AnonymizeMany(
 	if !s.license.IsValid() {
 		return nil, nucleuserrors.NewNotImplemented(
 			fmt.Sprintf(
-				"%s is not implemented in the OSS version of Neosync.",
+				"%s is not implemented in the OSS version of Vydon.",
 				strings.TrimPrefix(
 					mgmtv1alpha1connect.AnonymizationServiceAnonymizeManyProcedure,
 					"/",
@@ -53,7 +53,7 @@ func (s *Service) AnonymizeMany(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -62,7 +62,7 @@ func (s *Service) AnonymizeMany(
 	if err != nil {
 		return nil, err
 	}
-	if account.AccountType == int16(neosyncdb.AccountType_Personal) {
+	if account.AccountType == int16(vydondb.AccountType_Personal) {
 		return nil, nucleuserrors.NewForbidden(
 			fmt.Sprintf(
 				"%s is not implemented for personal accounts",
@@ -181,7 +181,7 @@ func (s *Service) AnonymizeSingle(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (s *Service) AnonymizeSingle(
 	if err != nil {
 		return nil, err
 	}
-	if !s.license.IsValid() || (s.cfg.IsNeosyncCloud && account.AccountType == int16(neosyncdb.AccountType_Personal)) {
+	if !s.license.IsValid() || (s.cfg.IsNeosyncCloud && account.AccountType == int16(vydondb.AccountType_Personal)) {
 		for _, mapping := range req.Msg.GetTransformerMappings() {
 			if mapping.GetTransformer().GetTransformPiiTextConfig() != nil {
 				return nil, nucleuserrors.NewForbidden(
@@ -297,8 +297,8 @@ func getMetricLabels(ctx context.Context, requestName, accountId string) []attri
 		attribute.String(metrics.ApiRequestId, requestId),
 		attribute.String(metrics.ApiRequestName, requestName),
 		attribute.String(
-			metrics.NeosyncDateLabel,
-			time.Now().UTC().Format(metrics.NeosyncDateFormat),
+			metrics.VydonDateLabel,
+			time.Now().UTC().Format(metrics.VydonDateFormat),
 		),
 	}
 }

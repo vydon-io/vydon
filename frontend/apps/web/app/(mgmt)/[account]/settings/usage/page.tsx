@@ -29,7 +29,7 @@ export default function UsagePage(): ReactElement {
         <Alert variant="warning">
           <AlertTitle>Metrics are not currently enabled</AlertTitle>
           <AlertDescription>
-            To enable them, please update Neosync configuration or contact your
+            To enable them, please update Vydon configuration or contact your
             system administrator.
           </AlertDescription>
         </Alert>

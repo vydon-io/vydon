@@ -5,21 +5,21 @@ import (
 	"log/slog"
 
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
-	neosync_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
+	vydon_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
 )
 
 // wrapper used for benthos mongo-based connections to retrieve the connection they need
 type Provider struct {
-	connmanager   connectionmanager.Interface[neosync_benthos_mongodb.MongoClient]
+	connmanager   connectionmanager.Interface[vydon_benthos_mongodb.MongoClient]
 	getConnection func(connectionId string) (connectionmanager.ConnectionInput, error)
 	logger        *slog.Logger
 	session       connectionmanager.SessionInterface
 }
 
-var _ neosync_benthos_mongodb.MongoPoolProvider = (*Provider)(nil)
+var _ vydon_benthos_mongodb.MongoPoolProvider = (*Provider)(nil)
 
 func NewProvider(
-	connmanager connectionmanager.Interface[neosync_benthos_mongodb.MongoClient],
+	connmanager connectionmanager.Interface[vydon_benthos_mongodb.MongoClient],
 	getConnection func(connectionId string) (connectionmanager.ConnectionInput, error),
 	session connectionmanager.SessionInterface,
 	logger *slog.Logger,
@@ -35,7 +35,7 @@ func NewProvider(
 func (p *Provider) GetClient(
 	ctx context.Context,
 	connectionId string,
-) (neosync_benthos_mongodb.MongoClient, error) {
+) (vydon_benthos_mongodb.MongoClient, error) {
 	conn, err := p.getConnection(connectionId)
 	if err != nil {
 		return nil, err

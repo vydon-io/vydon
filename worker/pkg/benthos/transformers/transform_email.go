@@ -15,7 +15,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:transform:transformEmail
+// +vydonTransformerBuilder:transform:transformEmail
 
 type InvalidEmailAction string
 

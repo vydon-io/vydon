@@ -1,6 +1,6 @@
 # Dependency License Audit
 
-Audit performed on the Vydon fork of Neosync. Scope: all production and
+Audit performed on the Vydon fork of Vydon. Scope: all production and
 development dependencies in Go, Node, and Python. Tool: [Trivy][trivy]
 `v0.70.0` filesystem scanner.
 

@@ -5,7 +5,7 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	"github.com/vydon-io/vydon/internal/license"
 	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"go.opentelemetry.io/otel/metric"
 )
 
@@ -17,7 +17,7 @@ type Service struct {
 	transformerClient  mgmtv1alpha1connect.TransformersServiceClient
 	analyze            presidioapi.AnalyzeInterface
 	anonymize          presidioapi.AnonymizeInterface
-	db                 *neosyncdb.NeosyncDb
+	db                 *vydondb.VydonDb
 	license            license.EEInterface
 }
 
@@ -36,7 +36,7 @@ func New(
 	transformerClient mgmtv1alpha1connect.TransformersServiceClient,
 	analyzeclient presidioapi.AnalyzeInterface,
 	anonymizeclient presidioapi.AnonymizeInterface,
-	db *neosyncdb.NeosyncDb,
+	db *vydondb.VydonDb,
 	license license.EEInterface,
 ) *Service {
 	return &Service{

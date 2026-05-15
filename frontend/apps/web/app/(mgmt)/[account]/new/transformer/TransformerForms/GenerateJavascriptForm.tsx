@@ -7,7 +7,7 @@ import Spinner from '@/components/Spinner';
 import { useAccount } from '@/components/providers/account-provider';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { useReadNeosyncTransformerDeclarationFile } from '@/libs/hooks/useReadNeosyncTransfomerDeclarationFile';
+import { useReadVydonTransformerDeclarationFile } from '@/libs/hooks/useReadVydonTransfomerDeclarationFile';
 import { create } from '@bufbuild/protobuf';
 import { useMutation } from '@connectrpc/connect-query';
 import Editor, { useMonaco } from '@monaco-editor/react';
@@ -34,12 +34,12 @@ export default function GenerateJavascriptForm(props: Props): ReactElement {
 
   const { resolvedTheme } = useTheme();
   const monaco = useMonaco();
-  const { data: fileContent } = useReadNeosyncTransformerDeclarationFile();
+  const { data: fileContent } = useReadVydonTransformerDeclarationFile();
   useEffect(() => {
     if (monaco && fileContent) {
       monaco.languages.typescript.javascriptDefaults.addExtraLib(
         fileContent,
-        'neosync-transformer.d.ts'
+        'vydon-transformer.d.ts'
       );
     }
   }, [monaco, fileContent]);

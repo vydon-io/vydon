@@ -35,8 +35,8 @@ export default function Upgrade(props: UpgradeProps): ReactElement | null {
   const { data: systemInfo } = useQuery(
     UserAccountService.method.getSystemInformation
   );
-  // always surface the upgrade button for non-neosynccloud users
-  if (!systemInfo?.license?.isValid && !systemInfo?.license?.isNeosyncCloud) {
+  // always surface the upgrade button for non-vydoncloud users
+  if (!systemInfo?.license?.isValid && !systemInfo?.license?.isVydonCloud) {
     return <UpgradeButton href={calendlyLink} target="_blank" />;
   }
 
@@ -85,7 +85,7 @@ function UpgradeInfoDialog(props: UpgradeInfoDialogProps): ReactElement {
             Upgrade Required
           </DialogTitle>
           <DialogDescription className="tracking-tight">
-            Upgrade to a Team or Enterprise plan to continue using Neosync.
+            Upgrade to a Team or Enterprise plan to continue using Vydon.
           </DialogDescription>
         </DialogHeader>
         {!!accountStatus && !!reason && (

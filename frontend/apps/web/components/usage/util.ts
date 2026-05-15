@@ -1,7 +1,7 @@
 import { create } from '@bufbuild/protobuf';
 import {
-  Date as NeosyncDate,
-  DateSchema as NeosyncDateSchema,
+  Date as VydonDate,
+  DateSchema as VydonDateSchema,
 } from '@vydon/sdk';
 import { endOfMonth, format, startOfMonth, subMonths } from 'date-fns';
 
@@ -26,8 +26,8 @@ export function shortNumberFormatter(
 
 export type UsagePeriod = 'current' | 'last-month';
 
-export function dateToNeoDate(date: Date): NeosyncDate {
-  return create(NeosyncDateSchema, {
+export function dateToNeoDate(date: Date): VydonDate {
+  return create(VydonDateSchema, {
     day: date.getDate(),
     month: date.getMonth() + 1,
     year: date.getFullYear(),

@@ -20,27 +20,27 @@ import (
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	aws_manager "github.com/vydon-io/vydon/internal/aws"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
-	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 type AwsS3ConnectionDataService struct {
 	logger              *slog.Logger
-	awsmanager          aws_manager.NeosyncAwsManagerClient
-	neosynctyperegistry neosynctypes.NeosyncTypeRegistry
+	awsmanager          aws_manager.VydonAwsManagerClient
+	vydontyperegistry vydontypes.VydonTypeRegistry
 	connection          *mgmtv1alpha1.Connection
 	connconfig          *mgmtv1alpha1.AwsS3ConnectionConfig
 }
 
 func NewAwsS3ConnectionDataService(
 	logger *slog.Logger,
-	awsmanager aws_manager.NeosyncAwsManagerClient,
-	neosynctyperegistry neosynctypes.NeosyncTypeRegistry,
+	awsmanager aws_manager.VydonAwsManagerClient,
+	vydontyperegistry vydontypes.VydonTypeRegistry,
 	connection *mgmtv1alpha1.Connection,
 ) *AwsS3ConnectionDataService {
 	return &AwsS3ConnectionDataService{
 		logger:              logger,
 		awsmanager:          awsmanager,
-		neosynctyperegistry: neosynctyperegistry,
+		vydontyperegistry: vydontyperegistry,
 		connection:          connection,
 		connconfig:          connection.GetConnectionConfig().GetAwsS3Config(),
 	}
@@ -166,10 +166,10 @@ func (s *AwsS3ConnectionDataService) StreamData(
 				}
 
 				for k, v := range rowData {
-					newVal, err := s.neosynctyperegistry.Unmarshal(v)
+					newVal, err := s.vydontyperegistry.Unmarshal(v)
 					if err != nil {
 						return fmt.Errorf(
-							"unable to unmarshal row value using neosync type registry: %w",
+							"unable to unmarshal row value using vydon type registry: %w",
 							err,
 						)
 					}

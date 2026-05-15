@@ -4,12 +4,12 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	"github.com/vydon-io/vydon/internal/license"
 	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type Service struct {
 	cfg            *Config
-	db             *neosyncdb.NeosyncDb
+	db             *vydondb.VydonDb
 	entityclient   presidioapi.EntityInterface
 	userdataclient userdata.Interface
 	license        license.EEInterface
@@ -21,7 +21,7 @@ type Config struct {
 
 func New(
 	cfg *Config,
-	db *neosyncdb.NeosyncDb,
+	db *vydondb.VydonDb,
 	recognizerclient presidioapi.EntityInterface,
 	userdataclient userdata.Interface,
 	license license.EEInterface,

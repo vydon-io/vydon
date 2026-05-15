@@ -10,7 +10,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateStreetAddress
+// +vydonTransformerBuilder:generate:generateStreetAddress
 
 type Address struct {
 	Address1 string `json:"address1"`

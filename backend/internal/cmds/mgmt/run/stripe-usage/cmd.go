@@ -13,8 +13,8 @@ import (
 	"github.com/go-logr/logr"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	neosynclogger "github.com/vydon-io/vydon/backend/pkg/logger"
-	neosyncotel "github.com/vydon-io/vydon/internal/otel"
+	vydonlogger "github.com/vydon-io/vydon/backend/pkg/logger"
+	vydonotel "github.com/vydon-io/vydon/internal/otel"
 	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -36,14 +36,14 @@ func NewCmd() *cobra.Command {
 }
 
 func run(ctx context.Context) error {
-	slogger, _ := neosynclogger.NewLoggers()
+	slogger, _ := vydonlogger.NewLoggers()
 
-	neoenv := viper.GetString("NUCLEUS_ENV")
+	neoenv := viper.GetString("VYDON_ENV")
 	if neoenv != "" {
 		slogger = slogger.With(
-			"nucleusEnv", neoenv,
+			"vydonEnv", neoenv,
 			"env", neoenv,
-			"neosyncEnv", neoenv,
+			"vydonEnv", neoenv,
 		)
 	}
 
@@ -65,12 +65,12 @@ func run(ctx context.Context) error {
 		return fmt.Errorf("unable to calculate ingest date: %w", err)
 	}
 
-	neosyncurl := shared.GetNeosyncUrl()
-	httpclient := shared.GetNeosyncHttpClient()
+	vydonurl := shared.GetVydonUrl()
+	httpclient := shared.GetVydonHttpClient()
 
 	clientInterceptors := []connect.Interceptor{}
 
-	otelconfig := neosyncotel.GetOtelConfigFromViperEnv()
+	otelconfig := vydonotel.GetOtelConfigFromViperEnv()
 	if otelconfig.IsEnabled {
 		otelinterceptors, otelshutdown, err := getOtelConfig(ctx, otelconfig, slogger)
 		if err != nil {
@@ -89,12 +89,12 @@ func run(ctx context.Context) error {
 
 	usersclient := mgmtv1alpha1connect.NewUserAccountServiceClient(
 		httpclient,
-		neosyncurl,
+		vydonurl,
 		connect.WithInterceptors(clientInterceptors...),
 	)
 	metricsclient := mgmtv1alpha1connect.NewMetricsServiceClient(
 		httpclient,
-		neosyncurl,
+		vydonurl,
 		connect.WithInterceptors(clientInterceptors...),
 	)
 
@@ -140,23 +140,23 @@ func run(ctx context.Context) error {
 
 func getOtelConfig(
 	ctx context.Context,
-	otelconfig neosyncotel.OtelEnvConfig,
+	otelconfig vydonotel.OtelEnvConfig,
 	logger *slog.Logger,
 ) (interceptors []connect.Interceptor, shutdown func(context.Context) error, err error) {
 	logger.DebugContext(ctx, "otel is enabled")
-	tmPropagator := neosyncotel.NewDefaultPropagator()
+	tmPropagator := vydonotel.NewDefaultPropagator()
 	otelconnopts := []otelconnect.Option{
 		otelconnect.WithoutServerPeerAttributes(),
 		otelconnect.WithPropagator(tmPropagator),
 	}
 
-	meterProviders := []neosyncotel.MeterProvider{}
-	traceProviders := []neosyncotel.TracerProvider{}
+	meterProviders := []vydonotel.MeterProvider{}
+	traceProviders := []vydonotel.TracerProvider{}
 
-	meterprovider, err := neosyncotel.NewMeterProvider(ctx, &neosyncotel.MeterProviderConfig{
+	meterprovider, err := vydonotel.NewMeterProvider(ctx, &vydonotel.MeterProviderConfig{
 		Exporter:   otelconfig.MeterExporter,
 		AppVersion: otelconfig.ServiceVersion,
-		Opts: neosyncotel.MeterExporterOpts{
+		Opts: vydonotel.MeterExporterOpts{
 			Otlp:    []otlpmetricgrpc.Option{},
 			Console: []stdoutmetric.Option{stdoutmetric.WithPrettyPrint()},
 		},
@@ -172,9 +172,9 @@ func getOtelConfig(
 		otelconnopts = append(otelconnopts, otelconnect.WithoutMetrics())
 	}
 
-	traceprovider, err := neosyncotel.NewTraceProvider(ctx, &neosyncotel.TraceProviderConfig{
+	traceprovider, err := vydonotel.NewTraceProvider(ctx, &vydonotel.TraceProviderConfig{
 		Exporter: otelconfig.TraceExporter,
-		Opts: neosyncotel.TraceExporterOpts{
+		Opts: vydonotel.TraceExporterOpts{
 			Otlp:    []otlptracegrpc.Option{},
 			Console: []stdouttrace.Option{stdouttrace.WithPrettyPrint()},
 		},
@@ -195,7 +195,7 @@ func getOtelConfig(
 		return nil, nil, err
 	}
 
-	otelshutdown := neosyncotel.SetupOtelSdk(&neosyncotel.SetupConfig{
+	otelshutdown := vydonotel.SetupOtelSdk(&vydonotel.SetupConfig{
 		TraceProviders:    traceProviders,
 		MeterProviders:    meterProviders,
 		Logger:            logr.FromSlogHandler(logger.Handler()),

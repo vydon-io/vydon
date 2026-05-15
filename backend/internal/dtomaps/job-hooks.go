@@ -3,7 +3,7 @@ package dtomaps
 import (
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -25,13 +25,13 @@ func ToJobHookDto(
 	}
 
 	output := &mgmtv1alpha1.JobHook{
-		Id:              neosyncdb.UUIDString(input.ID),
+		Id:              vydondb.UUIDString(input.ID),
 		Name:            input.Name,
 		Description:     input.Description,
-		JobId:           neosyncdb.UUIDString(input.JobID),
-		CreatedByUserId: neosyncdb.UUIDString(input.CreatedByUserID),
+		JobId:           vydondb.UUIDString(input.JobID),
+		CreatedByUserId: vydondb.UUIDString(input.CreatedByUserID),
 		CreatedAt:       timestamppb.New(input.CreatedAt.Time),
-		UpdatedByUserId: neosyncdb.UUIDString(input.UpdatedByUserID),
+		UpdatedByUserId: vydondb.UUIDString(input.UpdatedByUserID),
 		UpdatedAt:       timestamppb.New(input.UpdatedAt.Time),
 		Enabled:         input.Enabled,
 		Priority:        priority,

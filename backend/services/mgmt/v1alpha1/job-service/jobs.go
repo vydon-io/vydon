@@ -21,7 +21,7 @@ import (
 	"github.com/vydon-io/vydon/internal/rbac"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
 	job_util "github.com/vydon-io/vydon/internal/job"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	datasync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/workflow"
 	piidetect_job_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/job"
 
@@ -52,15 +52,15 @@ func (s *Service) GetJobs(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
 
 	jobs, err := s.db.Q.GetJobsByAccount(ctx, s.db.Db, accountUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, fmt.Errorf("unable to get jobs by account: %w", err)
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return connect.NewResponse(&mgmtv1alpha1.GetJobsResponse{Jobs: []*mgmtv1alpha1.Job{}}), nil
 	}
 
@@ -79,9 +79,9 @@ func (s *Service) GetJobs(
 			s.db.Db,
 			jobIds,
 		)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return nil, fmt.Errorf("unable to get job connection destinations by job ids: %w", err)
-		} else if err != nil && neosyncdb.IsNoRows(err) {
+		} else if err != nil && vydondb.IsNoRows(err) {
 			logger.Debug("found no job connection destinations by job ids")
 		}
 	}
@@ -126,7 +126,7 @@ func (s *Service) GetJob(
 	if err != nil {
 		return nil, err
 	}
-	jobUuid, err := neosyncdb.ToUuid(req.Msg.GetId())
+	jobUuid, err := vydondb.ToUuid(req.Msg.GetId())
 	if err != nil {
 		return nil, err
 	}
@@ -136,9 +136,9 @@ func (s *Service) GetJob(
 	var dbJob db_queries.NeosyncApiJob
 	errgrp.Go(func() error {
 		j, err := s.db.Q.GetJobById(errctx, s.db.Db, jobUuid)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return fmt.Errorf("unable to get job by id: %w", err)
-		} else if err != nil && neosyncdb.IsNoRows(err) {
+		} else if err != nil && vydondb.IsNoRows(err) {
 			return nucleuserrors.NewNotFound("job with that id does not exist")
 		}
 		dbJob = j
@@ -147,9 +147,9 @@ func (s *Service) GetJob(
 	var destConnections []db_queries.NeosyncApiJobDestinationConnectionAssociation
 	errgrp.Go(func() error {
 		dcs, err := s.db.Q.GetJobConnectionDestinations(ctx, s.db.Db, jobUuid)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return fmt.Errorf("unable to get job connection destinations by job id: %w", err)
-		} else if err != nil && neosyncdb.IsNoRows(err) {
+		} else if err != nil && vydondb.IsNoRows(err) {
 			return nil
 		}
 		destConnections = dcs
@@ -224,21 +224,21 @@ func (s *Service) GetJobStatuses(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
 
 	jobs, err := s.db.Q.GetJobsByAccount(ctx, s.db.Db, accountUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, fmt.Errorf("unable to get jobs by account: %w", err)
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return connect.NewResponse(&mgmtv1alpha1.GetJobStatusesResponse{Statuses: []*mgmtv1alpha1.JobStatusRecord{}}), nil
 	}
 
 	scheduleIds := make([]string, 0, len(jobs))
 	for idx := range jobs {
-		scheduleIds = append(scheduleIds, neosyncdb.UUIDString(jobs[idx].ID))
+		scheduleIds = append(scheduleIds, vydondb.UUIDString(jobs[idx].ID))
 	}
 
 	responses, err := s.temporalmgr.DescribeSchedules(
@@ -364,7 +364,7 @@ func (s *Service) CreateJob(
 	if err != nil {
 		return nil, err
 	}
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -373,7 +373,7 @@ func (s *Service) CreateJob(
 	connectionIds := []string{}
 	destinations := []*destination{}
 	for _, dest := range req.Msg.Destinations {
-		destUuid, err := neosyncdb.ToUuid(dest.ConnectionId)
+		destUuid, err := vydondb.ToUuid(dest.ConnectionId)
 		if err != nil {
 			return nil, err
 		}
@@ -433,7 +433,7 @@ func (s *Service) CreateJob(
 			return nil, err
 		}
 
-		sourceUuid, err := neosyncdb.ToUuid(*connectionIdToVerify)
+		sourceUuid, err := vydondb.ToUuid(*connectionIdToVerify)
 		if err != nil {
 			return nil, err
 		}
@@ -487,9 +487,9 @@ func (s *Service) CreateJob(
 		return nil, err
 	}
 
-	connDestParams := []*neosyncdb.CreateJobConnectionDestination{}
+	connDestParams := []*vydondb.CreateJobConnectionDestination{}
 	for _, dest := range destinations {
-		connDestParams = append(connDestParams, &neosyncdb.CreateJobConnectionDestination{
+		connDestParams = append(connDestParams, &vydondb.CreateJobConnectionDestination{
 			ConnectionId: dest.ConnectionId,
 			Options:      dest.Options,
 		})
@@ -548,12 +548,12 @@ func (s *Service) CreateJob(
 	if err != nil {
 		return nil, fmt.Errorf("unable to create job: %w", err)
 	}
-	jobUuid := neosyncdb.UUIDString(cj.ID)
+	jobUuid := vydondb.UUIDString(cj.ID)
 	logger = logger.With("jobId", jobUuid)
 	logger.Debug("created job record")
 
 	logger = logger.With("jobId", jobUuid)
-	schedule := neosyncdb.ToNullableString(cj.CronSchedule)
+	schedule := vydondb.ToNullableString(cj.CronSchedule)
 	paused := true
 	spec := temporalclient.ScheduleSpec{}
 	if schedule != nil {
@@ -571,7 +571,7 @@ func (s *Service) CreateJob(
 			Workflow:  syncWf.Workflow,
 			TaskQueue: taskQueue,
 			Args:      []any{&datasync_workflow.WorkflowRequest{JobId: jobUuid}},
-			ID:        neosyncdb.UUIDString(cj.ID),
+			ID:        vydondb.UUIDString(cj.ID),
 		}
 	} else if req.Msg.GetJobType().GetPiiDetect() != nil {
 		piiWf := &piidetect_job_workflow.Workflow{}
@@ -579,7 +579,7 @@ func (s *Service) CreateJob(
 			Workflow:  piiWf.JobPiiDetect,
 			TaskQueue: taskQueue,
 			Args:      []any{&piidetect_job_workflow.PiiDetectRequest{JobId: jobUuid}},
-			ID:        neosyncdb.UUIDString(cj.ID),
+			ID:        vydondb.UUIDString(cj.ID),
 		}
 	}
 	if cj.WorkflowOptions != nil && cj.WorkflowOptions.RunTimeout != nil {
@@ -651,15 +651,15 @@ func (s *Service) DeleteJob(
 ) (*connect.Response[mgmtv1alpha1.DeleteJobResponse], error) {
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
 	logger = logger.With("jobId", req.Msg.Id)
-	idUuid, err := neosyncdb.ToUuid(req.Msg.Id)
+	idUuid, err := vydondb.ToUuid(req.Msg.Id)
 	if err != nil {
 		return nil, err
 	}
 
 	dbJob, err := s.db.Q.GetJobById(ctx, s.db.Db, idUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return connect.NewResponse(&mgmtv1alpha1.DeleteJobResponse{}), nil
 	}
 
@@ -679,8 +679,8 @@ func (s *Service) DeleteJob(
 	logger.Debug("deleting temporal schedule")
 	err = s.temporalmgr.DeleteSchedule(
 		ctx,
-		neosyncdb.UUIDString(dbJob.AccountID),
-		neosyncdb.UUIDString(dbJob.ID),
+		vydondb.UUIDString(dbJob.AccountID),
+		vydondb.UUIDString(dbJob.ID),
 		logger,
 	)
 	if err != nil {
@@ -702,7 +702,7 @@ func (s *Service) CreateJobDestinationConnections(
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
 	logger = logger.With("jobId", req.Msg.JobId)
 
-	jobUuid, err := neosyncdb.ToUuid(req.Msg.JobId)
+	jobUuid, err := vydondb.ToUuid(req.Msg.JobId)
 	if err != nil {
 		return nil, err
 	}
@@ -720,7 +720,7 @@ func (s *Service) CreateJobDestinationConnections(
 	if err != nil {
 		return nil, err
 	}
-	accountUuid, err := neosyncdb.ToUuid(jobResp.Msg.GetJob().GetAccountId())
+	accountUuid, err := vydondb.ToUuid(jobResp.Msg.GetJob().GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -729,7 +729,7 @@ func (s *Service) CreateJobDestinationConnections(
 	connectionUuids := []pgtype.UUID{}
 	destinations := []*destination{}
 	for _, dest := range req.Msg.Destinations {
-		destUuid, err := neosyncdb.ToUuid(dest.ConnectionId)
+		destUuid, err := vydondb.ToUuid(dest.ConnectionId)
 		if err != nil {
 			return nil, err
 		}
@@ -820,12 +820,12 @@ func (s *Service) UpdateJobSchedule(
 		return nil, err
 	}
 
-	jobUuid, err := neosyncdb.ToUuid(jobDto.GetId())
+	jobUuid, err := vydondb.ToUuid(jobDto.GetId())
 	if err != nil {
 		return nil, err
 	}
 
-	if err := s.db.WithTx(ctx, nil, func(dbtx neosyncdb.BaseDBTX) error {
+	if err := s.db.WithTx(ctx, nil, func(dbtx vydondb.BaseDBTX) error {
 		_, err = s.db.Q.UpdateJobSchedule(ctx, dbtx, db_queries.UpdateJobScheduleParams{
 			ID:           jobUuid,
 			CronSchedule: cronText,
@@ -1087,7 +1087,7 @@ func (s *Service) UpdateJobSourceConnection(
 		vfkKeys[key] = struct{}{}
 	}
 
-	jobUuid, err := neosyncdb.ToUuid(jobDto.GetId())
+	jobUuid, err := vydondb.ToUuid(jobDto.GetId())
 	if err != nil {
 		return nil, err
 	}
@@ -1100,7 +1100,7 @@ func (s *Service) UpdateJobSourceConnection(
 		}
 	}
 
-	if err := s.db.WithTx(ctx, nil, func(dbtx neosyncdb.BaseDBTX) error {
+	if err := s.db.WithTx(ctx, nil, func(dbtx vydondb.BaseDBTX) error {
 		_, err = s.db.Q.UpdateJobSource(ctx, dbtx, db_queries.UpdateJobSourceParams{
 			ID:                jobUuid,
 			ConnectionOptions: connectionOptions,
@@ -1173,7 +1173,7 @@ func (s *Service) SetJobSourceSqlConnectionSubsets(
 		return nil, err
 	}
 	jobDto := jobResp.Msg.GetJob()
-	jobUuid, err := neosyncdb.ToUuid(jobDto.GetId())
+	jobUuid, err := vydondb.ToUuid(jobDto.GetId())
 	if err != nil {
 		return nil, err
 	}
@@ -1251,11 +1251,11 @@ func (s *Service) UpdateJobDestinationConnection(
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
 	logger = logger.With("jobId", req.Msg.GetJobId(), "connectionId", req.Msg.GetConnectionId())
 
-	jobUuid, err := neosyncdb.ToUuid(req.Msg.GetJobId())
+	jobUuid, err := vydondb.ToUuid(req.Msg.GetJobId())
 	if err != nil {
 		return nil, err
 	}
-	destinationUuid, err := neosyncdb.ToUuid(req.Msg.GetDestinationId())
+	destinationUuid, err := vydondb.ToUuid(req.Msg.GetDestinationId())
 	if err != nil {
 		return nil, err
 	}
@@ -1275,7 +1275,7 @@ func (s *Service) UpdateJobDestinationConnection(
 		return nil, err
 	}
 
-	connectionUuid, err := neosyncdb.ToUuid(req.Msg.GetConnectionId())
+	connectionUuid, err := vydondb.ToUuid(req.Msg.GetConnectionId())
 	if err != nil {
 		return nil, err
 	}
@@ -1300,9 +1300,9 @@ func (s *Service) UpdateJobDestinationConnection(
 			Options:      options,
 		},
 	)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		logger.Debug("destination not found. creating job destination connection")
 		_, err = s.db.Q.CreateJobConnectionDestination(ctx, s.db.Db, db_queries.CreateJobConnectionDestinationParams{
 			JobID:        jobUuid,
@@ -1333,19 +1333,19 @@ func (s *Service) DeleteJobDestinationConnection(
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
 	logger = logger.With("destinationId", req.Msg.GetDestinationId())
 
-	destinationUuid, err := neosyncdb.ToUuid(req.Msg.GetDestinationId())
+	destinationUuid, err := vydondb.ToUuid(req.Msg.GetDestinationId())
 	if err != nil {
 		return nil, err
 	}
 
 	destination, err := s.db.Q.GetJobConnectionDestination(ctx, s.db.Db, destinationUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return connect.NewResponse(&mgmtv1alpha1.DeleteJobDestinationConnectionResponse{}), nil
 	}
 
-	jobId := neosyncdb.UUIDString(destination.JobID)
+	jobId := vydondb.UUIDString(destination.JobID)
 
 	jobResp, err := s.GetJob(ctx, connect.NewRequest(&mgmtv1alpha1.GetJobRequest{
 		Id: jobId,
@@ -1368,9 +1368,9 @@ func (s *Service) DeleteJobDestinationConnection(
 
 	logger.Debug("deleting job destination connection")
 	err = s.db.Q.RemoveJobConnectionDestination(ctx, s.db.Db, destinationUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		logger.Debug("destination not found, during delete")
 	}
 
@@ -1390,7 +1390,7 @@ func (s *Service) IsJobNameAvailable(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -1413,11 +1413,11 @@ func (s *Service) verifyConnectionInAccount(
 	connectionId string,
 	accountId string,
 ) error {
-	accountUuid, err := neosyncdb.ToUuid(accountId)
+	accountUuid, err := vydondb.ToUuid(accountId)
 	if err != nil {
 		return err
 	}
-	connectionUuid, err := neosyncdb.ToUuid(connectionId)
+	connectionUuid, err := vydondb.ToUuid(connectionId)
 	if err != nil {
 		return err
 	}
@@ -1437,7 +1437,7 @@ func (s *Service) verifyConnectionInAccount(
 
 func verifyConnectionsInAccount(
 	ctx context.Context,
-	db *neosyncdb.NeosyncDb,
+	db *vydondb.VydonDb,
 	connectionUuids []pgtype.UUID,
 	accountUuid pgtype.UUID,
 ) (bool, error) {
@@ -1469,7 +1469,7 @@ func verifyConnectionIdsUnique(connectionIds []string) bool {
 
 func verifyConnectionsAreCompatible(
 	ctx context.Context,
-	db *neosyncdb.NeosyncDb,
+	db *vydondb.VydonDb,
 	sourceConnId pgtype.UUID,
 	destinations []*destination,
 ) (bool, error) {
@@ -1565,13 +1565,13 @@ func (s *Service) SetJobWorkflowOptions(
 		wfOptions.FromDto(req.Msg.WorfklowOptions)
 	}
 
-	jobUuid, err := neosyncdb.ToUuid(req.Msg.Id)
+	jobUuid, err := vydondb.ToUuid(req.Msg.Id)
 	if err != nil {
 		return nil, err
 	}
 
 	// update temporal scheduled job
-	if err := s.db.WithTx(ctx, nil, func(dbtx neosyncdb.BaseDBTX) error {
+	if err := s.db.WithTx(ctx, nil, func(dbtx vydondb.BaseDBTX) error {
 		_, err = s.db.Q.SetJobWorkflowOptions(ctx, dbtx, db_queries.SetJobWorkflowOptionsParams{
 			ID:              jobUuid,
 			WorkflowOptions: wfOptions,
@@ -1651,7 +1651,7 @@ func (s *Service) SetJobSyncOptions(
 		syncOptions.FromDto(req.Msg.SyncOptions)
 	}
 
-	jobUuid, err := neosyncdb.ToUuid(req.Msg.Id)
+	jobUuid, err := vydondb.ToUuid(req.Msg.Id)
 	if err != nil {
 		return nil, err
 	}

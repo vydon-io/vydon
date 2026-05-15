@@ -18,7 +18,7 @@ import (
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
 	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	querybuilder "github.com/vydon-io/vydon/worker/pkg/query-builder"
 )
 
@@ -141,7 +141,7 @@ func (s *SQLConnectionDataService) SampleData(
 		return err
 	}
 	rows, err := db.QueryContext(ctx, query)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return fmt.Errorf(
 			"error querying table %s with database type %s: %w",
 			schemaTable,
@@ -220,7 +220,7 @@ func (s *SQLConnectionDataService) StreamData(
 		return err
 	}
 	r, err := db.QueryContext(ctx, query)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return fmt.Errorf(
 			"error querying table %s with database type %s: %w",
 			schemaTable,
@@ -244,7 +244,7 @@ func (s *SQLConnectionDataService) StreamData(
 		return err
 	}
 	rows, err := db.QueryContext(ctx, selectQuery)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return fmt.Errorf(
 			"error querying table %s with goqu driver %s: %w",
 			schemaTable,

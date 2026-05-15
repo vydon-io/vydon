@@ -4,8 +4,8 @@ import (
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	benthosstream "github.com/vydon-io/vydon/internal/benthos-stream"
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
-	neosync_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
-	neosync_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
+	vydon_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
+	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
 	sync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/activities/sync"
 	tablesync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/workflow"
 	"github.com/redis/go-redis/v9"
@@ -22,8 +22,8 @@ func Register(
 	w Worker,
 	connclient mgmtv1alpha1connect.ConnectionServiceClient,
 	jobclient mgmtv1alpha1connect.JobServiceClient,
-	sqlconnmanager connectionmanager.Interface[neosync_benthos_sql.SqlDbtx],
-	mongoconnmanager connectionmanager.Interface[neosync_benthos_mongodb.MongoClient],
+	sqlconnmanager connectionmanager.Interface[vydon_benthos_sql.SqlDbtx],
+	mongoconnmanager connectionmanager.Interface[vydon_benthos_mongodb.MongoClient],
 	meter metric.Meter, // optional
 	benthosStreamManager benthosstream.BenthosStreamManagerClient,
 	temporalclient client.Client,

@@ -25,7 +25,7 @@ import (
 	"github.com/vydon-io/vydon/internal/connectrpc/validate"
 	sym_encrypt "github.com/vydon-io/vydon/internal/encrypt/sym"
 	http_client "github.com/vydon-io/vydon/internal/http/client"
-	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 	pyroscope_env "github.com/vydon-io/vydon/internal/pyroscope"
 	"go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
@@ -48,7 +48,7 @@ import (
 	accounthooks "github.com/vydon-io/vydon/backend/internal/hooks/accounts"
 	jobhooks "github.com/vydon-io/vydon/backend/internal/hooks/jobs"
 	"github.com/vydon-io/vydon/backend/internal/userdata"
-	neosynclogger "github.com/vydon-io/vydon/backend/pkg/logger"
+	vydonlogger "github.com/vydon-io/vydon/backend/pkg/logger"
 	"github.com/vydon-io/vydon/backend/pkg/mongoconnect"
 	mssql_queries "github.com/vydon-io/vydon/backend/pkg/mssql-querier"
 	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
@@ -74,10 +74,10 @@ import (
 	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
 	"github.com/vydon-io/vydon/internal/rbac"
 	ee_slack "github.com/vydon-io/vydon/internal/notifications/slack"
-	neosync_gcp "github.com/vydon-io/vydon/internal/gcp"
+	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
 	neomigrate "github.com/vydon-io/vydon/internal/migrate"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
-	neosyncotel "github.com/vydon-io/vydon/internal/otel"
+	"github.com/vydon-io/vydon/internal/vydondb"
+	vydonotel "github.com/vydon-io/vydon/internal/otel"
 	"github.com/vydon-io/vydon/internal/temporal/clientmanager"
 
 	"github.com/spf13/cobra"
@@ -113,11 +113,11 @@ func serve(ctx context.Context) error {
 		host = "127.0.0.1"
 	}
 
-	slogger, loglogger := neosynclogger.NewLoggers()
+	slogger, loglogger := vydonlogger.NewLoggers()
 
-	neoEnv := viper.GetString("NUCLEUS_ENV")
+	neoEnv := viper.GetString("VYDON_ENV")
 	if neoEnv != "" {
-		slogger = slogger.With("nucleusEnv", neoEnv)
+		slogger = slogger.With("vydonEnv", neoEnv)
 	}
 
 	slog.SetDefault(
@@ -134,9 +134,9 @@ func serve(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	slogger.Debug(fmt.Sprintf("neosync cloud enabled: %t", ncloudlicense.IsValid()))
+	slogger.Debug(fmt.Sprintf("vydon cloud enabled: %t", ncloudlicense.IsValid()))
 
-	pyroscopeConfig, isPyroscopeEnabled, err := pyroscope_env.NewFromEnv("neosync-api", slogger)
+	pyroscopeConfig, isPyroscopeEnabled, err := pyroscope_env.NewFromEnv("vydon-api", slogger)
 	if err != nil {
 		return fmt.Errorf("unable to initialize pyroscope from env: %w", err)
 	}
@@ -200,13 +200,13 @@ func serve(ctx context.Context) error {
 		return err
 	}
 
-	pool, err := neosyncdb.NewPool(dbconfig)
+	pool, err := vydondb.NewPool(dbconfig)
 	if err != nil {
 		return err
 	}
 
 	querier := db_queries.New()
-	db := neosyncdb.New(pool, querier)
+	db := vydondb.New(pool, querier)
 
 	if viper.GetBool("DB_AUTO_MIGRATE") {
 		schemaDir := viper.GetString("DB_SCHEMA_DIR")
@@ -224,7 +224,7 @@ func serve(ctx context.Context) error {
 		)
 		if err := neomigrate.Up(
 			ctx,
-			neosyncdb.GetDbUrl(dbMigConfig),
+			vydondb.GetDbUrl(dbMigConfig),
 			schemaDir,
 			slogger,
 		); err != nil {
@@ -240,21 +240,21 @@ func serve(ctx context.Context) error {
 	stdInterceptors := []connect.Interceptor{}
 
 	var anonymizerMeter metric.Meter
-	otelconfig := neosyncotel.GetOtelConfigFromViperEnv()
+	otelconfig := vydonotel.GetOtelConfigFromViperEnv()
 	if otelconfig.IsEnabled {
 		slogger.Debug("otel is enabled")
-		tmPropagator := neosyncotel.NewDefaultPropagator()
+		tmPropagator := vydonotel.NewDefaultPropagator()
 		otelconnopts := []otelconnect.Option{
 			otelconnect.WithoutServerPeerAttributes(),
 			otelconnect.WithPropagator(tmPropagator),
 		}
-		traceProviders := []neosyncotel.TracerProvider{}
-		meterProviders := []neosyncotel.MeterProvider{}
+		traceProviders := []vydonotel.TracerProvider{}
+		meterProviders := []vydonotel.MeterProvider{}
 
-		meterprovider, err := neosyncotel.NewMeterProvider(ctx, &neosyncotel.MeterProviderConfig{
+		meterprovider, err := vydonotel.NewMeterProvider(ctx, &vydonotel.MeterProviderConfig{
 			Exporter:   otelconfig.MeterExporter,
 			AppVersion: otelconfig.ServiceVersion,
-			Opts: neosyncotel.MeterExporterOpts{
+			Opts: vydonotel.MeterExporterOpts{
 				Otlp:    []otlpmetricgrpc.Option{},
 				Console: []stdoutmetric.Option{stdoutmetric.WithPrettyPrint()},
 			},
@@ -270,14 +270,14 @@ func serve(ctx context.Context) error {
 			otelconnopts = append(otelconnopts, otelconnect.WithoutMetrics())
 		}
 
-		anonymizeMeterProvider, err := neosyncotel.NewMeterProvider(
+		anonymizeMeterProvider, err := vydonotel.NewMeterProvider(
 			ctx,
-			&neosyncotel.MeterProviderConfig{
+			&vydonotel.MeterProviderConfig{
 				Exporter:   otelconfig.MeterExporter,
 				AppVersion: otelconfig.ServiceVersion,
-				Opts: neosyncotel.MeterExporterOpts{
+				Opts: vydonotel.MeterExporterOpts{
 					Otlp: []otlpmetricgrpc.Option{
-						neosyncotel.WithDefaultDeltaTemporalitySelector(),
+						vydonotel.WithDefaultDeltaTemporalitySelector(),
 					},
 					Console: []stdoutmetric.Option{stdoutmetric.WithPrettyPrint()},
 				},
@@ -292,9 +292,9 @@ func serve(ctx context.Context) error {
 			anonymizerMeter = anonymizeMeterProvider.Meter("anonymizer")
 		}
 
-		traceprovider, err := neosyncotel.NewTraceProvider(ctx, &neosyncotel.TraceProviderConfig{
+		traceprovider, err := vydonotel.NewTraceProvider(ctx, &vydonotel.TraceProviderConfig{
 			Exporter: otelconfig.TraceExporter,
-			Opts: neosyncotel.TraceExporterOpts{
+			Opts: vydonotel.TraceExporterOpts{
 				Otlp:    []otlptracegrpc.Option{},
 				Console: []stdouttrace.Option{stdouttrace.WithPrettyPrint()},
 			},
@@ -316,7 +316,7 @@ func serve(ctx context.Context) error {
 		}
 		stdInterceptors = append(stdInterceptors, otelInterceptor)
 
-		otelshutdown := neosyncotel.SetupOtelSdk(&neosyncotel.SetupConfig{
+		otelshutdown := vydonotel.SetupOtelSdk(&vydonotel.SetupConfig{
 			TraceProviders:    traceProviders,
 			MeterProviders:    meterProviders,
 			Logger:            logr.FromSlogHandler(slogger.Handler()),
@@ -600,8 +600,8 @@ func serve(ctx context.Context) error {
 		sql_manager.WithConnectionManagerOpts(connectionmanager.WithCloseOnRelease()),
 	)
 	mongoconnector := mongoconnect.NewConnector()
-	neosynctyperegistry := neosynctypes.NewTypeRegistry(slogger)
-	gcpmanager := neosync_gcp.NewManager()
+	vydontyperegistry := vydontypes.NewTypeRegistry(slogger)
+	gcpmanager := vydon_gcp.NewManager()
 	connectiondatabuilder := connectiondata.NewConnectionDataBuilder(
 		sqlConnector,
 		sqlmanager,
@@ -610,7 +610,7 @@ func serve(ctx context.Context) error {
 		awsManager,
 		gcpmanager,
 		mongoconnector,
-		neosynctyperegistry,
+		vydontyperegistry,
 	)
 
 	connectionService := v1alpha1_connectionservice.New(
@@ -803,7 +803,7 @@ func getPromClientFromEnvironment() (promapi.Client, error) {
 	})
 }
 
-func getDbConfig() (*neosyncdb.ConnectConfig, error) {
+func getDbConfig() (*vydondb.ConnectConfig, error) {
 	dbHost := viper.GetString("DB_HOST")
 	if dbHost == "" {
 		return nil, fmt.Errorf("must provide DB_HOST in environment")
@@ -840,7 +840,7 @@ func getDbConfig() (*neosyncdb.ConnectConfig, error) {
 		dbOptions = &val
 	}
 
-	return &neosyncdb.ConnectConfig{
+	return &vydondb.ConnectConfig{
 		Host:     dbHost,
 		Port:     dbPort,
 		Database: dbName,
@@ -851,7 +851,7 @@ func getDbConfig() (*neosyncdb.ConnectConfig, error) {
 	}, nil
 }
 
-func getDbMigrationConfig() (*neosyncdb.ConnectConfig, error) {
+func getDbMigrationConfig() (*vydondb.ConnectConfig, error) {
 	dbHost := viper.GetString("DB_HOST")
 	if dbHost == "" {
 		return nil, fmt.Errorf("must provide DB_HOST in environment")
@@ -900,7 +900,7 @@ func getDbMigrationConfig() (*neosyncdb.ConnectConfig, error) {
 		dbOptions = &val
 	}
 
-	return &neosyncdb.ConnectConfig{
+	return &vydondb.ConnectConfig{
 		Host:                  dbHost,
 		Port:                  dbPort,
 		Database:              dbName,
@@ -1135,13 +1135,13 @@ func getRunLogConfig() (*v1alpha1_jobservice.RunLogConfig, error) {
 			ksNs = getKubernetesNamespace()
 		}
 		if ksNs == "" {
-			ksNs = "neosync"
+			ksNs = "vydon"
 		}
 		if ksWorkerAppName == "" {
 			ksWorkerAppName = getKubernetesWorkerAppName()
 		}
 		if ksWorkerAppName == "" {
-			ksWorkerAppName = "neosync-worker"
+			ksWorkerAppName = "vydon-worker"
 		}
 		return &v1alpha1_jobservice.RunLogConfig{
 			IsEnabled:  true,
@@ -1160,7 +1160,7 @@ func getRunLogConfig() (*v1alpha1_jobservice.RunLogConfig, error) {
 		}
 		labelsQuery := viper.GetString("RUN_LOGS_LOKICONFIG_LABELSQUERY")
 		if labelsQuery == "" {
-			labelsQuery = `namespace="neosync", app="neosync-worker"`
+			labelsQuery = `namespace="vydon", app="vydon-worker"`
 		}
 		keepLabels := viper.GetStringSlice("RUN_LOGS_LOKICONFIG_KEEPLABELS")
 		return &v1alpha1_jobservice.RunLogConfig{

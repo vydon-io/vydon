@@ -10,7 +10,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateSHA256Hash
+// +vydonTransformerBuilder:generate:generateSHA256Hash
 
 func init() {
 	spec := bloblang.NewPluginSpec().

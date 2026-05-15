@@ -1,4 +1,4 @@
-package neosync_benthos_error
+package vydon_benthos_error
 
 import (
 	"context"

@@ -10,7 +10,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateCardNumber
+// +vydonTransformerBuilder:generate:generateCardNumber
 
 const defaultCCLength = 16
 const defaultIIN = 400000

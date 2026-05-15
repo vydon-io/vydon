@@ -14,19 +14,19 @@ import (
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
-	neosync_gcp "github.com/vydon-io/vydon/internal/gcp"
+	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
 )
 
 type GcpConnectionDataService struct {
 	logger     *slog.Logger
-	gcpmanager neosync_gcp.ManagerInterface
+	gcpmanager vydon_gcp.ManagerInterface
 	connection *mgmtv1alpha1.Connection
 	connconfig *mgmtv1alpha1.GcpCloudStorageConnectionConfig
 }
 
 func NewGcpConnectionDataService(
 	logger *slog.Logger,
-	gcpmanager neosync_gcp.ManagerInterface,
+	gcpmanager vydon_gcp.ManagerInterface,
 	connection *mgmtv1alpha1.Connection,
 ) *GcpConnectionDataService {
 	return &GcpConnectionDataService{
@@ -94,7 +94,7 @@ func (s *GcpConnectionDataService) StreamData(
 			&mgmtv1alpha1.GetConnectionDataStreamResponse{RowBytes: rowbytes.Bytes()},
 		)
 	}
-	tablePath := neosync_gcp.GetWorkflowActivityDataPrefix(
+	tablePath := vydon_gcp.GetWorkflowActivityDataPrefix(
 		jobRunId,
 		sqlmanager_shared.BuildTable(schema, table),
 		s.connconfig.PathPrefix,
@@ -137,7 +137,7 @@ func (s *GcpConnectionDataService) GetSchema(
 	schemas, err := gcpclient.GetDbSchemaFromPrefix(
 		ctx,
 		s.connconfig.GetBucket(),
-		neosync_gcp.GetWorkflowActivityPrefix(jobRunId, s.connconfig.PathPrefix),
+		vydon_gcp.GetWorkflowActivityPrefix(jobRunId, s.connconfig.PathPrefix),
 	)
 	if err != nil {
 		return nil, fmt.Errorf("uanble to retrieve db schema from gcs: %w", err)
@@ -147,7 +147,7 @@ func (s *GcpConnectionDataService) GetSchema(
 
 func (s *GcpConnectionDataService) getLatestJobRunFromGcs(
 	ctx context.Context,
-	client neosync_gcp.ClientInterface,
+	client vydon_gcp.ClientInterface,
 	jobId string,
 	bucket string,
 	pathPrefix *string,
@@ -183,7 +183,7 @@ func (s *GcpConnectionDataService) getLatestJobRunFromGcs(
 	sort.Sort(sort.Reverse(sort.StringSlice(runIDs)))
 
 	for _, runId := range runIDs {
-		prefix := neosync_gcp.GetWorkflowActivityPrefix(runId, pathPrefix)
+		prefix := vydon_gcp.GetWorkflowActivityPrefix(runId, pathPrefix)
 		ok, err := client.DoesPrefixContainTables(ctx, bucket, prefix)
 		if err != nil {
 			return "", fmt.Errorf("unable to check if prefix contains tables: %w", err)

@@ -29,13 +29,13 @@ This guide provides a comprehensive overview of SQL to JavaScript type mappings 
 | char             | string                  | "A "                                                            |
 | varchar          | string                  | "Example varchar"                                               |
 | text             | string                  | "Example text"                                                  |
-| bytea            | neosync.Binary          | [Binary type](/transformers/neosync-types#binary)               |
-| timestamp        | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime)  |
-| timestamptz      | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime)  |
-| date             | neosync.NeosyncDateTime | [NeosyncDateTime ](/transformers/neosync-types#neosyncdatetime) |
+| bytea            | vydon.Binary          | [Binary type](/transformers/vydon-types#binary)               |
+| timestamp        | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime)  |
+| timestamptz      | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime)  |
+| date             | vydon.VydonDateTime | [VydonDateTime ](/transformers/vydon-types#vydondatetime) |
 | time             | string                  | "12:34:56"                                                      |
 | timetz           | string                  | "12:34:56+00"                                                   |
-| interval         | neosync.Interval        | [Interval type](/transformers/neosync-types#interval)           |
+| interval         | vydon.Interval        | [Interval type](/transformers/vydon-types#interval)           |
 | boolean          | boolean                 | true                                                            |
 | point            | string                  | "(1,2)"                                                         |
 | line             | string                  | "{1,1,0}"                                                       |
@@ -47,8 +47,8 @@ This guide provides a comprehensive overview of SQL to JavaScript type mappings 
 | cidr             | string                  | "192.168.1.0/24"                                                |
 | inet             | string                  | "192.168.1.1"                                                   |
 | macaddr          | string                  | "08:00:2b:01:02:03"                                             |
-| bit              | neosync.Bits            | [Bits type](/transformers/neosync-types#bits)                   |
-| varbit           | neosync.Bits            | [Bits type](/transformers/neosync-types#bits)                   |
+| bit              | vydon.Bits            | [Bits type](/transformers/vydon-types#bits)                   |
+| varbit           | vydon.Bits            | [Bits type](/transformers/vydon-types#bits)                   |
 | tsvector         | string                  | "'example' 'tsvector'"                                          |
 | uuid             | string                  | "123e4567-e89b-12d3-a456-426614174000"                          |
 | xml              | string                  | `<foo>bar</foo>`                                                |
@@ -75,11 +75,11 @@ This guide provides a comprehensive overview of SQL to JavaScript type mappings 
 | decimal    | string                  | "1234.56"                                                      |
 | float      | number                  | 3.1414999961853027                                             |
 | double     | number                  | 3.14159265                                                     |
-| bit        | neosync.Bits            | [Bits type](/transformers/neosync-types#bits)                  |
+| bit        | vydon.Bits            | [Bits type](/transformers/vydon-types#bits)                  |
 | char       | string                  | "Fixed Char"                                                   |
 | varchar    | string                  | "Variable Char"                                                |
-| binary     | neosync.Binary          | [Binary type](/transformers/neosync-types#binary)              |
-| varbinary  | neosync.Binary          | [Binary type](/transformers/neosync-types#binary)              |
+| binary     | vydon.Binary          | [Binary type](/transformers/vydon-types#binary)              |
+| varbinary  | vydon.Binary          | [Binary type](/transformers/vydon-types#binary)              |
 | tinyblob   | string                  | "Tiny BLOB"                                                    |
 | blob       | string                  | "Regular BLOB"                                                 |
 | mediumblob | string                  | "Medium BLOB"                                                  |
@@ -91,10 +91,10 @@ This guide provides a comprehensive overview of SQL to JavaScript type mappings 
 | enum       | string                  | "value2"                                                       |
 | set        | string                  | "option1,option3"                                              |
 | json       | object                  | `{"key": "value", "array": [1, 2, 3]}`                         |
-| date       | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
-| time       | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
-| datetime   | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
-| timestamp  | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
+| date       | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
+| time       | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
+| datetime   | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
+| timestamp  | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
 | year       | number                  | 2023                                                           |
 
 ## SQL Server
@@ -112,14 +112,14 @@ This guide provides a comprehensive overview of SQL to JavaScript type mappings 
 | money            | string                  | "1234.5678"                                                    |
 | float            | number                  | 3.14159                                                        |
 | real             | number                  | 3.140000104904175                                              |
-| date             | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
-| time             | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
-| datetime         | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
-| datetime2        | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
-| smalldatetime    | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
-| datetimeoffset   | neosync.NeosyncDateTime | [NeosyncDateTime](/transformers/neosync-types#neosyncdatetime) |
-| binary           | neosync.Binary          | [Binary type](/transformers/neosync-types#binary)              |
-| varbinary        | neosync.Bits            | [Bits type](/transformers/neosync-types#bits)                  |
+| date             | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
+| time             | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
+| datetime         | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
+| datetime2        | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
+| smalldatetime    | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
+| datetimeoffset   | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
+| binary           | vydon.Binary          | [Binary type](/transformers/vydon-types#binary)              |
+| varbinary        | vydon.Bits            | [Bits type](/transformers/vydon-types#bits)                  |
 | char             | string                  | "CHAR"                                                         |
 | varchar          | string                  | "VARCHAR"                                                      |
 | varchar(max)     | string                  | "VARCHAR(MAX)"                                                 |

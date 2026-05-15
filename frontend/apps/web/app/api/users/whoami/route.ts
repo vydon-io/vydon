@@ -1,4 +1,4 @@
-import { withNeosyncContext } from '@/api-only/neosync-context';
+import { withVydonContext } from '@/api-only/vydon-context';
 import { create } from '@bufbuild/protobuf';
 import {
   SetPersonalAccountRequestSchema,
@@ -7,7 +7,7 @@ import {
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  return withNeosyncContext(async (ctx) => {
+  return withVydonContext(async (ctx) => {
     const setUserResp = await ctx.client.users.setUser(
       create(SetUserRequestSchema, {})
     );

@@ -1,5 +1,5 @@
-package neosync_benthos_metadata
+package vydon_benthos_metadata
 
 const (
-	MetaTypeMapStr = "neosync_key_type_map"
+	MetaTypeMapStr = "vydon_key_type_map"
 )

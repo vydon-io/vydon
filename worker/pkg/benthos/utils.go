@@ -1,4 +1,4 @@
-package neosync_benthos
+package vydon_benthos
 
 import (
 	"crypto/sha256"

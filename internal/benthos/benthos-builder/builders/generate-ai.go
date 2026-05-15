@@ -14,7 +14,7 @@ import (
 	bb_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
 	"github.com/vydon-io/vydon/internal/runconfigs"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 )
 
@@ -169,11 +169,11 @@ func buildBenthosAiGenerateSourceConfigResponses(
 		if userBatchSize != nil && *userBatchSize > 0 {
 			batchSize = *userBatchSize
 		}
-		bc := &neosync_benthos.BenthosConfig{
-			StreamConfig: neosync_benthos.StreamConfig{
-				Input: &neosync_benthos.InputConfig{
-					Inputs: neosync_benthos.Inputs{
-						OpenAiGenerate: &neosync_benthos.OpenAiGenerate{
+		bc := &vydon_benthos.BenthosConfig{
+			StreamConfig: vydon_benthos.StreamConfig{
+				Input: &vydon_benthos.InputConfig{
+					Inputs: vydon_benthos.Inputs{
+						OpenAiGenerate: &vydon_benthos.OpenAiGenerate{
 							ApiUrl:     openaiconfig.ApiUrl,
 							ApiKey:     openaiconfig.ApiKey,
 							UserPrompt: userPrompt,
@@ -185,15 +185,15 @@ func buildBenthosAiGenerateSourceConfigResponses(
 						},
 					},
 				},
-				Pipeline: &neosync_benthos.PipelineConfig{
+				Pipeline: &vydon_benthos.PipelineConfig{
 					Threads:    -1,
-					Processors: []neosync_benthos.ProcessorConfig{},
+					Processors: []vydon_benthos.ProcessorConfig{},
 				},
-				Output: &neosync_benthos.OutputConfig{
-					Outputs: neosync_benthos.Outputs{
-						Broker: &neosync_benthos.OutputBrokerConfig{
+				Output: &vydon_benthos.OutputConfig{
+					Outputs: vydon_benthos.Outputs{
+						Broker: &vydon_benthos.OutputBrokerConfig{
 							Pattern: "fan_out",
-							Outputs: []neosync_benthos.Outputs{},
+							Outputs: []vydon_benthos.Outputs{},
 						},
 					},
 				},
@@ -201,7 +201,7 @@ func buildBenthosAiGenerateSourceConfigResponses(
 		}
 
 		responses = append(responses, &bb_internal.BenthosSourceConfig{
-			Name: neosync_benthos.BuildBenthosTable(
+			Name: vydon_benthos.BuildBenthosTable(
 				tableMapping.Schema,
 				tableMapping.Table,
 			), // todo: may need to expand on this
@@ -234,7 +234,7 @@ func (b *generateAIBuilder) BuildDestinationConfig(
 		return nil, fmt.Errorf("unable to parse destination options: %w", err)
 	}
 
-	processorConfigs := []neosync_benthos.ProcessorConfig{}
+	processorConfigs := []vydon_benthos.ProcessorConfig{}
 	for _, pc := range benthosConfig.Processors {
 		processorConfigs = append(processorConfigs, *pc)
 	}
@@ -243,17 +243,17 @@ func (b *generateAIBuilder) BuildDestinationConfig(
 		config.BenthosDsns,
 		&bb_shared.BenthosDsn{ConnectionId: params.DestConnection.Id},
 	)
-	config.Outputs = append(config.Outputs, neosync_benthos.Outputs{
+	config.Outputs = append(config.Outputs, vydon_benthos.Outputs{
 		// retry processor and output several times
-		Retry: &neosync_benthos.RetryConfig{
-			InlineRetryConfig: neosync_benthos.InlineRetryConfig{
+		Retry: &vydon_benthos.RetryConfig{
+			InlineRetryConfig: vydon_benthos.InlineRetryConfig{
 				MaxRetries: 1,
 			},
-			Output: neosync_benthos.OutputConfig{
-				Outputs: neosync_benthos.Outputs{
-					Fallback: []neosync_benthos.Outputs{
+			Output: vydon_benthos.OutputConfig{
+				Outputs: vydon_benthos.Outputs{
+					Fallback: []vydon_benthos.Outputs{
 						{
-							PooledSqlInsert: &neosync_benthos.PooledSqlInsert{
+							PooledSqlInsert: &vydon_benthos.PooledSqlInsert{
 								ConnectionId:        params.DestConnection.GetId(),
 								Schema:              benthosConfig.TableSchema,
 								Table:               benthosConfig.TableName,
@@ -261,7 +261,7 @@ func (b *generateAIBuilder) BuildDestinationConfig(
 								OnConflictDoUpdate:  destOpts.OnConflictDoUpdate,
 								TruncateOnRetry:     destOpts.Truncate,
 
-								Batching: &neosync_benthos.Batching{
+								Batching: &vydon_benthos.Batching{
 									Period: destOpts.BatchPeriod,
 									Count:  destOpts.BatchCount,
 								},
@@ -269,9 +269,9 @@ func (b *generateAIBuilder) BuildDestinationConfig(
 							},
 						},
 						{ // kills activity depending on error
-							Error: &neosync_benthos.ErrorOutputConfig{
+							Error: &vydon_benthos.ErrorOutputConfig{
 								ErrorMsg: `${! meta("fallback_error")}`,
-								Batching: &neosync_benthos.Batching{
+								Batching: &vydon_benthos.Batching{
 									Period: destOpts.BatchPeriod,
 									Count:  destOpts.BatchCount,
 								},

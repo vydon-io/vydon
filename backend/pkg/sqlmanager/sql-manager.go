@@ -16,7 +16,7 @@ import (
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
 	"github.com/vydon-io/vydon/internal/connection-manager/providers/sqlprovider"
-	neosync_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
+	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
 )
 
 type SqlDatabase interface {
@@ -80,7 +80,7 @@ type sqlManagerConfig struct {
 	mysqlQuerier mysql_queries.Querier
 	mssqlQuerier mssql_queries.Querier
 
-	mgr connectionmanager.Interface[neosync_benthos_sql.SqlDbtx]
+	mgr connectionmanager.Interface[vydon_benthos_sql.SqlDbtx]
 }
 type SqlManagerOption func(*sqlManagerConfig)
 
@@ -104,7 +104,7 @@ func NewSqlManager(
 }
 
 func WithConnectionManager(
-	manager connectionmanager.Interface[neosync_benthos_sql.SqlDbtx],
+	manager connectionmanager.Interface[vydon_benthos_sql.SqlDbtx],
 ) SqlManagerOption {
 	return func(smc *sqlManagerConfig) {
 		smc.mgr = manager

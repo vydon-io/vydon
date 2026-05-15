@@ -529,7 +529,7 @@ func (s *IntegrationTestSuite) Test_ValidateSchema() {
 	s.T().Run("Ok", func(t *testing.T) {
 		Mappings := []*mgmtv1alpha1.JobMapping{
 			{
-				Schema: "neosync_api",
+				Schema: "vydon_api",
 				Table:  "users",
 				Column: "id",
 				Transformer: &mgmtv1alpha1.JobMappingTransformer{

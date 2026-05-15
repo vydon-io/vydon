@@ -5,7 +5,7 @@ import type { Config } from '@docusaurus/types';
 import { themes } from 'prism-react-renderer';
 
 const config: Config = {
-  title: 'Neosync',
+  title: 'Vydon',
   tagline: 'Open source Data Anonymization and Synthetic Data',
   favicon: 'img/logo_light_mode.png',
   headTags: [
@@ -19,15 +19,15 @@ const config: Config = {
     },
   ],
   // Set the production url of your s here
-  url: 'https://docs.neosync.dev',
+  url: 'https://docs.vydon.dev',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'nucleuscloud', // Usually your GitHub org/user name.
-  projectName: 'neosync', // Usually your repo name.
+  organizationName: 'vydon-io', // Usually your GitHub org/user name.
+  projectName: 'vydon', // Usually your repo name.
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn', //should probably be throw or warn but was causing a known issue in the markdown parsing of readme files from node_modules. https://github.com/facebook/docusaurus/issues/6370
@@ -73,13 +73,13 @@ const config: Config = {
           routeBasePath: '/',
           sidebarPath: './sidebars.ts',
           // Remove this to remove the "edit this page" links.
-          editUrl: 'https://github.com/nucleuscloud/neosync/blob/main/docs',
+          editUrl: 'https://github.com/vydon-io/vydon/blob/main/docs',
         },
         blog: {
           routeBasePath: '/changelog',
-          editUrl: 'https://github.com/nucleuscloud/neosync/blob/main/docs',
-          blogTitle: 'Neosync Changelog',
-          blogDescription: 'Neosync Changelog',
+          editUrl: 'https://github.com/vydon-io/vydon/blob/main/docs',
+          blogTitle: 'Vydon Changelog',
+          blogDescription: 'Vydon Changelog',
           blogSidebarTitle: ' Changelog',
           blogSidebarCount: 'ALL',
         },
@@ -125,14 +125,14 @@ const config: Config = {
     },
     navbar: {
       logo: {
-        alt: 'Neosync',
+        alt: 'Vydon',
         srcDark: 'img/logo_and_text_dark_mode.png',
         src: 'img/logo_and_text_light_mode.png',
       },
 
       items: [
         {
-          href: 'https://github.com/nucleuscloud/neosync',
+          href: 'https://github.com/vydon-io/vydon',
           position: 'right',
           className: 'header-github-link',
           'aria-label': 'GitHub repository',
@@ -147,13 +147,13 @@ const config: Config = {
         { to: '/api', label: 'SDK' },
         { to: '/changelog', label: 'Changelog' },
         {
-          to: 'https://www.postman.com/payload-pilot-82848251/neosync-rest-apis/collection/6sxdkh5/mgmt-v1alpha1?action=share&creator=24215189',
+          to: 'https://www.postman.com/payload-pilot-82848251/vydon-rest-apis/collection/6sxdkh5/mgmt-v1alpha1?action=share&creator=24215189',
           label: 'API Reference',
         },
       ],
     },
     footer: {
-      copyright: `Copyright © Nucleus Cloud Corp ${new Date().getFullYear()}`,
+      copyright: `Copyright © Vydon SAS ${new Date().getFullYear()}`,
     },
     prism: {
       theme: themes.github,
@@ -162,7 +162,7 @@ const config: Config = {
     algolia: {
       appId: 'LUROM0SS2F',
       apiKey: 'a58584698f0541be72a223f5b33d59a9',
-      indexName: 'neosync',
+      indexName: 'vydon',
       contextualSearch: true,
       searchParameters: {},
       searchPagePath: 'search',

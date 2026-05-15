@@ -6,12 +6,12 @@ import (
 	goja_require "github.com/dop251/goja_nodejs/require"
 	javascript_functions "github.com/vydon-io/vydon/internal/javascript/functions"
 	benthos_functions "github.com/vydon-io/vydon/internal/javascript/functions/benthos"
-	neosync_functions "github.com/vydon-io/vydon/internal/javascript/functions/neosync"
+	vydon_functions "github.com/vydon-io/vydon/internal/javascript/functions/vydon"
 	javascript_vm "github.com/vydon-io/vydon/internal/javascript/vm"
 	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 )
 
-// Comes full featured, but expects a value api that the benthos/neosync functions can manipulate
+// Comes full featured, but expects a value api that the benthos/vydon functions can manipulate
 func NewDefaultValueRunner(
 	valueApi javascript_functions.ValueApi,
 	transformPiiTextApi transformers.TransformPiiTextApi,
@@ -45,12 +45,12 @@ func getDefaultFunctions(
 	transformPiiTextApi transformers.TransformPiiTextApi,
 ) ([]*javascript_functions.FunctionDefinition, error) {
 	benthosFns := benthos_functions.Get()
-	neosyncFns, err := neosync_functions.Get(transformPiiTextApi)
+	vydonFns, err := vydon_functions.Get(transformPiiTextApi)
 	if err != nil {
 		return nil, err
 	}
-	output := make([]*javascript_functions.FunctionDefinition, 0, len(benthosFns)+len(neosyncFns))
+	output := make([]*javascript_functions.FunctionDefinition, 0, len(benthosFns)+len(vydonFns))
 	output = append(output, benthosFns...)
-	output = append(output, neosyncFns...)
+	output = append(output, vydonFns...)
 	return output, nil
 }

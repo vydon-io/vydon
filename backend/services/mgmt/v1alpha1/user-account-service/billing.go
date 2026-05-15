@@ -18,7 +18,7 @@ import (
 	"github.com/vydon-io/vydon/internal/billing"
 	"github.com/vydon-io/vydon/internal/rbac"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/stripe/stripe-go/v81"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -51,7 +51,7 @@ func (s *Service) GetAccountStatus(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +68,7 @@ func (s *Service) GetAccountStatus(
 
 	trialStatus := getTrialStatus(account.CreatedAt)
 
-	if account.AccountType == int16(neosyncdb.AccountType_Personal) {
+	if account.AccountType == int16(vydondb.AccountType_Personal) {
 		return connect.NewResponse(&mgmtv1alpha1.GetAccountStatusResponse{
 			SubscriptionStatus: trialStatus,
 		}), nil
@@ -212,7 +212,7 @@ func (s *Service) IsAccountStatusValid(
 		accountStatus = mgmtv1alpha1.AccountStatus_ACCOUNT_STATUS_ACCOUNT_TRIAL_ACTIVE
 		isValid = true
 
-		accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+		accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 		if err != nil {
 			return nil, err
 		}
@@ -259,7 +259,7 @@ func (s *Service) GetAccountBillingCheckoutSession(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -337,7 +337,7 @@ func (s *Service) GetAccountBillingPortalSession(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -381,7 +381,7 @@ func (s *Service) GetBillingAccounts(
 
 	accountIdsToFilter := []pgtype.UUID{}
 	for _, accountId := range req.Msg.GetAccountIds() {
-		accountUuid, err := neosyncdb.ToUuid(accountId)
+		accountUuid, err := vydondb.ToUuid(accountId)
 		if err != nil {
 			return nil, fmt.Errorf("input did not contain entirely valid uuids: %w", err)
 		}
@@ -426,15 +426,15 @@ func (s *Service) SetBillingMeterEvent(
 			"eventName", req.Msg.GetEventName(),
 		)
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
 
 	account, err := s.db.Q.GetAccount(ctx, s.db.Db, accountUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return nil, nucleuserrors.NewNotFound("account does not exist")
 	}
 	if !account.StripeCustomerID.Valid {

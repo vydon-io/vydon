@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "neosync-worker.name" -}}
+{{- define "vydon-worker.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "neosync-worker.fullname" -}}
+{{- define "vydon-worker.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "neosync-worker.chart" -}}
+{{- define "vydon-worker.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "neosync-worker.labels" -}}
-helm.sh/chart: {{ include "neosync-worker.chart" . }}
-{{ include "neosync-worker.selectorLabels" . }}
+{{- define "vydon-worker.labels" -}}
+helm.sh/chart: {{ include "vydon-worker.chart" . }}
+{{ include "vydon-worker.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "neosync-worker.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "neosync-worker.name" . }}
+{{- define "vydon-worker.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "vydon-worker.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "neosync-worker.serviceAccountName" -}}
+{{- define "vydon-worker.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "neosync-worker.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "vydon-worker.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -64,7 +64,7 @@ Create the name of the service account to use
 {{/*
 Generate the stringData section for environment variables
 */}}
-{{- define "neosync-worker.env-vars" -}}
+{{- define "vydon-worker.env-vars" -}}
 {{- if .Values.host }}
 HOST: {{ .Values.host | quote}}
 {{- end }}
@@ -74,8 +74,8 @@ PORT: {{ .Values.containerPort | quote }}
 {{- if .Values.otel.enabled }}
 OTEL_EXPORTER_OTLP_PORT: {{ .Values.otel.otlpPort | quote }} # sends to gRPC receiver
 {{- end }}
-{{- if .Values.nucleusEnv }}
-NUCLEUS_ENV: {{ .Values.nucleusEnv }}
+{{- if .Values.vydonEnv }}
+VYDON_ENV: {{ .Values.vydonEnv }}
 {{- end }}
 {{- if .Values.temporal.url }}
 TEMPORAL_URL: {{ .Values.temporal.url }}
@@ -98,11 +98,11 @@ TEMPORAL_CERT_KEY: {{ .Values.temporal.certificate.keyContents }}
 {{- if and .Values.temporal .Values.temporal.certificate .Values.temporal.certificate.certContents }}
 TEMPORAL_CERT: {{ .Values.temporal.certificate.certContents }}
 {{- end }}
-{{- if and .Values.neosync .Values.neosync.url }}
-NEOSYNC_URL: {{ .Values.neosync.url }}
+{{- if and .Values.vydon .Values.vydon.url }}
+VYDON_URL: {{ .Values.vydon.url }}
 {{- end }}
-{{- if and .Values.neosync .Values.neosync.apiKey }}
-NEOSYNC_API_KEY: {{ .Values.neosync.apiKey }}
+{{- if and .Values.vydon .Values.vydon.apiKey }}
+VYDON_API_KEY: {{ .Values.vydon.apiKey }}
 {{- end }}
 {{- if .Values.redis.url }}
 REDIS_URL: {{ .Values.redis.url }}
@@ -122,7 +122,7 @@ REDIS_TLS_ROOT_CERT_AUTHORITY: {{ .Values.redis.tls.rootCertAuthority }}
 {{- if and .Values.redis .Values.redis.tls .Values.redis.tls.rootCertAuthorityFile }}
 REDIS_TLS_ROOT_CERT_AUTHORITY_FILE: {{ .Values.redis.tls.rootCertAuthorityFile }}
 {{- end }}
-NEOSYNC_CLOUD: {{ .Values.neosyncCloud.enabled | default "false" | quote }}
+VYDON_CLOUD: {{ .Values.vydonCloud.enabled | default "false" | quote }}
 {{- if and .Values.ee .Values.ee.license }}
 EE_LICENSE: {{ .Values.ee.license | quote }}
 {{- end }}

@@ -60,7 +60,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ghcr.io/vydon-io/neosync/api
+            ghcr.io/vydon-io/vydon/api
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
@@ -134,7 +134,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ghcr.io/vydon-io/neosync/app
+            ghcr.io/vydon-io/vydon/app
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
@@ -203,7 +203,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
-            ghcr.io/vydon-io/neosync/worker
+            ghcr.io/vydon-io/vydon/worker
           # generate Docker tags based on the following events/attributes
           tags: |
             type=ref,event=branch
@@ -779,7 +779,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           registry-url: "https://registry.npmjs.org"
-          scope: "@neosync"
+          scope: "@vydon"
 
       - name: Cache node modules
         id: cache-npm

@@ -150,7 +150,7 @@ function Header(): ReactElement {
     <div>
       <h2 className="text-md font-semibold tracking-tight">S3 Configuration</h2>
       <p className="text-sm tracking-tight">
-        Change how Neosync handles sending records to the bucket.
+        Change how Vydon handles sending records to the bucket.
       </p>
     </div>
   );

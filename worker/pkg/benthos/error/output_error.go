@@ -1,11 +1,11 @@
-package neosync_benthos_error
+package vydon_benthos_error
 
 import (
 	"context"
 	"errors"
 	"fmt"
 
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
@@ -99,7 +99,7 @@ func (e *errorOutput) Close(ctx context.Context) error {
 
 func (e *errorOutput) isCriticalError(errMsg string) bool {
 	if e.isGenerateJob {
-		return neosync_benthos.IsGenerateJobCriticalError(errMsg)
+		return vydon_benthos.IsGenerateJobCriticalError(errMsg)
 	}
-	return neosync_benthos.IsCriticalError(errMsg)
+	return vydon_benthos.IsCriticalError(errMsg)
 }

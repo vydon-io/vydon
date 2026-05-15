@@ -1,4 +1,4 @@
-package neosync_benthos_defaulttransform
+package vydon_benthos_defaulttransform
 
 import (
 	"context"
@@ -31,7 +31,7 @@ func defaultTransformerProcessorConfig() *service.ConfigSpec {
 
 func ReisterDefaultTransformerProcessor(env *service.Environment) error {
 	return env.RegisterBatchProcessor(
-		"neosync_default_transformer",
+		"vydon_default_transformer",
 		defaultTransformerProcessorConfig(),
 		func(conf *service.ParsedConfig, mgr *service.Resources) (service.BatchProcessor, error) {
 			proc, err := newDefaultTransformerProcessor(conf, mgr)

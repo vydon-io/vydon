@@ -1,4 +1,4 @@
-package neosync_benthos_dynamodb
+package vydon_benthos_dynamodb
 
 import (
 	"context"
@@ -216,5 +216,5 @@ credentials:
 	require.True(t, credsConfig.UseEc2)
 	require.Equal(t, "my-role", credsConfig.Role)
 	require.Equal(t, "123", credsConfig.RoleExternalId)
-	require.Equal(t, "neosync", credsConfig.RoleSessionName)
+	require.Equal(t, "vydon", credsConfig.RoleSessionName)
 }

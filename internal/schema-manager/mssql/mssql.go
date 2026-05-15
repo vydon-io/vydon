@@ -71,7 +71,7 @@ func (d *MssqlSchemaManager) InitializeSchema(
 	}
 	if !d.eelicense.IsValid() {
 		return nil, fmt.Errorf(
-			"invalid or non-existent Neosync License. SQL Server schema init requires valid Enterprise license",
+			"invalid or non-existent Vydon License. SQL Server schema init requires valid Enterprise license",
 		)
 	}
 	tables := []*sqlmanager_shared.SchemaTable{}

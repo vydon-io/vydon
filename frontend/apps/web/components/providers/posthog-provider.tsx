@@ -1,6 +1,6 @@
 'use client';
 import { useGetSystemAppConfig } from '@/libs/hooks/useGetSystemAppConfig';
-import { useNeosyncUser } from '@/libs/hooks/useNeosyncUser';
+import { useVydonUser } from '@/libs/hooks/useVydonUser';
 import { useSession } from 'next-auth/react';
 import { usePathname, useSearchParams } from 'next/navigation';
 import posthog from 'posthog-js';
@@ -61,7 +61,7 @@ export function PHProvider({ children }: PHProps) {
 export function PostHogIdentifier(): ReactElement {
   const { data: systemAppConfig, isLoading: isSystemAppConfigLoading } =
     useGetSystemAppConfig();
-  const { data: userData, isLoading: isUserDataLoading } = useNeosyncUser();
+  const { data: userData, isLoading: isUserDataLoading } = useVydonUser();
   const { data: session } = useSession();
   const { account, isLoading: isAccountLoading } = useAccount();
   const posthog = usePostHog();
@@ -81,7 +81,7 @@ export function PostHogIdentifier(): ReactElement {
       accountId: account?.id,
       email: user?.email,
       name: user?.name,
-      neosyncCloud: systemAppConfig?.isNeosyncCloud ?? false,
+      vydonCloud: systemAppConfig?.isVydonCloud ?? false,
       userId,
     });
   }, [
@@ -92,7 +92,7 @@ export function PostHogIdentifier(): ReactElement {
     account?.name,
     userData?.userId,
     systemAppConfig?.isAuthEnabled,
-    systemAppConfig?.isNeosyncCloud,
+    systemAppConfig?.isVydonCloud,
     user?.email,
     user?.name,
   ]);

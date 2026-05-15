@@ -24,12 +24,12 @@ func javascriptProcessorConfig() *service.ConfigSpec {
 		Field(service.NewInterpolatedStringField(codeField))
 }
 
-func RegisterNeosyncJavascriptProcessor(
+func RegisterVydonJavascriptProcessor(
 	env *service.Environment,
 	transformPiiTextApi transformers.TransformPiiTextApi,
 ) error {
 	return env.RegisterBatchProcessor(
-		"neosync_javascript", javascriptProcessorConfig(),
+		"vydon_javascript", javascriptProcessorConfig(),
 		func(conf *service.ParsedConfig, mgr *service.Resources) (service.BatchProcessor, error) {
 			return newJavascriptProcessorFromConfig(conf, mgr, transformPiiTextApi)
 		})
@@ -108,12 +108,12 @@ func (j *javascriptProcessor) ProcessBatch(
 	defer func() {
 		if r := recover(); r != nil {
 			j.slogger.Error(
-				"recovered from panic in neosync_javascript batch processor",
+				"recovered from panic in vydon_javascript batch processor",
 				"error",
 				fmt.Sprintf("%v", r),
 			)
 			// Set the named return value 'err'
-			err = fmt.Errorf("neosync_javascript batch processor panic recovered: %v", r)
+			err = fmt.Errorf("vydon_javascript batch processor panic recovered: %v", r)
 			return
 		}
 	}()

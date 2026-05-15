@@ -7,7 +7,7 @@ import (
 	"os"
 
 	neomigrate "github.com/vydon-io/vydon/internal/migrate"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -108,7 +108,7 @@ func getDbUrl() (string, error) {
 		dbOptions = &val
 	}
 
-	return neosyncdb.GetDbUrl(&neosyncdb.ConnectConfig{
+	return vydondb.GetDbUrl(&vydondb.ConnectConfig{
 		Host:                  dbHost,
 		Port:                  dbPort,
 		Database:              dbName,

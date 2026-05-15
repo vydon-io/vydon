@@ -161,7 +161,7 @@ function RecheckSlackConnectionButton(
           </Button>
         </TooltipTrigger>
         <TooltipContent>
-          <p>Verify that Neosync has a connection to your Slack</p>
+          <p>Verify that Vydon has a connection to your Slack</p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
@@ -205,8 +205,8 @@ function ConnectSlackConnectionButton(
         <TooltipContent>
           <p>
             {hasConfiguration
-              ? 'Reconnect Neosync to your Slack'
-              : 'Connect Neosync to your Slack'}
+              ? 'Reconnect Vydon to your Slack'
+              : 'Connect Vydon to your Slack'}
           </p>
         </TooltipContent>
       </Tooltip>

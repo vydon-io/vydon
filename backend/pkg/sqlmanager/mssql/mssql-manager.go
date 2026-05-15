@@ -15,7 +15,7 @@ import (
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	ee_sqlmanager_mssql "github.com/vydon-io/vydon/internal/mssqlmanager"
 	"github.com/vydon-io/vydon/internal/gotypeutil"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -49,9 +49,9 @@ func (m *Manager) GetDatabaseSchema(
 	ctx context.Context,
 ) ([]*sqlmanager_shared.DatabaseSchemaRow, error) {
 	dbSchemas, err := m.querier.GetDatabaseSchema(ctx, m.db)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.DatabaseSchemaRow{}, nil
 	}
 
@@ -145,9 +145,9 @@ func (m *Manager) GetDatabaseTableSchemasBySchemasAndTables(
 	}
 
 	dbSchemas, err := m.querier.GetDatabaseTableSchemasBySchemasAndTables(ctx, m.db, schematables)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.DatabaseSchemaRow{}, nil
 	}
 
@@ -235,9 +235,9 @@ func (m *Manager) GetTableConstraintsBySchema(
 	constraints := []*mssql_queries.GetTableConstraintsBySchemasRow{}
 	errgrp.Go(func() error {
 		rows, err := m.querier.GetTableConstraintsBySchemas(ctx, m.db, schemas)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return err
-		} else if err != nil && neosyncdb.IsNoRows(err) {
+		} else if err != nil && vydondb.IsNoRows(err) {
 			return nil
 		}
 		constraints = rows
@@ -367,9 +367,9 @@ func isInvalidCircularSelfReferencingFk(
 
 func (m *Manager) GetRolePermissionsMap(ctx context.Context) (map[string][]string, error) {
 	rows, err := m.querier.GetRolePermissions(ctx, m.db)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, fmt.Errorf("unable to retrieve mssql role permissions: %w", err)
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return map[string][]string{}, nil
 	}
 

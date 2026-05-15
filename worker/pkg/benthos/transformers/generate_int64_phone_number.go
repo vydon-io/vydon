@@ -11,7 +11,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateInt64PhoneNumber
+// +vydonTransformerBuilder:generate:generateInt64PhoneNumber
 
 var defaultPhoneNumberLength = int64(10)
 

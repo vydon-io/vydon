@@ -127,7 +127,7 @@ jobs:
         with:
           aws-region: ${{ env.AWS_REGION }}
           role-to-assume: ${{ vars.INTEGRATION_TEST_AWS_ROLE_ARN }}
-          role-session-name: NeosyncCiIntegrationTests
+          role-session-name: VydonCiIntegrationTests
 
       - name: Run Integration Tests
         run: |

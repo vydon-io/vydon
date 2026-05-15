@@ -10,7 +10,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:transform:transformInt64
+// +vydonTransformerBuilder:transform:transformInt64
 
 func init() {
 	spec := bloblang.NewPluginSpec().

@@ -34,9 +34,9 @@ import (
 	"github.com/vydon-io/vydon/internal/connectiondata"
 	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
 	"github.com/vydon-io/vydon/internal/rbac"
-	neosync_gcp "github.com/vydon-io/vydon/internal/gcp"
-	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/vydon-io/vydon/internal/testutil"
 	tcpostgres "github.com/vydon-io/vydon/internal/testutil/testcontainers/postgres"
 )
@@ -74,10 +74,10 @@ const (
 	// OSS, Unauthenticated, Unlicensed
 	openSourceUnauthenticatedUnlicensedPostfix = "/oss-unauthenticated-unlicensed"
 	// NeoCloud, Licensed, Authenticated
-	neoCloudAuthenticatedLicensedPostfix = "/neosynccloud-authenticated"
+	neoCloudAuthenticatedLicensedPostfix = "/vydoncloud-authenticated"
 )
 
-func (s *NeosyncApiTestClient) setupOssUnauthenticatedLicensedMux(
+func (s *VydonApiTestClient) setupOssUnauthenticatedLicensedMux(
 	ctx context.Context,
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	logger *slog.Logger,
@@ -99,7 +99,7 @@ func (s *NeosyncApiTestClient) setupOssUnauthenticatedLicensedMux(
 	)
 }
 
-func (s *NeosyncApiTestClient) setupOssLicensedAuthMux(
+func (s *VydonApiTestClient) setupOssLicensedAuthMux(
 	ctx context.Context,
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	logger *slog.Logger,
@@ -121,7 +121,7 @@ func (s *NeosyncApiTestClient) setupOssLicensedAuthMux(
 	)
 }
 
-func (s *NeosyncApiTestClient) setupOssUnlicensedMux(
+func (s *VydonApiTestClient) setupOssUnlicensedMux(
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	logger *slog.Logger,
 ) (*http.ServeMux, error) {
@@ -139,7 +139,7 @@ func (s *NeosyncApiTestClient) setupOssUnlicensedMux(
 	)
 }
 
-func (s *NeosyncApiTestClient) setupNeoCloudMux(
+func (s *VydonApiTestClient) setupNeoCloudMux(
 	ctx context.Context,
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	logger *slog.Logger,
@@ -161,7 +161,7 @@ func (s *NeosyncApiTestClient) setupNeoCloudMux(
 	)
 }
 
-func (s *NeosyncApiTestClient) setupMux(
+func (s *VydonApiTestClient) setupMux(
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	isAuthEnabled bool,
 	isLicensed bool,
@@ -179,7 +179,7 @@ func (s *NeosyncApiTestClient) setupMux(
 		license = testutil.NewFakeEELicense()
 	}
 
-	neosyncDb := neosyncdb.New(pgcontainer.DB, db_queries.New())
+	vydonDb := vydondb.New(pgcontainer.DB, db_queries.New())
 
 	var billingclient billing.Interface
 	if isNeosyncCloud {
@@ -194,7 +194,7 @@ func (s *NeosyncApiTestClient) setupMux(
 			IsNeosyncCloud:           isNeosyncCloud,
 			DefaultMaxAllowedRecords: &maxAllowed,
 		},
-		neosyncdb.New(pgcontainer.DB, db_queries.New()),
+		vydondb.New(pgcontainer.DB, db_queries.New()),
 		s.Mocks.TemporalConfigProvider,
 		s.Mocks.Authclient,
 		s.Mocks.Authmanagerclient,
@@ -208,7 +208,7 @@ func (s *NeosyncApiTestClient) setupMux(
 		&v1alpha1_transformersservice.Config{
 			IsPresidioEnabled: isPresidioEnabled,
 		},
-		neosyncdb.New(pgcontainer.DB, db_queries.New()),
+		vydondb.New(pgcontainer.DB, db_queries.New()),
 		s.Mocks.Presidio.Entities,
 		userclient,
 		license,
@@ -218,7 +218,7 @@ func (s *NeosyncApiTestClient) setupMux(
 
 	connectionService := v1alpha1_connectionservice.New(
 		&v1alpha1_connectionservice.Config{IsNeosyncCloud: isNeosyncCloud},
-		neosyncDb,
+		vydonDb,
 		userclient,
 		mongoconnect.NewConnector(),
 		awsmanager.New(),
@@ -229,13 +229,13 @@ func (s *NeosyncApiTestClient) setupMux(
 	var jobhookService *jobhooks.Service
 	if isLicensed {
 		jobhookService = jobhooks.New(
-			neosyncDb,
+			vydonDb,
 			userclient,
 			jobhooks.WithEnabled(),
 		)
 	} else {
 		jobhookService = jobhooks.New(
-			neosyncDb,
+			vydonDb,
 			userclient,
 		)
 	}
@@ -246,8 +246,8 @@ func (s *NeosyncApiTestClient) setupMux(
 	mysqlquerier := mysql_queries.New()
 	mongoconnector := mongoconnect.NewConnector()
 	sqlmanager := sqlmanagerclient
-	gcpmanager := neosync_gcp.NewManager()
-	neosynctyperegistry := neosynctypes.NewTypeRegistry(logger)
+	gcpmanager := vydon_gcp.NewManager()
+	vydontyperegistry := vydontypes.NewTypeRegistry(logger)
 
 	connectiondatabuilder := connectiondata.NewConnectionDataBuilder(
 		sqlConnector,
@@ -257,12 +257,12 @@ func (s *NeosyncApiTestClient) setupMux(
 		awsManager,
 		gcpmanager,
 		mongoconnector,
-		neosynctyperegistry,
+		vydontyperegistry,
 	)
 
 	jobService := v1alpha1_jobservice.New(
 		&v1alpha1_jobservice.Config{IsAuthEnabled: isAuthEnabled, IsNeosyncCloud: isNeosyncCloud},
-		neosyncDb,
+		vydonDb,
 		s.Mocks.TemporalClientManager,
 		connectionService,
 		sqlmanagerclient,
@@ -286,7 +286,7 @@ func (s *NeosyncApiTestClient) setupMux(
 		transformerService,
 		presAnalyzeClient,
 		presAnonClient,
-		neosyncDb,
+		vydonDb,
 		license,
 	)
 
@@ -298,7 +298,7 @@ func (s *NeosyncApiTestClient) setupMux(
 
 	accountHookService := v1alpha1_accounthookservice.New(
 		accounthooks.New(
-			neosyncDb,
+			vydonDb,
 			userclient,
 			accounthooks.WithSlackClient(s.Mocks.Slackclient),
 		),
@@ -352,7 +352,7 @@ func (s *NeosyncApiTestClient) setupMux(
 	return mux, nil
 }
 
-func (s *NeosyncApiTestClient) getEnforcedRbacClient(
+func (s *VydonApiTestClient) getEnforcedRbacClient(
 	_ context.Context,
 	_ *tcpostgres.PostgresTestContainer,
 ) (rbac.Interface, error) {

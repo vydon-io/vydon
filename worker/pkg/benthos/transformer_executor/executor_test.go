@@ -1627,11 +1627,11 @@ func Test_InitializeTransformerByConfigType(t *testing.T) {
 
 		mockanalyze := presidioapi.NewMockAnalyzeInterface(t)
 		mockanon := presidioapi.NewMockAnonymizeInterface(t)
-		mockneosync := ee_transformer_fns.NewMockNeosyncOperatorApi(t)
+		mockvydon := ee_transformer_fns.NewMockVydonOperatorApi(t)
 		defaultLan := "en"
 
 		execOpts := []TransformerExecutorOption{
-			WithTransformPiiTextConfig(mockanalyze, mockanon, mockneosync, &defaultLan),
+			WithTransformPiiTextConfig(mockanalyze, mockanon, mockvydon, &defaultLan),
 		}
 		executor, err := InitializeTransformerByConfigType(config, execOpts...)
 		require.NoError(t, err)
@@ -1652,10 +1652,10 @@ func Test_InitializeTransformerByConfigType(t *testing.T) {
 
 		mockanalyze := presidioapi.NewMockAnalyzeInterface(t)
 		mockanon := presidioapi.NewMockAnonymizeInterface(t)
-		mockneosync := ee_transformer_fns.NewMockNeosyncOperatorApi(t)
+		mockvydon := ee_transformer_fns.NewMockVydonOperatorApi(t)
 		defaultLan := "en"
 		execOpts := []TransformerExecutorOption{
-			WithTransformPiiTextConfig(mockanalyze, mockanon, mockneosync, &defaultLan),
+			WithTransformPiiTextConfig(mockanalyze, mockanon, mockvydon, &defaultLan),
 		}
 		executor, err := InitializeTransformerByConfigType(config, execOpts...)
 		require.NoError(t, err)

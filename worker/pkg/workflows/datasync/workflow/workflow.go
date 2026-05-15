@@ -11,7 +11,7 @@ import (
 	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
 	"github.com/vydon-io/vydon/internal/license"
 	"github.com/vydon-io/vydon/internal/runconfigs"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	accountstatus_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/account-status"
 	genbenthosconfigs_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/gen-benthos-configs"
 	jobhooks_by_timing_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/jobhooks-by-timing"
@@ -692,7 +692,7 @@ func invokeSync(
 		}).
 			Get(ctx, &wfResult)
 		if err == nil {
-			tn := neosync_benthos.BuildBenthosTable(config.TableSchema, config.TableName)
+			tn := vydon_benthos.BuildBenthosTable(config.TableSchema, config.TableName)
 			err = updateCompletedMap(tn, completed, config.Columns)
 			if err != nil {
 				settable.Set(wfResult, err)

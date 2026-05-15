@@ -11,18 +11,18 @@ import (
 
 type piiTextApi struct {
 	execConfig         *transformPiiTextConfig
-	neosyncOperatorApi ee_transformer_fns.NeosyncOperatorApi
+	vydonOperatorApi ee_transformer_fns.VydonOperatorApi
 	logger             *slog.Logger
 }
 
 func newFromExecConfig(
 	execConfig *transformPiiTextConfig,
-	neosyncOperatorApi ee_transformer_fns.NeosyncOperatorApi,
+	vydonOperatorApi ee_transformer_fns.VydonOperatorApi,
 	logger *slog.Logger,
 ) transformers.TransformPiiTextApi {
 	return &piiTextApi{
 		execConfig:         execConfig,
-		neosyncOperatorApi: neosyncOperatorApi,
+		vydonOperatorApi: vydonOperatorApi,
 		logger:             logger,
 	}
 }
@@ -32,7 +32,7 @@ func (p *piiTextApi) Transform(ctx context.Context, config *mgmtv1alpha1.Transfo
 		ctx,
 		p.execConfig.analyze,
 		p.execConfig.anonymize,
-		p.neosyncOperatorApi,
+		p.vydonOperatorApi,
 		config,
 		value,
 		p.logger,

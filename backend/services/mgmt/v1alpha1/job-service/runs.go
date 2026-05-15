@@ -23,7 +23,7 @@ import (
 	"github.com/vydon-io/vydon/backend/internal/userdata"
 	"github.com/vydon-io/vydon/internal/rbac"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	piidetect_job_activities "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/job/activities"
 	piidetect_table_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/table"
 	piidetect_table_activities "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/table/activities"
@@ -53,7 +53,7 @@ func (s *Service) GetJobRuns(
 	jobIds := []string{}
 	switch id := req.Msg.Id.(type) {
 	case *mgmtv1alpha1.GetJobRunsRequest_JobId:
-		jobUuid, err := neosyncdb.ToUuid(id.JobId)
+		jobUuid, err := vydondb.ToUuid(id.JobId)
 		if err != nil {
 			return nil, err
 		}
@@ -62,11 +62,11 @@ func (s *Service) GetJobRuns(
 			return nil, err
 		}
 
-		accountId = neosyncdb.UUIDString(job.AccountID)
+		accountId = vydondb.UUIDString(job.AccountID)
 		jobIds = append(jobIds, id.JobId)
 	case *mgmtv1alpha1.GetJobRunsRequest_AccountId:
 		accountId = id.AccountId
-		accountPgUuid, err := neosyncdb.ToUuid(accountId)
+		accountPgUuid, err := vydondb.ToUuid(accountId)
 		if err != nil {
 			return nil, err
 		}
@@ -76,7 +76,7 @@ func (s *Service) GetJobRuns(
 		}
 		for i := range jobs {
 			job := jobs[i]
-			jobIds = append(jobIds, neosyncdb.UUIDString(job.ID))
+			jobIds = append(jobIds, vydondb.UUIDString(job.ID))
 		}
 	default:
 		return nil, fmt.Errorf("must provide jobId or accountId")
@@ -1050,7 +1050,7 @@ func (s *Service) GetRunContext(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(id.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(id.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -1060,9 +1060,9 @@ func (s *Service) GetRunContext(
 		ExternalId: id.GetExternalId(),
 		AccountId:  accountUuid,
 	})
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, fmt.Errorf("unable to retrieve run context by key: %w", err)
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return nil, nucleuserrors.NewNotFound("no run context exists with the provided key")
 	}
 
@@ -1091,7 +1091,7 @@ func (s *Service) SetRunContext(
 		)
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(id.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(id.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -1132,7 +1132,7 @@ func (s *Service) SetRunContexts(
 			)
 		}
 
-		accountUuid, err := neosyncdb.ToUuid(id.GetAccountId())
+		accountUuid, err := vydondb.ToUuid(id.GetAccountId())
 		if err != nil {
 			return nil, err
 		}
@@ -1174,7 +1174,7 @@ func (s *Service) GetPiiDetectionReport(
 
 	logger.Debug("building pii detection report")
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -1197,7 +1197,7 @@ func (s *Service) GetPiiDetectionReport(
 				AccountId:        accountUuid,
 			},
 		)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return nil, fmt.Errorf("unable to retrieve run contexts: %w", err)
 		}
 
@@ -1238,9 +1238,9 @@ func (s *Service) getTableRunContextsFromJobReport(
 		ExternalId: piidetect_job_activities.BuildJobReportExternalId(jobRun.GetJobId()),
 		AccountId:  accountUuid,
 	})
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, fmt.Errorf("unable to retrieve run context: %w", err)
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return nil, nil
 	}
 	var jobReport piidetect_job_activities.JobPiiDetectReport
@@ -1278,7 +1278,7 @@ func (s *Service) getDbRunContextsFromKeys(
 	for _, key := range keys {
 		key := key
 		errgrp.Go(func() error {
-			accountUuid, err := neosyncdb.ToUuid(key.GetAccountId())
+			accountUuid, err := vydondb.ToUuid(key.GetAccountId())
 			if err != nil {
 				return fmt.Errorf("unable to convert account id to uuid: %w", err)
 			}

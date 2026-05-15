@@ -1,4 +1,4 @@
-package neosync_gcp
+package vydon_gcp
 
 import (
 	"compress/gzip"

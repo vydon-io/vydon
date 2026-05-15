@@ -52,7 +52,7 @@ func (s *Service) GetDailyMetricCount(
 			"true",
 		), // we want to always exclude update configs
 		metrics.NewRegexMatchLabel(
-			metrics.NeosyncDateLabel,
+			metrics.VydonDateLabel,
 			strings.Join(
 				metrics.GenerateMonthRegexRange(req.Msg.GetStart(), req.Msg.GetEnd()),
 				metricDateSeparator,
@@ -148,7 +148,7 @@ func (s *Service) GetMetricCount(
 			"true",
 		), // we want to always exclude update configs
 		metrics.NewRegexMatchLabel(
-			metrics.NeosyncDateLabel,
+			metrics.VydonDateLabel,
 			strings.Join(
 				metrics.GenerateMonthRegexRange(req.Msg.GetStartDay(), req.Msg.GetEndDay()),
 				metricDateSeparator,

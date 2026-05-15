@@ -1,5 +1,5 @@
 'use client';
-import { useNeosyncUser } from '@/libs/hooks/useNeosyncUser';
+import { useVydonUser } from '@/libs/hooks/useVydonUser';
 import { getSingleOrUndefined } from '@/libs/utils';
 import { useQuery } from '@connectrpc/connect-query';
 import { UserAccount, UserAccountService } from '@vydon/sdk';
@@ -47,7 +47,7 @@ export default function AccountProvider(props: Props): ReactElement {
     undefined
   );
 
-  const { isLoading: isUserLoading } = useNeosyncUser();
+  const { isLoading: isUserLoading } = useVydonUser();
 
   const {
     data: accountsResponse,

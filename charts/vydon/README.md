@@ -1,12 +1,12 @@
-# neosync
+# vydon
 
-A Helm chart for Neosync that contains the api, app, and worker
+A Helm chart for Vydon that contains the api, app, and worker
 
-**Homepage:** <https://www.neosync.dev>
+**Homepage:** <https://www.vydon.dev>
 
 ## Source Code
 
-* <https://github.com/nucleuscloud/neosync>
+* <https://github.com/vydon-io/vydon>
 
 ## Requirements
 
@@ -22,7 +22,7 @@ A Helm chart for Neosync that contains the api, app, and worker
 |-----|------|---------|-------------|
 | api.enabled | bool | `true` | Enable or Disable Neoysnc Api |
 | app.enabled | bool | `true` | Enable or Disable Neoysnc App |
-| worker.enabled | bool | `true` | Enable or Disable Neosync Worker |
+| worker.enabled | bool | `true` | Enable or Disable Vydon Worker |
 | api.auth.api.baseUrl | string | `nil` | The base url to the auth service's admin url |
 | api.auth.api.clientId | string | `nil` | The service account client id |
 | api.auth.api.clientSecret | string | `nil` | The service account client secret |
@@ -48,22 +48,22 @@ A Helm chart for Neosync that contains the api, app, and worker
 | api.db.port | int | `5432` | The database port |
 | api.db.username | string | `nil` | The username that will be used for authentication |
 | api.deploymentAnnotations | object | `{}` | Provide a map of deployment annotations that will be attached to the deployment's annotations |
-| api.ee.license | string | `nil` | Neosync Enterprise-Edition License Key |
+| api.ee.license | string | `nil` | Vydon Enterprise-Edition License Key |
 | api.extraEnvVars | list | `[]` | Provide extra environment variables that will be applied to the deployment's user-container. |
 | api.fullnameOverride | string | `nil` | Fully overrides the chart name |
 | api.host | string | `"0.0.0.0"` | Sets the host that the backend will listen on. 0.0.0.0 is common for Kubernetes workloads. |
 | api.image.pullPolicy | string | `nil` | Overrides the default K8s pull policy |
-| api.image.repository | string | `"ghcr.io/vydon-io/neosync/api"` | The default image repository |
+| api.image.repository | string | `"ghcr.io/vydon-io/vydon/api"` | The default image repository |
 | api.image.tag | string | `nil` | Overrides the image tag whose default is {{ printf "v%s" .Chart.AppVersion }} |
 | api.imagePullSecrets | list | `[]` | Define a list of image pull secrets that will be used by the deployment |
 | api.ingress.enabled | bool | `false` | Enable this if using K8s ingress to expose the backend to the internet |
 | api.istio.enabled | bool | `false` | Whether or not to apply the default istio annotations/labels to the deployment |
 | api.kubernetes.enabled | bool | `true` | Whether or not this is kubernetes (should always be true) |
 | api.kubernetes.namespace | string | `nil` | Falls back to the helm release namespace |
-| api.kubernetes.workerAppName | string | `"neosync-worker"` | Corresponds with the app label that is present on the worker pod |
+| api.kubernetes.workerAppName | string | `"vydon-worker"` | Corresponds with the app label that is present on the worker pod |
 | api.migrations.db.disableSsl | bool | `false` | Whether or not to disable SSL when connecting to the database |
 | api.migrations.db.host | string | `nil` | The database hostname |
-| api.migrations.db.migrationsTableName | string | `"neosync_api_schema_migrations"` | This is the tablename that will be created in the postgres "public" schema |
+| api.migrations.db.migrationsTableName | string | `"vydon_api_schema_migrations"` | This is the tablename that will be created in the postgres "public" schema |
 | api.migrations.db.migrationsTableQuoted | bool | `false` | Whether or not the tablename is quoted in the connection string |
 | api.migrations.db.name | string | `nil` | The name of the database |
 | api.migrations.db.options | string | `nil` | Extra database options that will be appended to the query string |
@@ -74,10 +74,10 @@ A Helm chart for Neosync that contains the api, app, and worker
 | api.migrations.enabled | bool | `true` | Whether or not the migrations init container will be added to the deployment |
 | api.migrations.extraEnvVars | list | `[]` | Provide extra environment variables that will be applied to the migration init container. |
 | api.nameOverride | string | `nil` | Override the name specified on the Chart, which defaults to .Chart.Name |
-| api.neosyncCloud.enabled | bool | `false` | Whether or not this is NeosyncCloud |
-| api.neosyncCloud.workerApiKeys | list | `[]` | Worker API keys that have been allowlisted to for use |
+| api.vydonCloud.enabled | bool | `false` | Whether or not this is VydonCloud |
+| api.vydonCloud.workerApiKeys | list | `[]` | Worker API keys that have been allowlisted to for use |
 | api.nodeSelector | object | `{}` | Any node selectors that should be applied to the deployment |
-| api.nucleusEnv | string | `nil` | Mostly used by NeosyncCloud. Adds a special tag to the logging to determine what environment is running |
+| api.vydonEnv | string | `nil` | Mostly used by VydonCloud. Adds a special tag to the logging to determine what environment is running |
 | api.otel.enabled | bool | `false` | whether or not to enable open telemetry settings |
 | api.otel.otlpPort | int | `4317` | Specifies the port that otel is listening on that the service will export metrics and traces to |
 | api.podAnnotations | object | `{}` | Provide a map of pod annotations that will be attached to the deployment's pod template annotations |
@@ -88,11 +88,11 @@ A Helm chart for Neosync that contains the api, app, and worker
 | api.resources.limits.memory | string | `"512Mi"` | Sets the max Memory amount |
 | api.resources.requests.cpu | string | `"100m"` | Sets the CPU amount to be requested |
 | api.resources.requests.memory | string | `"128Mi"` | Sets the Memory amount to be requested |
-| api.runLogs.enabled | bool | `false` | Enable this if planning to surface logs within Neosync API and UI (requires a valid license). |
+| api.runLogs.enabled | bool | `false` | Enable this if planning to surface logs within Vydon API and UI (requires a valid license). |
 | api.runLogs.lokiConfig.baseUrl | string | `nil` | The base url to the loki instance |
 | api.runLogs.lokiConfig.keepLabels | string | `nil` | List format. |
 | api.runLogs.lokiConfig.labelsQuery | string | `nil` | LogQL labels query (without the {} as those are provided by the system) |
-| api.runLogs.podConfig.workerAppName | string | `"neosync-worker"` | Corresponds to the app label that is present on the worker pod that will be used to surface logs |
+| api.runLogs.podConfig.workerAppName | string | `"vydon-worker"` | Corresponds to the app label that is present on the worker pod that will be used to surface logs |
 | api.runLogs.podConfig.workerNamespace | string | `nil` | The namespace the worker lives in |
 | api.runLogs.type | string | `"k8s-pods"` | Possible values: k8s-pods, loki |
 | api.serviceAccount.annotations | object | `{}` | Specify annotations here that will be attached to the service account. Useful for specifying role information or other tagging depending on environment. |
@@ -132,20 +132,20 @@ A Helm chart for Neosync that contains the api, app, and worker
 | app.fullnameOverride | string | `nil` | Fully overrides the chart name |
 | app.host | string | `"0.0.0.0"` | Sets the host that the backend will listen on. 0.0.0.0 is common for Kubernetes workloads. |
 | app.image.pullPolicy | string | `nil` | Overrides the default K8s pull policy |
-| app.image.repository | string | `"ghcr.io/vydon-io/neosync/app"` | The default image repository |
+| app.image.repository | string | `"ghcr.io/vydon-io/vydon/app"` | The default image repository |
 | app.image.tag | string | `nil` | Overrides the image tag whose default is {{ printf "v%s" .Chart.AppVersion }} |
 | app.imagePullSecrets | list | `[]` | Define a list of image pull secrets that will be used by the deployment |
 | app.ingress.enabled | bool | `false` | Enable this if using K8s ingress to expose the backend to the internet |
 | app.istio.enabled | bool | `false` | Whether or not to apply the default istio annotations/labels to the deployment |
 | app.jobHooks.enabled | bool | `false` | Enables Job Hooks on the frontend. Note: This will only work if it has also been enabled via the backend with a valid license |
 | app.nameOverride | string | `nil` | Override the name specified on the Chart, which defaults to .Chart.Name |
-| app.neosyncApi.url | string | `"http://neosync-api"` | The URL to the Neosync API instance |
-| app.neosyncCloud.enabled | bool | `false` | Whether or not this is NeosyncCloud |
+| app.vydonApi.url | string | `"http://vydon-api"` | The URL to the Vydon API instance |
+| app.vydonCloud.enabled | bool | `false` | Whether or not this is VydonCloud |
 | app.nextAuthSecret | string | `"This is an example"` | next-auth secret that is used to encrypt the session cookie |
 | app.nextAuthUrl | string | `"http://localhost:3000"` | next-auth base url. Should be the public url for the application |
 | app.nextPublic.appBaseUrl | string | `"http://localhost:3000"` | next public app base url. Should be the public url for the application |
 | app.nodeSelector | object | `{}` | Any node selectors that should be applied to the deployment |
-| app.nucleusEnv | string | `nil` | Mostly used by NeosyncCloud. Adds a special tag to the logging to determine what environment is running |
+| app.vydonEnv | string | `nil` | Mostly used by VydonCloud. Adds a special tag to the logging to determine what environment is running |
 | app.otel.enabled | bool | `false` | whether or not to enable open telemetry settings |
 | app.otel.otlpPort | int | `4317` | Specifies the port that otel is listening on that the service will export metrics and traces to |
 | app.podAnnotations | object | `{}` | Provide a map of pod annotations that will be attached to the deployment's pod template annotations |
@@ -173,21 +173,21 @@ A Helm chart for Neosync that contains the api, app, and worker
 | worker.containerPort | int | `8080` | The container port |
 | worker.datadog.enabled | bool | `false` | Whether or not to apply the default Datadog annotations/labels to the deployment |
 | worker.deploymentAnnotations | object | `{}` | Provide a map of deployment annotations that will be attached to the deployment's annotations |
-| worker.ee.license | string | `nil` | Neosync Enterprise-Edition License Key |
+| worker.ee.license | string | `nil` | Vydon Enterprise-Edition License Key |
 | worker.extraEnvVars | list | `[]` | Provide extra environment variables that will be applied to the deployment. |
 | worker.fullnameOverride | string | `nil` | Fully overrides the chart name |
 | worker.host | string | `"0.0.0.0"` | Sets the host that the backend will listen on. 0.0.0.0 is common for Kubernetes workloads. |
 | worker.image.pullPolicy | string | `nil` | Overrides the default K8s pull policy |
-| worker.image.repository | string | `"ghcr.io/vydon-io/neosync/worker"` | The default image repository |
+| worker.image.repository | string | `"ghcr.io/vydon-io/vydon/worker"` | The default image repository |
 | worker.image.tag | string | `nil` | Overrides the image tag whose default is {{ printf "v%s" .Chart.AppVersion }} |
 | worker.imagePullSecrets | list | `[]` | Define a list of image pull secrets that will be used by the deployment |
 | worker.istio.enabled | bool | `false` | Whether or not to apply the default istio annotations/labels to the deployment |
 | worker.nameOverride | string | `nil` | Override the name specified on the Chart, which defaults to .Chart.Name |
-| worker.neosync.apiKey | string | `nil` | Only required if running the backend in auth-mode |
-| worker.neosync.url | string | `"http://neosync-api"` | The url to the Neoysnc API instance |
-| worker.neosyncCloud.enabled | bool | `false` | Whether or not this is NeosyncCloud |
+| worker.vydon.apiKey | string | `nil` | Only required if running the backend in auth-mode |
+| worker.vydon.url | string | `"http://vydon-api"` | The url to the Neoysnc API instance |
+| worker.vydonCloud.enabled | bool | `false` | Whether or not this is VydonCloud |
 | worker.nodeSelector | object | `{}` | Any node selectors that should be applied to the deployment |
-| worker.nucleusEnv | string | `nil` | Mostly used by NeosyncCloud. Adds a special tag to the logging to determine what environment is running |
+| worker.vydonEnv | string | `nil` | Mostly used by VydonCloud. Adds a special tag to the logging to determine what environment is running |
 | worker.otel | object | `{"enabled":false,"otlpPort":4317}` | Will eventually allow sending traces. The worker does emit record-based metrics, but does not currently listen to otel.enabled. Must provide the OTEL_SDK_DISABLED=false environment variable separately today. |
 | worker.podAnnotations | object | `{}` | Provide a map of pod annotations that will be attached to the deployment's pod template annotations |
 | worker.redis.kind | string | `nil` | The kind of redis instance. simpke, cluster, failover |

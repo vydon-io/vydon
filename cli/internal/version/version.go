@@ -32,7 +32,7 @@ func (info *VersionInfo) Headers() map[string]string {
 
 func constructUserAgent(info *VersionInfo) string {
 	return fmt.Sprintf(
-		"neosync/%s (commit: %s; build: %s; go: %s; compiler: %s; platform: %s)",
+		"vydon/%s (commit: %s; build: %s; go: %s; compiler: %s; platform: %s)",
 		info.GitVersion,
 		info.GitCommit,
 		info.BuildDate,

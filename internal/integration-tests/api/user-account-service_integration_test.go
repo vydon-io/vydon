@@ -591,7 +591,7 @@ func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountBillingCheckout
 		requireErrResp(s.T(), resp, err)
 	})
 
-	t.Run("non-neosynccloud - disallowed", func(t *testing.T) {
+	t.Run("non-vydoncloud - disallowed", func(t *testing.T) {
 		personalAccountId := s.createPersonalAccount(s.ctx, s.OSSUnauthenticatedLicensedClients.Users())
 		resp, err := userclient.GetAccountBillingCheckoutSession(s.ctx, connect.NewRequest(&mgmtv1alpha1.GetAccountBillingCheckoutSessionRequest{
 			AccountId: personalAccountId,
@@ -627,7 +627,7 @@ func (s *IntegrationTestSuite) Test_UserAccountService_GetAccountBillingPortalSe
 		requireErrResp(s.T(), resp, err)
 	})
 
-	t.Run("non-neosynccloud - disallowed", func(t *testing.T) {
+	t.Run("non-vydoncloud - disallowed", func(t *testing.T) {
 		personalAccountId := s.createPersonalAccount(s.ctx, s.OSSUnauthenticatedLicensedClients.Users())
 		resp, err := s.OSSUnauthenticatedLicensedClients.Users().GetAccountBillingPortalSession(s.ctx, connect.NewRequest(&mgmtv1alpha1.GetAccountBillingPortalSessionRequest{
 			AccountId: personalAccountId,

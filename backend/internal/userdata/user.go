@@ -11,7 +11,7 @@ import (
 	"github.com/vydon-io/vydon/internal/apikey"
 	"github.com/vydon-io/vydon/internal/license"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type UserAccountServiceClient interface {
@@ -34,7 +34,7 @@ type User struct {
 }
 
 func (u *User) Id() string {
-	return neosyncdb.UUIDString(u.id)
+	return vydondb.UUIDString(u.id)
 }
 func (u *User) PgId() pgtype.UUID {
 	return u.id
@@ -68,7 +68,7 @@ func (u *User) IsLicensed(ctx context.Context, accountId string) (bool, error) {
 		return false, err
 	}
 
-	// todo: check account type for Neosync Cloud Cloud?
+	// todo: check account type for Vydon Cloud Cloud?
 	// if: personal, then check if free trial is active
 	// if: pro, then no? or maybe still do a trial check?
 	// if: enterprise, then check for valid license
@@ -88,7 +88,7 @@ func enforceAccountAccess(ctx context.Context, user *User, accountId string) err
 		// We first want to check to make sure the api key is valid and that it says it's in the account
 		// However, we still want to make a DB request to ensure the DB still says it's in the account
 		if user.apiKeyData.ApiKey == nil ||
-			neosyncdb.UUIDString(user.apiKeyData.ApiKey.AccountID) != accountId {
+			vydondb.UUIDString(user.apiKeyData.ApiKey.AccountID) != accountId {
 			return nucleuserrors.NewUnauthorized("api key is not valid for account")
 		}
 	}

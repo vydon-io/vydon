@@ -7,7 +7,7 @@ import (
 
 	"github.com/jackc/pgx/v5/pgtype"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 const Wildcard = "*"
@@ -39,7 +39,7 @@ func NewJobIdEntity(value string) *Entity        { return NewEntity("jobs", valu
 func NewUserIdEntity(value string) *Entity       { return NewEntity("users", value) }
 func NewConnectionIdEntity(value string) *Entity { return NewEntity("connections", value) }
 func NewPgUserIdEntity(value pgtype.UUID) *Entity {
-	return NewUserIdEntity(neosyncdb.UUIDString(value))
+	return NewUserIdEntity(vydondb.UUIDString(value))
 }
 
 type AccountAction string

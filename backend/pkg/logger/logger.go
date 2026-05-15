@@ -1,4 +1,4 @@
-package neosynclogger
+package vydonlogger
 
 import (
 	"log"

@@ -297,11 +297,11 @@ code: |
 	require.NoError(t, proc.Close(bCtx))
 }
 
-func Test_NeosyncProcessor_Ok(t *testing.T) {
+func Test_VydonProcessor_Ok(t *testing.T) {
 	conf, err := javascriptProcessorConfig().ParseYAML(fmt.Sprintf(`
 code: |
   (() => {
-    let foo = neosync.transformCharacterScramble("123", null);
+    let foo = vydon.transformCharacterScramble("123", null);
     benthos.v0_msg_set_string(foo);
   })();
 `), nil)

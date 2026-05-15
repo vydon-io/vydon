@@ -13,7 +13,7 @@ import (
 	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
 	bb_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
 	"github.com/vydon-io/vydon/internal/runconfigs"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	tablesync_shared "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/shared"
 )
 
@@ -23,12 +23,12 @@ type BenthosConfigResponse struct {
 	DependsOn []*runconfigs.DependsOn
 
 	// TODO refactor these out
-	Config                  *neosync_benthos.BenthosConfig
+	Config                  *vydon_benthos.BenthosConfig
 	TableSchema             string
 	TableName               string
 	Columns                 []string
 	RunType                 runconfigs.RunType
-	ColumnDefaultProperties map[string]*neosync_benthos.ColumnDefaultProperties
+	ColumnDefaultProperties map[string]*vydon_benthos.ColumnDefaultProperties
 	RedisDependsOn          map[string][]string
 	BenthosDsns             []*bb_shared.BenthosDsn
 	RedisConfig             []*bb_shared.BenthosRedisConfig
@@ -425,7 +425,7 @@ func NewCliSourceBuilderProvider(
 	}
 	jobType := bb_internal.GetJobType(config.Job)
 
-	builder := bb_conns.NewNeosyncConnectionDataSyncBuilder(
+	builder := bb_conns.NewVydonConnectionDataSyncBuilder(
 		config.Connectiondataclient,
 		config.Sqlmanagerclient,
 		config.SourceJobRunId,

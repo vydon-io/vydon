@@ -7,5 +7,5 @@ app:
   enabled: true
 
 worker:
-  # -- Enable or Disable Neosync Worker
+  # -- Enable or Disable Vydon Worker
   enabled: true

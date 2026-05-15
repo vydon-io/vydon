@@ -1,4 +1,4 @@
-package neosync_benthos_dynamodb
+package vydon_benthos_dynamodb
 
 import (
 	"context"
@@ -12,7 +12,7 @@ import (
 	awsmanager "github.com/vydon-io/vydon/internal/aws"
 	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper/builder"
 	dynamodbmapper "github.com/vydon-io/vydon/internal/database-record-mapper/dynamodb"
-	neosync_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
+	vydon_benthos_metadata "github.com/vydon-io/vydon/worker/pkg/benthos/metadata"
 	"github.com/redpanda-data/benthos/v4/public/service"
 )
 
@@ -179,7 +179,7 @@ func (d *dynamodbInput) ReadBatch(
 		}
 
 		msg := service.NewMessage(nil)
-		msg.MetaSetMut(neosync_benthos_metadata.MetaTypeMapStr, keyTypeMap)
+		msg.MetaSetMut(vydon_benthos_metadata.MetaTypeMapStr, keyTypeMap)
 		msg.SetStructuredMut(resMap)
 		batch = append(batch, msg)
 	}
@@ -261,7 +261,7 @@ func getAwsCredentialsConfigFromParsedConf(
 	roleExternalId, _ := credsConf.FieldString("role_external_id")
 	output.RoleExternalId = roleExternalId
 
-	output.RoleSessionName = "neosync"
+	output.RoleSessionName = "vydon"
 
 	return output
 }

@@ -19,7 +19,7 @@ both pass, with **zero remaining imports** of `internal/ee/*`,
 
 ## Strategy
 
-The OSS-shipped Neosync codebase already contains OSS-compatible shims
+The OSS-shipped Vydon codebase already contains OSS-compatible shims
 inside the EE directories (most notably `internal/ee/rbac/allow_all_client.go`).
 The migration is therefore:
 
@@ -52,8 +52,8 @@ The migration is therefore:
 - `internal/ee/rbac/enforcer/` (the Casbin enforcer).
 
 **Caller migration:** replace
-`"github.com/nucleuscloud/neosync/internal/ee/rbac"` with
-`"github.com/nucleuscloud/neosync/internal/rbac"`. Any construction site
+`"github.com/vydon-io/vydon/internal/ee/rbac"` with
+`"github.com/vydon-io/vydon/internal/rbac"`. Any construction site
 calling `rbac.New(enforcer)` must switch to `&rbac.AllowAllClient{}`.
 
 **Drop dependency:** remove `github.com/casbin/casbin/v2` from `go.mod` if
@@ -190,9 +190,9 @@ Before merging the deletion PR:
 - [ ] `go vet ./...` exits 0
 - [ ] `go test ./... -short` passes (excluding integration tests that
       gated EE features — those should be deleted, not made to pass)
-- [ ] `grep -r "nucleuscloud/neosync/internal/ee\|nucleuscloud/neosync/worker/pkg/workflows/ee\|nucleuscloud/neosync/backend/internal/ee" --include="*.go" .` returns no matches
+- [ ] `grep -r "vydon-io/vydon/internal/ee\|vydon-io/vydon/worker/pkg/workflows/ee\|vydon-io/vydon/backend/internal/ee" --include="*.go" .` returns no matches
 - [ ] `find . -type d -name ee -not -path "*/node_modules/*"` returns no matches
 - [ ] CodeQL passes
 - [ ] OSV-Scanner passes
-- [ ] `helm lint charts/neosync` (no regression — the chart is still
-      named neosync until EPIC-2 renames)
+- [ ] `helm lint charts/vydon` (no regression — the chart is still
+      named vydon until EPIC-2 renames)

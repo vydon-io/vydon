@@ -186,8 +186,8 @@ function PermissionsPageContainer(props: PermissionsPageContainerProps) {
     <div className="flex flex-col gap-4">
       <div className="flex flex-row justify-between items-center w-full">
         <div className="text-muted-foreground text-sm">
-          Review the permissions that Neosync needs for your connection.{' '}
-          <LearnMoreLink href="https://docs.neosync.dev/connections/postgres#permissions" />
+          Review the permissions that Vydon needs for your connection.{' '}
+          <LearnMoreLink href="https://docs.vydon.dev/connections/postgres#permissions" />
         </div>
       </div>
 

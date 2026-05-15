@@ -10,7 +10,7 @@ import (
 	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 	"github.com/vydon-io/vydon/internal/rbac"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 func (s *Service) GetAccountTemporalConfig(
@@ -18,7 +18,7 @@ func (s *Service) GetAccountTemporalConfig(
 	req *connect.Request[mgmtv1alpha1.GetAccountTemporalConfigRequest],
 ) (*connect.Response[mgmtv1alpha1.GetAccountTemporalConfigResponse], error) {
 	if s.cfg.IsNeosyncCloud {
-		return nil, nucleuserrors.NewNotImplemented("not enabled in Neosync Cloud")
+		return nil, nucleuserrors.NewNotImplemented("not enabled in Vydon Cloud")
 	}
 	userdataclient := s.UserDataClient()
 	user, err := userdataclient.GetUser(ctx)
@@ -49,7 +49,7 @@ func (s *Service) SetAccountTemporalConfig(
 	req *connect.Request[mgmtv1alpha1.SetAccountTemporalConfigRequest],
 ) (*connect.Response[mgmtv1alpha1.SetAccountTemporalConfigResponse], error) {
 	if s.cfg.IsNeosyncCloud {
-		return nil, nucleuserrors.NewNotImplemented("not enabled in Neosync Cloud")
+		return nil, nucleuserrors.NewNotImplemented("not enabled in Vydon Cloud")
 	}
 	userdataclient := s.UserDataClient()
 	user, err := userdataclient.GetUser(ctx)
@@ -66,7 +66,7 @@ func (s *Service) SetAccountTemporalConfig(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}

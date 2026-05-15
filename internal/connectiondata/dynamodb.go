@@ -17,14 +17,14 @@ import (
 
 type AwsDynamodbConnectionDataService struct {
 	logger     *slog.Logger
-	awsmanager aws_manager.NeosyncAwsManagerClient
+	awsmanager aws_manager.VydonAwsManagerClient
 	connection *mgmtv1alpha1.Connection
 	connconfig *mgmtv1alpha1.DynamoDBConnectionConfig
 }
 
 func NewAwsDynamodbConnectionDataService(
 	logger *slog.Logger,
-	awsmanager aws_manager.NeosyncAwsManagerClient,
+	awsmanager aws_manager.VydonAwsManagerClient,
 	connection *mgmtv1alpha1.Connection,
 ) *AwsDynamodbConnectionDataService {
 	return &AwsDynamodbConnectionDataService{

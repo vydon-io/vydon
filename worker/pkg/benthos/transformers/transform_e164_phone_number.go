@@ -11,7 +11,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:transform:transformE164PhoneNumber
+// +vydonTransformerBuilder:transform:transformE164PhoneNumber
 
 func init() {
 	spec := bloblang.NewPluginSpec().

@@ -9,8 +9,8 @@ import (
 
 	mssql "github.com/microsoft/go-mssqldb"
 	"github.com/vydon-io/vydon/internal/database-record-mapper/builder"
-	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
-	neosync_types "github.com/vydon-io/vydon/internal/types"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
 )
 
 type MSSQLMapper struct{}
@@ -23,7 +23,7 @@ func NewMSSQLBuilder() *builder.Builder[*sql.Rows] {
 
 func (m *MSSQLMapper) MapRecordWithKeyType(
 	rows *sql.Rows,
-) (valuemap map[string]any, typemap map[string]neosync_types.KeyType, err error) {
+) (valuemap map[string]any, typemap map[string]vydon_types.KeyType, err error) {
 	return nil, nil, errors.ErrUnsupported
 }
 
@@ -68,7 +68,7 @@ func parseRowValues(values []any, columnNames, columnDbTypes []string) (map[stri
 		colType := columnDbTypes[i]
 		switch t := v.(type) {
 		case time.Time:
-			dt, err := neosynctypes.NewDateTimeFromMssql(t)
+			dt, err := vydontypes.NewDateTimeFromMssql(t)
 			if err != nil {
 				return nil, fmt.Errorf("failed to convert time.Time to DateTime for column %s: %w", col, err)
 			}
@@ -78,13 +78,13 @@ func parseRowValues(values []any, columnNames, columnDbTypes []string) (map[stri
 		case []byte:
 			switch {
 			case strings.EqualFold(colType, "binary"):
-				binary, err := neosynctypes.NewBinaryFromMssql(t)
+				binary, err := vydontypes.NewBinaryFromMssql(t)
 				if err != nil {
 					return nil, fmt.Errorf("failed to convert binary data for column %s: %w", col, err)
 				}
 				jObj[col] = binary
 			case strings.EqualFold(colType, "varbinary"):
-				bits, err := neosynctypes.NewBitsFromMssql(t)
+				bits, err := vydontypes.NewBitsFromMssql(t)
 				if err != nil {
 					return nil, fmt.Errorf("failed to convert varbinary data for column %s: %w", col, err)
 				}

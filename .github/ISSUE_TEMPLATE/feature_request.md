@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest a feature for Neosync
+about: Suggest a feature for Vydon
 labels: enhancement, feature
 
 ---

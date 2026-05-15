@@ -11,7 +11,7 @@ import (
 	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	tcneosyncapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
+	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	sqlmanager_mysql "github.com/vydon-io/vydon/backend/pkg/sqlmanager/mysql"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	tcmysql "github.com/vydon-io/vydon/internal/testutil/testcontainers/mysql"
@@ -136,12 +136,12 @@ func test_mysql_types(
 	t *testing.T,
 	ctx context.Context,
 	mysql *tcmysql.MysqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	alltypesSchema := "alltypes"
 
 	errgrp, errctx := errgroup.WithContext(ctx)
@@ -152,7 +152,7 @@ func test_mysql_types(
 	err := errgrp.Wait()
 	require.NoError(t, err)
 
-	neosyncApi.MockTemporalForCreateJob("test-mysql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mysql-sync")
 
 	alltypesMappings := mysql_alltypes.GetDefaultSyncJobMappings(alltypesSchema)
 
@@ -168,7 +168,7 @@ func test_mysql_types(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mysql_all_types")
@@ -204,12 +204,12 @@ func test_mysql_edgecases(
 	t *testing.T,
 	ctx context.Context,
 	mysql *tcmysql.MysqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "mysqledgecases"
 	schema2 := "mysqledgecasesother"
 
@@ -224,7 +224,7 @@ func test_mysql_edgecases(
 	err := errgrp.Wait()
 	require.NoError(t, err)
 
-	neosyncApi.MockTemporalForCreateJob("test-mysql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mysql-sync")
 
 	mappings := mysql_edgecases.GetDefaultSyncJobMappings(schema)
 	mappings2 := mysql_edgecases.GetDefaultSyncJobMappings(schema2)
@@ -241,7 +241,7 @@ func test_mysql_edgecases(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mysql_edgecases")
@@ -293,12 +293,12 @@ func test_mysql_composite_keys(
 	t *testing.T,
 	ctx context.Context,
 	mysql *tcmysql.MysqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "mysqlcompositekeys"
 
 	errgrp, errctx := errgroup.WithContext(ctx)
@@ -311,7 +311,7 @@ func test_mysql_composite_keys(
 	err := errgrp.Wait()
 	require.NoError(t, err)
 
-	neosyncApi.MockTemporalForCreateJob("test-mysql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mysql-sync")
 
 	mappings := mysql_composite_keys.GetDefaultSyncJobMappings(schema)
 
@@ -327,7 +327,7 @@ func test_mysql_composite_keys(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mysql_composite_keys")
@@ -359,12 +359,12 @@ func test_mysql_on_conflict_do_update(
 	t *testing.T,
 	ctx context.Context,
 	mysql *tcmysql.MysqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "human_resources"
 
 	errgrp, errctx := errgroup.WithContext(ctx)
@@ -390,7 +390,7 @@ func test_mysql_on_conflict_do_update(
 	_, err = mysql.Source.DB.ExecContext(ctx, updateStmt)
 	require.NoError(t, err)
 
-	neosyncApi.MockTemporalForCreateJob("test-mysql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mysql-sync")
 
 	mappings := mysql_human_resources.GetDefaultSyncJobMappings(schema)
 
@@ -407,7 +407,7 @@ func test_mysql_on_conflict_do_update(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mysql_human_resources")
@@ -445,18 +445,18 @@ func test_mysql_complex(
 	t *testing.T,
 	ctx context.Context,
 	mysql *tcmysql.MysqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "complex"
 
 	err := mysql.Source.RunCreateStmtsInDatabase(ctx, mysqlTestdataFolder, []string{"complex/create-tables.sql", "complex/inserts.sql"}, schema)
 	require.NoError(t, err)
 
-	neosyncApi.MockTemporalForCreateJob("test-mysql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mysql-sync")
 
 	mappings := mysql_complex.GetDefaultSyncJobMappings(schema)
 
@@ -473,7 +473,7 @@ func test_mysql_complex(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithMaxIterations(10), WithPageLimit(100))
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithMaxIterations(10), WithPageLimit(100))
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mysql_complex")
@@ -544,19 +544,19 @@ func test_mysql_schema_reconciliation(
 	t *testing.T,
 	ctx context.Context,
 	mysql *tcmysql.MysqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 	shouldTruncate bool,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := fmt.Sprintf("reconcile_%v", shouldTruncate)
 
 	err := mysql.Source.RunCreateStmtsInDatabase(ctx, mysqlTestdataFolder, []string{"schema-init/create-tables.sql"}, schema)
 	require.NoError(t, err)
 
-	neosyncApi.MockTemporalForCreateJob("test-mysql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mysql-sync")
 
 	mappings := mysql_schemainit.GetDefaultSyncJobMappings(schema)
 
@@ -574,7 +574,7 @@ func test_mysql_schema_reconciliation(
 	})
 	destinationId := job.GetDestinations()[0].GetId()
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithMaxIterations(100), WithPageLimit(1000))
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithMaxIterations(100), WithPageLimit(1000))
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mysql-schema-reconciliation")
@@ -633,7 +633,7 @@ func test_mysql_schema_reconciliation(
 	updatedMappings = append(updatedMappings, mysql_schemainit.GetAlterSyncJobMappings(schema)...)
 	job = updateJobMappings(t, ctx, jobclient, job.GetId(), updatedMappings, job.GetSource())
 
-	testworkflow = NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithMaxIterations(100), WithPageLimit(1000))
+	testworkflow = NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithMaxIterations(100), WithPageLimit(1000))
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mysql-schema-reconciliation-run-2")

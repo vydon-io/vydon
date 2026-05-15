@@ -4,7 +4,7 @@ import { useAccount } from '@/components/providers/account-provider';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useGetSystemAppConfig } from '@/libs/hooks/useGetSystemAppConfig';
-import { useNeosyncUser } from '@/libs/hooks/useNeosyncUser';
+import { useVydonUser } from '@/libs/hooks/useVydonUser';
 import { getErrorMessage } from '@/util/util';
 import { useMutation } from '@connectrpc/connect-query';
 import { UserAccountService } from '@vydon/sdk';
@@ -17,7 +17,7 @@ import { toast } from 'sonner';
 export default function InvitePage(): ReactElement {
   const { status } = useSession();
   const { setAccount, mutateUserAccount } = useAccount();
-  const { isLoading: isUserLoading, error: userError } = useNeosyncUser();
+  const { isLoading: isUserLoading, error: userError } = useVydonUser();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');
   const router = useRouter();

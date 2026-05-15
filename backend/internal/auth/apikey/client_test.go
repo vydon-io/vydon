@@ -14,7 +14,7 @@ import (
 	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 	pkg_utils "github.com/vydon-io/vydon/backend/pkg/utils"
 	"github.com/vydon-io/vydon/internal/apikey"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/stretchr/testify/mock"
 	"github.com/zeebo/assert"
 )
@@ -36,7 +36,7 @@ func Test_Client_InjectTokenCtx_Account(t *testing.T) {
 	hashedFakeToken := pkg_utils.ToSha256(
 		fakeToken,
 	)
-	expiresAt, err := neosyncdb.ToTimestamp(time.Now().Add(5 * time.Minute))
+	expiresAt, err := vydondb.ToTimestamp(time.Now().Add(5 * time.Minute))
 	assert.NoError(t, err)
 	apiKeyRecord := db_queries.NeosyncApiAccountApiKey{
 		ID:        pgtype.UUID{Valid: true},
@@ -75,7 +75,7 @@ func Test_Client_InjectTokenCtx_Account_Expired(t *testing.T) {
 	hashedFakeToken := pkg_utils.ToSha256(
 		fakeToken,
 	)
-	expiresAt, err := neosyncdb.ToTimestamp(time.Now().Add(-5 * time.Second))
+	expiresAt, err := vydondb.ToTimestamp(time.Now().Add(-5 * time.Second))
 	assert.NoError(t, err)
 	apiKeyRecord := db_queries.NeosyncApiAccountApiKey{
 		ID:        pgtype.UUID{Valid: true},

@@ -9,7 +9,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateInt64
+// +vydonTransformerBuilder:generate:generateInt64
 
 /*
 Integers can either be either put into non-numeric data types (varchar, text, integer) or numeric data types

@@ -10,7 +10,7 @@ import (
 	migrate_cmd "github.com/vydon-io/vydon/backend/internal/cmds/mgmt/migrate"
 	run_cmd "github.com/vydon-io/vydon/backend/internal/cmds/mgmt/run"
 	serve "github.com/vydon-io/vydon/backend/internal/cmds/mgmt/serve"
-	neosynclogger "github.com/vydon-io/vydon/backend/pkg/logger"
+	vydonlogger "github.com/vydon-io/vydon/backend/pkg/logger"
 )
 
 func Execute() {
@@ -18,7 +18,7 @@ func Execute() {
 
 	rootCmd := &cobra.Command{
 		Use:   "mgmt",
-		Short: "Terminal app that is used to manage the Neosync API system.",
+		Short: "Terminal app that is used to manage the Vydon API system.",
 		Long:  "",
 		PersistentPreRun: func(cmd *cobra.Command, _ []string) {
 			cmd.SilenceErrors = true
@@ -32,7 +32,7 @@ func Execute() {
 	rootCmd.AddCommand(migrate_cmd.NewCmd())
 	rootCmd.AddCommand(run_cmd.NewCmd())
 
-	logger, _ := neosynclogger.NewLoggers()
+	logger, _ := vydonlogger.NewLoggers()
 
 	err := rootCmd.Execute()
 	if err != nil {
@@ -57,7 +57,7 @@ func initConfig(
 			panic(err)
 		}
 	}
-	envType := viper.GetString("NUCLEUS_ENV")
+	envType := viper.GetString("VYDON_ENV")
 	if envType != "" {
 		viper.SetConfigName(fmt.Sprintf(".env.%s", envType))
 		if err := viper.MergeInConfig(); err != nil {

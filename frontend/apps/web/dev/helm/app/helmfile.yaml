@@ -1,25 +1,25 @@
 releases:
-  - name: neosync-app
+  - name: vydon-app
     chart: ../../../charts/app
     version: 'v0.0.0'
-    namespace: neosync
+    namespace: vydon
     createNamespace: false
 
     values:
       -
         image:
-          repository: neosync-app
+          repository: vydon-app
 
         serviceAccount:
           create: true
 
-        nucleusEnv: dev
+        vydonEnv: dev
 
         servicePort: 80
         containerPort: 3000
 
-        neosyncApi:
-          url: http://neosync-api
+        vydonApi:
+          url: http://vydon-api
 
         auth:
           enabled: false

@@ -9,7 +9,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateRandomString
+// +vydonTransformerBuilder:generate:generateRandomString
 
 func init() {
 	spec := bloblang.NewPluginSpec().

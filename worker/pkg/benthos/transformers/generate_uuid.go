@@ -10,7 +10,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateUUID
+// +vydonTransformerBuilder:generate:generateUUID
 
 func init() {
 	spec := bloblang.NewPluginSpec().Description("Generates a new UUIDv4 id.").

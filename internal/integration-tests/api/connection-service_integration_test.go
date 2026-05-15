@@ -63,7 +63,7 @@ func (s *IntegrationTestSuite) Test_ConnectionService_CheckConnectionConfig() {
 func (s *IntegrationTestSuite) Test_ConnectionService_CreateConnection() {
 	t := s.T()
 
-	t.Run("Neosync Cloud Authenticated", func(t *testing.T) {
+	t.Run("Vydon Cloud Authenticated", func(t *testing.T) {
 		userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 		integrationtests_test.SetUser(s.ctx, t, userclient)
 		// doing a team account here as getting weird errors due to the OSS accuont being shared for some reason

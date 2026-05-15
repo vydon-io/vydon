@@ -387,7 +387,7 @@ func Test_TransformEmailTransformerWithEmptyValueNilDomainsIntegerSliceDomains(t
 }
 
 func Test_TransformEmailTransformer_InvalidEmailArg(t *testing.T) {
-	mapping := fmt.Sprintf(`root = transform_email(value:%q,invalid_email_action:"passthrough")`, "nick@neosync.dev")
+	mapping := fmt.Sprintf(`root = transform_email(value:%q,invalid_email_action:"passthrough")`, "nick@vydon.dev")
 	ex, err := bloblang.Parse(mapping)
 	require.NoError(t, err, "failed to parse the email transformer")
 
@@ -396,7 +396,7 @@ func Test_TransformEmailTransformer_InvalidEmailArg(t *testing.T) {
 }
 
 func Test_TransformEmailTransformer_NoOptions(t *testing.T) {
-	mapping := fmt.Sprintf(`root = transform_email(value:%q)`, "nick@neosync.dev")
+	mapping := fmt.Sprintf(`root = transform_email(value:%q)`, "nick@vydon.dev")
 	ex, err := bloblang.Parse(mapping)
 	require.NoError(t, err, "failed to parse the email transformer")
 

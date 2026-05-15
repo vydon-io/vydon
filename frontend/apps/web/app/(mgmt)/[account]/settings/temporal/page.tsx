@@ -96,7 +96,7 @@ export default function Temporal(): ReactElement {
     return <Skeleton />;
   }
 
-  if (systemAppConfigData?.isNeosyncCloud) {
+  if (systemAppConfigData?.isVydonCloud) {
     return <Error statusCode={404} />;
   }
 

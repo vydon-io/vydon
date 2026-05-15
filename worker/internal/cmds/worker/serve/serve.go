@@ -19,7 +19,7 @@ import (
 	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
 	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	neosynclogger "github.com/vydon-io/vydon/backend/pkg/logger"
+	vydonlogger "github.com/vydon-io/vydon/backend/pkg/logger"
 	"github.com/vydon-io/vydon/backend/pkg/mongoconnect"
 	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
 	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
@@ -32,11 +32,11 @@ import (
 	retry_interceptor "github.com/vydon-io/vydon/internal/connectrpc/interceptors/retry"
 	cloudlicense "github.com/vydon-io/vydon/internal/cloudlicense"
 	"github.com/vydon-io/vydon/internal/license"
-	neosync_gcp "github.com/vydon-io/vydon/internal/gcp"
-	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
-	neosyncotel "github.com/vydon-io/vydon/internal/otel"
+	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
+	vydonotel "github.com/vydon-io/vydon/internal/otel"
 	pyroscope_env "github.com/vydon-io/vydon/internal/pyroscope"
-	neosync_redis "github.com/vydon-io/vydon/internal/redis"
+	vydon_redis "github.com/vydon-io/vydon/internal/redis"
 	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 	schemainit_workflow_register "github.com/vydon-io/vydon/worker/pkg/workflows/schemainit/workflow/register"
 	"github.com/openai/openai-go"
@@ -78,7 +78,7 @@ func NewCmd() *cobra.Command {
 }
 
 func serve(ctx context.Context) error {
-	logger, loglogger := neosynclogger.NewLoggers()
+	logger, loglogger := vydonlogger.NewLoggers()
 	slog.SetDefault(
 		logger,
 	) // set default logger for methods that can't easily access the configured logger
@@ -91,11 +91,11 @@ func serve(ctx context.Context) error {
 
 	ncloudlicense, err := cloudlicense.NewFromEnv()
 	if err != nil {
-		return fmt.Errorf("unable to initialize neosync cloud license from env: %w", err)
+		return fmt.Errorf("unable to initialize vydon cloud license from env: %w", err)
 	}
-	logger.Debug(fmt.Sprintf("neosync cloud enabled: %t", ncloudlicense.IsValid()))
+	logger.Debug(fmt.Sprintf("vydon cloud enabled: %t", ncloudlicense.IsValid()))
 
-	pyroscopeConfig, isPyroscopeEnabled, err := pyroscope_env.NewFromEnv("neosync-worker", logger)
+	pyroscopeConfig, isPyroscopeEnabled, err := pyroscope_env.NewFromEnv("vydon-worker", logger)
 	if err != nil {
 		return fmt.Errorf("unable to initialize pyroscope from env: %w", err)
 	}
@@ -113,27 +113,27 @@ func serve(ctx context.Context) error {
 
 	connectInterceptors := []connect.Interceptor{}
 
-	otelconfig := neosyncotel.GetOtelConfigFromViperEnv()
+	otelconfig := vydonotel.GetOtelConfigFromViperEnv()
 	if otelconfig.IsEnabled {
 		logger.Debug("otel is enabled")
-		tmPropagator := neosyncotel.NewDefaultPropagator()
+		tmPropagator := vydonotel.NewDefaultPropagator()
 		otelconnopts := []otelconnect.Option{
 			otelconnect.WithoutServerPeerAttributes(),
 			otelconnect.WithPropagator(tmPropagator),
 		}
 
-		meterProviders := []neosyncotel.MeterProvider{}
-		traceProviders := []neosyncotel.TracerProvider{}
+		meterProviders := []vydonotel.MeterProvider{}
+		traceProviders := []vydonotel.TracerProvider{}
 		// Meter Provider that uses delta temporality for use with Benthos metrics
 		// This meter provider is setup expire metrics after a specified time period for easy computation
-		benthosMeterProvider, err := neosyncotel.NewMeterProvider(
+		benthosMeterProvider, err := vydonotel.NewMeterProvider(
 			ctx,
-			&neosyncotel.MeterProviderConfig{
+			&vydonotel.MeterProviderConfig{
 				Exporter:   otelconfig.MeterExporter,
 				AppVersion: otelconfig.ServiceVersion,
-				Opts: neosyncotel.MeterExporterOpts{
+				Opts: vydonotel.MeterExporterOpts{
 					Otlp: []otlpmetricgrpc.Option{
-						neosyncotel.GetBenthosMetricTemporalityOption(),
+						vydonotel.GetBenthosMetricTemporalityOption(),
 					},
 					Console: []stdoutmetric.Option{stdoutmetric.WithPrettyPrint()},
 				},
@@ -148,12 +148,12 @@ func serve(ctx context.Context) error {
 			syncActivityMeter = benthosMeterProvider.Meter("sync_activity")
 		}
 
-		temporalMeterProvider, err := neosyncotel.NewMeterProvider(
+		temporalMeterProvider, err := vydonotel.NewMeterProvider(
 			ctx,
-			&neosyncotel.MeterProviderConfig{
+			&vydonotel.MeterProviderConfig{
 				Exporter:   otelconfig.MeterExporter,
 				AppVersion: otelconfig.ServiceVersion,
-				Opts: neosyncotel.MeterExporterOpts{
+				Opts: vydonotel.MeterExporterOpts{
 					Otlp:    []otlpmetricgrpc.Option{},
 					Console: []stdoutmetric.Option{stdoutmetric.WithPrettyPrint()},
 				},
@@ -167,7 +167,7 @@ func serve(ctx context.Context) error {
 			meterProviders = append(meterProviders, temporalMeterProvider)
 			temopralMeterHandler = temporalotel.NewMetricsHandler(
 				temporalotel.MetricsHandlerOptions{
-					Meter: temporalMeterProvider.Meter("neosync-temporal-sdk"),
+					Meter: temporalMeterProvider.Meter("vydon-temporal-sdk"),
 					OnError: func(err error) {
 						logger.Error(fmt.Errorf("error with temporal metering: %w", err).Error())
 					},
@@ -175,12 +175,12 @@ func serve(ctx context.Context) error {
 			)
 		}
 
-		neosyncMeterProvider, err := neosyncotel.NewMeterProvider(
+		vydonMeterProvider, err := vydonotel.NewMeterProvider(
 			ctx,
-			&neosyncotel.MeterProviderConfig{
+			&vydonotel.MeterProviderConfig{
 				Exporter:   otelconfig.MeterExporter,
 				AppVersion: otelconfig.ServiceVersion,
-				Opts: neosyncotel.MeterExporterOpts{
+				Opts: vydonotel.MeterExporterOpts{
 					Otlp:    []otlpmetricgrpc.Option{},
 					Console: []stdoutmetric.Option{stdoutmetric.WithPrettyPrint()},
 				},
@@ -189,19 +189,19 @@ func serve(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		if neosyncMeterProvider != nil {
-			logger.Debug("otel metering for neosync clients has been configured")
-			meterProviders = append(meterProviders, neosyncMeterProvider)
-			otelconnopts = append(otelconnopts, otelconnect.WithMeterProvider(neosyncMeterProvider))
+		if vydonMeterProvider != nil {
+			logger.Debug("otel metering for vydon clients has been configured")
+			meterProviders = append(meterProviders, vydonMeterProvider)
+			otelconnopts = append(otelconnopts, otelconnect.WithMeterProvider(vydonMeterProvider))
 		} else {
 			otelconnopts = append(otelconnopts, otelconnect.WithoutMetrics())
 		}
 
-		temporalTraceProvider, err := neosyncotel.NewTraceProvider(
+		temporalTraceProvider, err := vydonotel.NewTraceProvider(
 			ctx,
-			&neosyncotel.TraceProviderConfig{
+			&vydonotel.TraceProviderConfig{
 				Exporter: otelconfig.TraceExporter,
-				Opts: neosyncotel.TraceExporterOpts{
+				Opts: vydonotel.TraceExporterOpts{
 					Otlp:    []otlptracegrpc.Option{},
 					Console: []stdouttrace.Option{stdouttrace.WithPrettyPrint()},
 				},
@@ -214,7 +214,7 @@ func serve(ctx context.Context) error {
 			logger.Debug("otel tracing for temporal has been configured")
 			temporalTraceInterceptor, err := temporalotel.NewTracingInterceptor(
 				temporalotel.TracerOptions{
-					Tracer: temporalTraceProvider.Tracer("neosync-temporal-sdk"),
+					Tracer: temporalTraceProvider.Tracer("vydon-temporal-sdk"),
 				},
 			)
 			if err != nil {
@@ -227,11 +227,11 @@ func serve(ctx context.Context) error {
 			traceProviders = append(traceProviders, temporalTraceProvider)
 		}
 
-		neosyncTraceProvider, err := neosyncotel.NewTraceProvider(
+		vydonTraceProvider, err := vydonotel.NewTraceProvider(
 			ctx,
-			&neosyncotel.TraceProviderConfig{
+			&vydonotel.TraceProviderConfig{
 				Exporter: otelconfig.TraceExporter,
-				Opts: neosyncotel.TraceExporterOpts{
+				Opts: vydonotel.TraceExporterOpts{
 					Otlp:    []otlptracegrpc.Option{},
 					Console: []stdouttrace.Option{stdouttrace.WithPrettyPrint()},
 				},
@@ -240,11 +240,11 @@ func serve(ctx context.Context) error {
 		if err != nil {
 			return err
 		}
-		if neosyncTraceProvider != nil {
-			logger.Debug("otel tracing for neosync clients has been configured")
+		if vydonTraceProvider != nil {
+			logger.Debug("otel tracing for vydon clients has been configured")
 			otelconnopts = append(
 				otelconnopts,
-				otelconnect.WithTracerProvider(neosyncTraceProvider),
+				otelconnect.WithTracerProvider(vydonTraceProvider),
 			)
 		} else {
 			otelconnopts = append(otelconnopts, otelconnect.WithoutTracing(), otelconnect.WithoutTraceEvents())
@@ -256,7 +256,7 @@ func serve(ctx context.Context) error {
 		}
 		connectInterceptors = append(connectInterceptors, otelConnectInterceptor)
 
-		otelshutdown := neosyncotel.SetupOtelSdk(&neosyncotel.SetupConfig{
+		otelshutdown := vydonotel.SetupOtelSdk(&vydonotel.SetupConfig{
 			TraceProviders:    traceProviders,
 			MeterProviders:    meterProviders,
 			Logger:            logr.FromSlogHandler(logger.Handler()),
@@ -331,37 +331,37 @@ func serve(ctx context.Context) error {
 		license.NewValidLicense(),
 	)
 
-	neosyncurl := shared.GetNeosyncUrl()
-	httpclient := shared.GetNeosyncHttpClient()
+	vydonurl := shared.GetVydonUrl()
+	httpclient := shared.GetVydonHttpClient()
 	connectInterceptorOption := connect.WithInterceptors(connectInterceptors...)
 	userclient := mgmtv1alpha1connect.NewUserAccountServiceClient(
 		httpclient,
-		neosyncurl,
+		vydonurl,
 		connectInterceptorOption,
 	)
 	connclient := mgmtv1alpha1connect.NewConnectionServiceClient(
 		httpclient,
-		neosyncurl,
+		vydonurl,
 		connectInterceptorOption,
 	)
 	jobclient := mgmtv1alpha1connect.NewJobServiceClient(
 		httpclient,
-		neosyncurl,
+		vydonurl,
 		connectInterceptorOption,
 	)
 	transformerclient := mgmtv1alpha1connect.NewTransformersServiceClient(
 		httpclient,
-		neosyncurl,
+		vydonurl,
 		connectInterceptorOption,
 	)
 	accounthookclient := mgmtv1alpha1connect.NewAccountHookServiceClient(
 		httpclient,
-		neosyncurl,
+		vydonurl,
 		connectInterceptorOption,
 	)
 	anonymizationclient := mgmtv1alpha1connect.NewAnonymizationServiceClient(
 		httpclient,
-		neosyncurl,
+		vydonurl,
 		connectInterceptorOption,
 	)
 
@@ -377,7 +377,7 @@ func serve(ctx context.Context) error {
 	sqlmanager := sql_manager.NewSqlManager(sql_manager.WithConnectionManager(sqlconnmanager))
 
 	redisconfig := shared.GetRedisConfig()
-	redisclient, err := neosync_redis.GetRedisClient(redisconfig)
+	redisclient, err := vydon_redis.GetRedisClient(redisconfig)
 	if err != nil {
 		return fmt.Errorf("unable to get redis client: %w", err)
 	}
@@ -426,16 +426,16 @@ func serve(ctx context.Context) error {
 
 		openaiclient := openai.NewClient(option.WithAPIKey(viper.GetString("OPENAI_API_KEY")))
 
-		neosynctyperegistry := neosynctypes.NewTypeRegistry(logger)
+		vydontyperegistry := vydontypes.NewTypeRegistry(logger)
 		conndatabuilder := connectiondata.NewConnectionDataBuilder(
 			sqlConnector,
 			sqlmanager,
 			pg_queries.New(),
 			mysql_queries.New(),
 			awsmanager.New(),
-			neosync_gcp.NewManager(),
+			vydon_gcp.NewManager(),
 			mongoconnect.NewConnector(),
-			neosynctyperegistry,
+			vydontyperegistry,
 		)
 
 		piidetect_workflow_register.Register(

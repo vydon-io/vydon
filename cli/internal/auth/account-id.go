@@ -39,7 +39,7 @@ func ResolveAccountIdFromFlag(
 		}
 		apiKeyAccounts := uaResp.Msg.GetAccounts()
 		if len(apiKeyAccounts) == 0 {
-			return "", errors.New("api key is not associated with any neosync accounts")
+			return "", errors.New("api key is not associated with any vydon accounts")
 		}
 		accountId := apiKeyAccounts[0].GetId()
 		logger.Debug(fmt.Sprintf("provided api key resolved to account %q", accountId))
@@ -48,7 +48,7 @@ func ResolveAccountIdFromFlag(
 	accountId, err := userconfig.GetAccountId()
 	if err != nil {
 		return "", fmt.Errorf(
-			`unable to resolve account id from account context, please use the "neosync accounts switch" command to set an active account context: %w`,
+			`unable to resolve account id from account context, please use the "vydon accounts switch" command to set an active account context: %w`,
 			err,
 		)
 	}

@@ -13,15 +13,15 @@ func Test_getUniqueSchemaColMappings(t *testing.T) {
 			{TableSchema: "public", TableName: "users", ColumnName: "created_by"},
 			{TableSchema: "public", TableName: "users", ColumnName: "updated_by"},
 
-			{TableSchema: "neosync_api", TableName: "accounts", ColumnName: "id"},
+			{TableSchema: "vydon_api", TableName: "accounts", ColumnName: "id"},
 		},
 	)
 	require.Contains(t, mappings, "public.users", "job mappings are a subset of the present database schemas")
-	require.Contains(t, mappings, "neosync_api.accounts", "job mappings are a subset of the present database schemas")
+	require.Contains(t, mappings, "vydon_api.accounts", "job mappings are a subset of the present database schemas")
 	require.Contains(t, mappings["public.users"], "id", "")
 	require.Contains(t, mappings["public.users"], "created_by", "")
 	require.Contains(t, mappings["public.users"], "updated_by", "")
-	require.Contains(t, mappings["neosync_api.accounts"], "id", "")
+	require.Contains(t, mappings["vydon_api.accounts"], "id", "")
 }
 
 func Test_splitTableKey(t *testing.T) {
@@ -29,8 +29,8 @@ func Test_splitTableKey(t *testing.T) {
 	require.Equal(t, schema, "public")
 	require.Equal(t, table, "foo")
 
-	schema, table = SplitTableKey("neosync.foo")
-	require.Equal(t, schema, "neosync")
+	schema, table = SplitTableKey("vydon.foo")
+	require.Equal(t, schema, "vydon")
 	require.Equal(t, table, "foo")
 }
 

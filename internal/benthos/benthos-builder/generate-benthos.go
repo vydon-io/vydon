@@ -10,7 +10,7 @@ import (
 	bb_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
 	"github.com/vydon-io/vydon/internal/runconfigs"
 
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 func (b *BenthosConfigManager) GenerateBenthosConfigs(
@@ -82,8 +82,8 @@ func (b *BenthosConfigManager) GenerateBenthosConfigs(
 			metrics.NewEqLabel(metrics.AccountIdLabel, b.job.AccountId),
 			metrics.NewEqLabel(metrics.JobIdLabel, b.job.Id),
 			metrics.NewEqLabel(
-				metrics.NeosyncDateLabel,
-				bb_shared.WithEnvInterpolation(metrics.NeosyncDateEnvKey),
+				metrics.VydonDateLabel,
+				bb_shared.WithEnvInterpolation(metrics.VydonDateEnvKey),
 			),
 		}
 		for key, val := range b.metricLabelKeyVals {
@@ -91,8 +91,8 @@ func (b *BenthosConfigManager) GenerateBenthosConfigs(
 		}
 		for _, resp := range sourceConfigs {
 			joinedLabels := append(labels, resp.Metriclabels...) //nolint:gocritic
-			resp.Config.Metrics = &neosync_benthos.Metrics{
-				OtelCollector: &neosync_benthos.MetricsOtelCollector{},
+			resp.Config.Metrics = &vydon_benthos.Metrics{
+				OtelCollector: &vydon_benthos.MetricsOtelCollector{},
 				Mapping:       joinedLabels.ToBenthosMeta(),
 			}
 		}

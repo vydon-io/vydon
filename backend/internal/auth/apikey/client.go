@@ -13,7 +13,7 @@ import (
 	pkg_utils "github.com/vydon-io/vydon/backend/pkg/utils"
 	"github.com/vydon-io/vydon/internal/apikey"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type TokenContextKey struct{}
@@ -24,7 +24,7 @@ type TokenContextData struct {
 }
 
 var (
-	ErrInvalidApiKey = errors.New("token is not a valid neosync api key")
+	ErrInvalidApiKey = errors.New("token is not a valid vydon api key")
 	ErrApiKeyExpired = nucleuserrors.NewUnauthenticated("token is expired")
 )
 
@@ -76,9 +76,9 @@ func (c *Client) InjectTokenCtx(
 			token,
 		)
 		apiKey, err := c.q.GetAccountApiKeyByKeyValue(ctx, c.db, hashedKeyValue)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return nil, err
-		} else if err != nil && neosyncdb.IsNoRows(err) {
+		} else if err != nil && vydondb.IsNoRows(err) {
 			return nil, ErrInvalidApiKey
 		}
 

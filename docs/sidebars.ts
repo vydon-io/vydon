@@ -51,7 +51,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'category',
-      label: 'Neosync CLI',
+      label: 'Vydon CLI',
       collapsible: true,
       collapsed: true,
       items: [
@@ -130,7 +130,7 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'html',
-      value: '<div>Deploy Neosync</div>',
+      value: '<div>Deploy Vydon</div>',
       className: 'sidebarcategory',
     },
     {
@@ -186,8 +186,8 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'doc',
-      id: 'guides/using-neosync-in-ci',
-      label: 'Using Neosync in CI',
+      id: 'guides/using-vydon-in-ci',
+      label: 'Using Vydon in CI',
     },
     {
       type: 'doc',
@@ -196,13 +196,13 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'doc',
-      id: 'guides/neosync-local-dev',
-      label: 'Developing Neosync Locally',
+      id: 'guides/vydon-local-dev',
+      label: 'Developing Vydon Locally',
     },
     {
       type: 'doc',
       id: 'guides/terraform',
-      label: 'Neosync Terraform Provider',
+      label: 'Vydon Terraform Provider',
     },
     {
       type: 'doc',
@@ -231,8 +231,8 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'doc',
-      id: 'guides/neosync-ip-ranges',
-      label: 'Neosync IP Ranges',
+      id: 'guides/vydon-ip-ranges',
+      label: 'Vydon IP Ranges',
     },
     {
       type: 'doc',
@@ -326,8 +326,8 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'doc',
-      id: 'transformers/neosync-types',
-      label: 'Neosync Types',
+      id: 'transformers/vydon-types',
+      label: 'Vydon Types',
     },
     {
       type: 'doc',

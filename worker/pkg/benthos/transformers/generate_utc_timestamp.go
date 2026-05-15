@@ -10,7 +10,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateUTCTimestamp
+// +vydonTransformerBuilder:generate:generateUTCTimestamp
 
 func init() {
 	spec := bloblang.NewPluginSpec().Description("Randomly generates a UTC timestamp.").

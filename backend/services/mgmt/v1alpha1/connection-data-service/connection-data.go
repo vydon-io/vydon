@@ -14,14 +14,14 @@ import (
 	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	nucleuserrors "github.com/vydon-io/vydon/internal/errors"
-	neosyncgob "github.com/vydon-io/vydon/internal/gob"
+	vydongob "github.com/vydon-io/vydon/internal/gob"
 
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/protobuf/types/known/structpb"
 )
 
 func init() {
-	neosyncgob.RegisterGobTypes()
+	vydongob.RegisterGobTypes()
 }
 
 // GetConnectionDataStream streams data from a connection source (e.g. MySQL, Postgres, S3, etc)

@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: vydon-postgres
+spec:
+  storageClassName: standard
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  hostPath:
+    path: /vydon/vydon-postgres
+    type: DirectoryOrCreate
+  claimRef:
+    kind: PersistentVolumeClaim
+    name: vydon-postgres
+    namespace: vydon
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vydon-postgres
+  namespace: vydon
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+  volumeMode: Filesystem

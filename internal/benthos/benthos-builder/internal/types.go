@@ -10,7 +10,7 @@ import (
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	bb_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
 	"github.com/vydon-io/vydon/internal/runconfigs"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	tablesync_shared "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/shared"
 )
 
@@ -95,7 +95,7 @@ type DestinationParams struct {
 
 // BenthosSourceConfig represents a Benthos source configuration
 type BenthosSourceConfig struct {
-	Config                  *neosync_benthos.BenthosConfig
+	Config                  *vydon_benthos.BenthosConfig
 	Name                    string
 	DependsOn               []*runconfigs.DependsOn
 	RunType                 runconfigs.RunType
@@ -103,8 +103,8 @@ type BenthosSourceConfig struct {
 	TableName               string
 	Columns                 []string
 	RedisDependsOn          map[string][]string
-	ColumnDefaultProperties map[string]*neosync_benthos.ColumnDefaultProperties
-	Processors              []*neosync_benthos.ProcessorConfig
+	ColumnDefaultProperties map[string]*vydon_benthos.ColumnDefaultProperties
+	Processors              []*vydon_benthos.ProcessorConfig
 	BenthosDsns             []*bb_shared.BenthosDsn
 	RedisConfig             []*bb_shared.BenthosRedisConfig
 	PrimaryKeys             []string
@@ -114,6 +114,6 @@ type BenthosSourceConfig struct {
 
 // BenthosDestinationConfig represents a Benthos destination configuration
 type BenthosDestinationConfig struct {
-	Outputs     []neosync_benthos.Outputs
+	Outputs     []vydon_benthos.Outputs
 	BenthosDsns []*bb_shared.BenthosDsn
 }

@@ -10,7 +10,7 @@ import (
 
 // Holds the environment variable name and the connection id that should replace it at runtime when the Sync activity is launched
 type BenthosDsn struct {
-	// Neosync Connection Id
+	// Vydon Connection Id
 	ConnectionId string
 }
 
@@ -48,7 +48,7 @@ const (
 	ConnectionTypeDynamodb    ConnectionType = "aws-dynamodb"
 	ConnectionTypeLocalDir    ConnectionType = "local-directory"
 	ConnectionTypeOpenAI      ConnectionType = "openai"
-	ConnectionTypeNeosyncData ConnectionType = "neosync-data-stream"
+	ConnectionTypeVydonData ConnectionType = "vydon-data-stream"
 )
 
 // Determines type of connection from Connection

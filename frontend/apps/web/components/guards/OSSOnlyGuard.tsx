@@ -5,12 +5,12 @@ interface Props {
   children: ReactElement;
 }
 
-// Only renders children if the system is not Neosync Cloud
+// Only renders children if the system is not Vydon Cloud
 export default function OSSOnlyGuard(props: Props): ReactElement | null {
   const { children } = props;
   const { data: systemAppConfig } = useGetSystemAppConfig();
 
-  if (systemAppConfig?.isNeosyncCloud) {
+  if (systemAppConfig?.isVydonCloud) {
     return null;
   }
   return children;

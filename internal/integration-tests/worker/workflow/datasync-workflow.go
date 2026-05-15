@@ -5,17 +5,17 @@ import (
 	"testing"
 	"time"
 
-	tcneosyncapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
+	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
 	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
 	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
 	benthosstream "github.com/vydon-io/vydon/internal/benthos-stream"
 	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
 	"github.com/vydon-io/vydon/internal/connection-manager/providers/mongoprovider"
 	"github.com/vydon-io/vydon/internal/connection-manager/providers/sqlprovider"
-	neosync_redis "github.com/vydon-io/vydon/internal/redis"
+	vydon_redis "github.com/vydon-io/vydon/internal/redis"
 	"github.com/vydon-io/vydon/internal/testutil"
-	neosync_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
-	neosync_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
+	vydon_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
+	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
 	posttablesync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/post-table-sync"
 	datasync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/workflow"
 	datasync_workflow_register "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/workflow/register"
@@ -35,8 +35,8 @@ import (
 type Option func(*TestWorkflowEnv)
 
 type TestWorkflowEnv struct {
-	neosyncApi          *tcneosyncapi.NeosyncApiTestClient
-	redisconfig         *neosync_redis.RedisConfig
+	vydonApi          *tcvydonapi.VydonApiTestClient
+	redisconfig         *vydon_redis.RedisConfig
 	fakeEELicense       *testutil.FakeEELicense
 	pageLimit           int
 	maxIterations       int
@@ -48,10 +48,10 @@ type TestWorkflowEnv struct {
 // WithRedis creates redis client with provided URL
 func WithRedis(url string) Option {
 	return func(c *TestWorkflowEnv) {
-		c.redisconfig = &neosync_redis.RedisConfig{
+		c.redisconfig = &vydon_redis.RedisConfig{
 			Url:  url,
 			Kind: "simple",
-			Tls: &neosync_redis.RedisTlsConfig{
+			Tls: &vydon_redis.RedisTlsConfig{
 				Enabled: false,
 			},
 		}
@@ -87,14 +87,14 @@ func WithPostgresSchemaDrift() Option {
 // NewTestDataSyncWorkflowEnv creates and configures a new test datasync workflow environment
 func NewTestDataSyncWorkflowEnv(
 	t testing.TB,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	opts ...Option,
 ) *TestWorkflowEnv {
 	t.Helper()
 
 	workflowEnv := &TestWorkflowEnv{
-		neosyncApi:          neosyncApi,
+		vydonApi:          vydonApi,
 		fakeEELicense:       testutil.NewFakeEELicense(),
 		pageLimit:           10,
 		maxIterations:       5,
@@ -105,18 +105,18 @@ func NewTestDataSyncWorkflowEnv(
 		opt(workflowEnv)
 	}
 
-	redisclient, err := neosync_redis.GetRedisClient(workflowEnv.redisconfig)
+	redisclient, err := vydon_redis.GetRedisClient(workflowEnv.redisconfig)
 	if err != nil {
 		t.Fatal(err)
 	}
 	workflowEnv.Redisclient = redisclient
 
-	connclient := neosyncApi.OSSUnauthenticatedLicensedClients.Connections()
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
-	transformerclient := neosyncApi.OSSUnauthenticatedLicensedClients.Transformers()
-	userclient := neosyncApi.OSSUnauthenticatedLicensedClients.Users()
-	accounthookclient := neosyncApi.OSSUnauthenticatedLicensedClients.AccountHooks()
-	anonymizationclient := neosyncApi.OSSUnauthenticatedLicensedClients.Anonymize()
+	connclient := vydonApi.OSSUnauthenticatedLicensedClients.Connections()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
+	transformerclient := vydonApi.OSSUnauthenticatedLicensedClients.Transformers()
+	userclient := vydonApi.OSSUnauthenticatedLicensedClients.Users()
+	accounthookclient := vydonApi.OSSUnauthenticatedLicensedClients.AccountHooks()
+	anonymizationclient := vydonApi.OSSUnauthenticatedLicensedClients.Anonymize()
 	testSuite := &testsuite.WorkflowTestSuite{}
 	testSuite.SetLogger(log.NewStructuredLogger(testutil.GetConcurrentTestLogger(t)))
 	env := testSuite.NewTestWorkflowEnvironment()
@@ -153,7 +153,7 @@ func NewTestDataSyncWorkflowEnv(
 		dbManagers.MongoConnManager,
 		activityMeter,
 		benthosstream.NewBenthosStreamManager(),
-		neosyncApi.Mocks.TemporalClient,
+		vydonApi.Mocks.TemporalClient,
 		workflowEnv.maxIterations,
 		anonymizationclient,
 		workflowEnv.Redisclient,
@@ -221,9 +221,9 @@ func formatPostTableSyncErrors(errors []*posttablesync_activity.PostTableSyncErr
 
 // TestDatabaseManagers holds managers for supported connection types
 type TestDatabaseManagers struct {
-	SqlConnManager   *connectionmanager.ConnectionManager[neosync_benthos_sql.SqlDbtx]
+	SqlConnManager   *connectionmanager.ConnectionManager[vydon_benthos_sql.SqlDbtx]
 	SqlManager       *sql_manager.SqlManager
-	MongoConnManager *connectionmanager.ConnectionManager[neosync_benthos_mongodb.MongoClient]
+	MongoConnManager *connectionmanager.ConnectionManager[vydon_benthos_mongodb.MongoClient]
 }
 
 // NewTestDatabaseManagers creates and configures database connection managers for testing

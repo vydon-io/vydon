@@ -5,7 +5,7 @@ import (
 	"time"
 
 	dynamotypes "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 // need to register all the types that are used in the connection data service
@@ -15,11 +15,11 @@ func RegisterGobTypes() {
 	gob.Register([]any{})
 	gob.Register(time.Time{})
 	gob.Register([][]uint8{})
-	gob.RegisterName("neosynctypes.NeosyncDateTime", &neosynctypes.NeosyncDateTime{})
-	gob.RegisterName("neosynctypes.Bits", &neosynctypes.Bits{})
-	gob.RegisterName("neosynctypes.Binary", &neosynctypes.Binary{})
-	gob.RegisterName("neosynctypes.NeosyncArray", &neosynctypes.NeosyncArray{})
-	gob.RegisterName("neosynctypes.Interval", &neosynctypes.Interval{})
+	gob.RegisterName("vydontypes.VydonDateTime", &vydontypes.VydonDateTime{})
+	gob.RegisterName("vydontypes.Bits", &vydontypes.Bits{})
+	gob.RegisterName("vydontypes.Binary", &vydontypes.Binary{})
+	gob.RegisterName("vydontypes.VydonArray", &vydontypes.VydonArray{})
+	gob.RegisterName("vydontypes.Interval", &vydontypes.Interval{})
 	gob.RegisterName("dynamodb.AttributeValueMemberB", &dynamotypes.AttributeValueMemberB{})
 	gob.RegisterName("dynamodb.AttributeValueMemberBOOL", &dynamotypes.AttributeValueMemberBOOL{})
 	gob.RegisterName("dynamodb.AttributeValueMemberBS", &dynamotypes.AttributeValueMemberBS{})

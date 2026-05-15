@@ -3,7 +3,7 @@ package userdata
 import (
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/vydon-io/vydon/internal/rbac"
-	"github.com/vydon-io/vydon/internal/neosyncdb"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 // Domain entity interface that mimics the domain model of the mgmt service
@@ -50,8 +50,8 @@ func NewWildcardDomainEntity(accountId string) DomainEntity {
 // Helper function that can be used when dealing with the DB entities instead of the domain entities
 func NewDbDomainEntity(accountId, id pgtype.UUID) DomainEntity {
 	return &DomainEntityImpl{
-		id:        neosyncdb.UUIDString(id),
-		accountId: neosyncdb.UUIDString(accountId),
+		id:        vydondb.UUIDString(id),
+		accountId: vydondb.UUIDString(accountId),
 	}
 }
 

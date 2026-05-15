@@ -89,9 +89,9 @@ function useGetNavSettings(): Item[] {
     account?.type === UserAccountType.ENTERPRISE
       ? items
       : items.filter((item) => item.ref !== 'members');
-  // filter temporal page if app is in neosync cloud mode
+  // filter temporal page if app is in vydon cloud mode
   items =
-    !isSystemConfigLoading && systemAppConfigData?.isNeosyncCloud
+    !isSystemConfigLoading && systemAppConfigData?.isVydonCloud
       ? items.filter((item) => item.ref !== 'temporal')
       : items;
   // filter usage page if metrics service is not enabled
@@ -101,7 +101,7 @@ function useGetNavSettings(): Item[] {
       : items;
   // filter out billing for local
   items =
-    !isSystemConfigLoading && systemAppConfigData?.isNeosyncCloud
+    !isSystemConfigLoading && systemAppConfigData?.isVydonCloud
       ? items
       : items.filter((item) => item.ref !== 'billing');
   // filter out hooks if account hooks are not enabled

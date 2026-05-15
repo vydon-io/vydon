@@ -10,7 +10,7 @@ import (
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 )
 
-// +neosyncTransformerBuilder:generate:generateInternationalPhoneNumber
+// +vydonTransformerBuilder:generate:generateInternationalPhoneNumber
 
 func init() {
 	spec := bloblang.NewPluginSpec().

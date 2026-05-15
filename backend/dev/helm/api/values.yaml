@@ -1,11 +1,11 @@
 image:
-  repository: neosync-api
+  repository: vydon-api
 
 serviceAccount:
   create: true
 
 db:
-  host: neosync-postgresql
+  host: vydon-postgresql
   name: nucleus
   port: 5432
   username: postgres
@@ -14,7 +14,7 @@ db:
 
 migrations:
   db:
-    host: neosync-postgresql
+    host: vydon-postgresql
     name: nucleus
     port: 5432
     username: postgres
@@ -31,14 +31,14 @@ istio:
 datadog:
   enabled: false
 
-nucleusEnv: dev
+vydonEnv: dev
 
 servicePort: 80
 containerPort: 8080
 
 auth:
-  baseUrl: https://auth.nucleuscloud.dev/
-  audience: https://api.nucleuscloud.com
+  baseUrl: https://auth.vydon-io.dev/
+  audience: https://api.vydon-io.com
 
 temporal:
   url: temporal.temporal:7233

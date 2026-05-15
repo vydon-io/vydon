@@ -9,8 +9,8 @@ import (
 	"time"
 
 	"github.com/vydon-io/vydon/internal/database-record-mapper/builder"
-	neosynctypes "github.com/vydon-io/vydon/internal/neosync-types"
-	neosync_types "github.com/vydon-io/vydon/internal/types"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
 )
 
 type MySQLMapper struct{}
@@ -23,7 +23,7 @@ func NewMySQLBuilder() *builder.Builder[*sql.Rows] {
 
 func (m *MySQLMapper) MapRecordWithKeyType(
 	rows *sql.Rows,
-) (valuemap map[string]any, typemap map[string]neosync_types.KeyType, err error) {
+) (valuemap map[string]any, typemap map[string]vydon_types.KeyType, err error) {
 	return nil, nil, errors.ErrUnsupported
 }
 
@@ -69,7 +69,7 @@ func parseMysqlRowValues(
 		case nil:
 			jObj[col] = t
 		case time.Time:
-			dt, err := neosynctypes.NewDateTimeFromMysql(t)
+			dt, err := vydontypes.NewDateTimeFromMysql(t)
 			if err != nil {
 				return nil, fmt.Errorf("failed to parse datetime value: %w", err)
 			}
@@ -86,13 +86,13 @@ func parseMysqlRowValues(
 				}
 				jObj[col] = js
 			} else if strings.EqualFold(colDataType, "binary") {
-				binary, err := neosynctypes.NewBinaryFromMysql(t)
+				binary, err := vydontypes.NewBinaryFromMysql(t)
 				if err != nil {
 					return nil, fmt.Errorf("failed to parse binary value: %w", err)
 				}
 				jObj[col] = binary
 			} else if strings.EqualFold(colDataType, "bit") || strings.EqualFold(colDataType, "varbit") {
-				bits, err := neosynctypes.NewBitsFromMysql(t)
+				bits, err := vydontypes.NewBitsFromMysql(t)
 				if err != nil {
 					return nil, fmt.Errorf("failed to parse bit/varbit value: %w", err)
 				}

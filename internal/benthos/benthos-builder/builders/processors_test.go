@@ -13,7 +13,7 @@ import (
 	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
 	"github.com/vydon-io/vydon/internal/runconfigs"
-	neosync_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )
@@ -49,21 +49,21 @@ func Test_buildProcessorConfigsJavascript(t *testing.T) {
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({address: "world", extra: "foobar"}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -108,21 +108,21 @@ func Test_buildProcessorConfigsGenerateJavascript(t *testing.T) {
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -176,21 +176,21 @@ func Test_buildProcessorConfigsJavascriptMultiple(t *testing.T) {
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({"name": "world", "age": 2}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -245,21 +245,21 @@ func Test_buildProcessorConfigsTransformAndGenerateJavascript(t *testing.T) {
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({"name": "world"}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -305,21 +305,21 @@ func Test_buildProcessorConfigsJavascript_DeepKeys(t *testing.T) {
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({foo: {bar: {baz: "world"}}}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -442,8 +442,8 @@ func Test_buildIdentityCursors(t *testing.T) {
 		require.Len(t, cursors, 2)
 
 		// Verify cursors exist for both columns
-		usersIdToken := neosync_benthos.ToSha256("public.users.id")
-		ordersUserIdToken := neosync_benthos.ToSha256("public.orders.user_id")
+		usersIdToken := vydon_benthos.ToSha256("public.users.id")
+		ordersUserIdToken := vydon_benthos.ToSha256("public.orders.user_id")
 
 		require.NotNil(t, cursors[usersIdToken])
 		require.NotNil(t, cursors[ordersUserIdToken])
@@ -495,7 +495,7 @@ func Test_buildIdentityCursors(t *testing.T) {
 		require.NoError(t, err)
 		require.Len(t, cursors, 1)
 
-		usersIdToken := neosync_benthos.ToSha256("public.users.id")
+		usersIdToken := vydon_benthos.ToSha256("public.users.id")
 		require.NotNil(t, cursors[usersIdToken])
 	})
 
