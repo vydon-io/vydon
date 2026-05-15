@@ -1,11 +1,64 @@
 ---
-description: Best practices for react and typescript development
+description: React + TypeScript + Next.js conventions for the Vydon frontend
 globs: frontend/**/*.tsx, frontend/**/*.ts
 alwaysApply: false
 ---
 
-# useQuery and useMutation Imports
+# Vydon Frontend Rules
 
-- When importing `useQuery` and `useMutation`, always import from `@connectrpc/connect-query`, _not_ `@tanstack/react-query`.
-  - This is because we use the connect wrapper library that coincides with our API's types for a better user experience.
-  - This library uses `@tanstack/react-query` under the hood.
+## Data fetching
+
+- Always import `useQuery` and `useMutation` from `@connectrpc/connect-query`, not `@tanstack/react-query`.
+  - The connect wrapper aligns with our API's generated types.
+  - It uses TanStack Query under the hood — no need to import it directly.
+- Do not synchronise server data with `useEffect`. Use `connect-query` queries instead.
+
+## Components
+
+- Function components only. No class components.
+- Server Components by default. Add `'use client'` only when required (state, effects, browser APIs).
+- Default export is reserved for Next.js pages and layouts. Reusable components use named exports.
+- Prop types live in an `interface Props { ... }` above the component for any component with more than two props.
+
+## File naming
+
+- Components: `PascalCase.tsx` (e.g. `BaseLayout.tsx`, `SiteHeader.tsx`).
+- Providers / hooks / utilities: `kebab-case.ts` (e.g. `query-provider.tsx`, `use-account.ts`).
+- Next.js routing files keep their framework convention (`page.tsx`, `layout.tsx`, `loading.tsx`).
+
+## Imports
+
+- Use the `@/*` path alias instead of relative parents (`../../`).
+- Order: external packages, then `@/...`, then `./` relative imports.
+
+## State
+
+- Server state → `@connectrpc/connect-query`.
+- Local UI state → `useState` / `useReducer`.
+- Global state → typed React contexts. Do not introduce Redux or Zustand without justification.
+- URL state → Next.js `searchParams`.
+- Forms → `react-hook-form` + `zod`.
+
+## TypeScript
+
+- `strict: true` is mandatory. No `// @ts-ignore` — use `// @ts-expect-error` with a one-line reason if absolutely required.
+- Generated proto types in `gen/` are read-only.
+- `any` requires an inline comment explaining why.
+
+## Linting / formatting
+
+- Prettier: 2 spaces, single quotes, semicolons, `trailingComma: es5`. No per-file overrides.
+- ESLint `no-console: error` (except `warn` and `error`).
+- Unused vars must be prefixed `_` to be ignored.
+- `knip --production --strict` must pass — remove unused exports.
+
+## Performance
+
+- `next/image` only, with explicit `width` and `height`. `priority` reserved for hero media.
+- Use `dynamic(() => import(...))` for heavy non-critical components.
+
+## Naming reminders
+
+- Booleans: `is`, `has`, `should`, `can` prefixes.
+- Hooks: `use` prefix.
+- Constants: SCREAMING_SNAKE_CASE only for module-level magic numbers; otherwise camelCase.
