@@ -239,8 +239,8 @@ export function constructDocsLink(source: TransformerSource): string {
     source == TransformerSource.GENERATE_JAVASCRIPT ||
     source == TransformerSource.TRANSFORM_JAVASCRIPT
   ) {
-    return `https://docs.vydon.dev/guides/custom-code-transformers`;
+    return `https://docs.vydon.io/guides/custom-code-transformers`;
   } else {
-    return `https://docs.vydon.dev/transformers/system#${name}`;
+    return `https://docs.vydon.io/transformers/system#${name}`;
   }
 }

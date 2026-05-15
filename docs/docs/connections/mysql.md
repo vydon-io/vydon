@@ -44,7 +44,7 @@ For full support, the environment variable must live on both the `vydon-api` as 
 
 ### Discrete Host Parameters
 
-![mysql](https://assets.vydon-io.com/vydon/docs/mysql.png)
+![mysql](https://assets.vydon.io/vydon/docs/mysql.png)
 
 This guide will help you to configure your MySQL database connection properly.
 

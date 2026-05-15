@@ -2,7 +2,7 @@
 
 A Helm chart for the Vydon Temporal Worker
 
-**Homepage:** <https://www.vydon.dev>
+**Homepage:** <https://vydon.io>
 
 ## Source Code
 

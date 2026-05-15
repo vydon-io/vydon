@@ -38,7 +38,7 @@ containerPort: 8080
 
 auth:
   baseUrl: https://auth.vydon-io.dev/
-  audience: https://api.vydon-io.com
+  audience: https://api.vydon.io
 
 temporal:
   url: temporal.temporal:7233

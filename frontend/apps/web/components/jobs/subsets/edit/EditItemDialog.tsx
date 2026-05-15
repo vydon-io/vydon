@@ -36,7 +36,7 @@ export default function EditItemDialog(props: Props): ReactElement {
               <div className="flex flex-row items-center gap-2">
                 <DialogDescription>
                   Subset your data using SQL expressions.{' '}
-                  <LearnMoreLink href="https://docs.vydon.dev/table-constraints/subsetting" />
+                  <LearnMoreLink href="https://docs.vydon.io/table-constraints/subsetting" />
                 </DialogDescription>
               </div>
             </div>

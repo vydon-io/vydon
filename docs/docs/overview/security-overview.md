@@ -16,7 +16,7 @@ This page is mostly relevant to Vydon Cloud.
 
 All of the Vydon code is open source and can be found on our [Github](https://github.com/vydon-io/vydon).
 If you find a security vulnerability, please refer to our [Security.md](https://github.com/vydon-io/vydon/blob/main/SECURITY.md) for what to do.
-If all else fails, please email `security@vydon.dev` directly.
+If all else fails, please email `security@vydon.io` directly.
 
 Otherwise, the code that is found in our repo is the same code that we deploy on our servers.
 This is done directly with the helm charts that we publish to the Github Container Registry.

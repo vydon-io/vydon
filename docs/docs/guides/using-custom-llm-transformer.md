@@ -14,7 +14,7 @@ This guide walks through how you can integrate Vydon with any LLM or machine lea
 
 In order to get started, you'll need the following:
 
-1. A Vydon account which you can sign up for free [here](https://www.vydon.dev)
+1. A Vydon account which you can sign up for free [here](https://vydon.io)
 2. Access to an LLM hosted at an endpoint. I'll be using OpenAI but you can use any other LLM as long as it's available at a REST endpoint.
 3. A database to store your data. I'm going to use Neon but either Postgres or Mysql works.
 
@@ -62,7 +62,7 @@ Nice! Looks like we can see our database and table and that our permissions are 
 
 ## Creating a Custom Transformer
 
-Vydon has the notion of Transformers. Transformers are modules that can generate synthetic data or anonymize existing data. We ship Vydon with 40+ transformers out of the box but you can also create your own [custom transformers](https://www.vydon.dev/blog/introducing-custom-transformers) in code which is what we're going to do for this use case.
+Vydon has the notion of Transformers. Transformers are modules that can generate synthetic data or anonymize existing data. We ship Vydon with 40+ transformers out of the box but you can also create your own [custom transformers](https://vydon.io/blog/introducing-custom-transformers) in code which is what we're going to do for this use case.
 
 Click on **Transformers** in the top navigation menu and then the **+ New Transformer** button.
 

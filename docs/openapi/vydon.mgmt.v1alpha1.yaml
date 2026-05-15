@@ -2,16 +2,16 @@ openapi: 3.1.0
 info:
   summary: Vydon API
   version: '0.5'
-  termsOfService: https://www.vydon.dev/terms-of-service
+  termsOfService: https://vydon.io/terms-of-service
   contact:
     name: Vydon Support
-    email: support@vydon.dev
+    email: support@vydon.io
   license:
     name: MIT
     url: https://github.com/vydon-io/vydon/blob/main/LICENSE.md
   title: mgmt.v1alpha1
 servers:
-  - url: https://vydon-api.svcs.vydon.dev
+  - url: https://vydon-api.svcs.vydon.io
     description: Vydon Cloud
   - url: http://localhost:{port}
     description: Development
@@ -61,7 +61,7 @@ tags:
     x-displayName: mgmt.v1alpha1.UserAccountService
 externalDocs:
   description: API and SDK Documentation
-  url: https://docs.vydon.dev/api
+  url: https://docs.vydon.io/api
 paths:
   /mgmt.v1alpha1.AccountHookService/GetAccountHooks:
     post:

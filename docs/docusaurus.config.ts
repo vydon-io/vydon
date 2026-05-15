@@ -19,7 +19,7 @@ const config: Config = {
     },
   ],
   // Set the production url of your s here
-  url: 'https://docs.vydon.dev',
+  url: 'https://docs.vydon.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',

@@ -50,7 +50,7 @@ The **Connection Details** section, under the **Connection String** sub-header, 
 
 ## Setting up Vydon
 
-Let's get started with Vydon. First, sign up for a [Vydon account](https://app.vydon.dev).
+Let's get started with Vydon. First, sign up for a [Vydon account](https://app.vydon.io).
 
 Sign in with an email/password or Google OAuth. Once you're logged in, you'll be directed to the **Jobs** page.
 
@@ -153,4 +153,4 @@ Looking pretty good! We have seeded our Neon database with 1000 rows of complete
 
 In this quick start, we walked through how to seed a PostgreSQL database with 1000 rows of synthetic data using Vydon. This is just a small test and you can expand this to generate tens and hundreds of thousands or even millions of rows of data across any relational database. Vydon handles the referential integrity.
 
-Lastly, if you want to anonymize existing data then it's a similar workflow. The only difference is that you select the [Data Sync Job](https://www.vydon.dev/blog/vydon-neon-sync-job) and select a destination database.
+Lastly, if you want to anonymize existing data then it's a similar workflow. The only difference is that you select the [Data Sync Job](https://vydon.io/blog/vydon-neon-sync-job) and select a destination database.

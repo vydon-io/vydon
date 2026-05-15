@@ -14,10 +14,10 @@ metadata:
     {{- end }}
 
     {{- if .Values.vydonEnv }}
-    tags.vydon.dev/env: {{ .Values.vydonEnv }}
+    tags.vydon.io/env: {{ .Values.vydonEnv }}
     {{- end }}
-    tags.vydon.dev/service: {{ template "vydon-worker.fullname" . }}
-    tags.vydon.dev/version: {{ .Values.image.tag | default .Chart.AppVersion  }}
+    tags.vydon.io/service: {{ template "vydon-worker.fullname" . }}
+    tags.vydon.io/version: {{ .Values.image.tag | default .Chart.AppVersion  }}
   {{- if .Values.deploymentAnnotations }}
   annotations:
     {{- range $key, $value := .Values.deploymentAnnotations }}
@@ -58,10 +58,10 @@ spec:
         tags.datadoghq.com/version: {{ .Values.image.tag | default .Chart.AppVersion  }}
         {{- end }}
         {{- if .Values.vydonEnv }}
-        tags.vydon.dev/env: {{ .Values.vydonEnv }}
+        tags.vydon.io/env: {{ .Values.vydonEnv }}
         {{- end }}
-        tags.vydon.dev/service: {{ template "vydon-worker.fullname" . }}
-        tags.vydon.dev/version: {{ .Values.image.tag | default .Chart.AppVersion  }}
+        tags.vydon.io/service: {{ template "vydon-worker.fullname" . }}
+        tags.vydon.io/version: {{ .Values.image.tag | default .Chart.AppVersion  }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -150,11 +150,11 @@ spec:
             - name: OTEL_SERVICE_NAME
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.labels['tags.vydon.dev/service']
+                  fieldPath: metadata.labels['tags.vydon.io/service']
             - name: OTEL_SERVICE_VERSION
               valueFrom:
                 fieldRef:
-                  fieldPath: metadata.labels['tags.vydon.dev/version']
+                  fieldPath: metadata.labels['tags.vydon.io/version']
 
             {{- with .Values.extraEnvVars }}
             {{- range .}}

@@ -2,7 +2,7 @@
 
 A Helm chart for Vydon that contains the api, app, and worker
 
-**Homepage:** <https://www.vydon.dev>
+**Homepage:** <https://vydon.io>
 
 ## Source Code
 

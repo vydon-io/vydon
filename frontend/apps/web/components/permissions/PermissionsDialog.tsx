@@ -59,7 +59,7 @@ export default function PermissionsDialog(props: Props): ReactElement {
           </div>
           <DialogDescription className="text-muted-foreground text-sm">
             Review the permissions that Vydon needs for your connection.{' '}
-            <LearnMoreLink href="https://docs.vydon.dev/connections/postgres#permissions" />{' '}
+            <LearnMoreLink href="https://docs.vydon.io/connections/postgres#permissions" />{' '}
           </DialogDescription>
         </DialogHeader>
         <PermissionsDataTable

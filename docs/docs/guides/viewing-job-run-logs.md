@@ -16,7 +16,7 @@ This section details the variety of ways that job run logs can be accessed depen
 ## Vydon Cloud
 
 Job Run Logs can only be accessed through the UI.
-Navigate to [Vydon Cloud](https://app.vydon.dev), then click on the Runs tab in the top nav.
+Navigate to [Vydon Cloud](https://app.vydon.io), then click on the Runs tab in the top nav.
 
 Select the run you wish to see logs for. Select the run.
 

@@ -30,7 +30,7 @@ npm install @vydon/sdk @bufbuild/protobuf
 
 | **Properties** | **Details**                                                                                                                                                                 |
 | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **API URL**    | Production: `https://vydon-api.svcs.vydon.dev`<br /> Local: `http://localhost:8080`                                                                                     |
+| **API URL**    | Production: `https://vydon-api.svcs.vydon.io`<br /> Local: `http://localhost:8080`                                                                                     |
 | **Account ID** | The account ID may be necessary for some requests and can be found by going into the `/:accountName/settings` page in the Vydon App                                       |
 | **API Key**    | An access token (API key, or user JWT) must be used to access authenticated Vydon environments. For an API Key, this can be created at `/:accountName/settings/api-keys`. |
 
@@ -129,7 +129,7 @@ const vydonClient = getVydonClient({
   },
   getTransport(interceptors) {
     return createConnectTransport({
-      baseUrl: 'https://vydon-api.svcs.vydon.dev', // base url
+      baseUrl: 'https://vydon-api.svcs.vydon.io', // base url
       httpVersion: '2',
       interceptors: interceptors, // interceptors
     });
@@ -235,7 +235,7 @@ The best part is that all you have to do is change a transformer, that's it! Her
   },
 ```
 
-Our input object is a transcription from a call from a doctor's office. In this transcript, we have PII (personally identifiable information) such as names (John Chang, Jake), social security number (246-80-1357) and dates(8/1/2024). Using Vydon's `TransformPiiText` transformer, you can easily anonymize the sensitive data in this text. See [here](https://docs.vydon.dev/api/mgmt/v1alpha1/transformer.proto#transformpiitext) for the `TransformPiiText` proto definition.
+Our input object is a transcription from a call from a doctor's office. In this transcript, we have PII (personally identifiable information) such as names (John Chang, Jake), social security number (246-80-1357) and dates(8/1/2024). Using Vydon's `TransformPiiText` transformer, you can easily anonymize the sensitive data in this text. See [here](https://docs.vydon.io/api/mgmt/v1alpha1/transformer.proto#transformpiitext) for the `TransformPiiText` proto definition.
 
 ```ts
 import {
@@ -253,7 +253,7 @@ const vydonClient = getVydonClient({
   },
   getTransport(interceptors) {
     return createConnectTransport({
-      baseUrl: 'https://vydon-api.svcs.vydon.dev', // Vydon API Url
+      baseUrl: 'https://vydon-api.svcs.vydon.io', // Vydon API Url
       httpVersion: '2',
       interceptors: interceptors,
     });
@@ -321,7 +321,7 @@ const vydonClient = getVydonClient({
   },
   getTransport(interceptors) {
     return createConnectTransport({
-      baseUrl: 'https://vydon-api.svcs.vydon.dev', // base url
+      baseUrl: 'https://vydon-api.svcs.vydon.io', // base url
       httpVersion: '2',
       interceptors: interceptors, // interceptors
     });

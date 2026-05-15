@@ -2,7 +2,7 @@
 
 A Helm chart for the Vydon Backend API
 
-**Homepage:** <https://www.vydon.dev>
+**Homepage:** <https://vydon.io>
 
 ## Source Code
 

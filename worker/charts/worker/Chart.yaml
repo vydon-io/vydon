@@ -1,10 +1,10 @@
 apiVersion: v2
 name: worker
 description: A Helm chart for the Vydon Temporal Worker
-home: https://www.vydon.dev
+home: https://vydon.io
 sources:
   - https://github.com/vydon-io/vydon
-icon: https://assets.vydon-io.com/vydon/newbrand/logo_small.png
+icon: https://assets.vydon.io/vydon/newbrand/logo_small.png
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives

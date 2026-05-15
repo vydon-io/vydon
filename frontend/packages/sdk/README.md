@@ -13,7 +13,7 @@ npm install @vydon/sdk @bufbuild/protobuf
 
 This README shows the basics of how to use the SDK.
 
-For more detailed docs, go [here](https://docs.vydon.dev/api/typescript).
+For more detailed docs, go [here](https://docs.vydon.io/api/typescript).
 
 ## Usage
 

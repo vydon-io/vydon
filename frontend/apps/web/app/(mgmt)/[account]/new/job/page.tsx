@@ -198,8 +198,8 @@ function useGetJobData(
       experimental: false,
       image:
         resolvedTheme === 'light'
-          ? 'https://assets.vydon-io.com/vydon/app/jobsynclight.svg'
-          : 'https://assets.vydon-io.com/vydon/app/prodsync-dark.svg',
+          ? 'https://assets.vydon.io/vydon/app/jobsynclight.svg'
+          : 'https://assets.vydon.io/vydon/app/prodsync-dark.svg',
     },
     {
       name: 'Data Generation',
@@ -211,8 +211,8 @@ function useGetJobData(
       experimental: false,
       image:
         resolvedTheme === 'light'
-          ? 'https://assets.vydon-io.com/vydon/app/gen-light.svg'
-          : 'https://assets.vydon-io.com/vydon/app/datagen-dark.svg',
+          ? 'https://assets.vydon.io/vydon/app/gen-light.svg'
+          : 'https://assets.vydon.io/vydon/app/datagen-dark.svg',
     },
     {
       name: 'AI Data Generation',
@@ -223,8 +223,8 @@ function useGetJobData(
       experimental: true,
       image:
         resolvedTheme === 'light'
-          ? 'https://assets.vydon-io.com/vydon/app/aigen.svg'
-          : 'https://assets.vydon-io.com/vydon/app/aigen-dark.svg',
+          ? 'https://assets.vydon.io/vydon/app/aigen.svg'
+          : 'https://assets.vydon.io/vydon/app/aigen-dark.svg',
     },
   ];
 
@@ -239,8 +239,8 @@ function useGetJobData(
       experimental: true,
       image:
         resolvedTheme === 'light'
-          ? 'https://assets.vydon-io.com/vydon/app/pii-detect-light.svg'
-          : 'https://assets.vydon-io.com/vydon/app/pii-detect-dark.svg',
+          ? 'https://assets.vydon.io/vydon/app/pii-detect-light.svg'
+          : 'https://assets.vydon.io/vydon/app/pii-detect-dark.svg',
     });
   }
 

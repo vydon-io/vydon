@@ -8,4 +8,4 @@ This is the Python SDK for the Vydon API.
 pip install vydon
 ```
 
-For more details and examples, see the [docs](https://docs.vydon.dev/api/python).
+For more details and examples, see the [docs](https://docs.vydon.io/api/python).

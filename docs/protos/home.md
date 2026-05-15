@@ -22,7 +22,7 @@ There are a few inputs that any SDK needs in order to be properly configured.
 
 ### API Url
 
-If using Vydon Cloud, the backend api url is: `https://vydon-api.svcs.vydon.dev`
+If using Vydon Cloud, the backend api url is: `https://vydon-api.svcs.vydon.io`
 
 The standard localhost url is: `http://localhost:8080`
 

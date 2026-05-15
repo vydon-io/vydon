@@ -26,7 +26,7 @@ Example register event for username/password
     "auth_type": "code",
     "register_method": "form",
     "last_name": "Zelei",
-    "redirect_uri": "https://app.stage.vydon.dev/api/auth/callback/vydon",
+    "redirect_uri": "https://app.stage.vydon.io/api/auth/callback/vydon",
     "first_name": "Nick",
     "code_id": "3cd8d025-d5d4-4ff2-82d3-a9c552ba422c",
     "email": "nick@example.com",

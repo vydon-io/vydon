@@ -1,12 +1,12 @@
 <p align="center">
-  <!-- <img alt="vydonbanner" src="https://assets.vydon-io.com/vydon/docs/vydon-header.svg" > -->
+  <!-- <img alt="vydonbanner" src="https://assets.vydon.io/vydon/docs/vydon-header.svg" > -->
   <picture>
   <source
-    srcset="https://assets.vydon-io.com/vydon/docs/vydon-header.svg"
+    srcset="https://assets.vydon.io/vydon/docs/vydon-header.svg"
     media="(prefers-color-scheme: light)"
   />
   <source
-    srcset="https://assets.vydon-io.com/vydon/docs/vydon-header-dark.svg"
+    srcset="https://assets.vydon.io/vydon/docs/vydon-header-dark.svg"
     media="(prefers-color-scheme: dark), (prefers-color-scheme: no-preference)"
   />
   <img src="https://github-readme-stats.vercel.app/api?username=anuraghazra&show_icons=true" />
@@ -18,12 +18,12 @@ Open Source Data Anonymization and Synthetic Data Orchestration
 <p>
 
 <div align='center'>
- | <a href="https://www.vydon.dev">Website</a>
- | <a href="https://docs.vydon.dev">Docs</a>
+ | <a href="https://vydon.io">Website</a>
+ | <a href="https://docs.vydon.io">Docs</a>
  | <a href="https://discord.com/invite/MFAMgnp4HF">Discord</a>
- | <a href="https://www.vydon.dev/blog">Blog</a>
- | <a href="https://docs.vydon.dev/changelog">Changelog</a>
- | <a href="https://vydon.productlane.com/roadmap">Roadmap</a>
+ | <a href="https://vydon.io/blog">Blog</a>
+ | <a href="https://docs.vydon.io/changelog">Changelog</a>
+ | <a href="https://vydon-io.productlane.com/roadmap">Roadmap</a>
 </div>
 
  <br>
@@ -54,7 +54,7 @@ Open Source Data Anonymization and Synthetic Data Orchestration
 
 ## Introduction
 
-[Vydon](https://www.vydon.dev) is an open-source, developer-first way to anonymize PII, generate synthetic data and sync environments for better testing, debugging and developer experience.
+[Vydon](https://vydon.io) is an open-source, developer-first way to anonymize PII, generate synthetic data and sync environments for better testing, debugging and developer experience.
 
 Companies use Vydon to:
 
@@ -102,13 +102,13 @@ The production compose pre-seeds with connections and jobs to get you started! S
 
 ## Kubernetes, Auth Mode and more
 
-For more in-depth details on environment variables, Kubernetes deployments, and a production-ready guide, check out the [Deploy Vydon](https://docs.vydon.dev/deploy/introduction) section of our Docs.
+For more in-depth details on environment variables, Kubernetes deployments, and a production-ready guide, check out the [Deploy Vydon](https://docs.vydon.io/deploy/introduction) section of our Docs.
 
 ## Resources
 
 Some resources to help you along the way:
 
-- [Docs](https://docs.vydon.dev) for comprehensive documentation and guides
+- [Docs](https://docs.vydon.io) for comprehensive documentation and guides
 - [Discord](https://discord.com/invite/MFAMgnp4HF) for discussion with the community and Vydon team
 - [X](https://x.com/vydon) for the latest updates
 
@@ -117,7 +117,7 @@ Some resources to help you along the way:
 We love contributions big and small. Here are just a few ways that you can contribute to Vydon.
 
 - Join our [Discord](https://discord.com/invite/MFAMgnp4HF) channel and ask us any questions there
-- Open a PR (see our instructions on [developing with Vydon locally](https://docs.vydon.dev/guides/vydon-local-dev))
+- Open a PR (see our instructions on [developing with Vydon locally](https://docs.vydon.io/guides/vydon-local-dev))
 - Submit a [feature request](https://github.com/vydon-io/vydon/issues/new?assignees=&labels=enhancement%2C+feature&template=feature_request.md) or [bug report](https://github.com/vydon-io/vydon/issues/new?assignees=&labels=bug&template=bug_report.md)
 
 ## Licensing

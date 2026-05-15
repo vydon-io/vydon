@@ -51,7 +51,7 @@ brews:
       owner: vydon-io
       name: homebrew-tap
     directory: Formula
-    homepage: https://www.vydon.dev
+    homepage: https://vydon.io
     description: CLI for interfacing with Vydon
     license: MIT
 archives:
@@ -61,10 +61,10 @@ archives:
         format: zip
 
 aurs:
-  - homepage: https://www.vydon.dev
+  - homepage: https://vydon.io
     description: CLI for interfacing with Vydon
     maintainers:
-      - Devops <devops@vydon-io.com>
+      - Devops <devops@vydon.io>
     license: MIT
     git_url: ssh://aur@aur.archlinux.org/vydon-bin.git
     package: |-
@@ -75,7 +75,7 @@ aurs:
       install -Dm644 "./LICENSE" "${pkgdir}/usr/share/licenses/vydon/LICENSE"
     commit_author:
       name: vydonbot
-      email: devops@vydon-io.com
+      email: devops@vydon.io
     private_key: "{{ .Env.AUR_KEY }}"
 
 dockers:
