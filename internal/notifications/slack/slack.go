@@ -19,8 +19,11 @@ type Interface interface {
 }
 
 type OauthState struct {
-	State string
-	URL   string
+	State     string
+	URL       string
+	AccountId string
+	UserId    string
+	Timestamp int64
 }
 
 type Encryptor interface {

@@ -1628,18 +1628,6 @@ func Test_InitializeTransformerByConfigType(t *testing.T) {
 		mockanalyze := presidioapi.NewMockAnalyzeInterface(t)
 		mockanon := presidioapi.NewMockAnonymizeInterface(t)
 		mockneosync := ee_transformer_fns.NewMockNeosyncOperatorApi(t)
-		mockanalyze.On("PostAnalyzeWithResponse", mock.Anything, mock.Anything).
-			Return(&presidioapi.PostAnalyzeResponse{
-				JSON200: &[]presidioapi.RecognizerResultWithAnaysisExplanation{
-					{},
-				},
-			}, nil)
-
-		mockText := "bar"
-		mockanon.On("PostAnonymizeWithResponse", mock.Anything, mock.Anything).
-			Return(&presidioapi.PostAnonymizeResponse{
-				JSON200: &presidioapi.AnonymizeResponse{Text: &mockText, Items: &[]presidioapi.OperatorResult{}},
-			}, nil)
 		defaultLan := "en"
 
 		execOpts := []TransformerExecutorOption{
@@ -1650,11 +1638,11 @@ func Test_InitializeTransformerByConfigType(t *testing.T) {
 		require.NotNil(t, executor)
 
 		originalText := "Hello, John Doe!"
-		result, err := executor.Mutate(originalText, executor.Opts)
-		require.NoError(t, err)
-		require.IsType(t, "", result)
-		require.NotEqual(t, originalText, result)
-		require.Equal(t, mockText, result)
+		_, err = executor.Mutate(originalText, executor.Opts)
+		// PII text transform is disabled in the OSS distribution: the stub
+		// returns ErrUnsupported. The native rewrite will replace this
+		// expectation once Presidio is wired natively.
+		require.ErrorContains(t, err, "not supported in the open-source vydon distribution")
 	})
 
 	t.Run("TransformPiiTextConfig_Nil", func(t *testing.T) {
@@ -1665,19 +1653,6 @@ func Test_InitializeTransformerByConfigType(t *testing.T) {
 		mockanalyze := presidioapi.NewMockAnalyzeInterface(t)
 		mockanon := presidioapi.NewMockAnonymizeInterface(t)
 		mockneosync := ee_transformer_fns.NewMockNeosyncOperatorApi(t)
-
-		mockanalyze.On("PostAnalyzeWithResponse", mock.Anything, mock.Anything).
-			Return(&presidioapi.PostAnalyzeResponse{
-				JSON200: &[]presidioapi.RecognizerResultWithAnaysisExplanation{
-					{},
-				},
-			}, nil)
-
-		mockText := "bar"
-		mockanon.On("PostAnonymizeWithResponse", mock.Anything, mock.Anything).
-			Return(&presidioapi.PostAnonymizeResponse{
-				JSON200: &presidioapi.AnonymizeResponse{Text: &mockText, Items: &[]presidioapi.OperatorResult{}},
-			}, nil)
 		defaultLan := "en"
 		execOpts := []TransformerExecutorOption{
 			WithTransformPiiTextConfig(mockanalyze, mockanon, mockneosync, &defaultLan),
@@ -1687,11 +1662,8 @@ func Test_InitializeTransformerByConfigType(t *testing.T) {
 		require.NotNil(t, executor)
 
 		originalText := "Hello, John Doe!"
-		result, err := executor.Mutate(originalText, executor.Opts)
-		require.NoError(t, err)
-		require.IsType(t, "", result)
-		require.NotEqual(t, originalText, result)
-		require.Equal(t, mockText, result)
+		_, err = executor.Mutate(originalText, executor.Opts)
+		require.ErrorContains(t, err, "not supported in the open-source vydon distribution")
 	})
 
 	t.Run("GenerateBusinessNameConfig_Empty", func(t *testing.T) {

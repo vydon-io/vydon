@@ -18,8 +18,12 @@ const PiiCategoryPersonal PiiCategory = "personal"
 
 func (c PiiCategory) String() string { return string(c) }
 
-func BuildTableReportExternalId(jobID, schema, table string) string {
-	return jobID + "/" + schema + "/" + table + "/" + PiiTableReportSuffix
+func BuildTableReportExternalId(args ...string) string {
+	out := PiiTableReportSuffix
+	for _, a := range args {
+		out = a + "/" + out
+	}
+	return out
 }
 
 type RegexPiiDetectReport struct {
@@ -44,6 +48,6 @@ type ColumnReport struct {
 type TableReport struct {
 	TableSchema   string
 	TableName     string
-	ColumnReports []*ColumnReport
+	ColumnReports []ColumnReport
 	ReportKey     *mgmtv1alpha1.RunContextKey
 }
