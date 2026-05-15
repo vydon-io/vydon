@@ -8,7 +8,7 @@ import (
 	"time"
 
 	accounthook_events "github.com/nucleuscloud/neosync/internal/ee/events"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
+	"github.com/nucleuscloud/neosync/internal/license"
 	accounthook_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/ee/account_hooks/workflow"
 	"go.temporal.io/api/enums/v1"
 	"go.temporal.io/sdk/log"

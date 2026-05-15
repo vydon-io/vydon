@@ -9,7 +9,7 @@ import (
 	"github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
 	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
 	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
+	"github.com/nucleuscloud/neosync/internal/license"
 	schema_mssql "github.com/nucleuscloud/neosync/internal/schema-manager/mssql"
 	schema_mysql "github.com/nucleuscloud/neosync/internal/schema-manager/mysql"
 	schema_notsupported "github.com/nucleuscloud/neosync/internal/schema-manager/not-supported"

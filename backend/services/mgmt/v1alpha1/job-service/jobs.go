@@ -18,7 +18,7 @@ import (
 	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
 	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
 	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
+	"github.com/nucleuscloud/neosync/internal/rbac"
 	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
 	job_util "github.com/nucleuscloud/neosync/internal/job"
 	"github.com/nucleuscloud/neosync/internal/neosyncdb"

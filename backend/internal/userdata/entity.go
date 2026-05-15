@@ -2,7 +2,7 @@ package userdata
 
 import (
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
+	"github.com/nucleuscloud/neosync/internal/rbac"
 	"github.com/nucleuscloud/neosync/internal/neosyncdb"
 )
 

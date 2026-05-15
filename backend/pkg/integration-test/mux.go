@@ -7,7 +7,6 @@ import (
 	"net/http"
 
 	"connectrpc.com/connect"
-	"github.com/jackc/pgx/v5/stdlib"
 	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
 	mysql_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/mysql"
 	pg_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/postgresql"
@@ -34,8 +33,7 @@ import (
 	"github.com/nucleuscloud/neosync/internal/billing"
 	"github.com/nucleuscloud/neosync/internal/connectiondata"
 	presidioapi "github.com/nucleuscloud/neosync/internal/ee/presidio"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac/enforcer"
+	"github.com/nucleuscloud/neosync/internal/rbac"
 	neosync_gcp "github.com/nucleuscloud/neosync/internal/gcp"
 	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
 	"github.com/nucleuscloud/neosync/internal/neosyncdb"
@@ -355,21 +353,8 @@ func (s *NeosyncApiTestClient) setupMux(
 }
 
 func (s *NeosyncApiTestClient) getEnforcedRbacClient(
-	ctx context.Context,
-	pgcontainer *tcpostgres.PostgresTestContainer,
+	_ context.Context,
+	_ *tcpostgres.PostgresTestContainer,
 ) (rbac.Interface, error) {
-	rbacenforcer, err := enforcer.NewActiveEnforcer(
-		ctx,
-		stdlib.OpenDBFromPool(pgcontainer.DB),
-		"neosync_api.casbin_rule",
-	)
-	if err != nil {
-		return nil, fmt.Errorf("unable to create rbac enforcer: %w", err)
-	}
-	rbacenforcer.EnableAutoSave(true)
-	err = rbacenforcer.LoadPolicy()
-	if err != nil {
-		return nil, fmt.Errorf("unable to load rbac policies: %w", err)
-	}
-	return rbac.New(rbacenforcer), nil
+	return rbac.NewAllowAllClient(), nil
 }

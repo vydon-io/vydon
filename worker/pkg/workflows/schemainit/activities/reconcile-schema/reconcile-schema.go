@@ -12,7 +12,7 @@ import (
 	sql_manager "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
 	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
 	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
+	"github.com/nucleuscloud/neosync/internal/license"
 	schemamanager "github.com/nucleuscloud/neosync/internal/schema-manager"
 	schemamanager_shared "github.com/nucleuscloud/neosync/internal/schema-manager/shared"
 	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"

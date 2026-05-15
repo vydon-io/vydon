@@ -5,8 +5,8 @@ import (
 	"github.com/nucleuscloud/neosync/backend/internal/userdata"
 	"github.com/nucleuscloud/neosync/internal/authmgmt"
 	"github.com/nucleuscloud/neosync/internal/billing"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
+	"github.com/nucleuscloud/neosync/internal/license"
+	"github.com/nucleuscloud/neosync/internal/rbac"
 	"github.com/nucleuscloud/neosync/internal/neosyncdb"
 	"github.com/nucleuscloud/neosync/internal/temporal/clientmanager"
 )

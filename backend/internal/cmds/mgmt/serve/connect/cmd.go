@@ -19,7 +19,6 @@ import (
 	"github.com/auth0/go-jwt-middleware/v2/validator"
 	"github.com/go-logr/logr"
 	"github.com/grafana/pyroscope-go"
-	"github.com/jackc/pgx/v5/stdlib"
 	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
 	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
@@ -70,11 +69,10 @@ import (
 	awsmanager "github.com/nucleuscloud/neosync/internal/aws"
 	"github.com/nucleuscloud/neosync/internal/billing"
 	"github.com/nucleuscloud/neosync/internal/connectiondata"
-	cloudlicense "github.com/nucleuscloud/neosync/internal/ee/cloud-license"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
+	cloudlicense "github.com/nucleuscloud/neosync/internal/cloudlicense"
+	"github.com/nucleuscloud/neosync/internal/license"
 	presidioapi "github.com/nucleuscloud/neosync/internal/ee/presidio"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac/enforcer"
+	"github.com/nucleuscloud/neosync/internal/rbac"
 	ee_slack "github.com/nucleuscloud/neosync/internal/ee/slack"
 	neosync_gcp "github.com/nucleuscloud/neosync/internal/gcp"
 	neomigrate "github.com/nucleuscloud/neosync/internal/migrate"
@@ -234,31 +232,10 @@ func serve(ctx context.Context) error {
 		}
 	}
 
-	var rbacclient rbac.Interface
-	if cascadelicense.IsValid() {
-		slogger.Debug("rbac is enabled")
-		stddb := stdlib.OpenDBFromPool(pool)
-
-		rbacenforcer, err := enforcer.NewActiveEnforcer(ctx, stddb, "neosync_api.casbin_rule")
-		if err != nil {
-			return err
-		}
-		rbacenforcer.EnableAutoSave(true)
-		err = rbacenforcer.LoadPolicy()
-		if err != nil {
-			return fmt.Errorf("unable to load rbac policies: %w", err)
-		}
-		rbacdb := rbac.NewRbacDb(querier, db.Db)
-		enforcedClient := rbac.New(rbacenforcer)
-		err = enforcedClient.InitPolicies(ctx, rbacdb, slogger)
-		if err != nil {
-			return fmt.Errorf("unable to initialize rbac policies: %w", err)
-		}
-		rbacclient = enforcedClient
-	} else {
-		slogger.Debug("rbac is disabled")
-		rbacclient = rbac.NewAllowAllClient()
-	}
+	// Granular RBAC enforcement was a proprietary feature in the upstream
+	// fork. Vydon ships a permissive client; native RBAC will return in a
+	// future release.
+	var rbacclient rbac.Interface = rbac.NewAllowAllClient()
 
 	stdInterceptors := []connect.Interceptor{}
 
