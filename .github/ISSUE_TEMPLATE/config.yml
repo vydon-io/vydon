@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question or discussion
+    url: https://github.com/vydon-io/vydon/discussions
+    about: Open-ended questions, ideas, and general discussion.
+  - name: Security vulnerability
+    url: https://github.com/vydon-io/vydon/security/advisories/new
+    about: Report a vulnerability privately. Do not open a public issue.

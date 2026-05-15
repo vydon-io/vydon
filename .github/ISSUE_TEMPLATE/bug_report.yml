@@ -1,0 +1,81 @@
+name: Bug report
+description: Report a defect with a reproducible test case.
+title: "bug: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report. The more precise the
+        repro, the faster the fix.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One sentence describing the bug.
+      placeholder: Job runs hang when the source has more than 1M rows.
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Reproduction
+      description: Step-by-step. Include exact commands, configs, and inputs.
+      placeholder: |
+        1. `vydon run --config repro.yaml`
+        2. ...
+        3. Hang at 99% completion.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Logs, errors, stack traces. Use ``` fences.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: "Output of `vydon --version` or chart appVersion."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: deployment
+    attributes:
+      label: Deployment mode
+      options:
+        - Local (compose / tilt)
+        - Docker
+        - Helm / Kubernetes
+        - Other (specify)
+    validations:
+      required: true
+
+  - type: input
+    id: env
+    attributes:
+      label: Environment
+      description: "OS, kernel, runtime versions, database versions."
+      placeholder: macOS 15.3, Go 1.24.0, Postgres 16.4
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else relevant — recent changes, related issues, workarounds.
