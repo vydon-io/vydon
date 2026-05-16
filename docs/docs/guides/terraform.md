@@ -16,14 +16,7 @@ Before configuring the Vydon provider, you'll need to know a few pieces of confi
 
 ### Endpoint Url
 
-#### _Vydon Cloud_
-
-If configuring via Vydon Cloud, no endpoint is required as the provider already defaults to the Vydon Cloud instance.
-
-#### _Self-Hosted_
-
-If self-hosting, the url to your self-hosted instance of Vydon API must be provided.
-It can be provided either directly to the provider as a configuration parameter, or via the `VYDON_ENDPOINT` environment variable. This is detailed in the Terraform Registry docs as well.
+The url to your Vydon API must be provided. It can be set either directly on the provider as a configuration parameter, or via the `VYDON_ENDPOINT` environment variable. This is detailed in the Terraform Registry docs as well. For a local stack started with `make dev`, the API listens on [http://localhost:8080](http://localhost:8080).
 
 ### API Key
 
