@@ -15,8 +15,6 @@ There will also be a section for how to properly set up these systems properly.
 
 ## User Authentication
 
-> **NB:** This requires a valid Vydon Enterprise license for OSS deployments. If you would like to try this out, please contact us.
-
 This authentication is the primary form of authentication in the system. It is used to identify authenticating users in the system and what privileges they have.
 Today, this is quite simple and merely verifies their access token is valid and that they are operating against a Vydon account that a user resides in.
 
@@ -111,8 +109,6 @@ For Auth0, the service account should have the `read:users` scope under the `Aut
 For Keycloak, the `view-users` scope should be added to the service account roles, which can be found under the `realm-management` client scopes.
 
 ## Starting Vydon in Auth Mode
-
-> **NB:** This requires a valid Vydon Enterprise license to be present in the API container. If you would like to try this out, please contact us.
 
 Starting Vydon in Auth Mode is done in a similar way as starting Vydon in non-auth mode: using a compose file. A compose file is also provided that stands up [Keycloak](https://keycloak.org), an open source auth solution.
 
