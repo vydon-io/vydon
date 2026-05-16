@@ -1,6 +1,6 @@
 ---
 title: Kubernetes
-description: The Kubernetes guide covers how to deploy Neosync specific resources.
+description: The Kubernetes guide covers how to deploy Vydon specific resources.
 id: kubernetes
 hide_title: false
 slug: /deploy/kubernetes
@@ -8,59 +8,59 @@ slug: /deploy/kubernetes
 
 ## Kubernetes
 
-The Kubernetes guide covers how to deploy Neosync specific resources.
+The Kubernetes guide covers how to deploy Vydon specific resources.
 Deploying a Postgres database and Temporal instances are not covered under this guide.
 See the external dependency section below for more information regarding these resources.
 
-## Neosync Helm Chart Layout
+## Vydon Helm Chart Layout
 
-Neosync can be deployed to Kubernetes easily with the assistance of Helm charts.
+Vydon can be deployed to Kubernetes easily with the assistance of Helm charts.
 
 We currently publish four different helm charts for maximum flexibility.
 This page will detail the purpose of each one and how it can be used to deploy to Kubernetes.
 
 All of our helm charts are deployed as OCI helm charts and require Helm3 to use.
-Our images are published directly to the Github Container registry at: `ghcr.io/nucleuscloud/neosync/helm`.
+Our images are published directly to the Github Container registry at: `ghcr.io/vydon-io/vydon/helm`.
 
-When a release of Neosync is made, all of these resources are tagged and released at the same version.
-If using the Neosync AIO chart at version `v1.0.0`, it will use `v1.0.0` of the api, app, and worker.
+When a release of Vydon is made, all of these resources are tagged and released at the same version.
+If using the Vydon AIO chart at version `v1.0.0`, it will use `v1.0.0` of the api, app, and worker.
 
 ### API
 
 The API Helm chart can be used to deploy just the backend API server.
-The chart itself can be found [here](https://github.com/nucleuscloud/neosync/tree/main/backend/charts/api).
+The chart itself can be found [here](https://github.com/vydon-io/vydon/tree/main/backend/charts/api).
 
-The local dev edition can be found in the [helmfile](https://github.com/nucleuscloud/neosync/blob/main/backend/dev/helm/api/helmfile.yaml) that is used by our dev Tilt instance.
+The local dev edition can be found in the [helmfile](https://github.com/vydon-io/vydon/blob/main/backend/dev/helm/api/helmfile.yaml) that is used by our dev Tilt instance.
 
-The full image can be docker pulled via: `docker pull ghcr.io/nucleuscloud/neosync/helm/api:latest`
+The full image can be docker pulled via: `docker pull ghcr.io/vydon-io/vydon/helm/api:latest`
 
 ### App
 
 The APP Helm chart can be used to deploy just the frontend APP.
-The chart itself can be found [here](https://github.com/nucleuscloud/neosync/tree/main/frontend/charts/app).
+The chart itself can be found [here](https://github.com/vydon-io/vydon/tree/main/frontend/charts/app).
 
-The local dev edition can be found in the [helmfile](https://github.com/nucleuscloud/neosync/blob/main/frontend/apps/web/dev/helm/app/helmfile.yaml) that is used by our dev Tilt instance.
+The local dev edition can be found in the [helmfile](https://github.com/vydon-io/vydon/blob/main/frontend/apps/web/dev/helm/app/helmfile.yaml) that is used by our dev Tilt instance.
 
-The full image can be docker pulled via: `docker pull ghcr.io/nucleuscloud/neosync/helm/app:latest`
+The full image can be docker pulled via: `docker pull ghcr.io/vydon-io/vydon/helm/app:latest`
 
 ### Worker
 
 The APP Helm chart can be used to deploy just the worker.
-The chart itself can be found [here](https://github.com/nucleuscloud/neosync/tree/main/worker/charts/worker).
+The chart itself can be found [here](https://github.com/vydon-io/vydon/tree/main/worker/charts/worker).
 
-The local dev edition can be found in the [helmfile](https://github.com/nucleuscloud/neosync/blob/main/worker/dev/helm/helmfile.yaml) that is used by our dev Tilt instance.
+The local dev edition can be found in the [helmfile](https://github.com/vydon-io/vydon/blob/main/worker/dev/helm/helmfile.yaml) that is used by our dev Tilt instance.
 
-The full image can be docker pulled via: `docker pull ghcr.io/nucleuscloud/neosync/helm/worker:latest`
+The full image can be docker pulled via: `docker pull ghcr.io/vydon-io/vydon/helm/worker:latest`
 
-### Neosync Umbrella Chart
+### Vydon Umbrella Chart
 
-The Neosync Umbrella Helm chart can be used to deploy all three resources listed above.
-The chart itself can be found [here](https://github.com/nucleuscloud/neosync/blob/main/charts/neosync).
+The Vydon Umbrella Helm chart can be used to deploy all three resources listed above.
+The chart itself can be found [here](https://github.com/vydon-io/vydon/blob/main/charts/vydon).
 
-This chart has no templates of its own and merely acts as a single helm entrypoint to deploy all of the Neosync services.
-It only contains a `Chart.yaml` that defines the three Neosync dependencies.
+This chart has no templates of its own and merely acts as a single helm entrypoint to deploy all of the Vydon services.
+It only contains a `Chart.yaml` that defines the three Vydon dependencies.
 
-The full image can be docker pulled via: `docker pull ghcr.io/nucleuscloud/neosync/helm/neosync:latest`
+The full image can be docker pulled via: `docker pull ghcr.io/vydon-io/vydon/helm/vydon:latest`
 
 When running this within the repo, it points to the local copies of the helm chart. The OCI image will point to the OCI images of the published API, APP, and Worker charts.
 
@@ -77,7 +77,7 @@ worker:
 
 These can easily be spread across multiple `values.yaml` files if desired to keep them separate, but they will still need to be nested underneath their respective chart name keys.
 
-## Install Neosync on a Kubernetes Cluster
+## Install Vydon on a Kubernetes Cluster
 
 ### Prerequisites
 
@@ -92,7 +92,7 @@ This example uses the umbrella chart for simplicity.
 
 ### Basic Installation
 
-Neosync uses the OCI image format for Helm, so there is no need to add a separate registry prior to doing the install.
+Vydon uses the OCI image format for Helm, so there is no need to add a separate registry prior to doing the install.
 
 This example assumes that an external Postgres database has been provisioned as well as a functioning Temporal instance (or cloud).
 In the future we will add support for these external dependencies to make it easier to get up and running quickly.
@@ -106,13 +106,13 @@ Each helm chart has a README that contains the full values spec.
 
 These can be found in the Github repo, and are also available via ArtifactHub.
 
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/neosync)](https://artifacthub.io/packages/search?repo=neosync)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/vydon)](https://artifacthub.io/packages/search?repo=vydon)
 
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/neosync-api)](https://artifacthub.io/packages/search?repo=neosync-api)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/vydon-api)](https://artifacthub.io/packages/search?repo=vydon-api)
 
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/neosync-app)](https://artifacthub.io/packages/search?repo=neosync-app)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/vydon-app)](https://artifacthub.io/packages/search?repo=vydon-app)
 
-[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/neosync-worker)](https://artifacthub.io/packages/search?repo=neosync-worker)
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/vydon-worker)](https://artifacthub.io/packages/search?repo=vydon-worker)
 
 ```
 api:
@@ -152,14 +152,14 @@ Install the chart:
 When specifying the version, be sure to omit the `v` from the github release. So if the current version if `v0.4.38`, specify `0.4.38` as the helm version.
 
 ```
-helm install oci://ghcr.io/nucleuscloud/neosync/helm/neosync --version <version> -f values.yaml
+helm install oci://ghcr.io/vydon-io/vydon/helm/vydon --version <version> -f values.yaml
 ```
 
 ## External Dependencies for Production Deployments
 
-We do not cover how to deploy a Postgres database for Neosync or the Temporal suite.
+We do not cover how to deploy a Postgres database for Vydon or the Temporal suite.
 
-### Neosync Postgres DB
+### Vydon Postgres DB
 
 Generally, we suggest going with a cloud provider to host the database, but if it's desired to host within Kubernetes, the [Kubernetes Operator](https://postgres-operator.readthedocs.io/en/latest/) is good option.
 
@@ -178,7 +178,7 @@ Redis serves as an optional external dependency. It's specifically required if p
 
 ## Tilt for Development Deployments
 
-For development, we use Tilt to set up and deploy Neosync to Kubernetes.
+For development, we use Tilt to set up and deploy Vydon to Kubernetes.
 You can find all of the scripts in the various `Tiltfile`'s that can be found throughout our Github repository.
 The top level `Tiltfile` is the main driver that can be used to deploy everything (including external dependencies like Temporal).
 This is the quickest way to get up and running with a Kubernetes-enabled setup.
@@ -212,19 +212,19 @@ This will add the following to each service's `Deployment`.
 kind: Deployment
 metadata:
   labels:
-    tags.datadoghq.com/env: { { .Values.nucleusEnv } }
-    tags.datadoghq.com/service: { { template "neosync-api.fullname" . } }
+    tags.datadoghq.com/env: { { .Values.vydonEnv } }
+    tags.datadoghq.com/service: { { template "vydon-api.fullname" . } }
     tags.datadoghq.com/version:
       { { .Values.image.tag | default .Chart.AppVersion } }
 spec:
   template:
     metadata:
       annotations:
-        ad.datadoghq.com/nucleus-api.logs: '[{"source":"nucleus-neosync-api","service":"{{ template "neosync-api.fullname" . }}"}]'
+        ad.datadoghq.com/vydon-api.logs: '[{"source":"vydon-vydon-api","service":"{{ template "vydon-api.fullname" . }}"}]'
       labels:
         admission.datadoghq.com/enabled: 'true'
-        tags.datadoghq.com/env: { { .Values.nucleusEnv } }
-        tags.datadoghq.com/service: { { template "neosync-api.fullname" . } }
+        tags.datadoghq.com/env: { { .Values.vydonEnv } }
+        tags.datadoghq.com/service: { { template "vydon-api.fullname" . } }
         tags.datadoghq.com/version:
           { { .Values.image.tag | default .Chart.AppVersion } }
     spec:
@@ -252,7 +252,7 @@ This will generate a Kubernetes `Ingress` resource that is attached to each char
 See the `ingress.yaml` in each chart for a better understanding of what is available there.
 Each ingress has full support for specifying the classname and TLS options.
 
-Below is an example neosync-api Ingress that utilizes nginx, along with cert-manager for TLS decryption, which is required if exposing gRPC/Connect to the outside world.
+Below is an example vydon-api Ingress that utilizes nginx, along with cert-manager for TLS decryption, which is required if exposing gRPC/Connect to the outside world.
 The TLS setup may be different depending on what your ingress class supports.
 
 ```yaml
@@ -262,43 +262,43 @@ metadata:
   annotations:
     cert-manager.io/cluster-issuer: my-cluster-issuer
     nginx.ingress.kubernetes.io/backend-protocol: GRPC
-    nginx.org/grpc-services: neosync-api
-  name: neosync-api
+    nginx.org/grpc-services: vydon-api
+  name: vydon-api
 spec:
   ingressClassName: nginx
   rules:
-    - host: neosync-api.example.com
+    - host: vydon-api.example.com
       http:
         paths:
           - backend:
               service:
-                name: neosync-api
+                name: vydon-api
                 port:
                   number: 80
             path: /
             pathType: Prefix
   tls:
     - hosts:
-        - neosync-api.example.com
-      secretName: neosync-api-certificate
+        - vydon-api.example.com
+      secretName: vydon-api-certificate
 ```
 
-The corresponding helm chart values to generate the above would look like this for neosync-api:
+The corresponding helm chart values to generate the above would look like this for vydon-api:
 
 ```yaml
 ingress:
   enabled: true
   className: nginx
   hosts:
-    - neosync-api.example.com
+    - vydon-api.example.com
   tls:
     - hosts:
-        - neosync-api.example.com
-      secretName: neosync-api-certificate
+        - vydon-api.example.com
+      secretName: vydon-api-certificate
   annotations:
     cert-manager.io/cluster-issuer: my-cluster-issuer
     nginx.ingress.kubernetes.io/backend-protocol: GRPC
-    nginx.org/grpc-services: neosync-api
+    nginx.org/grpc-services: vydon-api
 ```
 
 ## Configuring API and Worker charts with Temporal mTLS Certificates
@@ -320,7 +320,7 @@ Both the `temporal.cert` and `temporal.key` must be sitting next to the `kustomi
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: neosync
+namespace: vydon
 
 secretGenerator:
   - name: temporal-mtls-certs
@@ -334,7 +334,7 @@ secretGenerator:
 
 To apply this: `kustomize build . | kubectl apply -f -`
 
-This will generate a secret and store it in the `neosync` namespace named `temporal-mtls-certs`
+This will generate a secret and store it in the `vydon` namespace named `temporal-mtls-certs`
 
 To properly configure the `api` and `worker` helm charts, the following values can be specific in the `values.yaml` file.
 For simplicity, this section assumes that the same leaf cert will be used by both the API and the Worker.

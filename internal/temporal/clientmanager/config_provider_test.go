@@ -5,10 +5,10 @@ import (
 	"testing"
 
 	"github.com/google/uuid"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 )
 
 var (

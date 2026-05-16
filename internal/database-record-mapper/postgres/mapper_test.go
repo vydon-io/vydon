@@ -6,8 +6,8 @@ import (
 	"testing"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
 	"github.com/stretchr/testify/require"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 func Test_parsePgRowValues(t *testing.T) {
@@ -50,11 +50,11 @@ func Test_parsePgRowValues(t *testing.T) {
 			"nil_col":   nil,
 			"json_col":  map[string]any{"key": "value"},
 			"array_col": []any{1, 2, 3},
-			"binary_col": &neosynctypes.Binary{
-				BaseType: neosynctypes.BaseType{
-					Neosync: neosynctypes.Neosync{
+			"binary_col": &vydontypes.Binary{
+				BaseType: vydontypes.BaseType{
+					Vydon: vydontypes.Vydon{
 						Version: 1,
-						TypeId:  "NEOSYNC_BINARY",
+						TypeId:  "VYDON_BINARY",
 					},
 				},
 				Bytes: binaryData,
@@ -120,58 +120,58 @@ func Test_parsePgRowValues(t *testing.T) {
 		require.NoError(t, err)
 
 		expected := map[string]any{
-			"bit_col": &neosynctypes.Bits{
-				BaseType: neosynctypes.BaseType{
-					Neosync: neosynctypes.Neosync{
+			"bit_col": &vydontypes.Bits{
+				BaseType: vydontypes.BaseType{
+					Vydon: vydontypes.Vydon{
 						Version: 1,
-						TypeId:  "NEOSYNC_BIT",
+						TypeId:  "VYDON_BIT",
 					},
 				},
 				Bytes: bits.Bytes,
 				Len:   bits.Len,
 			},
-			"varbit_col": &neosynctypes.Bits{
-				BaseType: neosynctypes.BaseType{
-					Neosync: neosynctypes.Neosync{
+			"varbit_col": &vydontypes.Bits{
+				BaseType: vydontypes.BaseType{
+					Vydon: vydontypes.Vydon{
 						Version: 1,
-						TypeId:  "NEOSYNC_BIT",
+						TypeId:  "VYDON_BIT",
 					},
 				},
 				Bytes: varbits.Bytes,
 				Len:   varbits.Len,
 			},
-			"bytea_col": &neosynctypes.Binary{
-				BaseType: neosynctypes.BaseType{
-					Neosync: neosynctypes.Neosync{
+			"bytea_col": &vydontypes.Binary{
+				BaseType: vydontypes.BaseType{
+					Vydon: vydontypes.Vydon{
 						Version: 1,
-						TypeId:  "NEOSYNC_BINARY",
+						TypeId:  "VYDON_BINARY",
 					},
 				},
 				Bytes: byteaValue,
 			},
-			"bit_array_col": &neosynctypes.NeosyncArray{
-				BaseType: neosynctypes.BaseType{
-					Neosync: neosynctypes.Neosync{
+			"bit_array_col": &vydontypes.VydonArray{
+				BaseType: vydontypes.BaseType{
+					Vydon: vydontypes.Vydon{
 						Version: 1,
-						TypeId:  "NEOSYNC_ARRAY",
+						TypeId:  "VYDON_ARRAY",
 					},
 				},
-				Elements: []neosynctypes.NeosyncAdapter{
-					&neosynctypes.Bits{
-						BaseType: neosynctypes.BaseType{
-							Neosync: neosynctypes.Neosync{
+				Elements: []vydontypes.VydonAdapter{
+					&vydontypes.Bits{
+						BaseType: vydontypes.BaseType{
+							Vydon: vydontypes.Vydon{
 								Version: 1,
-								TypeId:  "NEOSYNC_BIT",
+								TypeId:  "VYDON_BIT",
 							},
 						},
 						Bytes: []byte{0x05},
 						Len:   3,
 					},
-					&neosynctypes.Bits{
-						BaseType: neosynctypes.BaseType{
-							Neosync: neosynctypes.Neosync{
+					&vydontypes.Bits{
+						BaseType: vydontypes.BaseType{
+							Vydon: vydontypes.Vydon{
 								Version: 1,
-								TypeId:  "NEOSYNC_BIT",
+								TypeId:  "VYDON_BIT",
 							},
 						},
 						Bytes: []byte{0x03},
@@ -179,28 +179,28 @@ func Test_parsePgRowValues(t *testing.T) {
 					},
 				},
 			},
-			"bytea_array_col": &neosynctypes.NeosyncArray{
-				BaseType: neosynctypes.BaseType{
-					Neosync: neosynctypes.Neosync{
+			"bytea_array_col": &vydontypes.VydonArray{
+				BaseType: vydontypes.BaseType{
+					Vydon: vydontypes.Vydon{
 						Version: 1,
-						TypeId:  "NEOSYNC_ARRAY",
+						TypeId:  "VYDON_ARRAY",
 					},
 				},
-				Elements: []neosynctypes.NeosyncAdapter{
-					&neosynctypes.Binary{
-						BaseType: neosynctypes.BaseType{
-							Neosync: neosynctypes.Neosync{
+				Elements: []vydontypes.VydonAdapter{
+					&vydontypes.Binary{
+						BaseType: vydontypes.BaseType{
+							Vydon: vydontypes.Vydon{
 								Version: 1,
-								TypeId:  "NEOSYNC_BINARY",
+								TypeId:  "VYDON_BINARY",
 							},
 						},
 						Bytes: []byte{0x01, 0x02},
 					},
-					&neosynctypes.Binary{
-						BaseType: neosynctypes.BaseType{
-							Neosync: neosynctypes.Neosync{
+					&vydontypes.Binary{
+						BaseType: vydontypes.BaseType{
+							Vydon: vydontypes.Vydon{
 								Version: 1,
-								TypeId:  "NEOSYNC_BINARY",
+								TypeId:  "VYDON_BINARY",
 							},
 						},
 						Bytes: []byte{0x03, 0x04},
@@ -307,28 +307,28 @@ func Test_parsePgRowValues(t *testing.T) {
 			"int_array":  []any{int64(42), int64(43)},
 			"bool_array": []any{true, false},
 			"json_array": []any{map[string]any{"key": "value1"}, map[string]any{"key": "value2"}},
-			"binary_array": &neosynctypes.NeosyncArray{
-				BaseType: neosynctypes.BaseType{
-					Neosync: neosynctypes.Neosync{
+			"binary_array": &vydontypes.VydonArray{
+				BaseType: vydontypes.BaseType{
+					Vydon: vydontypes.Vydon{
 						Version: 1,
-						TypeId:  "NEOSYNC_ARRAY",
+						TypeId:  "VYDON_ARRAY",
 					},
 				},
-				Elements: []neosynctypes.NeosyncAdapter{
-					&neosynctypes.Binary{
-						BaseType: neosynctypes.BaseType{
-							Neosync: neosynctypes.Neosync{
+				Elements: []vydontypes.VydonAdapter{
+					&vydontypes.Binary{
+						BaseType: vydontypes.BaseType{
+							Vydon: vydontypes.Vydon{
 								Version: 1,
-								TypeId:  "NEOSYNC_BINARY",
+								TypeId:  "VYDON_BINARY",
 							},
 						},
 						Bytes: binaryData1,
 					},
-					&neosynctypes.Binary{
-						BaseType: neosynctypes.BaseType{
-							Neosync: neosynctypes.Neosync{
+					&vydontypes.Binary{
+						BaseType: vydontypes.BaseType{
+							Vydon: vydontypes.Vydon{
 								Version: 1,
-								TypeId:  "NEOSYNC_BINARY",
+								TypeId:  "VYDON_BINARY",
 							},
 						},
 						Bytes: binaryData2,

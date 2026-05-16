@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	sql_manager "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	benthosbuilder "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder"
-	temporallogger "github.com/nucleuscloud/neosync/worker/internal/temporal-logger"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
+	temporallogger "github.com/vydon-io/vydon/worker/internal/temporal-logger"
 	"go.temporal.io/sdk/activity"
 	"go.temporal.io/sdk/log"
 )

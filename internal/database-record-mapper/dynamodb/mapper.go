@@ -5,9 +5,9 @@ import (
 	"fmt"
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/builder"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
-	neosync_types "github.com/nucleuscloud/neosync/internal/types"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/builder"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
 )
 
 type DynamoDBMapper struct{}
@@ -24,9 +24,9 @@ func (m *DynamoDBMapper) MapRecord(item map[string]types.AttributeValue) (map[st
 
 func (m *DynamoDBMapper) MapRecordWithKeyType(
 	item map[string]types.AttributeValue,
-) (valuemap map[string]any, typemap map[string]neosync_types.KeyType, err error) {
+) (valuemap map[string]any, typemap map[string]vydon_types.KeyType, err error) {
 	standardJSON := make(map[string]any)
-	ktm := make(map[string]neosync_types.KeyType)
+	ktm := make(map[string]vydon_types.KeyType)
 	for k, v := range item {
 		val, err := parseAttributeValue(k, v, ktm)
 		if err != nil {
@@ -41,7 +41,7 @@ func (m *DynamoDBMapper) MapRecordWithKeyType(
 func parseAttributeValue(
 	key string,
 	v types.AttributeValue,
-	keyTypeMap map[string]neosync_types.KeyType,
+	keyTypeMap map[string]vydon_types.KeyType,
 ) (any, error) {
 	switch t := v.(type) {
 	case *types.AttributeValueMemberB:
@@ -81,7 +81,7 @@ func parseAttributeValue(
 		}
 		return n, nil
 	case *types.AttributeValueMemberNS:
-		keyTypeMap[key] = neosync_types.NumberSet
+		keyTypeMap[key] = vydon_types.NumberSet
 		lAny := make([]any, len(t.Value))
 		for i, v := range t.Value {
 			n, err := gotypeutil.ParseStringAsNumber(v)
@@ -96,7 +96,7 @@ func parseAttributeValue(
 	case *types.AttributeValueMemberS:
 		return t.Value, nil
 	case *types.AttributeValueMemberSS:
-		keyTypeMap[key] = neosync_types.StringSet
+		keyTypeMap[key] = vydon_types.StringSet
 		lAny := make([]any, len(t.Value))
 		for i, v := range t.Value {
 			lAny[i] = v

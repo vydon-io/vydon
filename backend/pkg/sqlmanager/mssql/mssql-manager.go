@@ -10,12 +10,12 @@ import (
 	"strings"
 
 	"github.com/doug-martin/goqu/v9"
-	mysql_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/mysql"
-	mssql_queries "github.com/nucleuscloud/neosync/backend/pkg/mssql-querier"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	ee_sqlmanager_mssql "github.com/nucleuscloud/neosync/internal/ee/mssql-manager"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
+	mssql_queries "github.com/vydon-io/vydon/backend/pkg/mssql-querier"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
+	ee_sqlmanager_mssql "github.com/vydon-io/vydon/internal/mssqlmanager"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -49,9 +49,9 @@ func (m *Manager) GetDatabaseSchema(
 	ctx context.Context,
 ) ([]*sqlmanager_shared.DatabaseSchemaRow, error) {
 	dbSchemas, err := m.querier.GetDatabaseSchema(ctx, m.db)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.DatabaseSchemaRow{}, nil
 	}
 
@@ -145,9 +145,9 @@ func (m *Manager) GetDatabaseTableSchemasBySchemasAndTables(
 	}
 
 	dbSchemas, err := m.querier.GetDatabaseTableSchemasBySchemasAndTables(ctx, m.db, schematables)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.DatabaseSchemaRow{}, nil
 	}
 
@@ -235,9 +235,9 @@ func (m *Manager) GetTableConstraintsBySchema(
 	constraints := []*mssql_queries.GetTableConstraintsBySchemasRow{}
 	errgrp.Go(func() error {
 		rows, err := m.querier.GetTableConstraintsBySchemas(ctx, m.db, schemas)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return err
-		} else if err != nil && neosyncdb.IsNoRows(err) {
+		} else if err != nil && vydondb.IsNoRows(err) {
 			return nil
 		}
 		constraints = rows
@@ -367,9 +367,9 @@ func isInvalidCircularSelfReferencingFk(
 
 func (m *Manager) GetRolePermissionsMap(ctx context.Context) (map[string][]string, error) {
 	rows, err := m.querier.GetRolePermissions(ctx, m.db)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, fmt.Errorf("unable to retrieve mssql role permissions: %w", err)
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return map[string][]string{}, nil
 	}
 
@@ -422,12 +422,12 @@ func (m *Manager) GetTableRowCount(
 	if whereClause != nil && *whereClause != "" {
 		query = query.Where(goqu.L(*whereClause))
 	}
-	sql, _, err := query.ToSQL()
+	statement, _, err := query.ToSQL()
 	if err != nil {
 		return 0, fmt.Errorf("unable to build table row count statement for mssql: %w", err)
 	}
 	var count int64
-	err = m.db.QueryRowContext(ctx, sql).Scan(&count)
+	err = m.db.QueryRowContext(ctx, statement).Scan(&count)
 	if err != nil {
 		return 0, fmt.Errorf("unable to query table row count for mssql: %w", err)
 	}
@@ -508,4 +508,60 @@ func BuildMssqlSetIdentityInsertStatement(
 		enabledKeyword = "ON"
 	}
 	return fmt.Sprintf("SET IDENTITY_INSERT %q.%q %s;", schema, table, enabledKeyword)
+}
+
+// GetDataTypesByTables returns empty data type information. A native
+// implementation will replace this stub when the OSS MSSQL provider is
+// fleshed out.
+func (m *Manager) GetDataTypesByTables(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) (*sqlmanager_shared.AllTableDataTypes, error) {
+	return &sqlmanager_shared.AllTableDataTypes{}, nil
+}
+
+// GetSchemaInitStatements returns no init statements. A native
+// implementation will replace this stub.
+func (m *Manager) GetSchemaInitStatements(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) ([]*sqlmanager_shared.InitSchemaStatements, error) {
+	return nil, nil
+}
+
+// GetSchemaTableTriggers returns no triggers. A native implementation
+// will replace this stub.
+func (m *Manager) GetSchemaTableTriggers(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) ([]*sqlmanager_shared.TableTrigger, error) {
+	return nil, nil
+}
+
+// GetSequencesByTables returns no sequences. MSSQL sequences are not
+// modeled in the OSS distribution yet.
+func (m *Manager) GetSequencesByTables(
+	_ context.Context,
+	_ string,
+	_ []string,
+) ([]*sqlmanager_shared.DataType, error) {
+	return nil, nil
+}
+
+// GetSchemaTableDataTypes returns empty data type info. This method is
+// scheduled to be removed in favor of GetDataTypesByTables.
+func (m *Manager) GetSchemaTableDataTypes(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) (*sqlmanager_shared.SchemaTableDataTypeResponse, error) {
+	return &sqlmanager_shared.SchemaTableDataTypeResponse{}, nil
+}
+
+// GetTableInitStatements returns no init statements. A native
+// implementation will replace this stub.
+func (m *Manager) GetTableInitStatements(
+	_ context.Context,
+	_ []*sqlmanager_shared.SchemaTable,
+) ([]*sqlmanager_shared.TableInitStatement, error) {
+	return nil, nil
 }

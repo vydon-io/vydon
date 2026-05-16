@@ -5,10 +5,10 @@ package clientmanager
 import (
 	context "context"
 
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
 	mock "github.com/stretchr/testify/mock"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
 
-	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
 
 	pgtype "github.com/jackc/pgx/v5/pgtype"
 )
@@ -65,7 +65,7 @@ type MockDB_GetTemporalConfigByAccount_Call struct {
 //   - ctx context.Context
 //   - db db_queries.DBTX
 //   - accountId pgtype.UUID
-func (_e *MockDB_Expecter) GetTemporalConfigByAccount(ctx interface{}, db interface{}, accountId interface{}) *MockDB_GetTemporalConfigByAccount_Call {
+func (_e *MockDB_Expecter) GetTemporalConfigByAccount(ctx any, db any, accountId any) *MockDB_GetTemporalConfigByAccount_Call {
 	return &MockDB_GetTemporalConfigByAccount_Call{Call: _e.mock.On("GetTemporalConfigByAccount", ctx, db, accountId)}
 }
 

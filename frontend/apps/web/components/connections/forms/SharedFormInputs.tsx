@@ -37,7 +37,7 @@ import {
   CheckSSHConnectionRequest,
   CheckSSHConnectionResult,
   ConnectionService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import {
   CheckCircledIcon,
   ExclamationTriangleIcon,
@@ -197,7 +197,7 @@ export function ClientTlsAccordion(
         <AccordionTrigger>Client TLS Certificates</AccordionTrigger>
         <AccordionContent className="flex flex-col gap-4 p-2">
           <div className="text-sm">
-            Configuring this section allows Neosync to connect to the database
+            Configuring this section allows Vydon to connect to the database
             using SSL/TLS.
           </div>
           <ClientTls {...props} />

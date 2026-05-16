@@ -3,9 +3,9 @@ package schemamanager_shared
 import (
 	"testing"
 
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	"github.com/nucleuscloud/neosync/internal/testutil"
 	"github.com/stretchr/testify/assert"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	"github.com/vydon-io/vydon/internal/testutil"
 )
 
 func Test_BuildOrderedForeignKeyConstraintsToDrop(t *testing.T) {
@@ -129,7 +129,14 @@ func Test_BuildOrderedForeignKeyConstraintsToDrop(t *testing.T) {
 			result := BuildOrderedForeignKeyConstraintsToDrop(logger, tt.diff)
 			assert.Equal(t, len(tt.expected), len(result), "expected %d foreign keys, got %d", len(tt.expected), len(result))
 			for i, fk := range result {
-				assert.Equal(t, tt.expected[i].ConstraintName, fk.ConstraintName, "expected foreign key %s, got %s", tt.expected[i].ConstraintName, fk.ConstraintName)
+				assert.Equal(
+					t,
+					tt.expected[i].ConstraintName,
+					fk.ConstraintName,
+					"expected foreign key %s, got %s",
+					tt.expected[i].ConstraintName,
+					fk.ConstraintName,
+				)
 			}
 		})
 	}

@@ -1,2 +1,2 @@
-ALTER TABLE neosync_api.jobs
+ALTER TABLE vydon_api.jobs
 DROP COLUMN IF EXISTS virtual_foreign_keys;

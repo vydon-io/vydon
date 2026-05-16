@@ -8,7 +8,7 @@ import (
 	connect "connectrpc.com/connect"
 	context "context"
 	errors "errors"
-	v1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
+	v1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	http "net/http"
 	strings "strings"
 )
@@ -106,7 +106,7 @@ type AccountHookServiceClient interface {
 	SetAccountHookEnabled(context.Context, *connect.Request[v1alpha1.SetAccountHookEnabledRequest]) (*connect.Response[v1alpha1.SetAccountHookEnabledResponse], error)
 	// Retrieves all active account hooks for a specific event.
 	GetActiveAccountHooksByEvent(context.Context, *connect.Request[v1alpha1.GetActiveAccountHooksByEventRequest]) (*connect.Response[v1alpha1.GetActiveAccountHooksByEventResponse], error)
-	// Retrieves the Slack connection url that allows a user to connect their Slack workspace to Neosync.
+	// Retrieves the Slack connection url that allows a user to connect their Slack workspace to Vydon.
 	GetSlackConnectionUrl(context.Context, *connect.Request[v1alpha1.GetSlackConnectionUrlRequest]) (*connect.Response[v1alpha1.GetSlackConnectionUrlResponse], error)
 	// Handles the Slack OAuth callback.
 	HandleSlackOAuthCallback(context.Context, *connect.Request[v1alpha1.HandleSlackOAuthCallbackRequest]) (*connect.Response[v1alpha1.HandleSlackOAuthCallbackResponse], error)
@@ -300,7 +300,7 @@ type AccountHookServiceHandler interface {
 	SetAccountHookEnabled(context.Context, *connect.Request[v1alpha1.SetAccountHookEnabledRequest]) (*connect.Response[v1alpha1.SetAccountHookEnabledResponse], error)
 	// Retrieves all active account hooks for a specific event.
 	GetActiveAccountHooksByEvent(context.Context, *connect.Request[v1alpha1.GetActiveAccountHooksByEventRequest]) (*connect.Response[v1alpha1.GetActiveAccountHooksByEventResponse], error)
-	// Retrieves the Slack connection url that allows a user to connect their Slack workspace to Neosync.
+	// Retrieves the Slack connection url that allows a user to connect their Slack workspace to Vydon.
 	GetSlackConnectionUrl(context.Context, *connect.Request[v1alpha1.GetSlackConnectionUrlRequest]) (*connect.Response[v1alpha1.GetSlackConnectionUrlResponse], error)
 	// Handles the Slack OAuth callback.
 	HandleSlackOAuthCallback(context.Context, *connect.Request[v1alpha1.HandleSlackOAuthCallbackRequest]) (*connect.Response[v1alpha1.HandleSlackOAuthCallbackResponse], error)

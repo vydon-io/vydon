@@ -59,7 +59,7 @@ type MockQuerier_GetAllSchemas_Call struct {
 // GetAllSchemas is a helper method to define mock.On call
 //   - ctx context.Context
 //   - db DBTX
-func (_e *MockQuerier_Expecter) GetAllSchemas(ctx interface{}, db interface{}) *MockQuerier_GetAllSchemas_Call {
+func (_e *MockQuerier_Expecter) GetAllSchemas(ctx any, db any) *MockQuerier_GetAllSchemas_Call {
 	return &MockQuerier_GetAllSchemas_Call{Call: _e.mock.On("GetAllSchemas", ctx, db)}
 }
 
@@ -118,7 +118,7 @@ type MockQuerier_GetAllTables_Call struct {
 // GetAllTables is a helper method to define mock.On call
 //   - ctx context.Context
 //   - db DBTX
-func (_e *MockQuerier_Expecter) GetAllTables(ctx interface{}, db interface{}) *MockQuerier_GetAllTables_Call {
+func (_e *MockQuerier_Expecter) GetAllTables(ctx any, db any) *MockQuerier_GetAllTables_Call {
 	return &MockQuerier_GetAllTables_Call{Call: _e.mock.On("GetAllTables", ctx, db)}
 }
 
@@ -178,7 +178,7 @@ type MockQuerier_GetCompositeTypesByTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schematables []string
-func (_e *MockQuerier_Expecter) GetCompositeTypesByTables(ctx interface{}, db interface{}, schematables interface{}) *MockQuerier_GetCompositeTypesByTables_Call {
+func (_e *MockQuerier_Expecter) GetCompositeTypesByTables(ctx any, db any, schematables any) *MockQuerier_GetCompositeTypesByTables_Call {
 	return &MockQuerier_GetCompositeTypesByTables_Call{Call: _e.mock.On("GetCompositeTypesByTables", ctx, db, schematables)}
 }
 
@@ -238,7 +238,7 @@ type MockQuerier_GetCustomFunctionsBySchemaAndTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg *GetCustomFunctionsBySchemaAndTablesParams
-func (_e *MockQuerier_Expecter) GetCustomFunctionsBySchemaAndTables(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetCustomFunctionsBySchemaAndTables_Call {
+func (_e *MockQuerier_Expecter) GetCustomFunctionsBySchemaAndTables(ctx any, db any, arg any) *MockQuerier_GetCustomFunctionsBySchemaAndTables_Call {
 	return &MockQuerier_GetCustomFunctionsBySchemaAndTables_Call{Call: _e.mock.On("GetCustomFunctionsBySchemaAndTables", ctx, db, arg)}
 }
 
@@ -298,7 +298,7 @@ type MockQuerier_GetCustomSequencesBySchemaAndTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg *GetCustomSequencesBySchemaAndTablesParams
-func (_e *MockQuerier_Expecter) GetCustomSequencesBySchemaAndTables(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetCustomSequencesBySchemaAndTables_Call {
+func (_e *MockQuerier_Expecter) GetCustomSequencesBySchemaAndTables(ctx any, db any, arg any) *MockQuerier_GetCustomSequencesBySchemaAndTables_Call {
 	return &MockQuerier_GetCustomSequencesBySchemaAndTables_Call{Call: _e.mock.On("GetCustomSequencesBySchemaAndTables", ctx, db, arg)}
 }
 
@@ -358,7 +358,7 @@ type MockQuerier_GetCustomTriggersBySchemaAndTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schematables []string
-func (_e *MockQuerier_Expecter) GetCustomTriggersBySchemaAndTables(ctx interface{}, db interface{}, schematables interface{}) *MockQuerier_GetCustomTriggersBySchemaAndTables_Call {
+func (_e *MockQuerier_Expecter) GetCustomTriggersBySchemaAndTables(ctx any, db any, schematables any) *MockQuerier_GetCustomTriggersBySchemaAndTables_Call {
 	return &MockQuerier_GetCustomTriggersBySchemaAndTables_Call{Call: _e.mock.On("GetCustomTriggersBySchemaAndTables", ctx, db, schematables)}
 }
 
@@ -418,7 +418,7 @@ type MockQuerier_GetDataTypesBySchemaAndTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg *GetDataTypesBySchemaAndTablesParams
-func (_e *MockQuerier_Expecter) GetDataTypesBySchemaAndTables(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetDataTypesBySchemaAndTables_Call {
+func (_e *MockQuerier_Expecter) GetDataTypesBySchemaAndTables(ctx any, db any, arg any) *MockQuerier_GetDataTypesBySchemaAndTables_Call {
 	return &MockQuerier_GetDataTypesBySchemaAndTables_Call{Call: _e.mock.On("GetDataTypesBySchemaAndTables", ctx, db, arg)}
 }
 
@@ -477,7 +477,7 @@ type MockQuerier_GetDatabaseSchema_Call struct {
 // GetDatabaseSchema is a helper method to define mock.On call
 //   - ctx context.Context
 //   - db DBTX
-func (_e *MockQuerier_Expecter) GetDatabaseSchema(ctx interface{}, db interface{}) *MockQuerier_GetDatabaseSchema_Call {
+func (_e *MockQuerier_Expecter) GetDatabaseSchema(ctx any, db any) *MockQuerier_GetDatabaseSchema_Call {
 	return &MockQuerier_GetDatabaseSchema_Call{Call: _e.mock.On("GetDatabaseSchema", ctx, db)}
 }
 
@@ -537,7 +537,7 @@ type MockQuerier_GetDatabaseTableSchemasBySchemasAndTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schematables []string
-func (_e *MockQuerier_Expecter) GetDatabaseTableSchemasBySchemasAndTables(ctx interface{}, db interface{}, schematables interface{}) *MockQuerier_GetDatabaseTableSchemasBySchemasAndTables_Call {
+func (_e *MockQuerier_Expecter) GetDatabaseTableSchemasBySchemasAndTables(ctx any, db any, schematables any) *MockQuerier_GetDatabaseTableSchemasBySchemasAndTables_Call {
 	return &MockQuerier_GetDatabaseTableSchemasBySchemasAndTables_Call{Call: _e.mock.On("GetDatabaseTableSchemasBySchemasAndTables", ctx, db, schematables)}
 }
 
@@ -597,7 +597,7 @@ type MockQuerier_GetDomainsByTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schematables []string
-func (_e *MockQuerier_Expecter) GetDomainsByTables(ctx interface{}, db interface{}, schematables interface{}) *MockQuerier_GetDomainsByTables_Call {
+func (_e *MockQuerier_Expecter) GetDomainsByTables(ctx any, db any, schematables any) *MockQuerier_GetDomainsByTables_Call {
 	return &MockQuerier_GetDomainsByTables_Call{Call: _e.mock.On("GetDomainsByTables", ctx, db, schematables)}
 }
 
@@ -657,7 +657,7 @@ type MockQuerier_GetEnumTypesByTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schematables []string
-func (_e *MockQuerier_Expecter) GetEnumTypesByTables(ctx interface{}, db interface{}, schematables interface{}) *MockQuerier_GetEnumTypesByTables_Call {
+func (_e *MockQuerier_Expecter) GetEnumTypesByTables(ctx any, db any, schematables any) *MockQuerier_GetEnumTypesByTables_Call {
 	return &MockQuerier_GetEnumTypesByTables_Call{Call: _e.mock.On("GetEnumTypesByTables", ctx, db, schematables)}
 }
 
@@ -717,7 +717,7 @@ type MockQuerier_GetExtensionsBySchemas_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schema []string
-func (_e *MockQuerier_Expecter) GetExtensionsBySchemas(ctx interface{}, db interface{}, schema interface{}) *MockQuerier_GetExtensionsBySchemas_Call {
+func (_e *MockQuerier_Expecter) GetExtensionsBySchemas(ctx any, db any, schema any) *MockQuerier_GetExtensionsBySchemas_Call {
 	return &MockQuerier_GetExtensionsBySchemas_Call{Call: _e.mock.On("GetExtensionsBySchemas", ctx, db, schema)}
 }
 
@@ -777,7 +777,7 @@ type MockQuerier_GetForeignKeyConstraintsBySchemas_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schemas []string
-func (_e *MockQuerier_Expecter) GetForeignKeyConstraintsBySchemas(ctx interface{}, db interface{}, schemas interface{}) *MockQuerier_GetForeignKeyConstraintsBySchemas_Call {
+func (_e *MockQuerier_Expecter) GetForeignKeyConstraintsBySchemas(ctx any, db any, schemas any) *MockQuerier_GetForeignKeyConstraintsBySchemas_Call {
 	return &MockQuerier_GetForeignKeyConstraintsBySchemas_Call{Call: _e.mock.On("GetForeignKeyConstraintsBySchemas", ctx, db, schemas)}
 }
 
@@ -837,7 +837,7 @@ type MockQuerier_GetForeignKeyConstraintsBySchemasAndTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg *GetForeignKeyConstraintsBySchemasAndTablesParams
-func (_e *MockQuerier_Expecter) GetForeignKeyConstraintsBySchemasAndTables(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetForeignKeyConstraintsBySchemasAndTables_Call {
+func (_e *MockQuerier_Expecter) GetForeignKeyConstraintsBySchemasAndTables(ctx any, db any, arg any) *MockQuerier_GetForeignKeyConstraintsBySchemasAndTables_Call {
 	return &MockQuerier_GetForeignKeyConstraintsBySchemasAndTables_Call{Call: _e.mock.On("GetForeignKeyConstraintsBySchemasAndTables", ctx, db, arg)}
 }
 
@@ -897,7 +897,7 @@ type MockQuerier_GetIndicesBySchemasAndTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schematables []string
-func (_e *MockQuerier_Expecter) GetIndicesBySchemasAndTables(ctx interface{}, db interface{}, schematables interface{}) *MockQuerier_GetIndicesBySchemasAndTables_Call {
+func (_e *MockQuerier_Expecter) GetIndicesBySchemasAndTables(ctx any, db any, schematables any) *MockQuerier_GetIndicesBySchemasAndTables_Call {
 	return &MockQuerier_GetIndicesBySchemasAndTables_Call{Call: _e.mock.On("GetIndicesBySchemasAndTables", ctx, db, schematables)}
 }
 
@@ -957,7 +957,7 @@ type MockQuerier_GetNonForeignKeyTableConstraintsBySchema_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schemas []string
-func (_e *MockQuerier_Expecter) GetNonForeignKeyTableConstraintsBySchema(ctx interface{}, db interface{}, schemas interface{}) *MockQuerier_GetNonForeignKeyTableConstraintsBySchema_Call {
+func (_e *MockQuerier_Expecter) GetNonForeignKeyTableConstraintsBySchema(ctx any, db any, schemas any) *MockQuerier_GetNonForeignKeyTableConstraintsBySchema_Call {
 	return &MockQuerier_GetNonForeignKeyTableConstraintsBySchema_Call{Call: _e.mock.On("GetNonForeignKeyTableConstraintsBySchema", ctx, db, schemas)}
 }
 
@@ -1017,7 +1017,7 @@ type MockQuerier_GetNonForeignKeyTableConstraintsBySchemaAndTables_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - arg *GetNonForeignKeyTableConstraintsBySchemaAndTablesParams
-func (_e *MockQuerier_Expecter) GetNonForeignKeyTableConstraintsBySchemaAndTables(ctx interface{}, db interface{}, arg interface{}) *MockQuerier_GetNonForeignKeyTableConstraintsBySchemaAndTables_Call {
+func (_e *MockQuerier_Expecter) GetNonForeignKeyTableConstraintsBySchemaAndTables(ctx any, db any, arg any) *MockQuerier_GetNonForeignKeyTableConstraintsBySchemaAndTables_Call {
 	return &MockQuerier_GetNonForeignKeyTableConstraintsBySchemaAndTables_Call{Call: _e.mock.On("GetNonForeignKeyTableConstraintsBySchemaAndTables", ctx, db, arg)}
 }
 
@@ -1077,7 +1077,7 @@ type MockQuerier_GetPartitionHierarchyByTable_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - table string
-func (_e *MockQuerier_Expecter) GetPartitionHierarchyByTable(ctx interface{}, db interface{}, table interface{}) *MockQuerier_GetPartitionHierarchyByTable_Call {
+func (_e *MockQuerier_Expecter) GetPartitionHierarchyByTable(ctx any, db any, table any) *MockQuerier_GetPartitionHierarchyByTable_Call {
 	return &MockQuerier_GetPartitionHierarchyByTable_Call{Call: _e.mock.On("GetPartitionHierarchyByTable", ctx, db, table)}
 }
 
@@ -1137,7 +1137,7 @@ type MockQuerier_GetPartitionedTablesBySchema_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schema []string
-func (_e *MockQuerier_Expecter) GetPartitionedTablesBySchema(ctx interface{}, db interface{}, schema interface{}) *MockQuerier_GetPartitionedTablesBySchema_Call {
+func (_e *MockQuerier_Expecter) GetPartitionedTablesBySchema(ctx any, db any, schema any) *MockQuerier_GetPartitionedTablesBySchema_Call {
 	return &MockQuerier_GetPartitionedTablesBySchema_Call{Call: _e.mock.On("GetPartitionedTablesBySchema", ctx, db, schema)}
 }
 
@@ -1196,7 +1196,7 @@ type MockQuerier_GetPostgresRolePermissions_Call struct {
 // GetPostgresRolePermissions is a helper method to define mock.On call
 //   - ctx context.Context
 //   - db DBTX
-func (_e *MockQuerier_Expecter) GetPostgresRolePermissions(ctx interface{}, db interface{}) *MockQuerier_GetPostgresRolePermissions_Call {
+func (_e *MockQuerier_Expecter) GetPostgresRolePermissions(ctx any, db any) *MockQuerier_GetPostgresRolePermissions_Call {
 	return &MockQuerier_GetPostgresRolePermissions_Call{Call: _e.mock.On("GetPostgresRolePermissions", ctx, db)}
 }
 
@@ -1256,7 +1256,7 @@ type MockQuerier_GetUniqueIndexesBySchema_Call struct {
 //   - ctx context.Context
 //   - db DBTX
 //   - schema []string
-func (_e *MockQuerier_Expecter) GetUniqueIndexesBySchema(ctx interface{}, db interface{}, schema interface{}) *MockQuerier_GetUniqueIndexesBySchema_Call {
+func (_e *MockQuerier_Expecter) GetUniqueIndexesBySchema(ctx any, db any, schema any) *MockQuerier_GetUniqueIndexesBySchema_Call {
 	return &MockQuerier_GetUniqueIndexesBySchema_Call{Call: _e.mock.On("GetUniqueIndexesBySchema", ctx, db, schema)}
 }
 

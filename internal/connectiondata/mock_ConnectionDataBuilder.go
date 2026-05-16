@@ -3,8 +3,8 @@
 package connectiondata
 
 import (
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
 	mock "github.com/stretchr/testify/mock"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 
 	slog "log/slog"
 )
@@ -60,7 +60,7 @@ type MockConnectionDataBuilder_NewDataConnection_Call struct {
 // NewDataConnection is a helper method to define mock.On call
 //   - logger *slog.Logger
 //   - connection *mgmtv1alpha1.Connection
-func (_e *MockConnectionDataBuilder_Expecter) NewDataConnection(logger interface{}, connection interface{}) *MockConnectionDataBuilder_NewDataConnection_Call {
+func (_e *MockConnectionDataBuilder_Expecter) NewDataConnection(logger any, connection any) *MockConnectionDataBuilder_NewDataConnection_Call {
 	return &MockConnectionDataBuilder_NewDataConnection_Call{Call: _e.mock.On("NewDataConnection", logger, connection)}
 }
 

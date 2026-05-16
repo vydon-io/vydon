@@ -6,7 +6,7 @@ import SkeletonForm from '@/components/skeleton/SkeletonForm';
 import { SubNav } from '@/components/SubNav';
 import { PageProps } from '@/components/types';
 import { useQuery } from '@connectrpc/connect-query';
-import { ConnectionService } from '@neosync/sdk';
+import { ConnectionService } from '@vydon/sdk';
 import Error from 'next/error';
 import { ReactElement, use } from 'react';
 import { useGetConnectionComponentDetails } from './components/useGetConnectionComponentDetails';
@@ -47,7 +47,7 @@ export default function ConnectionPage(props: PageProps): ReactElement {
       </div>
     );
   }
-  if (!isLoading && !data?.connection) {
+  if (!data?.connection) {
     return <Error statusCode={404} />;
   }
 

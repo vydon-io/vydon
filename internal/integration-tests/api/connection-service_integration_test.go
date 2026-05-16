@@ -5,9 +5,9 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	integrationtests_test "github.com/nucleuscloud/neosync/backend/pkg/integration-test"
 	"github.com/stretchr/testify/require"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	integrationtests_test "github.com/vydon-io/vydon/backend/pkg/integration-test"
 )
 
 func (s *IntegrationTestSuite) Test_ConnectionService_IsConnectionNameAvailable_Available() {
@@ -63,13 +63,13 @@ func (s *IntegrationTestSuite) Test_ConnectionService_CheckConnectionConfig() {
 func (s *IntegrationTestSuite) Test_ConnectionService_CreateConnection() {
 	t := s.T()
 
-	t.Run("Neosync Cloud Authenticated", func(t *testing.T) {
-		userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+	t.Run("Vydon Cloud Authenticated", func(t *testing.T) {
+		userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
 		integrationtests_test.SetUser(s.ctx, t, userclient)
 		// doing a team account here as getting weird errors due to the OSS accuont being shared for some reason
 		// I think due to the unauthenticated client being used where rbac is not set up originally so the permissions are missing
 		accountId := s.createBilledTeamAccount(s.ctx, userclient, "test-account", "cus_P00000000000000000000000")
-		client := s.NeosyncCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId))
+		client := s.VydonCloudAuthenticatedLicensedClients.Connections(integrationtests_test.WithUserId(testAuthUserId))
 		t.Run("postgres-envvar-failure", func(t *testing.T) {
 			resp, err := client.CreateConnection(
 				s.ctx,

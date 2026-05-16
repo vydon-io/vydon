@@ -1,18 +1,18 @@
 package v1alpha1_jobservice
 
 import (
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	jobhooks "github.com/nucleuscloud/neosync/backend/internal/ee/hooks/jobs"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	sql_manager "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	"github.com/nucleuscloud/neosync/internal/connectiondata"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
-	clientmanager "github.com/nucleuscloud/neosync/internal/temporal/clientmanager"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	jobhooks "github.com/vydon-io/vydon/backend/internal/hooks/jobs"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	"github.com/vydon-io/vydon/internal/connectiondata"
+	clientmanager "github.com/vydon-io/vydon/internal/temporal/clientmanager"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type Service struct {
 	cfg               *Config
-	db                *neosyncdb.NeosyncDb
+	db                *vydondb.VydonDb
 	connectionService mgmtv1alpha1connect.ConnectionServiceClient
 	userdataclient    userdata.Interface
 	sqlmanager        sql_manager.SqlManagerClient
@@ -44,8 +44,8 @@ type LokiRunLogConfig struct {
 }
 
 type Config struct {
-	IsAuthEnabled  bool
-	IsNeosyncCloud bool
+	IsAuthEnabled bool
+	IsVydonCloud  bool
 
 	RunLogConfig *RunLogConfig
 }
@@ -59,7 +59,7 @@ type RunLogConfig struct {
 
 func New(
 	cfg *Config,
-	db *neosyncdb.NeosyncDb,
+	db *vydondb.VydonDb,
 	temporalWfManager clientmanager.Interface,
 	connectionService mgmtv1alpha1connect.ConnectionServiceClient,
 	sqlmanager sql_manager.SqlManagerClient,

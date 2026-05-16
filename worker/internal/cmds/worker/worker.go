@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 
-	neosynclogger "github.com/nucleuscloud/neosync/backend/pkg/logger"
-	serve_connect "github.com/nucleuscloud/neosync/worker/internal/cmds/worker/serve"
+	vydonlogger "github.com/vydon-io/vydon/backend/pkg/logger"
+	serve_connect "github.com/vydon-io/vydon/worker/internal/cmds/worker/serve"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -16,7 +16,7 @@ func Execute() {
 
 	rootCmd := &cobra.Command{
 		Use:   "worker",
-		Short: "Terminal app that is used to boot up the Neosync worker.",
+		Short: "Terminal app that is used to boot up the Vydon worker.",
 		Long:  "",
 		PersistentPreRun: func(cmd *cobra.Command, _ []string) {
 			cmd.SilenceErrors = true
@@ -28,7 +28,7 @@ func Execute() {
 	// Wire up subcommands here
 	rootCmd.AddCommand(serve_connect.NewCmd())
 
-	logger, _ := neosynclogger.NewLoggers()
+	logger, _ := vydonlogger.NewLoggers()
 
 	err := rootCmd.Execute()
 	if err != nil {
@@ -53,7 +53,7 @@ func initConfig(
 			panic(err)
 		}
 	}
-	envType := viper.GetString("NUCLEUS_ENV")
+	envType := viper.GetString("VYDON_ENV")
 	if envType != "" {
 		viper.SetConfigName(fmt.Sprintf(".env.%s", envType))
 		if err := viper.MergeInConfig(); err != nil {

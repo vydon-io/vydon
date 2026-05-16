@@ -7,16 +7,16 @@ import (
 	"time"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	"github.com/stretchr/testify/require"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/sync/errgroup"
 
-	tcneosyncapi "github.com/nucleuscloud/neosync/backend/pkg/integration-test"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
-	tcmongodb "github.com/nucleuscloud/neosync/internal/testutil/testcontainers/mongodb"
+	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
+	tcmongodb "github.com/vydon-io/vydon/internal/testutil/testcontainers/mongodb"
 )
 
 func createMongodbSyncJob(
@@ -60,13 +60,13 @@ func test_mongodb_alltypes(
 	t *testing.T,
 	ctx context.Context,
 	mongo *tcmongodb.MongoDBTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
-	neosyncApi.MockTemporalForCreateJob("test-mongodb-sync")
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
+	vydonApi.MockTemporalForCreateJob("test-mongodb-sync")
 	dbName := "data"
 	collectionName := "test-sync"
 	docs := getMongodbAllTypesTestData()
@@ -106,7 +106,7 @@ func test_mongodb_alltypes(
 		JobMappings: mappings,
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mongo_all_types")
@@ -133,13 +133,13 @@ func test_mongodb_transform(
 	t *testing.T,
 	ctx context.Context,
 	mongo *tcmongodb.MongoDBTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
-	neosyncApi.MockTemporalForCreateJob("test-mongodb-sync")
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
+	vydonApi.MockTemporalForCreateJob("test-mongodb-sync")
 	dbName := "data"
 	collectionName := "test-sync-transform"
 	docs := getMongodbAllTypesTestData()
@@ -227,7 +227,7 @@ func test_mongodb_transform(
 		JobMappings: mappings,
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers)
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers)
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mongo_transform")

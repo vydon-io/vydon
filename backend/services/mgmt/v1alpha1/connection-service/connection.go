@@ -12,19 +12,19 @@ import (
 	"connectrpc.com/connect"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/google/uuid"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	logger_interceptor "github.com/nucleuscloud/neosync/backend/internal/connect/interceptors/logger"
-	"github.com/nucleuscloud/neosync/backend/internal/dtomaps"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	dbconnectconfig "github.com/nucleuscloud/neosync/backend/pkg/dbconnect-config"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlconnect"
-	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
-	"github.com/nucleuscloud/neosync/internal/sshtunnel"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
+	"github.com/vydon-io/vydon/backend/internal/dtomaps"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	dbconnectconfig "github.com/vydon-io/vydon/backend/pkg/dbconnect-config"
+	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/sshtunnel"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"golang.org/x/crypto/ssh"
 	"golang.org/x/sync/errgroup"
 
@@ -180,7 +180,7 @@ func (s *Service) CheckConnectionConfig(
 			Privileges:      privs,
 		}), nil
 	default:
-		return nil, nucleuserrors.NewBadRequest(fmt.Errorf("this method does not support this connection type %T: %w", req.Msg.GetConnectionConfig().GetConfig(), errors.ErrUnsupported).Error())
+		return nil, vydonerrors.NewBadRequest(fmt.Errorf("this method does not support this connection type %T: %w", req.Msg.GetConnectionConfig().GetConfig(), errors.ErrUnsupported).Error())
 	}
 }
 
@@ -254,7 +254,7 @@ func (s *Service) IsConnectionNameAvailable(
 	if err != nil {
 		return nil, err
 	}
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -303,7 +303,7 @@ func (s *Service) GetConnections(
 		canViewSensitive = false
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -332,16 +332,16 @@ func (s *Service) GetConnection(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.GetConnectionRequest],
 ) (*connect.Response[mgmtv1alpha1.GetConnectionResponse], error) {
-	idUuid, err := neosyncdb.ToUuid(req.Msg.Id)
+	idUuid, err := vydondb.ToUuid(req.Msg.Id)
 	if err != nil {
 		return nil, err
 	}
 
 	connection, err := s.db.Q.GetConnectionById(ctx, s.db.Db, idUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find connection by id")
+	} else if err != nil && vydondb.IsNoRows(err) {
+		return nil, vydonerrors.NewNotFound("unable to find connection by id")
 	}
 
 	user, err := s.userclient.GetUser(ctx)
@@ -395,20 +395,20 @@ func (s *Service) CreateConnection(
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_MssqlConfig:
-		if err := checkUrlEnvVar(cfg.MssqlConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.MssqlConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_MysqlConfig:
-		if err := checkUrlEnvVar(cfg.MysqlConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.MysqlConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_PgConfig:
-		if err := checkUrlEnvVar(cfg.PgConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.PgConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -439,15 +439,15 @@ func (s *Service) UpdateConnection(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.UpdateConnectionRequest],
 ) (*connect.Response[mgmtv1alpha1.UpdateConnectionResponse], error) {
-	connectionUuid, err := neosyncdb.ToUuid(req.Msg.Id)
+	connectionUuid, err := vydondb.ToUuid(req.Msg.Id)
 	if err != nil {
 		return nil, err
 	}
 	connection, err := s.db.Q.GetConnectionById(ctx, s.db.Db, connectionUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find connection by id")
+	} else if err != nil && vydondb.IsNoRows(err) {
+		return nil, vydonerrors.NewNotFound("unable to find connection by id")
 	}
 
 	user, err := s.userclient.GetUser(ctx)
@@ -456,19 +456,19 @@ func (s *Service) UpdateConnection(
 	}
 	switch cfg := req.Msg.GetConnectionConfig().GetConfig().(type) {
 	case *mgmtv1alpha1.ConnectionConfig_AwsS3Config, *mgmtv1alpha1.ConnectionConfig_GcpCloudstorageConfig:
-		if err := user.EnforceLicense(ctx, neosyncdb.UUIDString(connection.AccountID)); err != nil {
+		if err := user.EnforceLicense(ctx, vydondb.UUIDString(connection.AccountID)); err != nil {
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_MssqlConfig:
-		if err := checkUrlEnvVar(cfg.MssqlConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.MssqlConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_MysqlConfig:
-		if err := checkUrlEnvVar(cfg.MysqlConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.MysqlConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	case *mgmtv1alpha1.ConnectionConfig_PgConfig:
-		if err := checkUrlEnvVar(cfg.PgConfig, s.cfg.IsNeosyncCloud); err != nil {
+		if err := checkUrlEnvVar(cfg.PgConfig, s.cfg.IsVydonCloud); err != nil {
 			return nil, err
 		}
 	}
@@ -504,15 +504,15 @@ func (s *Service) DeleteConnection(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.DeleteConnectionRequest],
 ) (*connect.Response[mgmtv1alpha1.DeleteConnectionResponse], error) {
-	idUuid, err := neosyncdb.ToUuid(req.Msg.Id)
+	idUuid, err := vydondb.ToUuid(req.Msg.Id)
 	if err != nil {
 		return nil, err
 	}
 
 	connection, err := s.db.Q.GetConnectionById(ctx, s.db.Db, idUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return connect.NewResponse(&mgmtv1alpha1.DeleteConnectionResponse{}), nil
 	}
 
@@ -568,7 +568,7 @@ func (s *Service) CheckSqlQuery(
 	if err != nil {
 		return nil, err
 	}
-	defer neosyncdb.HandleSqlRollback(tx, logger)
+	defer vydondb.HandleSqlRollback(tx, logger)
 
 	_, err = tx.PrepareContext(ctx, req.Msg.GetQuery())
 	var errorMsg *string
@@ -667,9 +667,9 @@ type urlEnvVarConfig interface {
 	GetUrlFromEnv() string
 }
 
-func checkUrlEnvVar(cfg urlEnvVarConfig, isNeosyncCloud bool) error {
-	if cfg.GetUrlFromEnv() != "" && isNeosyncCloud {
-		return nucleuserrors.NewBadRequest("url env var is not supported in neosync cloud")
+func checkUrlEnvVar(cfg urlEnvVarConfig, isVydonCloud bool) error {
+	if cfg.GetUrlFromEnv() != "" && isVydonCloud {
+		return vydonerrors.NewBadRequest("url env var is not supported in vydon cloud")
 	}
 	return nil
 }

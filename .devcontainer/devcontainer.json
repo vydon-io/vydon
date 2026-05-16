@@ -1,4 +1,4 @@
 {
-  "name": "neosync",
-  "image": "ghcr.io/nucleuscloud/neosync/devcontainer:latest"
+  "name": "vydon",
+  "image": "ghcr.io/vydon-io/vydon/devcontainer:latest"
 }

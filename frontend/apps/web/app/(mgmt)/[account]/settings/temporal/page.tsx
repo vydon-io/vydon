@@ -27,7 +27,7 @@ import {
   AccountTemporalConfigSchema,
   GetAccountTemporalConfigResponseSchema,
   UserAccountService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { useQueryClient } from '@tanstack/react-query';
 import Error from 'next/error';
 import { ReactElement } from 'react';
@@ -96,7 +96,7 @@ export default function Temporal(): ReactElement {
     return <Skeleton />;
   }
 
-  if (systemAppConfigData?.isNeosyncCloud) {
+  if (systemAppConfigData?.isVydonCloud) {
     return <Error statusCode={404} />;
   }
 

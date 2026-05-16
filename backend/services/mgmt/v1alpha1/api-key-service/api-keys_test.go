@@ -10,24 +10,24 @@ import (
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	pgxmock "github.com/nucleuscloud/neosync/internal/mocks/github.com/jackc/pgx/v5"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	pgxmock "github.com/vydon-io/vydon/internal/mocks/github.com/jackc/pgx/v5"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func Test_Service_GetAccountApiKeys(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
-	rawData := []db_queries.NeosyncApiAccountApiKey{
+	rawData := []db_queries.VydonApiAccountApiKey{
 		{
 			ID:          newPgUuid(t),
 			AccountID:   newPgUuid(t),
@@ -68,18 +68,18 @@ func Test_Service_GetAccountApiKeys(t *testing.T) {
 	)
 	for idx, apiKey := range resp.Msg.ApiKeys {
 		dbApikey := rawData[idx]
-		assert.Equal(t, apiKey.Id, neosyncdb.UUIDString(dbApikey.ID))
+		assert.Equal(t, apiKey.Id, vydondb.UUIDString(dbApikey.ID))
 		assert.Nil(t, apiKey.KeyValue)
 		assert.Equal(t, apiKey.Name, dbApikey.KeyName)
 	}
 }
 
 func Test_Service_GetAccountApiKeys_ForbiddenAccount(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
 	mockIsUserInAccount(t, mockUserService, false)
 
@@ -91,13 +91,13 @@ func Test_Service_GetAccountApiKeys_ForbiddenAccount(t *testing.T) {
 }
 
 func Test_Service_GetAccountApiKey_Found(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
-	rawData := db_queries.NeosyncApiAccountApiKey{
+	rawData := db_queries.VydonApiAccountApiKey{
 		ID:          newPgUuid(t),
 		AccountID:   newPgUuid(t),
 		KeyValue:    "foo",
@@ -117,19 +117,19 @@ func Test_Service_GetAccountApiKey_Found(t *testing.T) {
 	}))
 	assert.NoError(t, err)
 	assert.NotNil(t, resp)
-	assert.Equal(t, resp.Msg.ApiKey.Id, neosyncdb.UUIDString(rawData.ID))
+	assert.Equal(t, resp.Msg.ApiKey.Id, vydondb.UUIDString(rawData.ID))
 	assert.Nil(t, resp.Msg.ApiKey.KeyValue)
 }
 
 func Test_Service_GetAccountApiKey_NotFound(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
 	mockQuerier.On("GetAccountApiKeyById", mock.Anything, mock.Anything, mock.Anything).
-		Return(db_queries.NeosyncApiAccountApiKey{}, pgx.ErrNoRows)
+		Return(db_queries.VydonApiAccountApiKey{}, pgx.ErrNoRows)
 
 	resp, err := svc.GetAccountApiKey(context.Background(), connect.NewRequest(&mgmtv1alpha1.GetAccountApiKeyRequest{
 		Id: uuid.NewString(),
@@ -139,13 +139,13 @@ func Test_Service_GetAccountApiKey_NotFound(t *testing.T) {
 }
 
 func Test_Service_GetAccountApiKey_Found_ForbiddenAccount(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
-	rawData := db_queries.NeosyncApiAccountApiKey{
+	rawData := db_queries.VydonApiAccountApiKey{
 		ID:          newPgUuid(t),
 		AccountID:   newPgUuid(t),
 		KeyValue:    "foo",
@@ -168,25 +168,25 @@ func Test_Service_GetAccountApiKey_Found_ForbiddenAccount(t *testing.T) {
 }
 
 func Test_Service_CreateAccountApiKey(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockTx := pgxmock.NewMockTx(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
 	mockIsUserInAccount(t, mockUserService, true)
 
 	mockDbtx.On("Begin", mock.Anything).Return(mockTx, nil)
 	mockTx.On("Commit", mock.Anything).Return(nil)
 	mockTx.On("Rollback", mock.Anything).Return(nil)
-	user := db_queries.NeosyncApiUser{
+	user := db_queries.VydonApiUser{
 		ID:       newPgUuid(t),
 		UserType: 1,
 	}
 	mockQuerier.On("CreateMachineUser", mock.Anything, mock.Anything, mock.Anything).
 		Return(user, nil)
-	rawData := db_queries.NeosyncApiAccountApiKey{
+	rawData := db_queries.VydonApiAccountApiKey{
 		ID:          newPgUuid(t),
 		AccountID:   newPgUuid(t),
 		KeyValue:    "foo",
@@ -213,15 +213,15 @@ func Test_Service_CreateAccountApiKey(t *testing.T) {
 }
 
 func Test_Service_RegenerateAccountApiKey(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
 	mockIsUserInAccount(t, mockUserService, true)
 
-	rawData := db_queries.NeosyncApiAccountApiKey{
+	rawData := db_queries.VydonApiAccountApiKey{
 		ID:          newPgUuid(t),
 		AccountID:   newPgUuid(t),
 		KeyValue:    "foo",
@@ -248,14 +248,14 @@ func Test_Service_RegenerateAccountApiKey(t *testing.T) {
 }
 
 func Test_Service_RegenerateAccountApiKey_ForbiddenAccount(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
 	mockIsUserInAccount(t, mockUserService, false)
-	rawData := db_queries.NeosyncApiAccountApiKey{
+	rawData := db_queries.VydonApiAccountApiKey{
 		ID:          newPgUuid(t),
 		AccountID:   newPgUuid(t),
 		KeyValue:    "foo",
@@ -278,14 +278,14 @@ func Test_Service_RegenerateAccountApiKey_ForbiddenAccount(t *testing.T) {
 }
 
 func Test_Service_RegenerateAccountApiKey_NotFound(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
 	mockQuerier.On("GetAccountApiKeyById", mock.Anything, mock.Anything, mock.Anything).
-		Return(db_queries.NeosyncApiAccountApiKey{}, pgx.ErrNoRows)
+		Return(db_queries.VydonApiAccountApiKey{}, pgx.ErrNoRows)
 
 	resp, err := svc.RegenerateAccountApiKey(context.Background(), connect.NewRequest(&mgmtv1alpha1.RegenerateAccountApiKeyRequest{
 		Id:        uuid.NewString(),
@@ -296,11 +296,11 @@ func Test_Service_RegenerateAccountApiKey_NotFound(t *testing.T) {
 }
 
 func Test_Service_CreateAccountApiKey_ForbiddenAccount(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
 	mockIsUserInAccount(t, mockUserService, false)
 
@@ -314,13 +314,13 @@ func Test_Service_CreateAccountApiKey_ForbiddenAccount(t *testing.T) {
 }
 
 func Test_Service_DeleteAccountApiKey_Existing(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
-	rawData := db_queries.NeosyncApiAccountApiKey{
+	rawData := db_queries.VydonApiAccountApiKey{
 		ID:          newPgUuid(t),
 		AccountID:   newPgUuid(t),
 		KeyValue:    "foo",
@@ -344,13 +344,13 @@ func Test_Service_DeleteAccountApiKey_Existing(t *testing.T) {
 }
 
 func Test_Service_DeleteAccountApiKey_Existing_ForbiddenAccount(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
-	rawData := db_queries.NeosyncApiAccountApiKey{
+	rawData := db_queries.VydonApiAccountApiKey{
 		ID:          newPgUuid(t),
 		AccountID:   newPgUuid(t),
 		KeyValue:    "foo",
@@ -373,14 +373,14 @@ func Test_Service_DeleteAccountApiKey_Existing_ForbiddenAccount(t *testing.T) {
 }
 
 func Test_Service_DeleteAccountApiKey_NotFound(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
 	mockQuerier.On("GetAccountApiKeyById", mock.Anything, mock.Anything, mock.Anything).
-		Return(db_queries.NeosyncApiAccountApiKey{}, pgx.ErrNoRows)
+		Return(db_queries.VydonApiAccountApiKey{}, pgx.ErrNoRows)
 
 	resp, err := svc.DeleteAccountApiKey(context.Background(), connect.NewRequest(&mgmtv1alpha1.DeleteAccountApiKeyRequest{
 		Id: uuid.NewString(),
@@ -390,13 +390,13 @@ func Test_Service_DeleteAccountApiKey_NotFound(t *testing.T) {
 }
 
 func Test_Service_DeleteAccountApiKey_Existing_DeleteRace(t *testing.T) {
-	mockDbtx := neosyncdb.NewMockDBTX(t)
+	mockDbtx := vydondb.NewMockDBTX(t)
 	mockQuerier := db_queries.NewMockQuerier(t)
 	mockUserService := userdata.NewMockInterface(t)
 
-	svc := New(&Config{}, neosyncdb.New(mockDbtx, mockQuerier), mockUserService)
+	svc := New(&Config{}, vydondb.New(mockDbtx, mockQuerier), mockUserService)
 
-	rawData := db_queries.NeosyncApiAccountApiKey{
+	rawData := db_queries.VydonApiAccountApiKey{
 		ID:          newPgUuid(t),
 		AccountID:   newPgUuid(t),
 		KeyValue:    "foo",
@@ -422,7 +422,7 @@ func Test_Service_DeleteAccountApiKey_Existing_DeleteRace(t *testing.T) {
 func newPgUuid(t *testing.T) pgtype.UUID {
 	t.Helper()
 	newuuid := uuid.NewString()
-	val, err := neosyncdb.ToUuid(newuuid)
+	val, err := vydondb.ToUuid(newuuid)
 	assert.NoError(t, err)
 	return val
 }

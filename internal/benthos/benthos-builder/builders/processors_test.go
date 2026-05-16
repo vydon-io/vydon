@@ -8,14 +8,14 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/dop251/goja"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	"github.com/vydon-io/vydon/internal/runconfigs"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 func Test_buildProcessorConfigsJavascript(t *testing.T) {
@@ -34,36 +34,50 @@ func Test_buildProcessorConfigsJavascript(t *testing.T) {
 	}
 
 	res, err := buildProcessorConfigs(
-		ctx, mockTransformerClient,
+		ctx,
+		mockTransformerClient,
 		[]*mgmtv1alpha1.JobMapping{
 			{
 				Schema: "public", Table: "users", Column: "address",
 				Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT.Config},
 			}},
 		map[string]*sqlmanager_shared.DatabaseSchemaRow{},
-		map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId,
-		runconfigs.NewRunConfig("id", sqlmanager_shared.SchemaTable{}, runconfigs.RunTypeInsert, nil, nil, nil, []string{"address"}, nil, false),
+		map[string][]*bb_internal.ReferenceKey{},
+		[]string{},
+		mockJobId,
+		mockRunId,
+		runconfigs.NewRunConfig(
+			"id",
+			sqlmanager_shared.SchemaTable{},
+			runconfigs.RunTypeInsert,
+			nil,
+			nil,
+			nil,
+			[]string{"address"},
+			nil,
+			false,
+		),
 		nil,
 		[]string{},
 	)
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({address: "world", extra: "foobar"}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -94,35 +108,49 @@ func Test_buildProcessorConfigsGenerateJavascript(t *testing.T) {
 	}
 
 	res, err := buildProcessorConfigs(
-		ctx, mockTransformerClient,
+		ctx,
+		mockTransformerClient,
 		[]*mgmtv1alpha1.JobMapping{
 			{Schema: "public", Table: "users", Column: "test",
 				Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT.Config},
 			}},
 		map[string]*sqlmanager_shared.DatabaseSchemaRow{},
-		map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId,
-		runconfigs.NewRunConfig("id", sqlmanager_shared.SchemaTable{}, runconfigs.RunTypeInsert, nil, nil, nil, []string{"test"}, nil, false),
+		map[string][]*bb_internal.ReferenceKey{},
+		[]string{},
+		mockJobId,
+		mockRunId,
+		runconfigs.NewRunConfig(
+			"id",
+			sqlmanager_shared.SchemaTable{},
+			runconfigs.RunTypeInsert,
+			nil,
+			nil,
+			nil,
+			[]string{"test"},
+			nil,
+			false,
+		),
 		nil,
 		[]string{},
 	)
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -164,33 +192,48 @@ func Test_buildProcessorConfigsJavascriptMultiple(t *testing.T) {
 	}
 
 	res, err := buildProcessorConfigs(
-		ctx, mockTransformerClient,
+		ctx,
+		mockTransformerClient,
 		[]*mgmtv1alpha1.JobMapping{
 			{Schema: "public", Table: "users", Column: nameCol, Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT.Config}},
 			{Schema: "public", Table: "users", Column: ageCol, Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT2.Config}}},
-		map[string]*sqlmanager_shared.DatabaseSchemaRow{}, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId,
-		runconfigs.NewRunConfig("id", sqlmanager_shared.SchemaTable{}, runconfigs.RunTypeInsert, nil, nil, nil, []string{nameCol, ageCol}, nil, false),
+		map[string]*sqlmanager_shared.DatabaseSchemaRow{},
+		map[string][]*bb_internal.ReferenceKey{},
+		[]string{},
+		mockJobId,
+		mockRunId,
+		runconfigs.NewRunConfig(
+			"id",
+			sqlmanager_shared.SchemaTable{},
+			runconfigs.RunTypeInsert,
+			nil,
+			nil,
+			nil,
+			[]string{nameCol, ageCol},
+			nil,
+			false,
+		),
 		nil,
 		[]string{},
 	)
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({"name": "world", "age": 2}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -233,33 +276,48 @@ func Test_buildProcessorConfigsTransformAndGenerateJavascript(t *testing.T) {
 	}
 
 	res, err := buildProcessorConfigs(
-		ctx, mockTransformerClient,
+		ctx,
+		mockTransformerClient,
 		[]*mgmtv1alpha1.JobMapping{
 			{Schema: "public", Table: "users", Column: nameCol, Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT.Config}},
 			{Schema: "public", Table: "users", Column: col2, Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT2.Config}}},
-		map[string]*sqlmanager_shared.DatabaseSchemaRow{}, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId,
-		runconfigs.NewRunConfig("id", sqlmanager_shared.SchemaTable{}, runconfigs.RunTypeInsert, nil, nil, nil, []string{nameCol, col2}, nil, false),
+		map[string]*sqlmanager_shared.DatabaseSchemaRow{},
+		map[string][]*bb_internal.ReferenceKey{},
+		[]string{},
+		mockJobId,
+		mockRunId,
+		runconfigs.NewRunConfig(
+			"id",
+			sqlmanager_shared.SchemaTable{},
+			runconfigs.RunTypeInsert,
+			nil,
+			nil,
+			nil,
+			[]string{nameCol, col2},
+			nil,
+			false,
+		),
 		nil,
 		[]string{},
 	)
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({"name": "world"}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -290,36 +348,50 @@ func Test_buildProcessorConfigsJavascript_DeepKeys(t *testing.T) {
 	}
 
 	res, err := buildProcessorConfigs(
-		ctx, mockTransformerClient,
+		ctx,
+		mockTransformerClient,
 		[]*mgmtv1alpha1.JobMapping{
 			{
 				Schema: "public", Table: "users", Column: "foo.bar.baz",
 				Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT.Config},
 			}},
 		map[string]*sqlmanager_shared.DatabaseSchemaRow{},
-		map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId,
-		runconfigs.NewRunConfig("id", sqlmanager_shared.SchemaTable{}, runconfigs.RunTypeInsert, nil, nil, nil, []string{"foo.bar.baz"}, nil, false),
+		map[string][]*bb_internal.ReferenceKey{},
+		[]string{},
+		mockJobId,
+		mockRunId,
+		runconfigs.NewRunConfig(
+			"id",
+			sqlmanager_shared.SchemaTable{},
+			runconfigs.RunTypeInsert,
+			nil,
+			nil,
+			nil,
+			[]string{"foo.bar.baz"},
+			nil,
+			false,
+		),
 		nil,
 		[]string{},
 	)
 
 	require.NoError(t, err)
 	require.NotEmpty(t, res)
-	require.NotNil(t, res[0].NeosyncJavascript)
-	require.NotNil(t, res[0].NeosyncJavascript.Code)
+	require.NotNil(t, res[0].VydonJavascript)
+	require.NotNil(t, res[0].VydonJavascript.Code)
 
 	wrappedCode := fmt.Sprintf(`
 let programOutput = undefined;
 const benthos = {
   v0_msg_as_structured: () => ({foo: {bar: {baz: "world"}}}),
 };
-const neosync = {
+const vydon = {
   patchStructuredMessage: (val) => {
     programOutput = val;
   }
 };
 %s
-	`, res[0].NeosyncJavascript.Code)
+	`, res[0].VydonJavascript.Code)
 
 	program, err := goja.Compile("test.js", wrappedCode, true)
 	require.NoError(t, err)
@@ -442,8 +514,8 @@ func Test_buildIdentityCursors(t *testing.T) {
 		require.Len(t, cursors, 2)
 
 		// Verify cursors exist for both columns
-		usersIdToken := neosync_benthos.ToSha256("public.users.id")
-		ordersUserIdToken := neosync_benthos.ToSha256("public.orders.user_id")
+		usersIdToken := vydon_benthos.ToSha256("public.users.id")
+		ordersUserIdToken := vydon_benthos.ToSha256("public.orders.user_id")
 
 		require.NotNil(t, cursors[usersIdToken])
 		require.NotNil(t, cursors[ordersUserIdToken])
@@ -495,7 +567,7 @@ func Test_buildIdentityCursors(t *testing.T) {
 		require.NoError(t, err)
 		require.Len(t, cursors, 1)
 
-		usersIdToken := neosync_benthos.ToSha256("public.users.id")
+		usersIdToken := vydon_benthos.ToSha256("public.users.id")
 		require.NotNil(t, cursors[usersIdToken])
 	})
 

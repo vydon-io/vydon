@@ -5,13 +5,13 @@ import (
 	"slices"
 
 	"github.com/jackc/pgx/v5"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 
-	runconfigs "github.com/nucleuscloud/neosync/internal/runconfigs"
+	runconfigs "github.com/vydon-io/vydon/internal/runconfigs"
 
-	selectbuilder "github.com/nucleuscloud/neosync/worker/pkg/select-query-builder"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	selectbuilder "github.com/vydon-io/vydon/worker/pkg/select-query-builder"
 )
 
 var (
@@ -41,7 +41,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_DoubleReference() {
 		}
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int64{
@@ -113,7 +120,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_DoubleRootSubset() {
 		"genbenthosconfigs_querybuilder.test_2_x": "created > '2023-06-03'",
 		"genbenthosconfigs_querybuilder.test_2_b": "created > '2023-06-03'",
 	}
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 
 	expectedValues := map[string]map[string][]int64{
 		"genbenthosconfigs_querybuilder.test_2_x.insert": {
@@ -178,7 +192,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_MultipleRoots() {
 		}
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int64{
@@ -251,7 +272,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_MultipleSubsets() {
 		}
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int64{
@@ -309,7 +337,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_MultipleSubsets_SubsetsByForei
 		}
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int64{
@@ -364,7 +399,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_CircularDependency() {
 		}
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int64{
@@ -432,7 +474,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_NoForeignKeys() {
 		}
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int64{
@@ -480,7 +529,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_NoForeignKeys_NoSubsets() {
 		}
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedCount := map[string]int{
@@ -529,7 +585,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_SubsetCompositeKeys() {
 		}
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int64{
@@ -586,7 +649,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_ComplexSubset_Postgres() {
 		}
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int32{
@@ -714,7 +784,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_Pruned_Joins() {
 	subsets := map[string]string{
 		"genbenthosconfigs_querybuilder.network_users": "username = 'sophia_wilson'",
 	}
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.postgres.tableConstraints.ForeignKeyConstraints, subsets, s.postgres.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.postgres.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.postgres.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int64{
@@ -768,7 +845,14 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_ComplexSubset_Mssql() {
 		"mssqltest.users": "user_id in (1,2,5,6,7,8)",
 	}
 
-	dependencyConfigs, err := runconfigs.BuildRunConfigs(s.mssql.tableConstraints.ForeignKeyConstraints, subsets, s.mssql.tableConstraints.PrimaryKeyConstraints, tableColumnsMap, nil, nil)
+	dependencyConfigs, err := runconfigs.BuildRunConfigs(
+		s.mssql.tableConstraints.ForeignKeyConstraints,
+		subsets,
+		s.mssql.tableConstraints.PrimaryKeyConstraints,
+		tableColumnsMap,
+		nil,
+		nil,
+	)
 	require.NoError(s.T(), err)
 
 	expectedValues := map[string]map[string][]int64{
@@ -874,7 +958,11 @@ func (s *IntegrationTestSuite) Test_BuildQueryMap_ComplexSubset_Mssql() {
 
 }
 
-func (s *IntegrationTestSuite) assertQueryMap(sqlMap map[string]*sqlmanager_shared.SelectQuery, expectedValues map[string]map[string][]int64, expectedCount map[string]int) {
+func (s *IntegrationTestSuite) assertQueryMap(
+	sqlMap map[string]*sqlmanager_shared.SelectQuery,
+	expectedValues map[string]map[string][]int64,
+	expectedCount map[string]int,
+) {
 	require.Equal(s.T(), len(expectedValues), len(sqlMap), "number of queries in sqlMap doesn't match expected values")
 	for configId, query := range sqlMap {
 		rows, err := s.postgres.pgcontainer.DB.Query(s.ctx, query.Query)
@@ -904,11 +992,28 @@ func (s *IntegrationTestSuite) assertQueryMap(sqlMap map[string]*sqlmanager_shar
 					default:
 						assert.Failf(s.T(), "unexpected type for column %s", "expected int32 or int64, got %T for column %s", col, colName)
 					}
-					assert.Containsf(s.T(), allowedValues, value, "config %s: column %s value %d not in expected values %v", configId, colName, value, allowedValues)
+					assert.Containsf(
+						s.T(),
+						allowedValues,
+						value,
+						"config %s: column %s value %d not in expected values %v",
+						configId,
+						colName,
+						value,
+						allowedValues,
+					)
 				}
 			}
 		}
 		rows.Close()
-		assert.Equalf(s.T(), expectedCount[configId], rowCount, "config %s: row count %d doesn't match expected count %d", configId, rowCount, expectedCount[configId])
+		assert.Equalf(
+			s.T(),
+			expectedCount[configId],
+			rowCount,
+			"config %s: row count %d doesn't match expected count %d",
+			configId,
+			rowCount,
+			expectedCount[configId],
+		)
 	}
 }

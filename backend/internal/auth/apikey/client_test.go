@@ -11,11 +11,11 @@ import (
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	pkg_utils "github.com/nucleuscloud/neosync/backend/pkg/utils"
-	"github.com/nucleuscloud/neosync/internal/apikey"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
 	"github.com/stretchr/testify/mock"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	pkg_utils "github.com/vydon-io/vydon/backend/pkg/utils"
+	"github.com/vydon-io/vydon/internal/apikey"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"github.com/zeebo/assert"
 )
 
@@ -36,9 +36,9 @@ func Test_Client_InjectTokenCtx_Account(t *testing.T) {
 	hashedFakeToken := pkg_utils.ToSha256(
 		fakeToken,
 	)
-	expiresAt, err := neosyncdb.ToTimestamp(time.Now().Add(5 * time.Minute))
+	expiresAt, err := vydondb.ToTimestamp(time.Now().Add(5 * time.Minute))
 	assert.NoError(t, err)
-	apiKeyRecord := db_queries.NeosyncApiAccountApiKey{
+	apiKeyRecord := db_queries.VydonApiAccountApiKey{
 		ID:        pgtype.UUID{Valid: true},
 		ExpiresAt: expiresAt,
 	}
@@ -75,9 +75,9 @@ func Test_Client_InjectTokenCtx_Account_Expired(t *testing.T) {
 	hashedFakeToken := pkg_utils.ToSha256(
 		fakeToken,
 	)
-	expiresAt, err := neosyncdb.ToTimestamp(time.Now().Add(-5 * time.Second))
+	expiresAt, err := vydondb.ToTimestamp(time.Now().Add(-5 * time.Second))
 	assert.NoError(t, err)
-	apiKeyRecord := db_queries.NeosyncApiAccountApiKey{
+	apiKeyRecord := db_queries.VydonApiAccountApiKey{
 		ID:        pgtype.UUID{Valid: true},
 		ExpiresAt: expiresAt,
 	}
@@ -123,7 +123,7 @@ func Test_Client_InjectTokenCtx_Account_NotFoundKeyValue(t *testing.T) {
 	)
 
 	mockQuerier.On("GetAccountApiKeyByKeyValue", mock.Anything, mock.Anything, hashedFakeToken).
-		Return(db_queries.NeosyncApiAccountApiKey{}, pgx.ErrNoRows)
+		Return(db_queries.VydonApiAccountApiKey{}, pgx.ErrNoRows)
 
 	newctx, err := client.InjectTokenCtx(context.Background(), http.Header{
 		"Authorization": []string{fmt.Sprintf("Bearer %s", fakeToken)},

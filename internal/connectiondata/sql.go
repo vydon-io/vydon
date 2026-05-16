@@ -9,17 +9,17 @@ import (
 	"log/slog"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlconnect"
-	sql_manager "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	sqlmanager_mysql "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/mysql"
-	sqlmanager_postgres "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/postgres"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	database_record_mapper "github.com/nucleuscloud/neosync/internal/database-record-mapper"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
-	querybuilder "github.com/nucleuscloud/neosync/worker/pkg/query-builder"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
+	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	sqlmanager_mysql "github.com/vydon-io/vydon/backend/pkg/sqlmanager/mysql"
+	sqlmanager_postgres "github.com/vydon-io/vydon/backend/pkg/sqlmanager/postgres"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/vydondb"
+	querybuilder "github.com/vydon-io/vydon/worker/pkg/query-builder"
 )
 
 type SQLConnectionDataService struct {
@@ -141,7 +141,7 @@ func (s *SQLConnectionDataService) SampleData(
 		return err
 	}
 	rows, err := db.QueryContext(ctx, query)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return fmt.Errorf(
 			"error querying table %s with database type %s: %w",
 			schemaTable,
@@ -220,7 +220,7 @@ func (s *SQLConnectionDataService) StreamData(
 		return err
 	}
 	r, err := db.QueryContext(ctx, query)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return fmt.Errorf(
 			"error querying table %s with database type %s: %w",
 			schemaTable,
@@ -244,7 +244,7 @@ func (s *SQLConnectionDataService) StreamData(
 		return err
 	}
 	rows, err := db.QueryContext(ctx, selectQuery)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return fmt.Errorf(
 			"error querying table %s with goqu driver %s: %w",
 			schemaTable,
@@ -391,7 +391,7 @@ func (s *SQLConnectionDataService) GetInitStatements(
 				truncateStmtsMap[k] = stmt
 			}
 		} else if options.GetTruncateBeforeInsert() {
-			return nil, nucleuserrors.NewNotImplemented("postgres truncate unsupported. table foreig keys required to build truncate statement.")
+			return nil, vydonerrors.NewNotImplemented("postgres truncate unsupported. table foreig keys required to build truncate statement.")
 		}
 
 	default:
@@ -565,7 +565,7 @@ func (s *SQLConnectionDataService) areSchemaAndTableValid(
 	}
 
 	if !isValidSchema(schema, schemas) || !isValidTable(table, schemas) {
-		return nucleuserrors.NewBadRequest("must provide valid schema and table")
+		return vydonerrors.NewBadRequest("must provide valid schema and table")
 	}
 	return nil
 }

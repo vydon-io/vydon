@@ -1,5 +1,5 @@
 import { create } from '@bufbuild/protobuf';
-import { TransformerConfig, TransformerConfigSchema } from '@neosync/sdk';
+import { TransformerConfig, TransformerConfigSchema } from '@vydon/sdk';
 import { ReactElement } from 'react';
 import { FieldErrors } from 'react-hook-form';
 import GenerateCardNumberForm from './GenerateCardNumber';

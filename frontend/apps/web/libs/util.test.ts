@@ -14,7 +14,7 @@ import {
   MysqlConnectionConfig,
   OpenAiConnectionConfig,
   PostgresConnectionConfig,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import {
   getSingleOrUndefined,
   JobRunsAutoRefreshInterval,

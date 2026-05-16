@@ -16,33 +16,33 @@ import (
 	"connectrpc.com/connect"
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	aws_manager "github.com/nucleuscloud/neosync/internal/aws"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	aws_manager "github.com/vydon-io/vydon/internal/aws"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 type AwsS3ConnectionDataService struct {
-	logger              *slog.Logger
-	awsmanager          aws_manager.NeosyncAwsManagerClient
-	neosynctyperegistry neosynctypes.NeosyncTypeRegistry
-	connection          *mgmtv1alpha1.Connection
-	connconfig          *mgmtv1alpha1.AwsS3ConnectionConfig
+	logger            *slog.Logger
+	awsmanager        aws_manager.VydonAwsManagerClient
+	vydontyperegistry vydontypes.VydonTypeRegistry
+	connection        *mgmtv1alpha1.Connection
+	connconfig        *mgmtv1alpha1.AwsS3ConnectionConfig
 }
 
 func NewAwsS3ConnectionDataService(
 	logger *slog.Logger,
-	awsmanager aws_manager.NeosyncAwsManagerClient,
-	neosynctyperegistry neosynctypes.NeosyncTypeRegistry,
+	awsmanager aws_manager.VydonAwsManagerClient,
+	vydontyperegistry vydontypes.VydonTypeRegistry,
 	connection *mgmtv1alpha1.Connection,
 ) *AwsS3ConnectionDataService {
 	return &AwsS3ConnectionDataService{
-		logger:              logger,
-		awsmanager:          awsmanager,
-		neosynctyperegistry: neosynctyperegistry,
-		connection:          connection,
-		connconfig:          connection.GetConnectionConfig().GetAwsS3Config(),
+		logger:            logger,
+		awsmanager:        awsmanager,
+		vydontyperegistry: vydontyperegistry,
+		connection:        connection,
+		connconfig:        connection.GetConnectionConfig().GetAwsS3Config(),
 	}
 }
 
@@ -71,7 +71,7 @@ func (s *AwsS3ConnectionDataService) StreamData(
 ) error {
 	awsS3StreamCfg := config.GetAwsS3Config()
 	if awsS3StreamCfg == nil {
-		return nucleuserrors.NewBadRequest("jobId or jobRunId required for AWS S3 connections")
+		return vydonerrors.NewBadRequest("jobId or jobRunId required for AWS S3 connections")
 	}
 
 	s3Client, err := s.awsmanager.NewS3Client(ctx, s.connconfig)
@@ -99,7 +99,7 @@ func (s *AwsS3ConnectionDataService) StreamData(
 		logger.Debug(fmt.Sprintf("found run id for job in s3: %s", runId))
 		jobRunId = runId
 	default:
-		return nucleuserrors.NewInternalError("unsupported AWS S3 config id")
+		return vydonerrors.NewInternalError("unsupported AWS S3 config id")
 	}
 	logger = logger.With("runId", jobRunId)
 
@@ -166,10 +166,10 @@ func (s *AwsS3ConnectionDataService) StreamData(
 				}
 
 				for k, v := range rowData {
-					newVal, err := s.neosynctyperegistry.Unmarshal(v)
+					newVal, err := s.vydontyperegistry.Unmarshal(v)
 					if err != nil {
 						return fmt.Errorf(
-							"unable to unmarshal row value using neosync type registry: %w",
+							"unable to unmarshal row value using vydon type registry: %w",
 							err,
 						)
 					}
@@ -209,7 +209,7 @@ func (s *AwsS3ConnectionDataService) GetSchema(
 ) ([]*mgmtv1alpha1.DatabaseColumn, error) {
 	awsCfg := config.GetAwsS3Config()
 	if config == nil {
-		return nil, nucleuserrors.NewBadRequest("jobId or jobRunId required for AWS S3 connections")
+		return nil, vydonerrors.NewBadRequest("jobId or jobRunId required for AWS S3 connections")
 	}
 
 	s3Client, err := s.awsmanager.NewS3Client(ctx, s.connconfig)
@@ -234,7 +234,7 @@ func (s *AwsS3ConnectionDataService) GetSchema(
 		}
 		jobRunId = runId
 	default:
-		return nil, nucleuserrors.NewInternalError("unsupported AWS S3 config id")
+		return nil, vydonerrors.NewInternalError("unsupported AWS S3 config id")
 	}
 
 	s3pathpieces = append(
@@ -410,7 +410,7 @@ func (s *AwsS3ConnectionDataService) getLastestJobRunFromAwsS3(
 	sort.Sort(sort.Reverse(sort.StringSlice(runIDs)))
 
 	if len(runIDs) == 0 {
-		return "", nucleuserrors.NewNotFound(
+		return "", vydonerrors.NewNotFound(
 			fmt.Sprintf(
 				"unable to find latest job run for job in s3 after processing common prefixes: %s",
 				jobId,

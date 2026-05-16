@@ -1,11 +1,11 @@
 package v1alpha_anonymizationservice
 
 import (
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
-	presidioapi "github.com/nucleuscloud/neosync/internal/ee/presidio"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	"github.com/vydon-io/vydon/internal/license"
+	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"go.opentelemetry.io/otel/metric"
 )
 
@@ -17,13 +17,13 @@ type Service struct {
 	transformerClient  mgmtv1alpha1connect.TransformersServiceClient
 	analyze            presidioapi.AnalyzeInterface
 	anonymize          presidioapi.AnonymizeInterface
-	db                 *neosyncdb.NeosyncDb
+	db                 *vydondb.VydonDb
 	license            license.EEInterface
 }
 
 type Config struct {
 	IsAuthEnabled           bool
-	IsNeosyncCloud          bool
+	IsVydonCloud            bool
 	IsPresidioEnabled       bool
 	PresidioDefaultLanguage *string
 }
@@ -36,7 +36,7 @@ func New(
 	transformerClient mgmtv1alpha1connect.TransformersServiceClient,
 	analyzeclient presidioapi.AnalyzeInterface,
 	anonymizeclient presidioapi.AnonymizeInterface,
-	db *neosyncdb.NeosyncDb,
+	db *vydondb.VydonDb,
 	license license.EEInterface,
 ) *Service {
 	return &Service{

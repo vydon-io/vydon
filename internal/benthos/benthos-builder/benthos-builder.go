@@ -5,16 +5,16 @@ import (
 	"log/slog"
 	"sync"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	bb_conns "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/builders"
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	bb_shared "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/shared"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
-	tablesync_shared "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/shared"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	bb_conns "github.com/vydon-io/vydon/internal/benthos/benthos-builder/builders"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	bb_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
+	"github.com/vydon-io/vydon/internal/runconfigs"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	tablesync_shared "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/shared"
 )
 
 // BenthosConfigResponse represents a complete Benthos data pipeline configuration for a specific table,
@@ -23,12 +23,12 @@ type BenthosConfigResponse struct {
 	DependsOn []*runconfigs.DependsOn
 
 	// TODO refactor these out
-	Config                  *neosync_benthos.BenthosConfig
+	Config                  *vydon_benthos.BenthosConfig
 	TableSchema             string
 	TableName               string
 	Columns                 []string
 	RunType                 runconfigs.RunType
-	ColumnDefaultProperties map[string]*neosync_benthos.ColumnDefaultProperties
+	ColumnDefaultProperties map[string]*vydon_benthos.ColumnDefaultProperties
 	RedisDependsOn          map[string][]string
 	BenthosDsns             []*bb_shared.BenthosDsn
 	RedisConfig             []*bb_shared.BenthosRedisConfig
@@ -425,7 +425,7 @@ func NewCliSourceBuilderProvider(
 	}
 	jobType := bb_internal.GetJobType(config.Job)
 
-	builder := bb_conns.NewNeosyncConnectionDataSyncBuilder(
+	builder := bb_conns.NewVydonConnectionDataSyncBuilder(
 		config.Connectiondataclient,
 		config.Sqlmanagerclient,
 		config.SourceJobRunId,

@@ -3,8 +3,8 @@
 package mongoconnect
 
 import (
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
 	mock "github.com/stretchr/testify/mock"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 
 	slog "log/slog"
 )
@@ -60,7 +60,7 @@ type MockInterface_NewFromConnectionConfig_Call struct {
 // NewFromConnectionConfig is a helper method to define mock.On call
 //   - cc *mgmtv1alpha1.ConnectionConfig
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) NewFromConnectionConfig(cc interface{}, logger interface{}) *MockInterface_NewFromConnectionConfig_Call {
+func (_e *MockInterface_Expecter) NewFromConnectionConfig(cc any, logger any) *MockInterface_NewFromConnectionConfig_Call {
 	return &MockInterface_NewFromConnectionConfig_Call{Call: _e.mock.On("NewFromConnectionConfig", cc, logger)}
 }
 

@@ -1,12 +1,12 @@
 <p align="center">
-  <!-- <img alt="neosyncbanner" src="https://assets.nucleuscloud.com/neosync/docs/neosync-header.svg" > -->
+  <!-- <img alt="vydonbanner" src="https://assets.vydon.io/vydon/docs/vydon-header.svg" > -->
   <picture>
   <source
-    srcset="https://assets.nucleuscloud.com/neosync/docs/neosync-header.svg"
+    srcset="https://assets.vydon.io/vydon/docs/vydon-header.svg"
     media="(prefers-color-scheme: light)"
   />
   <source
-    srcset="https://assets.nucleuscloud.com/neosync/docs/neosync-header-dark.svg"
+    srcset="https://assets.vydon.io/vydon/docs/vydon-header-dark.svg"
     media="(prefers-color-scheme: dark), (prefers-color-scheme: no-preference)"
   />
   <img src="https://github-readme-stats.vercel.app/api?username=anuraghazra&show_icons=true" />
@@ -18,12 +18,12 @@ Open Source Data Anonymization and Synthetic Data Orchestration
 <p>
 
 <div align='center'>
- | <a href="https://www.neosync.dev">Website</a>
- | <a href="https://docs.neosync.dev">Docs</a>
+ | <a href="https://vydon.io">Website</a>
+ | <a href="https://docs.vydon.io">Docs</a>
  | <a href="https://discord.com/invite/MFAMgnp4HF">Discord</a>
- | <a href="https://www.neosync.dev/blog">Blog</a>
- | <a href="https://docs.neosync.dev/changelog">Changelog</a>
- | <a href="https://neosync.productlane.com/roadmap">Roadmap</a>
+ | <a href="https://vydon.io/blog">Blog</a>
+ | <a href="https://docs.vydon.io/changelog">Changelog</a>
+ | <a href="https://vydon-io.productlane.com/roadmap">Roadmap</a>
 </div>
 
  <br>
@@ -33,30 +33,30 @@ Open Source Data Anonymization and Synthetic Data Orchestration
     <img alt='PRs Welcome' src='https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shields'/>
   </a>
   <img src="https://img.shields.io/github/license/lightdash/lightdash" />
-  <!-- <a href="https://codecov.io/gh/nucleuscloud/neosync">
-    <img alt="CodeCov" src="https://codecov.io/gh/nucleuscloud/neosync/graph/badge.svg?token=A35QDLRU04"/>
+  <!-- <a href="https://codecov.io/gh/vydon-io/vydon">
+    <img alt="CodeCov" src="https://codecov.io/gh/vydon-io/vydon/graph/badge.svg?token=A35QDLRU04"/>
     </a> -->
-  <a href="https://github.com/nucleuscloud/neosync/actions/workflows/go.yml/">
-    <img alt="Go Tests" src="https://github.com/nucleuscloud/neosync/actions/workflows/go.yml/badge.svg"/>
+  <a href="https://github.com/vydon-io/vydon/actions/workflows/go.yml/">
+    <img alt="Go Tests" src="https://github.com/vydon-io/vydon/actions/workflows/go.yml/badge.svg"/>
   </a>
-  <a href="https://x.com/neosynccloud">
-    <img alt="Follow X" src="https://img.shields.io/twitter/follow/neosynccloud?label=Follow"/>
+  <a href="https://x.com/vydon">
+    <img alt="Follow X" src="https://img.shields.io/twitter/follow/vydon?label=Follow"/>
   </a>
-  <a href="https://artifacthub.io/packages/search?repo=neosync">
-    <img alt="ArtifactHub Neosync" src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/neosync" />
+  <a href="https://artifacthub.io/packages/search?repo=vydon">
+    <img alt="ArtifactHub Vydon" src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/vydon" />
   </a>
-  <a href="https://gurubase.io/g/neosync">
-    <img alt="Gurubase" src="https://img.shields.io/badge/Gurubase-Ask%20Neosync%20Guru-006BFF" />
+  <a href="https://gurubase.io/g/vydon">
+    <img alt="Gurubase" src="https://img.shields.io/badge/Gurubase-Ask%20Vydon%20Guru-006BFF" />
   </a>
 </div>
 
-> **⚠️ Disclaimer:** **Neosync has been acquired by [Grow Therapy](https://www.growtherapy.com). As a result, this repository is no longer actively maintained. Thank you to all of our OSS and Cloud supporters over the years.**
+> **⚠️ Disclaimer:** **Vydon has been acquired by [Grow Therapy](https://www.growtherapy.com). As a result, this repository is no longer actively maintained. Thank you to all of our OSS and Cloud supporters over the years.**
 
 ## Introduction
 
-[Neosync](https://www.neosync.dev) is an open-source, developer-first way to anonymize PII, generate synthetic data and sync environments for better testing, debugging and developer experience.
+[Vydon](https://vydon.io) is an open-source, developer-first way to anonymize PII, generate synthetic data and sync environments for better testing, debugging and developer experience.
 
-Companies use Neosync to:
+Companies use Vydon to:
 
 1. **Safely test code against production data** - Anonymize sensitive production data in order to safely use it locally for a better testing and developer experience
 2. **Easily reproduce production bugs locally** - Anonymize and subset production data to get a safe, representative data set that you can use to locally reproduce production bugs quickly and efficiently
@@ -78,47 +78,87 @@ Companies use Neosync to:
 
 ## Getting started
 
-Neosync is a fully dockerized setup which makes it easy to get up and running.
+Pick the path that matches your workflow.
 
-A [compose.yml](./compose.yml) file at the root contains production image refs that allow you to get up and running with just a few commands without having to build anything on your system.
+### Docker Compose (default, < 2 min)
 
-Neosync uses the newer `docker compose` command, so be sure to have that installed on your machine.
-
-To start Neosync, clone the repo into a local directory, be sure to have docker installed and running, and then run:
-
-```sh
-make compose/up
-```
-
-To stop, run:
+The fastest way to get the full stack running. Requires Docker with the
+modern `docker compose` plugin.
 
 ```sh
-make compose/down
+git clone https://github.com/vydon-io/vydon.git
+cd vydon
+make dev
 ```
 
-Neosync will now be available on [http://localhost:3000](http://localhost:3000).
+`make dev` builds the local images and brings up Postgres, Redis, Temporal,
+the API, the worker and the frontend with hot reload enabled. Once it
+returns, the stack is reachable at:
 
-The production compose pre-seeds with connections and jobs to get you started! Simply run the generate and sync job to watch Neosync in action!
+| Service         | URL                                                 |
+| --------------- | --------------------------------------------------- |
+| Frontend        | <http://localhost:3000>                             |
+| API healthcheck | <http://localhost:8080/healthz>                     |
+| Temporal UI     | <http://localhost:8233>                             |
+
+Useful follow-up commands:
+
+```sh
+make dev/logs    # tail logs from every container
+make dev/down    # stop the stack (keeps volumes)
+make dev/clean   # stop the stack and wipe all volumes (destructive)
+```
+
+If you previously ran an older revision and the API logs report
+`database "vydon" does not exist`, run `make dev/clean` once to recreate
+the Postgres data volume.
+
+### Tilt + kind (Kubernetes path, optional)
+
+For contributors who want a Kubernetes-shaped environment closer to
+production. Requires [Tilt](https://tilt.dev) and a running
+[kind](https://kind.sigs.k8s.io) cluster named `vydon-dev`.
+
+```sh
+kind create cluster --name vydon-dev
+tilt up
+```
+
+Tilt watches the source tree and live-syncs Go and frontend changes into
+the cluster. The Tilt UI exposes per-resource logs and health.
+
+### Production-style compose
+
+The root [compose.yml](./compose.yml) pulls published images from GHCR
+(no local build) and seeds demo connections and jobs.
+
+```sh
+docker compose up -d    # start
+docker compose down     # stop
+```
+
+This path is useful for demos and CI smoke tests, not for active
+development — there is no hot reload.
 
 ## Kubernetes, Auth Mode and more
 
-For more in-depth details on environment variables, Kubernetes deployments, and a production-ready guide, check out the [Deploy Neosync](https://docs.neosync.dev/deploy/introduction) section of our Docs.
+For more in-depth details on environment variables, Kubernetes deployments, and a production-ready guide, check out the [Deploy Vydon](https://docs.vydon.io/deploy/introduction) section of our Docs.
 
 ## Resources
 
 Some resources to help you along the way:
 
-- [Docs](https://docs.neosync.dev) for comprehensive documentation and guides
-- [Discord](https://discord.com/invite/MFAMgnp4HF) for discussion with the community and Neosync team
-- [X](https://x.com/neosynccloud) for the latest updates
+- [Docs](https://docs.vydon.io) for comprehensive documentation and guides
+- [Discord](https://discord.com/invite/MFAMgnp4HF) for discussion with the community and Vydon team
+- [X](https://x.com/vydon) for the latest updates
 
 ## Contributing
 
-We love contributions big and small. Here are just a few ways that you can contribute to Neosync.
+We love contributions big and small. Here are just a few ways that you can contribute to Vydon.
 
 - Join our [Discord](https://discord.com/invite/MFAMgnp4HF) channel and ask us any questions there
-- Open a PR (see our instructions on [developing with Neosync locally](https://docs.neosync.dev/guides/neosync-local-dev))
-- Submit a [feature request](https://github.com/nucleuscloud/neosync/issues/new?assignees=&labels=enhancement%2C+feature&template=feature_request.md) or [bug report](https://github.com/nucleuscloud/neosync/issues/new?assignees=&labels=bug&template=bug_report.md)
+- Open a PR (see our instructions on [developing with Vydon locally](https://docs.vydon.io/guides/vydon-local-dev))
+- Submit a [feature request](https://github.com/vydon-io/vydon/issues/new?assignees=&labels=enhancement%2C+feature&template=feature_request.md) or [bug report](https://github.com/vydon-io/vydon/issues/new?assignees=&labels=bug&template=bug_report.md)
 
 ## Licensing
 

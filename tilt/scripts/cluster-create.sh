@@ -1,7 +1,7 @@
 #!/bin/sh
 
 FILE=$(readlink -f "$0")
-NEOSYNC_ROOT="$(dirname "$FILE")/../../"
+VYDON_ROOT="$(dirname "$FILE")/../../"
 
 cluster_create()
 {
@@ -11,10 +11,10 @@ cluster_create()
   fi
 
 
-  NEOSYNC_DEV_HOSTPATH="${NEOSYNC_ROOT}/.data"
-  mkdir -p "$NEOSYNC_DEV_HOSTPATH"
-  chmod 777 "$NEOSYNC_DEV_HOSTPATH"
-  sed 's|{NEOSYNC_DEV_HOSTPATH}|'"$NEOSYNC_DEV_HOSTPATH"'|' < "$NEOSYNC_ROOT/tilt/kind/cluster.yaml" | ctlptl apply -f -
+  VYDON_DEV_HOSTPATH="${VYDON_ROOT}/.data"
+  mkdir -p "$VYDON_DEV_HOSTPATH"
+  chmod 777 "$VYDON_DEV_HOSTPATH"
+  sed 's|{VYDON_DEV_HOSTPATH}|'"$VYDON_DEV_HOSTPATH"'|' < "$VYDON_ROOT/tilt/kind/cluster.yaml" | ctlptl apply -f -
 }
 
 cluster_create

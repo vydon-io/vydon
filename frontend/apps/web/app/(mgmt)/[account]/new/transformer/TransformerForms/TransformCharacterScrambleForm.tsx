@@ -15,7 +15,7 @@ import {
   TransformCharacterScramble,
   TransformCharacterScrambleSchema,
   TransformersService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { ReactElement, useState } from 'react';
 import { TransformerConfigProps } from './util';
 
@@ -89,7 +89,7 @@ export default function TransformCharacterScrambleForm(
             Provide a Go regular expression to match and transform a substring
             of the value. Leave this blank to transform the entire value. Note:
             the regex needs to compile in Go.{' '}
-            <LearnMoreLink href="https://docs.neosync.dev/transformers/system#transform-character-scramble" />
+            <LearnMoreLink href="https://docs.vydon.io/transformers/system#transform-character-scramble" />
           </FormDescription>
         </div>
         <div className="flex flex-col">

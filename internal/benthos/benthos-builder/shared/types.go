@@ -3,14 +3,14 @@ package benthosbuilder_shared
 import (
 	"fmt"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	rc "github.com/nucleuscloud/neosync/internal/runconfigs"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	rc "github.com/vydon-io/vydon/internal/runconfigs"
 )
 
 // Holds the environment variable name and the connection id that should replace it at runtime when the Sync activity is launched
 type BenthosDsn struct {
-	// Neosync Connection Id
+	// Vydon Connection Id
 	ConnectionId string
 }
 
@@ -39,16 +39,16 @@ func WithEnvInterpolation(input string) string {
 type ConnectionType string
 
 const (
-	ConnectionTypePostgres    ConnectionType = "postgres"
-	ConnectionTypeMysql       ConnectionType = "mysql"
-	ConnectionTypeMssql       ConnectionType = "mssql"
-	ConnectionTypeAwsS3       ConnectionType = "aws-s3"
-	ConnectionTypeGCP         ConnectionType = "gcp-cloud-storage"
-	ConnectionTypeMongo       ConnectionType = "mongodb"
-	ConnectionTypeDynamodb    ConnectionType = "aws-dynamodb"
-	ConnectionTypeLocalDir    ConnectionType = "local-directory"
-	ConnectionTypeOpenAI      ConnectionType = "openai"
-	ConnectionTypeNeosyncData ConnectionType = "neosync-data-stream"
+	ConnectionTypePostgres  ConnectionType = "postgres"
+	ConnectionTypeMysql     ConnectionType = "mysql"
+	ConnectionTypeMssql     ConnectionType = "mssql"
+	ConnectionTypeAwsS3     ConnectionType = "aws-s3"
+	ConnectionTypeGCP       ConnectionType = "gcp-cloud-storage"
+	ConnectionTypeMongo     ConnectionType = "mongodb"
+	ConnectionTypeDynamodb  ConnectionType = "aws-dynamodb"
+	ConnectionTypeLocalDir  ConnectionType = "local-directory"
+	ConnectionTypeOpenAI    ConnectionType = "openai"
+	ConnectionTypeVydonData ConnectionType = "vydon-data-stream"
 )
 
 // Determines type of connection from Connection

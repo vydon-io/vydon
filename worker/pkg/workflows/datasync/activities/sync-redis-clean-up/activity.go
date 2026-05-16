@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	temporallogger "github.com/nucleuscloud/neosync/worker/internal/temporal-logger"
 	redis "github.com/redis/go-redis/v9"
+	temporallogger "github.com/vydon-io/vydon/worker/internal/temporal-logger"
 	"go.temporal.io/sdk/activity"
 	"go.temporal.io/sdk/log"
 )

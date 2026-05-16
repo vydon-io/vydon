@@ -7,9 +7,9 @@ import (
 	"slices"
 	"time"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
 	promv1 "github.com/prometheus/client_golang/api/prometheus/v1"
 	"github.com/prometheus/common/model"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 )
 
 func GetDailyUsageFromProm(
@@ -51,12 +51,12 @@ func GetDailyUsageFromProm(
 
 	var overallTotal float64
 	for _, day := range dates {
-		date, err := time.Parse(NeosyncDateFormat, day)
+		date, err := time.Parse(VydonDateFormat, day)
 		if err != nil {
 			return nil, -1, fmt.Errorf(
 				"unable to convert day back to usage date (%q) format (%q): %w",
 				date,
-				NeosyncDateFormat,
+				VydonDateFormat,
 				err,
 			)
 		}
@@ -72,17 +72,17 @@ func GetDailyUsageFromProm(
 }
 
 func getDayFromMetric(metric model.Metric, metricTimestamp time.Time) string {
-	metricVal, ok := metric[NeosyncDateLabel]
+	metricVal, ok := metric[VydonDateLabel]
 	if ok && metricVal.IsValid() {
 		return string(metricVal)
 	}
-	return metricTimestamp.Format(NeosyncDateFormat)
+	return metricTimestamp.Format(VydonDateFormat)
 }
 
 // Plugs in to slices.SortFunc
 func sortUsageDates(a, b string) int {
-	dateA, errA := time.Parse(NeosyncDateFormat, a)
-	dateB, errB := time.Parse(NeosyncDateFormat, b)
+	dateA, errA := time.Parse(VydonDateFormat, a)
+	dateB, errB := time.Parse(VydonDateFormat, b)
 
 	// If both dates are invalid, maintain their original order
 	if errA != nil && errB != nil {
@@ -152,7 +152,7 @@ func GetPromQueryFromMetric(
 		metricName,
 		labels.ToPromQueryString(),
 		timeWindow,
-		NeosyncDateLabel,
+		VydonDateLabel,
 	), nil
 }
 

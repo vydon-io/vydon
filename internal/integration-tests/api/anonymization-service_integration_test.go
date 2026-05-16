@@ -7,11 +7,11 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	integrationtests_test "github.com/nucleuscloud/neosync/backend/pkg/integration-test"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
 	"github.com/stretchr/testify/require"
 	"github.com/stripe/stripe-go/v81"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	integrationtests_test "github.com/vydon-io/vydon/backend/pkg/integration-test"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
 )
 
 func (s *IntegrationTestSuite) Test_AnonymizeService_AnonymizeMany() {
@@ -36,8 +36,8 @@ func (s *IntegrationTestSuite) Test_AnonymizeService_AnonymizeMany() {
 	})
 
 	t.Run("cloud-personal-fail", func(t *testing.T) {
-		userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
-		anonclient := s.NeosyncCloudAuthenticatedLicensedClients.Anonymize(integrationtests_test.WithUserId(testAuthUserId))
+		userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+		anonclient := s.VydonCloudAuthenticatedLicensedClients.Anonymize(integrationtests_test.WithUserId(testAuthUserId))
 		s.setUser(s.ctx, userclient)
 		accountId := s.createPersonalAccount(s.ctx, userclient)
 		resp, err := anonclient.AnonymizeMany(
@@ -88,8 +88,8 @@ func (s *IntegrationTestSuite) Test_AnonymizeService_AnonymizeMany() {
 }`,
 		}
 
-		userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
-		anonclient := s.NeosyncCloudAuthenticatedLicensedClients.Anonymize(integrationtests_test.WithUserId(testAuthUserId))
+		userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+		anonclient := s.VydonCloudAuthenticatedLicensedClients.Anonymize(integrationtests_test.WithUserId(testAuthUserId))
 
 		s.setUser(s.ctx, userclient)
 		accountId := s.createBilledTeamAccount(s.ctx, userclient, "team1", "foo")
@@ -343,8 +343,8 @@ func (s *IntegrationTestSuite) Test_AnonymizeService_AnonymizeSingle_InvalidTran
 	t := s.T()
 
 	t.Run("no-nested-transformpiitext", func(t *testing.T) {
-		userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
-		anonclient := s.NeosyncCloudAuthenticatedLicensedClients.Anonymize(integrationtests_test.WithUserId(testAuthUserId))
+		userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+		anonclient := s.VydonCloudAuthenticatedLicensedClients.Anonymize(integrationtests_test.WithUserId(testAuthUserId))
 
 		s.setUser(s.ctx, userclient)
 		accountId := s.createBilledTeamAccount(s.ctx, userclient, "team34", "foo34")
@@ -432,6 +432,11 @@ func (s *IntegrationTestSuite) Test_AnonymizeService_AnonymizeSingle_InvalidTran
 func (s *IntegrationTestSuite) Test_AnonymizeService_AnonymizeSingle_ForbiddenTransformers() {
 	t := s.T()
 
+	// transform_pii_text relied on the upstream Presidio integration that was
+	// removed for MIT compliance. The OSS stub returns ErrUnsupported instead of
+	// performing real anonymization, so the legacy assertions no longer apply.
+	t.Skip("transform_pii_text is unsupported in the open-source distribution; the native pii detector lands separately")
+
 	t.Run("OSS", func(t *testing.T) {
 		accountId := s.createPersonalAccount(s.ctx, s.OSSUnauthenticatedUnlicensedClients.Users())
 
@@ -509,8 +514,8 @@ func (s *IntegrationTestSuite) Test_AnonymizeService_AnonymizeSingle_ForbiddenTr
 	})
 
 	t.Run("cloud-personal", func(t *testing.T) {
-		userclient := s.NeosyncCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
-		anonclient := s.NeosyncCloudAuthenticatedLicensedClients.Anonymize(integrationtests_test.WithUserId(testAuthUserId))
+		userclient := s.VydonCloudAuthenticatedLicensedClients.Users(integrationtests_test.WithUserId(testAuthUserId))
+		anonclient := s.VydonCloudAuthenticatedLicensedClients.Anonymize(integrationtests_test.WithUserId(testAuthUserId))
 
 		s.setUser(s.ctx, userclient)
 		accountId := s.createPersonalAccount(s.ctx, userclient)

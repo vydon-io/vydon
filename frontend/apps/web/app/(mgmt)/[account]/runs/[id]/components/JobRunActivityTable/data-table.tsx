@@ -27,7 +27,7 @@ import {
   JobRunEvent,
   JobRunEventMetadata,
   JobRunSyncMetadata,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { useLocalStorage } from 'usehooks-ts';
 
 interface DataTableProps {

@@ -1,4 +1,4 @@
-package neosync_benthos_dynamodb
+package vydon_benthos_dynamodb
 
 import (
 	"context"
@@ -7,10 +7,10 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	dynamodbmapper "github.com/nucleuscloud/neosync/internal/database-record-mapper/dynamodb"
 	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	dynamodbmapper "github.com/vydon-io/vydon/internal/database-record-mapper/dynamodb"
 )
 
 func Test_isTableActive(t *testing.T) {
@@ -216,5 +216,5 @@ credentials:
 	require.True(t, credsConfig.UseEc2)
 	require.Equal(t, "my-role", credsConfig.Role)
 	require.Equal(t, "123", credsConfig.RoleExternalId)
-	require.Equal(t, "neosync", credsConfig.RoleSessionName)
+	require.Equal(t, "vydon", credsConfig.RoleSessionName)
 }

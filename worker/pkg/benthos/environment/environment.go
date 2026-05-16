@@ -5,23 +5,23 @@ import (
 	"fmt"
 	"log/slog"
 
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	continuation_token "github.com/nucleuscloud/neosync/internal/continuation-token"
-	neosync_benthos_defaulttransform "github.com/nucleuscloud/neosync/worker/pkg/benthos/default_transform"
-	neosync_benthos_dynamodb "github.com/nucleuscloud/neosync/worker/pkg/benthos/dynamodb"
-	neosync_benthos_error "github.com/nucleuscloud/neosync/worker/pkg/benthos/error"
-	javascript_processor "github.com/nucleuscloud/neosync/worker/pkg/benthos/javascript"
-	neosync_benthos_json "github.com/nucleuscloud/neosync/worker/pkg/benthos/json"
-	benthos_metrics "github.com/nucleuscloud/neosync/worker/pkg/benthos/metrics"
-	neosync_benthos_mongodb "github.com/nucleuscloud/neosync/worker/pkg/benthos/mongodb"
-	neosync_benthos_connectiondata "github.com/nucleuscloud/neosync/worker/pkg/benthos/neosync_connection_data"
-	openaigenerate "github.com/nucleuscloud/neosync/worker/pkg/benthos/openai_generate"
-	benthos_redis "github.com/nucleuscloud/neosync/worker/pkg/benthos/redis"
-	neosync_benthos_sql "github.com/nucleuscloud/neosync/worker/pkg/benthos/sql"
-	"github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers"
 	"github.com/redis/go-redis/v9"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/redpanda-data/benthos/v4/public/service"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	continuation_token "github.com/vydon-io/vydon/internal/continuation-token"
+	vydon_benthos_defaulttransform "github.com/vydon-io/vydon/worker/pkg/benthos/default_transform"
+	vydon_benthos_dynamodb "github.com/vydon-io/vydon/worker/pkg/benthos/dynamodb"
+	vydon_benthos_error "github.com/vydon-io/vydon/worker/pkg/benthos/error"
+	javascript_processor "github.com/vydon-io/vydon/worker/pkg/benthos/javascript"
+	vydon_benthos_json "github.com/vydon-io/vydon/worker/pkg/benthos/json"
+	benthos_metrics "github.com/vydon-io/vydon/worker/pkg/benthos/metrics"
+	vydon_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
+	openaigenerate "github.com/vydon-io/vydon/worker/pkg/benthos/openai_generate"
+	benthos_redis "github.com/vydon-io/vydon/worker/pkg/benthos/redis"
+	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
+	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
+	vydon_benthos_connectiondata "github.com/vydon-io/vydon/worker/pkg/benthos/vydon_connection_data"
 	"go.opentelemetry.io/otel/metric"
 )
 
@@ -88,14 +88,14 @@ func WithTransformPiiTextApi(transformPiiTextApi transformers.TransformPiiTextAp
 }
 
 type SqlConfig struct {
-	Provider               neosync_benthos_sql.ConnectionProvider
+	Provider               vydon_benthos_sql.ConnectionProvider
 	IsRetry                bool
-	InputHasMorePages      neosync_benthos_sql.OnHasMorePagesFn
+	InputHasMorePages      vydon_benthos_sql.OnHasMorePagesFn
 	InputContinuationToken *continuation_token.ContinuationToken
 }
 
 type MongoConfig struct {
-	Provider neosync_benthos_mongodb.MongoPoolProvider
+	Provider vydon_benthos_mongodb.MongoPoolProvider
 }
 
 type RedisConfig struct {
@@ -103,7 +103,7 @@ type RedisConfig struct {
 }
 
 type ConnectionDataConfig struct {
-	NeosyncConnectionDataApi mgmtv1alpha1connect.ConnectionDataServiceClient
+	VydonConnectionDataApi mgmtv1alpha1connect.ConnectionDataServiceClient
 }
 
 func NewEnvironment(logger *slog.Logger, opts ...Option) (*service.Environment, error) {
@@ -139,7 +139,7 @@ func NewWithEnvironment(
 	}
 
 	if config.sqlConfig != nil {
-		err := neosync_benthos_sql.RegisterPooledSqlInsertOutput(
+		err := vydon_benthos_sql.RegisterPooledSqlInsertOutput(
 			env,
 			config.sqlConfig.Provider,
 			config.sqlConfig.IsRetry,
@@ -151,14 +151,14 @@ func NewWithEnvironment(
 				err,
 			)
 		}
-		err = neosync_benthos_sql.RegisterPooledSqlUpdateOutput(env, config.sqlConfig.Provider)
+		err = vydon_benthos_sql.RegisterPooledSqlUpdateOutput(env, config.sqlConfig.Provider)
 		if err != nil {
 			return nil, fmt.Errorf(
 				"unable to register pooled_sql_update output to benthos instance: %w",
 				err,
 			)
 		}
-		err = neosync_benthos_sql.RegisterPooledSqlRawInput(
+		err = vydon_benthos_sql.RegisterPooledSqlRawInput(
 			env,
 			config.sqlConfig.Provider,
 			config.stopChannel,
@@ -174,14 +174,14 @@ func NewWithEnvironment(
 	}
 
 	if config.mongoConfig != nil {
-		err := neosync_benthos_mongodb.RegisterPooledMongoDbInput(env, config.mongoConfig.Provider)
+		err := vydon_benthos_mongodb.RegisterPooledMongoDbInput(env, config.mongoConfig.Provider)
 		if err != nil {
 			return nil, fmt.Errorf(
 				"unable to register pooled_mongodb input to benthos instance: %w",
 				err,
 			)
 		}
-		err = neosync_benthos_mongodb.RegisterPooledMongoDbOutput(env, config.mongoConfig.Provider)
+		err = vydon_benthos_mongodb.RegisterPooledMongoDbOutput(env, config.mongoConfig.Provider)
 		if err != nil {
 			return nil, fmt.Errorf(
 				"unable to register pooled_mongodb output to benthos instance: %w",
@@ -209,13 +209,13 @@ func NewWithEnvironment(
 	}
 
 	if config.connectionDataConfig != nil {
-		err := neosync_benthos_connectiondata.RegisterNeosyncConnectionDataInput(
+		err := vydon_benthos_connectiondata.RegisterVydonConnectionDataInput(
 			env,
-			config.connectionDataConfig.NeosyncConnectionDataApi,
+			config.connectionDataConfig.VydonConnectionDataApi,
 			logger,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("unable to register neosync_connection_data input: %w", err)
+			return nil, fmt.Errorf("unable to register vydon_connection_data input: %w", err)
 		}
 	}
 
@@ -227,27 +227,27 @@ func NewWithEnvironment(
 		)
 	}
 
-	err = neosync_benthos_error.RegisterErrorProcessor(env, config.stopChannel)
+	err = vydon_benthos_error.RegisterErrorProcessor(env, config.stopChannel)
 	if err != nil {
 		return nil, fmt.Errorf("unable to register error processor to benthos instance: %w", err)
 	}
 
-	err = neosync_benthos_error.RegisterErrorOutput(env, config.stopChannel)
+	err = vydon_benthos_error.RegisterErrorOutput(env, config.stopChannel)
 	if err != nil {
 		return nil, fmt.Errorf("unable to register error output to benthos instance: %w", err)
 	}
 
-	err = neosync_benthos_dynamodb.RegisterDynamoDbInput(env)
+	err = vydon_benthos_dynamodb.RegisterDynamoDbInput(env)
 	if err != nil {
 		return nil, fmt.Errorf("unable to register dynamodb input to benthos instance: %w", err)
 	}
 
-	err = neosync_benthos_dynamodb.RegisterDynamoDbOutput(env)
+	err = vydon_benthos_dynamodb.RegisterDynamoDbOutput(env)
 	if err != nil {
 		return nil, fmt.Errorf("unable to register dynamodb output to benthos instance: %w", err)
 	}
 
-	err = neosync_benthos_defaulttransform.ReisterDefaultTransformerProcessor(env)
+	err = vydon_benthos_defaulttransform.ReisterDefaultTransformerProcessor(env)
 	if err != nil {
 		return nil, fmt.Errorf(
 			"unable to register default mapping processor to benthos instance: %w",
@@ -255,39 +255,39 @@ func NewWithEnvironment(
 		)
 	}
 
-	err = neosync_benthos_json.RegisterNeosyncToJsonProcessor(env)
+	err = vydon_benthos_json.RegisterVydonToJsonProcessor(env)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"unable to register Neosync to JSON processor to benthos instance: %w",
+			"unable to register Vydon to JSON processor to benthos instance: %w",
 			err,
 		)
 	}
 
-	err = neosync_benthos_sql.RegisterNeosyncToPgxProcessor(env)
+	err = vydon_benthos_sql.RegisterVydonToPgxProcessor(env)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"unable to register Neosync to PGX processor to benthos instance: %w",
+			"unable to register Vydon to PGX processor to benthos instance: %w",
 			err,
 		)
 	}
 
-	err = neosync_benthos_sql.RegisterNeosyncToMysqlProcessor(env)
+	err = vydon_benthos_sql.RegisterVydonToMysqlProcessor(env)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"unable to register Neosync to MYSQL processor to benthos instance: %w",
+			"unable to register Vydon to MYSQL processor to benthos instance: %w",
 			err,
 		)
 	}
 
-	err = neosync_benthos_sql.RegisterNeosyncToMssqlProcessor(env)
+	err = vydon_benthos_sql.RegisterVydonToMssqlProcessor(env)
 	if err != nil {
 		return nil, fmt.Errorf(
-			"unable to register Neosync to MSSQL processor to benthos instance: %w",
+			"unable to register Vydon to MSSQL processor to benthos instance: %w",
 			err,
 		)
 	}
 
-	err = javascript_processor.RegisterNeosyncJavascriptProcessor(env, config.transformPiiTextApi)
+	err = javascript_processor.RegisterVydonJavascriptProcessor(env, config.transformPiiTextApi)
 	if err != nil {
 		return nil, fmt.Errorf(
 			"unable to register javascript processor to benthos instance: %w",

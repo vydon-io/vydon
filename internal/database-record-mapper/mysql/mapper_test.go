@@ -3,8 +3,8 @@ package mysql
 import (
 	"testing"
 
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
 	"github.com/stretchr/testify/require"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 func Test_parseMysqlRowValues(t *testing.T) {
@@ -39,11 +39,11 @@ func Test_parseMysqlRowValues(t *testing.T) {
 			"bool_col": true,
 			"nil_col":  nil,
 			"json_col": map[string]any{"key": "value"},
-			"binary_col": &neosynctypes.Binary{
-				BaseType: neosynctypes.BaseType{
-					Neosync: neosynctypes.Neosync{
+			"binary_col": &vydontypes.Binary{
+				BaseType: vydontypes.BaseType{
+					Vydon: vydontypes.Vydon{
 						Version: 1,
-						TypeId:  "NEOSYNC_BINARY",
+						TypeId:  "VYDON_BINARY",
 					},
 				},
 				Bytes: binaryData,
@@ -53,7 +53,15 @@ func Test_parseMysqlRowValues(t *testing.T) {
 	})
 
 	t.Run("JSON Columns", func(t *testing.T) {
-		values := []any{[]byte(`"Hello"`), []byte(`true`), []byte(`null`), []byte(`42`), []byte(`{"items": ["book", "pen"], "count": 2, "in_stock": true}`), []byte(`[1,2,3]`), nil}
+		values := []any{
+			[]byte(`"Hello"`),
+			[]byte(`true`),
+			[]byte(`null`),
+			[]byte(`42`),
+			[]byte(`{"items": ["book", "pen"], "count": 2, "in_stock": true}`),
+			[]byte(`[1,2,3]`),
+			nil,
+		}
 		columnNames := []string{"text_col", "bool_col", "null_col", "int_col", "json_col", "array_col", "nil_col"}
 		cTypes := []string{"json", "json", "json", "json", "json", "json", "json"}
 

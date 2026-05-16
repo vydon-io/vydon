@@ -8,7 +8,7 @@ import {
 import { Alert } from '@/components/ui/alert';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useQuery } from '@connectrpc/connect-query';
-import { JobMapping, JobService } from '@neosync/sdk';
+import { JobMapping, JobService } from '@vydon/sdk';
 import { ReactElement } from 'react';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 

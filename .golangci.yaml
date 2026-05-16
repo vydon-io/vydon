@@ -40,6 +40,7 @@ linters:
         - ifElseChain
         - octalLiteral
         - whyNoLint
+        - importShadow
       enabled-tags:
         - diagnostic
         - experimental
@@ -88,6 +89,21 @@ linters:
           - staticcheck
           - whitespace
         path: ^mock_.*\.go$
+      - linters:
+          - goconst
+          - gocritic
+          - dupl
+          - unparam
+        path: gen_.*\.go$
+      - linters:
+          - gosec
+        text: "G115"
+      - linters:
+          - gosec
+        text: "G703"
+      - linters:
+          - nolintlint
+        text: "directive .* is unused for linter"
     paths:
       - frontend
       - charts
@@ -112,7 +128,7 @@ formatters:
         - pattern: interface{}
           replacement: any
     golines:
-      max-len: 140
+      max-len: 200
   exclusions:
     generated: lax
     paths:

@@ -47,7 +47,7 @@ type MockBenthosStreamClient_Run_Call struct {
 
 // Run is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockBenthosStreamClient_Expecter) Run(ctx interface{}) *MockBenthosStreamClient_Run_Call {
+func (_e *MockBenthosStreamClient_Expecter) Run(ctx any) *MockBenthosStreamClient_Run_Call {
 	return &MockBenthosStreamClient_Run_Call{Call: _e.mock.On("Run", ctx)}
 }
 
@@ -93,7 +93,7 @@ type MockBenthosStreamClient_Stop_Call struct {
 
 // Stop is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockBenthosStreamClient_Expecter) Stop(ctx interface{}) *MockBenthosStreamClient_Stop_Call {
+func (_e *MockBenthosStreamClient_Expecter) Stop(ctx any) *MockBenthosStreamClient_Stop_Call {
 	return &MockBenthosStreamClient_Stop_Call{Call: _e.mock.On("Stop", ctx)}
 }
 
@@ -139,7 +139,7 @@ type MockBenthosStreamClient_StopWithin_Call struct {
 
 // StopWithin is a helper method to define mock.On call
 //   - d time.Duration
-func (_e *MockBenthosStreamClient_Expecter) StopWithin(d interface{}) *MockBenthosStreamClient_StopWithin_Call {
+func (_e *MockBenthosStreamClient_Expecter) StopWithin(d any) *MockBenthosStreamClient_StopWithin_Call {
 	return &MockBenthosStreamClient_StopWithin_Call{Call: _e.mock.On("StopWithin", d)}
 }
 

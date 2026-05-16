@@ -456,7 +456,7 @@ export const ConnectionSchema: GenMessage<Connection> = /*@__PURE__*/
   messageDesc(file_mgmt_v1alpha1_connection, 15);
 
 /**
- * Configuration for all of the supported Neosync connection types
+ * Configuration for all of the supported Vydon connection types
  *
  * @generated from message mgmt.v1alpha1.ConnectionConfig
  */
@@ -1547,7 +1547,7 @@ export const CheckSSHConnectionResultSchema: GenMessage<CheckSSHConnectionResult
 
 /**
  * Service for managing datasource connections.
- * This is a primary data model in Neosync and is used in reference when hooking up Jobs to synchronize and generate data.
+ * This is a primary data model in Vydon and is used in reference when hooking up Jobs to synchronize and generate data.
  *
  * @generated from service mgmt.v1alpha1.ConnectionService
  */

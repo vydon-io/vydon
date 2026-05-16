@@ -57,7 +57,7 @@ type MockInterface_CancelWorkflow_Call struct {
 //   - accountId string
 //   - workflowId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) CancelWorkflow(ctx interface{}, accountId interface{}, workflowId interface{}, logger interface{}) *MockInterface_CancelWorkflow_Call {
+func (_e *MockInterface_Expecter) CancelWorkflow(ctx any, accountId any, workflowId any, logger any) *MockInterface_CancelWorkflow_Call {
 	return &MockInterface_CancelWorkflow_Call{Call: _e.mock.On("CancelWorkflow", ctx, accountId, workflowId, logger)}
 }
 
@@ -116,7 +116,7 @@ type MockInterface_CreateSchedule_Call struct {
 //   - accountId string
 //   - opts *client.ScheduleOptions
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) CreateSchedule(ctx interface{}, accountId interface{}, opts interface{}, logger interface{}) *MockInterface_CreateSchedule_Call {
+func (_e *MockInterface_Expecter) CreateSchedule(ctx any, accountId any, opts any, logger any) *MockInterface_CreateSchedule_Call {
 	return &MockInterface_CreateSchedule_Call{Call: _e.mock.On("CreateSchedule", ctx, accountId, opts, logger)}
 }
 
@@ -165,7 +165,7 @@ type MockInterface_DeleteSchedule_Call struct {
 //   - accountId string
 //   - scheduleId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) DeleteSchedule(ctx interface{}, accountId interface{}, scheduleId interface{}, logger interface{}) *MockInterface_DeleteSchedule_Call {
+func (_e *MockInterface_Expecter) DeleteSchedule(ctx any, accountId any, scheduleId any, logger any) *MockInterface_DeleteSchedule_Call {
 	return &MockInterface_DeleteSchedule_Call{Call: _e.mock.On("DeleteSchedule", ctx, accountId, scheduleId, logger)}
 }
 
@@ -214,7 +214,7 @@ type MockInterface_DeleteWorkflowExecution_Call struct {
 //   - accountId string
 //   - workflowId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) DeleteWorkflowExecution(ctx interface{}, accountId interface{}, workflowId interface{}, logger interface{}) *MockInterface_DeleteWorkflowExecution_Call {
+func (_e *MockInterface_Expecter) DeleteWorkflowExecution(ctx any, accountId any, workflowId any, logger any) *MockInterface_DeleteWorkflowExecution_Call {
 	return &MockInterface_DeleteWorkflowExecution_Call{Call: _e.mock.On("DeleteWorkflowExecution", ctx, accountId, workflowId, logger)}
 }
 
@@ -275,7 +275,7 @@ type MockInterface_DescribeSchedule_Call struct {
 //   - accountId string
 //   - scheduleId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) DescribeSchedule(ctx interface{}, accountId interface{}, scheduleId interface{}, logger interface{}) *MockInterface_DescribeSchedule_Call {
+func (_e *MockInterface_Expecter) DescribeSchedule(ctx any, accountId any, scheduleId any, logger any) *MockInterface_DescribeSchedule_Call {
 	return &MockInterface_DescribeSchedule_Call{Call: _e.mock.On("DescribeSchedule", ctx, accountId, scheduleId, logger)}
 }
 
@@ -336,7 +336,7 @@ type MockInterface_DescribeSchedules_Call struct {
 //   - accountId string
 //   - scheduleIds []string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) DescribeSchedules(ctx interface{}, accountId interface{}, scheduleIds interface{}, logger interface{}) *MockInterface_DescribeSchedules_Call {
+func (_e *MockInterface_Expecter) DescribeSchedules(ctx any, accountId any, scheduleIds any, logger any) *MockInterface_DescribeSchedules_Call {
 	return &MockInterface_DescribeSchedules_Call{Call: _e.mock.On("DescribeSchedules", ctx, accountId, scheduleIds, logger)}
 }
 
@@ -397,7 +397,7 @@ type MockInterface_DescribeWorklowExecution_Call struct {
 //   - accountId string
 //   - workflowId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) DescribeWorklowExecution(ctx interface{}, accountId interface{}, workflowId interface{}, logger interface{}) *MockInterface_DescribeWorklowExecution_Call {
+func (_e *MockInterface_Expecter) DescribeWorklowExecution(ctx any, accountId any, workflowId any, logger any) *MockInterface_DescribeWorklowExecution_Call {
 	return &MockInterface_DescribeWorklowExecution_Call{Call: _e.mock.On("DescribeWorklowExecution", ctx, accountId, workflowId, logger)}
 }
 
@@ -455,7 +455,7 @@ type MockInterface_DoesAccountHaveNamespace_Call struct {
 //   - ctx context.Context
 //   - accountId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) DoesAccountHaveNamespace(ctx interface{}, accountId interface{}, logger interface{}) *MockInterface_DoesAccountHaveNamespace_Call {
+func (_e *MockInterface_Expecter) DoesAccountHaveNamespace(ctx any, accountId any, logger any) *MockInterface_DoesAccountHaveNamespace_Call {
 	return &MockInterface_DoesAccountHaveNamespace_Call{Call: _e.mock.On("DoesAccountHaveNamespace", ctx, accountId, logger)}
 }
 
@@ -513,7 +513,7 @@ type MockInterface_GetSyncJobTaskQueue_Call struct {
 //   - ctx context.Context
 //   - accountId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) GetSyncJobTaskQueue(ctx interface{}, accountId interface{}, logger interface{}) *MockInterface_GetSyncJobTaskQueue_Call {
+func (_e *MockInterface_Expecter) GetSyncJobTaskQueue(ctx any, accountId any, logger any) *MockInterface_GetSyncJobTaskQueue_Call {
 	return &MockInterface_GetSyncJobTaskQueue_Call{Call: _e.mock.On("GetSyncJobTaskQueue", ctx, accountId, logger)}
 }
 
@@ -574,7 +574,7 @@ type MockInterface_GetWorkflowExecutionById_Call struct {
 //   - accountId string
 //   - workflowId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) GetWorkflowExecutionById(ctx interface{}, accountId interface{}, workflowId interface{}, logger interface{}) *MockInterface_GetWorkflowExecutionById_Call {
+func (_e *MockInterface_Expecter) GetWorkflowExecutionById(ctx any, accountId any, workflowId any, logger any) *MockInterface_GetWorkflowExecutionById_Call {
 	return &MockInterface_GetWorkflowExecutionById_Call{Call: _e.mock.On("GetWorkflowExecutionById", ctx, accountId, workflowId, logger)}
 }
 
@@ -635,7 +635,7 @@ type MockInterface_GetWorkflowExecutionsByScheduleIds_Call struct {
 //   - accountId string
 //   - scheduleIds []string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) GetWorkflowExecutionsByScheduleIds(ctx interface{}, accountId interface{}, scheduleIds interface{}, logger interface{}) *MockInterface_GetWorkflowExecutionsByScheduleIds_Call {
+func (_e *MockInterface_Expecter) GetWorkflowExecutionsByScheduleIds(ctx any, accountId any, scheduleIds any, logger any) *MockInterface_GetWorkflowExecutionsByScheduleIds_Call {
 	return &MockInterface_GetWorkflowExecutionsByScheduleIds_Call{Call: _e.mock.On("GetWorkflowExecutionsByScheduleIds", ctx, accountId, scheduleIds, logger)}
 }
 
@@ -696,7 +696,7 @@ type MockInterface_GetWorkflowHistory_Call struct {
 //   - accountId string
 //   - workflowId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) GetWorkflowHistory(ctx interface{}, accountId interface{}, workflowId interface{}, logger interface{}) *MockInterface_GetWorkflowHistory_Call {
+func (_e *MockInterface_Expecter) GetWorkflowHistory(ctx any, accountId any, workflowId any, logger any) *MockInterface_GetWorkflowHistory_Call {
 	return &MockInterface_GetWorkflowHistory_Call{Call: _e.mock.On("GetWorkflowHistory", ctx, accountId, workflowId, logger)}
 }
 
@@ -746,7 +746,7 @@ type MockInterface_PauseSchedule_Call struct {
 //   - scheduleId string
 //   - opts *client.SchedulePauseOptions
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) PauseSchedule(ctx interface{}, accountId interface{}, scheduleId interface{}, opts interface{}, logger interface{}) *MockInterface_PauseSchedule_Call {
+func (_e *MockInterface_Expecter) PauseSchedule(ctx any, accountId any, scheduleId any, opts any, logger any) *MockInterface_PauseSchedule_Call {
 	return &MockInterface_PauseSchedule_Call{Call: _e.mock.On("PauseSchedule", ctx, accountId, scheduleId, opts, logger)}
 }
 
@@ -795,7 +795,7 @@ type MockInterface_TerminateWorkflow_Call struct {
 //   - accountId string
 //   - workflowId string
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) TerminateWorkflow(ctx interface{}, accountId interface{}, workflowId interface{}, logger interface{}) *MockInterface_TerminateWorkflow_Call {
+func (_e *MockInterface_Expecter) TerminateWorkflow(ctx any, accountId any, workflowId any, logger any) *MockInterface_TerminateWorkflow_Call {
 	return &MockInterface_TerminateWorkflow_Call{Call: _e.mock.On("TerminateWorkflow", ctx, accountId, workflowId, logger)}
 }
 
@@ -845,7 +845,7 @@ type MockInterface_TriggerSchedule_Call struct {
 //   - scheduleId string
 //   - opts *client.ScheduleTriggerOptions
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) TriggerSchedule(ctx interface{}, accountId interface{}, scheduleId interface{}, opts interface{}, logger interface{}) *MockInterface_TriggerSchedule_Call {
+func (_e *MockInterface_Expecter) TriggerSchedule(ctx any, accountId any, scheduleId any, opts any, logger any) *MockInterface_TriggerSchedule_Call {
 	return &MockInterface_TriggerSchedule_Call{Call: _e.mock.On("TriggerSchedule", ctx, accountId, scheduleId, opts, logger)}
 }
 
@@ -895,7 +895,7 @@ type MockInterface_UnpauseSchedule_Call struct {
 //   - scheduleId string
 //   - opts *client.ScheduleUnpauseOptions
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) UnpauseSchedule(ctx interface{}, accountId interface{}, scheduleId interface{}, opts interface{}, logger interface{}) *MockInterface_UnpauseSchedule_Call {
+func (_e *MockInterface_Expecter) UnpauseSchedule(ctx any, accountId any, scheduleId any, opts any, logger any) *MockInterface_UnpauseSchedule_Call {
 	return &MockInterface_UnpauseSchedule_Call{Call: _e.mock.On("UnpauseSchedule", ctx, accountId, scheduleId, opts, logger)}
 }
 
@@ -945,7 +945,7 @@ type MockInterface_UpdateSchedule_Call struct {
 //   - scheduleId string
 //   - opts *client.ScheduleUpdateOptions
 //   - logger *slog.Logger
-func (_e *MockInterface_Expecter) UpdateSchedule(ctx interface{}, accountId interface{}, scheduleId interface{}, opts interface{}, logger interface{}) *MockInterface_UpdateSchedule_Call {
+func (_e *MockInterface_Expecter) UpdateSchedule(ctx any, accountId any, scheduleId any, opts any, logger any) *MockInterface_UpdateSchedule_Call {
 	return &MockInterface_UpdateSchedule_Call{Call: _e.mock.On("UpdateSchedule", ctx, accountId, scheduleId, opts, logger)}
 }
 

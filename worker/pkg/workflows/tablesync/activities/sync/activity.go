@@ -10,39 +10,39 @@ import (
 	"time"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/pkg/metrics"
-	benthosstream "github.com/nucleuscloud/neosync/internal/benthos-stream"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	pool_mongo_provider "github.com/nucleuscloud/neosync/internal/connection-manager/pool/providers/mongo"
-	pool_sql_provider "github.com/nucleuscloud/neosync/internal/connection-manager/pool/providers/sql"
-	continuation_token "github.com/nucleuscloud/neosync/internal/continuation-token"
-	temporallogger "github.com/nucleuscloud/neosync/worker/internal/temporal-logger"
-	benthos_environment "github.com/nucleuscloud/neosync/worker/pkg/benthos/environment"
-	neosync_benthos_mongodb "github.com/nucleuscloud/neosync/worker/pkg/benthos/mongodb"
-	neosync_benthos_sql "github.com/nucleuscloud/neosync/worker/pkg/benthos/sql"
-	"github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
-	tablesync_shared "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/shared"
 	"github.com/redis/go-redis/v9"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/redpanda-data/benthos/v4/public/service"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/pkg/metrics"
+	benthosstream "github.com/vydon-io/vydon/internal/benthos-stream"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	pool_mongo_provider "github.com/vydon-io/vydon/internal/connection-manager/pool/providers/mongo"
+	pool_sql_provider "github.com/vydon-io/vydon/internal/connection-manager/pool/providers/sql"
+	continuation_token "github.com/vydon-io/vydon/internal/continuation-token"
+	temporallogger "github.com/vydon-io/vydon/worker/internal/temporal-logger"
+	benthos_environment "github.com/vydon-io/vydon/worker/pkg/benthos/environment"
+	vydon_benthos_mongodb "github.com/vydon-io/vydon/worker/pkg/benthos/mongodb"
+	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
+	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
+	tablesync_shared "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/shared"
 	"go.opentelemetry.io/otel/metric"
 	"go.temporal.io/sdk/activity"
 	temporalclient "go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/log"
 	"golang.org/x/sync/errgroup"
 
-	benthosbuilder_shared "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/shared"
-	_ "github.com/nucleuscloud/neosync/internal/benthos/imports"
+	benthosbuilder_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
+	_ "github.com/vydon-io/vydon/internal/benthos/imports"
 )
 
 type Activity struct {
 	connclient           mgmtv1alpha1connect.ConnectionServiceClient
 	jobclient            mgmtv1alpha1connect.JobServiceClient
-	sqlconnmanager       connectionmanager.Interface[neosync_benthos_sql.SqlDbtx]
-	mongoconnmanager     connectionmanager.Interface[neosync_benthos_mongodb.MongoClient]
+	sqlconnmanager       connectionmanager.Interface[vydon_benthos_sql.SqlDbtx]
+	mongoconnmanager     connectionmanager.Interface[vydon_benthos_mongodb.MongoClient]
 	meter                metric.Meter // optional
 	benthosStreamManager benthosstream.BenthosStreamManagerClient
 	temporalclient       temporalclient.Client
@@ -53,8 +53,8 @@ type Activity struct {
 func New(
 	connclient mgmtv1alpha1connect.ConnectionServiceClient,
 	jobclient mgmtv1alpha1connect.JobServiceClient,
-	sqlconnmanager connectionmanager.Interface[neosync_benthos_sql.SqlDbtx],
-	mongoconnmanager connectionmanager.Interface[neosync_benthos_mongodb.MongoClient],
+	sqlconnmanager connectionmanager.Interface[vydon_benthos_sql.SqlDbtx],
+	mongoconnmanager connectionmanager.Interface[vydon_benthos_mongodb.MongoClient],
 	meter metric.Meter,
 	benthosStreamManager benthosstream.BenthosStreamManagerClient,
 	temporalclient temporalclient.Client,
@@ -352,7 +352,7 @@ func (a *Activity) getBenthosStream(
 	session connectionmanager.SessionInterface,
 	stopActivityChan chan error,
 	getConnectionById func(connectionId string) (connectionmanager.ConnectionInput, error),
-	hasMorePages neosync_benthos_sql.OnHasMorePagesFn,
+	hasMorePages vydon_benthos_sql.OnHasMorePagesFn,
 	continuationToken *continuation_token.ContinuationToken,
 	identityAllocator tablesync_shared.IdentityAllocator,
 	anonymizationClient mgmtv1alpha1connect.AnonymizationServiceClient,
@@ -378,7 +378,7 @@ func (a *Activity) getBenthosStream(
 	envKeyMap := map[string]string{}
 	envKeyMap[metrics.TemporalWorkflowIdEnvKey] = info.WorkflowExecution.ID
 	envKeyMap[metrics.TemporalRunIdEnvKey] = info.WorkflowExecution.RunID
-	envKeyMap[metrics.NeosyncDateEnvKey] = time.Now().UTC().Format(metrics.NeosyncDateFormat)
+	envKeyMap[metrics.VydonDateEnvKey] = time.Now().UTC().Format(metrics.VydonDateFormat)
 
 	streambldr := benenv.NewStreamBuilder()
 	streambldr.SetLogger(logger.With(
@@ -411,7 +411,7 @@ func (a *Activity) getBenthosEnvironment(
 	getConnectionById func(connectionId string) (connectionmanager.ConnectionInput, error),
 	session connectionmanager.SessionInterface,
 	stopActivityChan chan error,
-	hasMorePages neosync_benthos_sql.OnHasMorePagesFn,
+	hasMorePages vydon_benthos_sql.OnHasMorePagesFn,
 	continuationToken *continuation_token.ContinuationToken,
 	identityAllocator tablesync_shared.IdentityAllocator,
 	anonymizationClient mgmtv1alpha1connect.AnonymizationServiceClient,

@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	auth_apikey "github.com/nucleuscloud/neosync/backend/internal/auth/apikey"
-	auth_jwt "github.com/nucleuscloud/neosync/backend/internal/auth/jwt"
+	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
+	auth_jwt "github.com/vydon-io/vydon/backend/internal/auth/jwt"
 	"github.com/zeebo/assert"
 )
 

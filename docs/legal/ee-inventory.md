@@ -1,6 +1,6 @@
 # Enterprise Edition Inventory
 
-Passive inventory of EE-licensed material inherited from the Neosync fork.
+Passive inventory of EE-licensed material inherited from the Vydon fork.
 This document is the source-of-truth for the upcoming EE deletion work.
 **No code is removed in this change.**
 
@@ -59,10 +59,10 @@ internal/ee/rbac/enforcer/model.go
 internal/ee/license/license.go
 internal/ee/license/license_test.go
 internal/ee/license/cascade.go
-internal/ee/license/neosync_ee_pub.pem
+internal/ee/license/vydon_ee_pub.pem
 internal/ee/cloud-license/license.go
 internal/ee/cloud-license/license_test.go
-internal/ee/cloud-license/neosync_cloud_pub.pem
+internal/ee/cloud-license/vydon_cloud_pub.pem
 internal/ee/mssql-manager/ee-mssql-manager.go
 internal/ee/mssql-manager/ee-mssql-manager_test.go
 internal/ee/mssql-manager/generate-sql.go
@@ -82,7 +82,7 @@ internal/ee/slack/mock_Interface.go
 internal/ee/transformers/transformers.go
 internal/ee/transformers/functions/functions.go
 internal/ee/transformers/functions/functions_test.go
-internal/ee/transformers/functions/mock_NeosyncOperatorApi.go
+internal/ee/transformers/functions/mock_VydonOperatorApi.go
 internal/ee/events/events.go
 ```
 
@@ -235,7 +235,7 @@ Docs referencing EE features (cleanup pending):
 ```
 docs/protos/home.md
 docs/docs/deploy/kubernetes.md
-docs/docs/guides/neosync-local-dev.md
+docs/docs/guides/vydon-local-dev.md
 frontend/apps/web/README.md
 ```
 

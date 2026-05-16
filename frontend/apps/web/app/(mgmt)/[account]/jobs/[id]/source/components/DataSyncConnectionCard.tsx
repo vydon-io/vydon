@@ -94,7 +94,7 @@ import {
   ValidateJobMappingsResponse,
   VirtualForeignConstraintSchema,
   VirtualForeignKeySchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { useQueryClient } from '@tanstack/react-query';
 import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
@@ -1351,10 +1351,10 @@ async function getUpdatedValues(
   );
 
   const values = {
-    sourceId: connectionId || '',
+    sourceId: connectionId,
     sourceOptions: {},
     mappings,
-    connectionId: connectionId || '',
+    connectionId: connectionId,
     destinationOptions: [],
   };
 

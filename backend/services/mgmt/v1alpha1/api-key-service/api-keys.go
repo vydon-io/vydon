@@ -4,15 +4,15 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/internal/dtomaps"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	pkg_utils "github.com/nucleuscloud/neosync/backend/pkg/utils"
-	"github.com/nucleuscloud/neosync/internal/apikey"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/internal/dtomaps"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	pkg_utils "github.com/vydon-io/vydon/backend/pkg/utils"
+	"github.com/vydon-io/vydon/internal/apikey"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 func (s *Service) GetAccountApiKeys(
@@ -28,7 +28,7 @@ func (s *Service) GetAccountApiKeys(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -53,23 +53,23 @@ func (s *Service) GetAccountApiKey(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.GetAccountApiKeyRequest],
 ) (*connect.Response[mgmtv1alpha1.GetAccountApiKeyResponse], error) {
-	apiKeyUuid, err := neosyncdb.ToUuid(req.Msg.GetId())
+	apiKeyUuid, err := vydondb.ToUuid(req.Msg.GetId())
 	if err != nil {
 		return nil, err
 	}
 
 	apiKey, err := s.db.Q.GetAccountApiKeyById(ctx, s.db.Db, apiKeyUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find api key")
+	} else if err != nil && vydondb.IsNoRows(err) {
+		return nil, vydonerrors.NewNotFound("unable to find api key")
 	}
 
 	user, err := s.userdataclient.GetUser(ctx)
 	if err != nil {
 		return nil, err
 	}
-	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(neosyncdb.UUIDString(apiKey.AccountID)), rbac.AccountAction_View); err != nil {
+	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(vydondb.UUIDString(apiKey.AccountID)), rbac.AccountAction_View); err != nil {
 		return nil, err
 	}
 
@@ -88,19 +88,19 @@ func (s *Service) CreateAccountApiKey(
 	}
 
 	if user.IsApiKey() {
-		return nil, nucleuserrors.NewUnauthorized("api key user cannot create api keys")
+		return nil, vydonerrors.NewUnauthorized("api key user cannot create api keys")
 	}
 
 	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(req.Msg.GetAccountId()), rbac.AccountAction_Edit); err != nil {
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
 
-	expiresAt, err := neosyncdb.ToTimestamp(req.Msg.GetExpiresAt().AsTime())
+	expiresAt, err := vydondb.ToTimestamp(req.Msg.GetExpiresAt().AsTime())
 	if err != nil {
 		return nil, err
 	}
@@ -110,7 +110,7 @@ func (s *Service) CreateAccountApiKey(
 		clearKeyValue,
 	)
 
-	newApiKey, err := s.db.CreateAccountApikey(ctx, &neosyncdb.CreateAccountApiKeyRequest{
+	newApiKey, err := s.db.CreateAccountApikey(ctx, &vydondb.CreateAccountApiKeyRequest{
 		KeyName:           req.Msg.Name,
 		KeyValue:          hashedKeyValue,
 		AccountUuid:       accountUuid,
@@ -129,16 +129,16 @@ func (s *Service) RegenerateAccountApiKey(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.RegenerateAccountApiKeyRequest],
 ) (*connect.Response[mgmtv1alpha1.RegenerateAccountApiKeyResponse], error) {
-	apiKeyUuid, err := neosyncdb.ToUuid(req.Msg.GetId())
+	apiKeyUuid, err := vydondb.ToUuid(req.Msg.GetId())
 	if err != nil {
 		return nil, err
 	}
 
 	apiKey, err := s.db.Q.GetAccountApiKeyById(ctx, s.db.Db, apiKeyUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("account api key not found")
+	} else if err != nil && vydondb.IsNoRows(err) {
+		return nil, vydonerrors.NewNotFound("account api key not found")
 	}
 
 	user, err := s.userdataclient.GetUser(ctx)
@@ -147,10 +147,10 @@ func (s *Service) RegenerateAccountApiKey(
 	}
 
 	if user.IsApiKey() {
-		return nil, nucleuserrors.NewUnauthorized("api key user cannot regenerate api keys")
+		return nil, vydonerrors.NewUnauthorized("api key user cannot regenerate api keys")
 	}
 
-	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(neosyncdb.UUIDString(apiKey.AccountID)), rbac.AccountAction_Edit); err != nil {
+	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(vydondb.UUIDString(apiKey.AccountID)), rbac.AccountAction_Edit); err != nil {
 		return nil, err
 	}
 
@@ -158,7 +158,7 @@ func (s *Service) RegenerateAccountApiKey(
 	hashedKeyValue := pkg_utils.ToSha256(
 		clearKeyValue,
 	)
-	expiresAt, err := neosyncdb.ToTimestamp(req.Msg.GetExpiresAt().AsTime())
+	expiresAt, err := vydondb.ToTimestamp(req.Msg.GetExpiresAt().AsTime())
 	if err != nil {
 		return nil, err
 	}
@@ -184,15 +184,15 @@ func (s *Service) DeleteAccountApiKey(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.DeleteAccountApiKeyRequest],
 ) (*connect.Response[mgmtv1alpha1.DeleteAccountApiKeyResponse], error) {
-	apiKeyUuid, err := neosyncdb.ToUuid(req.Msg.GetId())
+	apiKeyUuid, err := vydondb.ToUuid(req.Msg.GetId())
 	if err != nil {
 		return nil, err
 	}
 
 	apiKey, err := s.db.Q.GetAccountApiKeyById(ctx, s.db.Db, apiKeyUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return connect.NewResponse(&mgmtv1alpha1.DeleteAccountApiKeyResponse{}), nil
 	}
 
@@ -201,14 +201,14 @@ func (s *Service) DeleteAccountApiKey(
 		return nil, err
 	}
 	if user.IsApiKey() {
-		return nil, nucleuserrors.NewUnauthorized("api key user cannot delete api keys")
+		return nil, vydonerrors.NewUnauthorized("api key user cannot delete api keys")
 	}
-	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(neosyncdb.UUIDString(apiKey.AccountID)), rbac.AccountAction_Edit); err != nil {
+	if err := user.EnforceAccount(ctx, userdata.NewIdentifier(vydondb.UUIDString(apiKey.AccountID)), rbac.AccountAction_Edit); err != nil {
 		return nil, err
 	}
 
 	err = s.db.Q.RemoveAccountApiKey(ctx, s.db.Db, apiKeyUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
 	}
 

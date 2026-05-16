@@ -6,15 +6,15 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
-	"github.com/nucleuscloud/neosync/internal/testutil"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
+	"github.com/vydon-io/vydon/internal/testutil"
 )
 
 const (
@@ -119,7 +119,7 @@ func Test_InitStatementBuilder_Pg_Generate_InitSchema(t *testing.T) {
 				Config: &mgmtv1alpha1.ConnectionConfig_PgConfig{
 					PgConfig: &mgmtv1alpha1.PostgresConnectionConfig{
 						ConnectionConfig: &mgmtv1alpha1.PostgresConnectionConfig_Url{
-							Url: "postgresql://postgres:foofar@localhost:5435/nucleus",
+							Url: "postgresql://postgres:foofar@localhost:5435/vydon",
 						},
 					},
 				},
@@ -140,26 +140,31 @@ func Test_InitStatementBuilder_Pg_Generate_InitSchema(t *testing.T) {
 				Config: &mgmtv1alpha1.ConnectionConfig_PgConfig{
 					PgConfig: &mgmtv1alpha1.PostgresConnectionConfig{
 						ConnectionConfig: &mgmtv1alpha1.PostgresConnectionConfig_Url{
-							Url: "postgresql://postgres:foofar@localhost:5435/nucleus",
+							Url: "postgresql://postgres:foofar@localhost:5435/vydon",
 						},
 					},
 				},
 			},
 		},
 	}), nil)
-	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil)
+	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil)
 	mockSqlDb.On("GetSequencesByTables", mock.Anything, mock.Anything, mock.Anything).Return([]*sqlmanager_shared.DataType{}, nil)
-	mockSqlDb.On("GetSchemaInitStatements", mock.Anything, []*sqlmanager_shared.SchemaTable{{Schema: "public", Table: "users"}}).Return([]*sqlmanager_shared.InitSchemaStatements{
-		{Label: "data types", Statements: []string{}},
-		{Label: "create table", Statements: []string{"test-create-statement"}},
-		{Label: "non-fk alter table", Statements: []string{"test-pk-statement"}},
-		{Label: "fk alter table", Statements: []string{"test-fk-statement"}},
-		{Label: "table index", Statements: []string{"test-idx-statement"}},
-		{Label: "table triggers", Statements: []string{"test-trigger-statement"}},
-	}, nil)
-	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"TRUNCATE \"public\".\"users\" RESTART IDENTITY CASCADE;"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
-	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-trigger-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
-	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-create-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
+	mockSqlDb.On("GetSchemaInitStatements", mock.Anything, []*sqlmanager_shared.SchemaTable{{Schema: "public", Table: "users"}}).
+		Return([]*sqlmanager_shared.InitSchemaStatements{
+			{Label: "data types", Statements: []string{}},
+			{Label: "create table", Statements: []string{"test-create-statement"}},
+			{Label: "non-fk alter table", Statements: []string{"test-pk-statement"}},
+			{Label: "fk alter table", Statements: []string{"test-fk-statement"}},
+			{Label: "table index", Statements: []string{"test-idx-statement"}},
+			{Label: "table triggers", Statements: []string{"test-trigger-statement"}},
+		}, nil)
+	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"TRUNCATE \"public\".\"users\" RESTART IDENTITY CASCADE;"}, &sqlmanager_shared.BatchExecOpts{}).
+		Return(nil)
+	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-trigger-statement"}, &sqlmanager_shared.BatchExecOpts{}).
+		Return(nil)
+	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-create-statement"}, &sqlmanager_shared.BatchExecOpts{}).
+		Return(nil)
 	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-pk-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
 	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-fk-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
 	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-idx-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
@@ -293,7 +298,9 @@ func Test_InitStatementBuilder_Pg_Generate_NoInitStatement(t *testing.T) {
 			},
 		},
 	}), nil)
-	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil).Twice()
+	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil).
+		Twice()
 	mockSqlDb.On("Close").Return(nil)
 
 	bbuilder := newInitStatementBuilder(mockSqlManager, mockJobClient, mockConnectionClient, fakeEELicense, workflowId)
@@ -415,17 +422,22 @@ func Test_InitStatementBuilder_Pg_TruncateCascade(t *testing.T) {
 				Config: &mgmtv1alpha1.ConnectionConfig_PgConfig{
 					PgConfig: &mgmtv1alpha1.PostgresConnectionConfig{
 						ConnectionConfig: &mgmtv1alpha1.PostgresConnectionConfig_Url{
-							Url: "postgresql://postgres:foofar@localhost:5435/nucleus",
+							Url: "postgresql://postgres:foofar@localhost:5435/vydon",
 						},
 					},
 				},
 			},
 		},
 	}), nil)
-	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil)
+	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil)
 	mockSqlDb.On("GetSequencesByTables", mock.Anything, mock.Anything, mock.Anything).Return([]*sqlmanager_shared.DataType{}, nil)
-	stmts := []string{"TRUNCATE \"public\".\"users\" RESTART IDENTITY CASCADE;", "TRUNCATE \"public\".\"accounts\" RESTART IDENTITY CASCADE;"}
-	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, mock.MatchedBy(func(query []string) bool { return compareSlices(query, stmts) }), &sqlmanager_shared.BatchExecOpts{}).Return(nil)
+	stmts := []string{
+		"TRUNCATE \"public\".\"users\" RESTART IDENTITY CASCADE;",
+		"TRUNCATE \"public\".\"accounts\" RESTART IDENTITY CASCADE;",
+	}
+	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, mock.MatchedBy(func(query []string) bool { return compareSlices(query, stmts) }), &sqlmanager_shared.BatchExecOpts{}).
+		Return(nil)
 	mockSqlDb.On("Close").Return(nil)
 
 	bbuilder := newInitStatementBuilder(mockSqlManager, mockJobClient, mockConnectionClient, fakeEELicense, workflowId)
@@ -547,14 +559,15 @@ func Test_InitStatementBuilder_Pg_Truncate(t *testing.T) {
 				Config: &mgmtv1alpha1.ConnectionConfig_PgConfig{
 					PgConfig: &mgmtv1alpha1.PostgresConnectionConfig{
 						ConnectionConfig: &mgmtv1alpha1.PostgresConnectionConfig_Url{
-							Url: "postgresql://postgres:foofar@localhost:5435/nucleus",
+							Url: "postgresql://postgres:foofar@localhost:5435/vydon",
 						},
 					},
 				},
 			},
 		},
 	}), nil)
-	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil)
+	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil)
 	mockSqlDb.On("GetTableConstraintsBySchema", mock.Anything, []string{"public"}).Return(&sqlmanager_shared.TableConstraints{
 		ForeignKeyConstraints: map[string][]*sqlmanager_shared.ForeignConstraint{
 			"public.users": {{
@@ -687,7 +700,7 @@ func Test_InitStatementBuilder_Pg_InitSchema(t *testing.T) {
 				Config: &mgmtv1alpha1.ConnectionConfig_PgConfig{
 					PgConfig: &mgmtv1alpha1.PostgresConnectionConfig{
 						ConnectionConfig: &mgmtv1alpha1.PostgresConnectionConfig_Url{
-							Url: "postgresql://postgres:foofar@localhost:5435/nucleus",
+							Url: "postgresql://postgres:foofar@localhost:5435/vydon",
 						},
 					},
 				},
@@ -709,7 +722,7 @@ func Test_InitStatementBuilder_Pg_InitSchema(t *testing.T) {
 				Config: &mgmtv1alpha1.ConnectionConfig_PgConfig{
 					PgConfig: &mgmtv1alpha1.PostgresConnectionConfig{
 						ConnectionConfig: &mgmtv1alpha1.PostgresConnectionConfig_Url{
-							Url: "postgresql://postgres:foofar@localhost:5435/nucleus",
+							Url: "postgresql://postgres:foofar@localhost:5435/vydon",
 						},
 					},
 				},
@@ -717,7 +730,9 @@ func Test_InitStatementBuilder_Pg_InitSchema(t *testing.T) {
 		},
 	}), nil)
 
-	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Twice().Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil)
+	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		Twice().
+		Return(sqlmanager.NewPostgresSqlConnection(mockSqlDb), nil)
 	mockSqlDb.On("GetSchemaInitStatements", mock.Anything, mock.Anything).Return([]*sqlmanager_shared.InitSchemaStatements{
 		{Label: "data types", Statements: []string{}},
 		{Label: "create table", Statements: []string{"test-create-statement"}},
@@ -727,8 +742,10 @@ func Test_InitStatementBuilder_Pg_InitSchema(t *testing.T) {
 		{Label: "table triggers", Statements: []string{"test-trigger-statement"}},
 	}, nil)
 
-	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-create-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
-	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-trigger-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
+	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-create-statement"}, &sqlmanager_shared.BatchExecOpts{}).
+		Return(nil)
+	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-trigger-statement"}, &sqlmanager_shared.BatchExecOpts{}).
+		Return(nil)
 	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-pk-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
 	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-fk-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
 	mockSqlDb.On("BatchExec", mock.Anything, mock.Anything, []string{"test-idx-statement"}, &sqlmanager_shared.BatchExecOpts{}).Return(nil)
@@ -865,7 +882,9 @@ func Test_InitStatementBuilder_Mysql_Generate(t *testing.T) {
 			},
 		},
 	}), nil)
-	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).Return(sqlmanager.NewMysqlSqlConnection(mockSqlDb), nil).Twice()
+	mockSqlManager.On("NewSqlConnection", mock.Anything, mock.Anything, mock.Anything, mock.Anything).
+		Return(sqlmanager.NewMysqlSqlConnection(mockSqlDb), nil).
+		Twice()
 	mockSqlDb.On("Close").Return(nil)
 
 	bbuilder := newInitStatementBuilder(mockSqlManager, mockJobClient, mockConnectionClient, fakeEELicense, workflowId)

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
 	"github.com/stretchr/testify/require"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 )
 
 func Test_BuildSelectQuery(t *testing.T) {
@@ -147,11 +147,56 @@ func Test_BuildUpdateQuery(t *testing.T) {
 		columnValueMap map[string]any
 		expected       string
 	}{
-		{"Single Column postgres", "postgres", "public", "users", []string{"name"}, []string{"id"}, map[string]any{"name": "Alice", "id": 1}, `UPDATE "public"."users" SET "name"='Alice' WHERE ("id" = 1)`},
-		{"Special characters postgres", "postgres", "public", "users.stage$dev", []string{"name"}, []string{"id"}, map[string]any{"name": "Alice", "id": 1}, `UPDATE "public"."users.stage$dev" SET "name"='Alice' WHERE ("id" = 1)`},
-		{"Multiple Primary Keys postgres", "postgres", "public", "users", []string{"name", "email"}, []string{"id", "other"}, map[string]any{"name": "Alice", "id": 1, "email": "alice@fake.com", "other": "blah"}, `UPDATE "public"."users" SET "email"='alice@fake.com',"name"='Alice' WHERE (("id" = 1) AND ("other" = 'blah'))`},
-		{"Single Column mysql", "mysql", "public", "users", []string{"name"}, []string{"id"}, map[string]any{"name": "Alice", "id": 1}, "UPDATE `public`.`users` SET `name`='Alice' WHERE (`id` = 1)"},
-		{"Multiple Primary Keys mysql", "mysql", "public", "users", []string{"name", "email"}, []string{"id", "other"}, map[string]any{"name": "Alice", "id": 1, "email": "alice@fake.com", "other": "blah"}, "UPDATE `public`.`users` SET `email`='alice@fake.com',`name`='Alice' WHERE ((`id` = 1) AND (`other` = 'blah'))"},
+		{
+			"Single Column postgres",
+			"postgres",
+			"public",
+			"users",
+			[]string{"name"},
+			[]string{"id"},
+			map[string]any{"name": "Alice", "id": 1},
+			`UPDATE "public"."users" SET "name"='Alice' WHERE ("id" = 1)`,
+		},
+		{
+			"Special characters postgres",
+			"postgres",
+			"public",
+			"users.stage$dev",
+			[]string{"name"},
+			[]string{"id"},
+			map[string]any{"name": "Alice", "id": 1},
+			`UPDATE "public"."users.stage$dev" SET "name"='Alice' WHERE ("id" = 1)`,
+		},
+		{
+			"Multiple Primary Keys postgres",
+			"postgres",
+			"public",
+			"users",
+			[]string{"name", "email"},
+			[]string{"id", "other"},
+			map[string]any{"name": "Alice", "id": 1, "email": "alice@fake.com", "other": "blah"},
+			`UPDATE "public"."users" SET "email"='alice@fake.com',"name"='Alice' WHERE (("id" = 1) AND ("other" = 'blah'))`,
+		},
+		{
+			"Single Column mysql",
+			"mysql",
+			"public",
+			"users",
+			[]string{"name"},
+			[]string{"id"},
+			map[string]any{"name": "Alice", "id": 1},
+			"UPDATE `public`.`users` SET `name`='Alice' WHERE (`id` = 1)",
+		},
+		{
+			"Multiple Primary Keys mysql",
+			"mysql",
+			"public",
+			"users",
+			[]string{"name", "email"},
+			[]string{"id", "other"},
+			map[string]any{"name": "Alice", "id": 1, "email": "alice@fake.com", "other": "blah"},
+			"UPDATE `public`.`users` SET `email`='alice@fake.com',`name`='Alice' WHERE ((`id` = 1) AND (`other` = 'blah'))",
+		},
 	}
 
 	for _, tt := range tests {

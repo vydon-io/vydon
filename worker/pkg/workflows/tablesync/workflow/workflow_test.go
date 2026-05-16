@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	sync_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/activities/sync"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	sync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/activities/sync"
 	"go.temporal.io/sdk/testsuite"
 	"go.temporal.io/sdk/workflow"
 )

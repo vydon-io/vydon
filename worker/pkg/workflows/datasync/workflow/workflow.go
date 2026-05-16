@@ -7,22 +7,22 @@ import (
 	"sync"
 	"time"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	benthosbuilder "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
-	accountstatus_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/account-status"
-	genbenthosconfigs_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/gen-benthos-configs"
-	jobhooks_by_timing_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/jobhooks-by-timing"
-	posttablesync_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/post-table-sync"
-	syncactivityopts_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/sync-activity-opts"
-	syncrediscleanup_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/sync-redis-clean-up"
-	schemainit_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/schemainit/workflow"
-	workflow_shared "github.com/nucleuscloud/neosync/worker/pkg/workflows/shared"
-	sync_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/activities/sync"
-	tablesync_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/workflow"
 	"github.com/spf13/viper"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
+	"github.com/vydon-io/vydon/internal/license"
+	"github.com/vydon-io/vydon/internal/runconfigs"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	accountstatus_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/account-status"
+	genbenthosconfigs_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/gen-benthos-configs"
+	jobhooks_by_timing_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/jobhooks-by-timing"
+	posttablesync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/post-table-sync"
+	syncactivityopts_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-activity-opts"
+	syncrediscleanup_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-redis-clean-up"
+	schemainit_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/schemainit/workflow"
+	workflow_shared "github.com/vydon-io/vydon/worker/pkg/workflows/shared"
+	sync_activity "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/activities/sync"
+	tablesync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/workflow"
 	"go.temporal.io/sdk/log"
 	"go.temporal.io/sdk/temporal"
 
@@ -692,7 +692,7 @@ func invokeSync(
 		}).
 			Get(ctx, &wfResult)
 		if err == nil {
-			tn := neosync_benthos.BuildBenthosTable(config.TableSchema, config.TableName)
+			tn := vydon_benthos.BuildBenthosTable(config.TableSchema, config.TableName)
 			err = updateCompletedMap(tn, completed, config.Columns)
 			if err != nil {
 				settable.Set(wfResult, err)

@@ -7,19 +7,19 @@ import (
 	"log/slog"
 	"strings"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/pkg/metrics"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	sqlmanager_mssql "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/mssql"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	bb_shared "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/shared"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	job_util "github.com/nucleuscloud/neosync/internal/job"
-	rc "github.com/nucleuscloud/neosync/internal/runconfigs"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/pkg/metrics"
+	"github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	sqlmanager_mssql "github.com/vydon-io/vydon/backend/pkg/sqlmanager/mssql"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	bb_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	job_util "github.com/vydon-io/vydon/internal/job"
+	rc "github.com/vydon-io/vydon/internal/runconfigs"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 )
 
 type sqlSyncBuilder struct {
@@ -283,11 +283,11 @@ func buildBenthosSqlSourceConfigResponses(
 			return nil, fmt.Errorf("query info not found for id: %s", config.Id())
 		}
 
-		bc := &neosync_benthos.BenthosConfig{
-			StreamConfig: neosync_benthos.StreamConfig{
-				Input: &neosync_benthos.InputConfig{
-					Inputs: neosync_benthos.Inputs{
-						PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+		bc := &vydon_benthos.BenthosConfig{
+			StreamConfig: vydon_benthos.StreamConfig{
+				Input: &vydon_benthos.InputConfig{
+					Inputs: vydon_benthos.Inputs{
+						PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 							ConnectionId: dsnConnectionId,
 
 							Query:             query.Query,
@@ -297,15 +297,15 @@ func buildBenthosSqlSourceConfigResponses(
 						},
 					},
 				},
-				Pipeline: &neosync_benthos.PipelineConfig{
+				Pipeline: &vydon_benthos.PipelineConfig{
 					Threads:    -1,
-					Processors: []neosync_benthos.ProcessorConfig{},
+					Processors: []vydon_benthos.ProcessorConfig{},
 				},
-				Output: &neosync_benthos.OutputConfig{
-					Outputs: neosync_benthos.Outputs{
-						Broker: &neosync_benthos.OutputBrokerConfig{
+				Output: &vydon_benthos.OutputConfig{
+					Outputs: vydon_benthos.Outputs{
+						Broker: &vydon_benthos.OutputBrokerConfig{
 							Pattern: "fan_out",
-							Outputs: []neosync_benthos.Outputs{},
+							Outputs: []vydon_benthos.Outputs{},
 						},
 					},
 				},
@@ -373,7 +373,7 @@ func (b *sqlSyncBuilder) BuildDestinationConfig(
 ) (*bb_internal.BenthosDestinationConfig, error) {
 	logger := params.Logger
 	benthosConfig := params.SourceConfig
-	tableKey := neosync_benthos.BuildBenthosTable(
+	tableKey := vydon_benthos.BuildBenthosTable(
 		benthosConfig.TableSchema,
 		benthosConfig.TableName,
 	)
@@ -477,10 +477,10 @@ func (b *sqlSyncBuilder) BuildDestinationConfig(
 		if err != nil {
 			return nil, err
 		}
-		config.Outputs = append(config.Outputs, neosync_benthos.Outputs{
-			Fallback: []neosync_benthos.Outputs{
+		config.Outputs = append(config.Outputs, vydon_benthos.Outputs{
+			Fallback: []vydon_benthos.Outputs{
 				{
-					PooledSqlUpdate: &neosync_benthos.PooledSqlUpdate{
+					PooledSqlUpdate: &vydon_benthos.PooledSqlUpdate{
 						ConnectionId: params.DestConnection.GetId(),
 
 						Schema:                   benthosConfig.TableSchema,
@@ -490,17 +490,17 @@ func (b *sqlSyncBuilder) BuildDestinationConfig(
 						MaxInFlight:              int(destOpts.MaxInFlight),
 						WhereColumns:             benthosConfig.PrimaryKeys,
 
-						Batching: &neosync_benthos.Batching{
+						Batching: &vydon_benthos.Batching{
 							Period:     destOpts.BatchPeriod,
 							Count:      destOpts.BatchCount,
-							Processors: []*neosync_benthos.BatchProcessor{sqlProcessor},
+							Processors: []*vydon_benthos.BatchProcessor{sqlProcessor},
 						},
 					},
 				},
 				// kills activity depending on error
-				{Error: &neosync_benthos.ErrorOutputConfig{
+				{Error: &vydon_benthos.ErrorOutputConfig{
 					ErrorMsg: `${! meta("fallback_error")}`,
-					Batching: &neosync_benthos.Batching{
+					Batching: &vydon_benthos.Batching{
 						Period: destOpts.BatchPeriod,
 						Count:  destOpts.BatchCount,
 					},
@@ -513,19 +513,24 @@ func (b *sqlSyncBuilder) BuildDestinationConfig(
 		for col := range constraints {
 			transformer := b.colTransformerMap[tableKey][col]
 			if shouldProcessStrict(transformer) {
-				hashedKey := neosync_benthos.HashBenthosCacheKey(params.Job.GetId(), params.JobRunId, tableKey, col)
-				config.Outputs = append(config.Outputs, neosync_benthos.Outputs{
-					Fallback: []neosync_benthos.Outputs{
+				hashedKey := vydon_benthos.HashBenthosCacheKey(params.Job.GetId(), params.JobRunId, tableKey, col)
+				config.Outputs = append(config.Outputs, vydon_benthos.Outputs{
+					Fallback: []vydon_benthos.Outputs{
 						{
-							RedisHashOutput: &neosync_benthos.RedisHashOutputConfig{
-								Key:            hashedKey,
-								FieldsMapping:  fmt.Sprintf(`root = {meta(%q): json(%q)}`, hashPrimaryKeyMetaKey(benthosConfig.TableSchema, benthosConfig.TableName, col), col), // map of original value to transformed value
+							RedisHashOutput: &vydon_benthos.RedisHashOutputConfig{
+								Key: hashedKey,
+								// map of original value to transformed value
+								FieldsMapping: fmt.Sprintf(
+									`root = {meta(%q): json(%q)}`,
+									hashPrimaryKeyMetaKey(benthosConfig.TableSchema, benthosConfig.TableName, col),
+									col,
+								),
 								WalkMetadata:   false,
 								WalkJsonObject: false,
 							},
 						},
 						// kills activity depending on error
-						{Error: &neosync_benthos.ErrorOutputConfig{
+						{Error: &vydon_benthos.ErrorOutputConfig{
 							ErrorMsg: `${! meta("fallback_error")}`,
 						}},
 					},
@@ -544,10 +549,10 @@ func (b *sqlSyncBuilder) BuildDestinationConfig(
 
 		hasDeferrableConstraint := b.tableDeferrableMap[tableKey]
 		prefix, suffix := getInsertPrefixAndSuffix(b.driver, benthosConfig.TableSchema, benthosConfig.TableName, columnDefaultProperties)
-		config.Outputs = append(config.Outputs, neosync_benthos.Outputs{
-			Fallback: []neosync_benthos.Outputs{
+		config.Outputs = append(config.Outputs, vydon_benthos.Outputs{
+			Fallback: []vydon_benthos.Outputs{
 				{
-					PooledSqlInsert: &neosync_benthos.PooledSqlInsert{
+					PooledSqlInsert: &vydon_benthos.PooledSqlInsert{
 						ConnectionId: params.DestConnection.GetId(),
 
 						Schema:                      benthosConfig.TableSchema,
@@ -563,18 +568,18 @@ func (b *sqlSyncBuilder) BuildDestinationConfig(
 						Prefix:                      prefix,
 						Suffix:                      suffix,
 
-						Batching: &neosync_benthos.Batching{
+						Batching: &vydon_benthos.Batching{
 							Period:     destOpts.BatchPeriod,
 							Count:      destOpts.BatchCount,
-							Processors: []*neosync_benthos.BatchProcessor{sqlProcessor},
+							Processors: []*vydon_benthos.BatchProcessor{sqlProcessor},
 						},
 						MaxInFlight: int(destOpts.MaxInFlight),
 					},
 				},
 				// kills activity depending on error
-				{Error: &neosync_benthos.ErrorOutputConfig{
+				{Error: &vydon_benthos.ErrorOutputConfig{
 					ErrorMsg: `${! meta("fallback_error")}`,
-					Batching: &neosync_benthos.Batching{
+					Batching: &vydon_benthos.Batching{
 						Period: destOpts.BatchPeriod,
 						Count:  destOpts.BatchCount,
 					},
@@ -590,8 +595,8 @@ func getProcessors(
 	driver string,
 	columns []string,
 	colInfoMap map[string]*sqlmanager_shared.DatabaseSchemaRow,
-	columnDefaultProperties map[string]*neosync_benthos.ColumnDefaultProperties,
-) (*neosync_benthos.BatchProcessor, error) {
+	columnDefaultProperties map[string]*vydon_benthos.ColumnDefaultProperties,
+) (*vydon_benthos.BatchProcessor, error) {
 	columnDataTypes := map[string]string{}
 	for _, c := range columns {
 		colType, ok := colInfoMap[c]
@@ -605,7 +610,7 @@ func getProcessors(
 
 func getInsertPrefixAndSuffix(
 	driver, schema, table string,
-	columnDefaultProperties map[string]*neosync_benthos.ColumnDefaultProperties,
+	columnDefaultProperties map[string]*vydon_benthos.ColumnDefaultProperties,
 ) (prefix, suffix *string) {
 	var pre, suff *string
 	if len(columnDefaultProperties) == 0 {
@@ -635,7 +640,7 @@ func getInsertPrefixAndSuffix(
 }
 
 func hasPassthroughIdentityColumn(
-	columnDefaultProperties map[string]*neosync_benthos.ColumnDefaultProperties,
+	columnDefaultProperties map[string]*vydon_benthos.ColumnDefaultProperties,
 ) bool {
 	for _, d := range columnDefaultProperties {
 		if d.NeedsOverride && d.NeedsReset && !d.HasDefaultTransformer {

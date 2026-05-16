@@ -47,7 +47,7 @@ type MockDbContainer_Close_Call struct {
 
 // Close is a helper method to define mock.On call
 //   - _a0 context.Context
-func (_e *MockDbContainer_Expecter) Close(_a0 interface{}) *MockDbContainer_Close_Call {
+func (_e *MockDbContainer_Expecter) Close(_a0 any) *MockDbContainer_Close_Call {
 	return &MockDbContainer_Close_Call{Call: _e.mock.On("Close", _a0)}
 }
 
@@ -105,7 +105,7 @@ type MockDbContainer_Open_Call struct {
 
 // Open is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockDbContainer_Expecter) Open(ctx interface{}) *MockDbContainer_Open_Call {
+func (_e *MockDbContainer_Expecter) Open(ctx any) *MockDbContainer_Open_Call {
 	return &MockDbContainer_Open_Call{Call: _e.mock.On("Open", ctx)}
 }
 

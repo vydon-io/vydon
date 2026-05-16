@@ -1,4 +1,4 @@
-package neosync_benthos_sql
+package vydon_benthos_sql
 
 import (
 	"context"
@@ -6,13 +6,13 @@ import (
 	"fmt"
 	"sync"
 
-	mysql_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/mysql"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	continuation_token "github.com/nucleuscloud/neosync/internal/continuation-token"
-	database_record_mapper "github.com/nucleuscloud/neosync/internal/database-record-mapper"
-	record_mapper_builder "github.com/nucleuscloud/neosync/internal/database-record-mapper/builder"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
 	"github.com/redpanda-data/benthos/v4/public/service"
+	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	continuation_token "github.com/vydon-io/vydon/internal/continuation-token"
+	database_record_mapper "github.com/vydon-io/vydon/internal/database-record-mapper"
+	record_mapper_builder "github.com/vydon-io/vydon/internal/database-record-mapper/builder"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 func sqlRawInputSpec() *service.ConfigSpec {
@@ -201,7 +201,7 @@ func (s *pooledInput) Connect(ctx context.Context) error {
 
 	rows, err := db.QueryContext(ctx, query, args...)
 	if err != nil {
-		if neosync_benthos.IsCriticalError(err.Error()) {
+		if vydon_benthos.IsCriticalError(err.Error()) {
 			s.logger.Error(
 				fmt.Sprintf("Benthos input error - sending stop activity signal: %s ", err.Error()),
 			)

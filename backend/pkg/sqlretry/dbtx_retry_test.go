@@ -11,8 +11,8 @@ import (
 	"github.com/cenkalti/backoff/v5"
 	"github.com/go-sql-driver/mysql"
 	"github.com/lib/pq"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqldbtx"
 	"github.com/stretchr/testify/mock"
+	"github.com/vydon-io/vydon/backend/pkg/sqldbtx"
 )
 
 func TestIsRetryableError(t *testing.T) {

@@ -7,9 +7,9 @@ import (
 	"net/url"
 	"strings"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
 	"github.com/spf13/viper"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 const postgresScheme = "postgres"
@@ -69,7 +69,12 @@ func NewFromPostgresConnection(
 			pgurl = config.PgConfig.GetUrl()
 		} else if config.PgConfig.GetUrlFromEnv() != "" {
 			if !strings.HasPrefix(config.PgConfig.GetUrlFromEnv(), userDefinedEnvPrefix) {
-				return nil, nucleuserrors.NewBadRequest(fmt.Sprintf("to source a url from an environment variable, the variable must have a prefix of %s", userDefinedEnvPrefix))
+				return nil, vydonerrors.NewBadRequest(
+					fmt.Sprintf(
+						"to source a url from an environment variable, the variable must have a prefix of %s",
+						userDefinedEnvPrefix,
+					),
+				)
 			}
 			pgurl = viper.GetString(config.PgConfig.GetUrlFromEnv())
 		}

@@ -4,8 +4,8 @@ import (
 	"math/big"
 	"testing"
 
-	neosync_types "github.com/nucleuscloud/neosync/internal/types"
 	"github.com/stretchr/testify/require"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
@@ -20,7 +20,7 @@ func Test_UnmarshalPrimitives(t *testing.T) {
 		"int":    42,
 		"bool":   true,
 	}
-	expectedKTM := map[string]neosync_types.KeyType{}
+	expectedKTM := map[string]vydon_types.KeyType{}
 
 	mapper := NewMongoBuilder()
 
@@ -45,11 +45,11 @@ func Test_UnmarshalPrimitives(t *testing.T) {
 		"objectID":  objectId,
 		"timestamp": primitive.Timestamp{T: 1, I: 1},
 	}
-	expectedKTM = map[string]neosync_types.KeyType{
-		"decimal":   neosync_types.Decimal128,
-		"binary":    neosync_types.Binary,
-		"objectID":  neosync_types.ObjectID,
-		"timestamp": neosync_types.Timestamp,
+	expectedKTM = map[string]vydon_types.KeyType{
+		"decimal":   vydon_types.Decimal128,
+		"binary":    vydon_types.Binary,
+		"objectID":  vydon_types.ObjectID,
+		"timestamp": vydon_types.Timestamp,
 	}
 
 	t.Run("BSON types", func(t *testing.T) {
@@ -72,42 +72,42 @@ func Test_ParsePrimitives(t *testing.T) {
 		name        string
 		key         string
 		value       any
-		expectedKTM map[string]neosync_types.KeyType
+		expectedKTM map[string]vydon_types.KeyType
 		expected    any
 	}{
 		{
 			name:        "Decimal128",
 			key:         "decimal",
 			value:       dec128,
-			expectedKTM: map[string]neosync_types.KeyType{"decimal": neosync_types.Decimal128},
+			expectedKTM: map[string]vydon_types.KeyType{"decimal": vydon_types.Decimal128},
 			expected:    getBigFloat(dec128.String()),
 		},
 		{
 			name:        "Binary",
 			key:         "binary",
 			value:       primitive.Binary{Data: []byte("test")},
-			expectedKTM: map[string]neosync_types.KeyType{"binary": neosync_types.Binary},
+			expectedKTM: map[string]vydon_types.KeyType{"binary": vydon_types.Binary},
 			expected:    primitive.Binary{Data: []byte("test")},
 		},
 		{
 			name:        "ObjectID",
 			key:         "objectID",
 			value:       objectId,
-			expectedKTM: map[string]neosync_types.KeyType{"objectID": neosync_types.ObjectID},
+			expectedKTM: map[string]vydon_types.KeyType{"objectID": vydon_types.ObjectID},
 			expected:    objectId,
 		},
 		{
 			name:        "Timestamp",
 			key:         "timestamp",
 			value:       primitive.Timestamp{T: 1, I: 1},
-			expectedKTM: map[string]neosync_types.KeyType{"timestamp": neosync_types.Timestamp},
+			expectedKTM: map[string]vydon_types.KeyType{"timestamp": vydon_types.Timestamp},
 			expected:    primitive.Timestamp{T: 1, I: 1},
 		},
 	}
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			ktm := make(map[string]neosync_types.KeyType)
+			ktm := make(map[string]vydon_types.KeyType)
 			result, err := parsePrimitives(tc.key, tc.value, ktm)
 			require.NoError(t, err)
 			require.Equal(t, tc.expectedKTM, ktm)

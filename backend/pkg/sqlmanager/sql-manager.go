@@ -5,18 +5,18 @@ import (
 	"fmt"
 	"log/slog"
 
-	mysql_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/mysql"
-	pg_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/postgresql"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	mssql_queries "github.com/nucleuscloud/neosync/backend/pkg/mssql-querier"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlconnect"
-	sqlmanager_mssql "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/mssql"
-	sqlmanager_mysql "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/mysql"
-	sqlmanager_postgres "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/postgres"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	"github.com/nucleuscloud/neosync/internal/connection-manager/providers/sqlprovider"
-	neosync_benthos_sql "github.com/nucleuscloud/neosync/worker/pkg/benthos/sql"
+	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
+	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	mssql_queries "github.com/vydon-io/vydon/backend/pkg/mssql-querier"
+	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
+	sqlmanager_mssql "github.com/vydon-io/vydon/backend/pkg/sqlmanager/mssql"
+	sqlmanager_mysql "github.com/vydon-io/vydon/backend/pkg/sqlmanager/mysql"
+	sqlmanager_postgres "github.com/vydon-io/vydon/backend/pkg/sqlmanager/postgres"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	"github.com/vydon-io/vydon/internal/connection-manager/providers/sqlprovider"
+	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
 )
 
 type SqlDatabase interface {
@@ -80,7 +80,7 @@ type sqlManagerConfig struct {
 	mysqlQuerier mysql_queries.Querier
 	mssqlQuerier mssql_queries.Querier
 
-	mgr connectionmanager.Interface[neosync_benthos_sql.SqlDbtx]
+	mgr connectionmanager.Interface[vydon_benthos_sql.SqlDbtx]
 }
 type SqlManagerOption func(*sqlManagerConfig)
 
@@ -104,7 +104,7 @@ func NewSqlManager(
 }
 
 func WithConnectionManager(
-	manager connectionmanager.Interface[neosync_benthos_sql.SqlDbtx],
+	manager connectionmanager.Interface[vydon_benthos_sql.SqlDbtx],
 ) SqlManagerOption {
 	return func(smc *sqlManagerConfig) {
 		smc.mgr = manager

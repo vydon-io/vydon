@@ -1,0 +1,32 @@
+openapi: 3.1.0
+info:
+  summary: Vydon API
+  description: Vydon API
+  version: 0.5
+  termsOfService: "https://vydon.io/terms-of-service"
+  contact:
+    name: Vydon Support
+    email: support@vydon.io
+  license:
+    name: MIT
+    url: https://github.com/vydon-io/vydon/blob/main/LICENSE.md
+externalDocs:
+  description: API and SDK Documentation
+  url: https://docs.vydon.io/api
+servers:
+  - url: https://vydon-api.svcs.vydon.io
+    description: Vydon Cloud
+  - url: http://localhost:{port}
+    description: Development
+    variables:
+      port:
+        default: 8080
+        description: The port to use for the development server
+components:
+  securitySchemas:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      description: API Key or JWT are accepted as valid access tokens. However, authentication is required for Vydon Cloud, it may not be required for local or self-hosted deployments.
+security:
+  - BearerAuth: []

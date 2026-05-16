@@ -7,11 +7,11 @@ import (
 	"time"
 	"unicode"
 
-	transformer_utils "github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers/utils"
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	transformer_utils "github.com/vydon-io/vydon/worker/pkg/benthos/transformers/utils"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 var helloWorldRegex = "ell"
@@ -206,7 +206,7 @@ func Test_TransformCharacterSubstitutionTransformer(t *testing.T) {
 }
 
 func Test_TransformCharacterSubsitutitionRegexEmail(t *testing.T) {
-	emailregex := `(gmail\.com|yahoo\.com|nucleus\.com)$`
+	emailregex := `(gmail\.com|yahoo\.com|vydon\.com)$`
 
 	testEmail := "nick@gmail.com"
 

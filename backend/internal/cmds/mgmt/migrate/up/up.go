@@ -6,10 +6,10 @@ import (
 	"log/slog"
 	"os"
 
-	neomigrate "github.com/nucleuscloud/neosync/internal/migrate"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	neomigrate "github.com/vydon-io/vydon/internal/migrate"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 func NewCmd() *cobra.Command {
@@ -108,7 +108,7 @@ func getDbUrl() (string, error) {
 		dbOptions = &val
 	}
 
-	return neosyncdb.GetDbUrl(&neosyncdb.ConnectConfig{
+	return vydondb.GetDbUrl(&vydondb.ConnectConfig{
 		Host:                  dbHost,
 		Port:                  dbPort,
 		Database:              dbName,

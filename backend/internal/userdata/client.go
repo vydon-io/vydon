@@ -5,11 +5,11 @@ import (
 	"fmt"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	auth_apikey "github.com/nucleuscloud/neosync/backend/internal/auth/apikey"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
+	"github.com/vydon-io/vydon/internal/license"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type UserServiceClient interface {
@@ -57,7 +57,7 @@ func (c *Client) GetUser(ctx context.Context) (*User, error) {
 	if err != nil {
 		return nil, fmt.Errorf("unable to get user: %w", err)
 	}
-	pguuid, err := neosyncdb.ToUuid(resp.Msg.GetUserId())
+	pguuid, err := vydondb.ToUuid(resp.Msg.GetUserId())
 	if err != nil {
 		return nil, fmt.Errorf("unable to parse user id: %w", err)
 	}

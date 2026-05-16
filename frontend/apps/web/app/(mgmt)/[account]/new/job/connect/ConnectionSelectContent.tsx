@@ -1,5 +1,5 @@
 import { SelectGroup, SelectItem, SelectLabel } from '@/components/ui/select';
-import { Connection } from '@neosync/sdk';
+import { Connection } from '@vydon/sdk';
 import { PlusIcon } from '@radix-ui/react-icons';
 import { ReactElement } from 'react';
 

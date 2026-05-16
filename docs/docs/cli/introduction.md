@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: This section details Neosync CLI and all of its available commands.
+description: This section details Vydon CLI and all of its available commands.
 id: intro
 hide_title: false
 slug: /cli/introduction
@@ -10,59 +10,59 @@ slug: /cli/introduction
 
 ## Introduction
 
-This section details Neosync CLI and all of its available commands.
+This section details Vydon CLI and all of its available commands.
 
 ```console
-➜  ~ neosync
-Terminal UI that interfaces with the Neosync system.
+➜  ~ vydon
+Terminal UI that interfaces with the Vydon system.
 
 Usage:
-  neosync [command]
+  vydon [command]
 
 Available Commands:
   completion  Generate the autocompletion script for the specified shell
   help        Help about any command
   jobs        Parent command for jobs
-  login       Login to Neosync
+  login       Login to Vydon
   sync        One off sync job to local resource
   version     Print the client version information
   whoami      Find out who you are
 
 Flags:
-      --api-key string   Neosync API Key. Takes precedence over $NEOSYNC_API_KEY
-      --config string    config file (default is $HOME/.neosync/neosync.yaml)
-  -h, --help             help for neosync
-  -v, --version          version for neosync
+      --api-key string   Vydon API Key. Takes precedence over $VYDON_API_KEY
+      --config string    config file (default is $HOME/.vydon/vydon.yaml)
+  -h, --help             help for vydon
+  -v, --version          version for vydon
 
-Use "neosync [command] --help" for more information about a command.
+Use "vydon [command] --help" for more information about a command.
 ```
 
 ## Environment Variables
 
 There are a few global environment variables that are available on every request.
 
-### `NEOSYNC_API_KEY`
+### `VYDON_API_KEY`
 
-Neosync API Key. Used if logging in via a system api key.
+Vydon API Key. Used if logging in via a system api key.
 
-### `NEOSYNC_API_URL`
+### `VYDON_API_URL`
 
-The url of the Neosync API to direct the request to.
+The url of the Vydon API to direct the request to.
 
 ### Persisting CLI Environment Variables
 
 Environment Variables for the CLI may be persisted by setting them in the config file.
-By default this is located at `$HOME/.neosync/config.yaml`.
-The CLI does respect `XDG_CONFIG_HOME` as well as a `NEOSYNC_CONFIG_DIR` may be optionally set to override the default location.
+By default this is located at `$HOME/.vydon/config.yaml`.
+The CLI does respect `XDG_CONFIG_HOME` as well as a `VYDON_CONFIG_DIR` may be optionally set to override the default location.
 
 Example of a config.yaml:
 
 ```yaml
-NEOSYNC_API_URL: 'http://localhost:8080'
+VYDON_API_URL: 'http://localhost:8080'
 ```
 
 The CLI uses [viper](https://github.com/spf13/viper) for environment management, and has various configuration options that come with it.
-You can find the environment setup method [here](https://github.com/nucleuscloud/neosync/blob/main/cli/internal/cmds/neosync/neosync.go#L80).
+You can find the environment setup method [here](https://github.com/vydon-io/vydon/blob/main/cli/internal/cmds/vydon/vydon.go#L80).
 
 ### Full list
 

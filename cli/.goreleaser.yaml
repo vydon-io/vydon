@@ -1,5 +1,5 @@
 version: 2
-project_name: neosync
+project_name: vydon
 before:
   hooks:
     - go mod tidy # https://goreleaser.com/customization/builds/#go-modules
@@ -16,9 +16,9 @@ builds:
       - arm64
 
     ldflags:
-      - -s -w -X 'github.com/nucleuscloud/neosync/cli/internal/version.buildDate={{.Date}}' -X 'github.com/nucleuscloud/neosync/cli/internal/version.gitCommit={{.Commit}}' -X 'github.com/nucleuscloud/neosync/cli/internal/version.gitVersion={{.Version}}' -X 'github.com/nucleuscloud/neosync/cli/internal/auth.defaultBaseUrl={{ .Env.NEOSYNC_BASE_URL }}'
+      - -s -w -X 'github.com/vydon-io/vydon/cli/internal/version.buildDate={{.Date}}' -X 'github.com/vydon-io/vydon/cli/internal/version.gitCommit={{.Commit}}' -X 'github.com/vydon-io/vydon/cli/internal/version.gitVersion={{.Version}}' -X 'github.com/vydon-io/vydon/cli/internal/auth.defaultBaseUrl={{ .Env.VYDON_BASE_URL }}'
 
-    main: ./cmd/neosync
+    main: ./cmd/vydon
 
 checksum:
   name_template: "{{ .ProjectName }}_{{ .Version }}_SHA256SUMS"
@@ -48,11 +48,11 @@ changelog:
       - "^test:"
 brews:
   - repository:
-      owner: nucleuscloud
+      owner: vydon-io
       name: homebrew-tap
     directory: Formula
-    homepage: https://www.neosync.dev
-    description: CLI for interfacing with Neosync
+    homepage: https://vydon.io
+    description: CLI for interfacing with Vydon
     license: MIT
 archives:
   - id: default
@@ -61,69 +61,69 @@ archives:
         format: zip
 
 aurs:
-  - homepage: https://www.neosync.dev
-    description: CLI for interfacing with Neosync
+  - homepage: https://vydon.io
+    description: CLI for interfacing with Vydon
     maintainers:
-      - Devops <devops@nucleuscloud.com>
+      - Devops <devops@vydon.io>
     license: MIT
-    git_url: ssh://aur@aur.archlinux.org/neosync-bin.git
+    git_url: ssh://aur@aur.archlinux.org/vydon-bin.git
     package: |-
       # bin
-      install -Dm755 "./neosync" "${pkgdir}/usr/bin/neosync"
+      install -Dm755 "./vydon" "${pkgdir}/usr/bin/vydon"
 
       # license
-      install -Dm644 "./LICENSE" "${pkgdir}/usr/share/licenses/neosync/LICENSE"
+      install -Dm644 "./LICENSE" "${pkgdir}/usr/share/licenses/vydon/LICENSE"
     commit_author:
-      name: nucleusbot
-      email: devops@nucleuscloud.com
+      name: vydonbot
+      email: devops@vydon.io
     private_key: "{{ .Env.AUR_KEY }}"
 
 dockers:
   - image_templates:
-      - "ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64"
+      - "ghcr.io/vydon-io/vydon/cli:{{ .Version }}-amd64"
     use: buildx
     dockerfile: Dockerfile.goreleaser
     build_flag_templates:
       - --platform=linux/amd64
       - --label=org.opencontainers.image.title={{ .ProjectName }}
       - --label=org.opencontainers.image.description={{ .ProjectName }}
-      - --label=org.opencontainers.image.url=https://github.com/nucleuscloud/neosync/cli
-      - --label=org.opencontainers.image.source=https://github.com/nucleuscloud/neosync/cli
+      - --label=org.opencontainers.image.url=https://github.com/vydon-io/vydon/cli
+      - --label=org.opencontainers.image.source=https://github.com/vydon-io/vydon/cli
       - --label=org.opencontainers.image.version={{ .Version }}
       - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
   - image_templates:
-      - "ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64"
+      - "ghcr.io/vydon-io/vydon/cli:{{ .Version }}-arm64"
     use: buildx
     dockerfile: Dockerfile.goreleaser
     build_flag_templates:
       - --platform=linux/arm64
       - --label=org.opencontainers.image.title={{ .ProjectName }}
       - --label=org.opencontainers.image.description={{ .ProjectName }}
-      - --label=org.opencontainers.image.url=https://github.com/nucleuscloud/neosync/cli
-      - --label=org.opencontainers.image.source=https://github.com/nucleuscloud/neosync/cli
+      - --label=org.opencontainers.image.url=https://github.com/vydon-io/vydon/cli
+      - --label=org.opencontainers.image.source=https://github.com/vydon-io/vydon/cli
       - --label=org.opencontainers.image.version={{ .Version }}
       - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
 
 docker_manifests:
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}
+  - name_template: ghcr.io/vydon-io/vydon/cli:{{ .Version }}
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:latest
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-arm64
+  - name_template: ghcr.io/vydon-io/vydon/cli:latest
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:{{ .Tag }}
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-arm64
+  - name_template: ghcr.io/vydon-io/vydon/cli:{{ .Tag }}
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:v{{ .Major }}
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-arm64
+  - name_template: ghcr.io/vydon-io/vydon/cli:v{{ .Major }}
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
-  - name_template: ghcr.io/nucleuscloud/neosync/cli:v{{ .Major }}.{{ .Minor }}
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-arm64
+  - name_template: ghcr.io/vydon-io/vydon/cli:v{{ .Major }}.{{ .Minor }}
     image_templates:
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-amd64
-      - ghcr.io/nucleuscloud/neosync/cli:{{ .Version }}-arm64
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-amd64
+      - ghcr.io/vydon-io/vydon/cli:{{ .Version }}-arm64

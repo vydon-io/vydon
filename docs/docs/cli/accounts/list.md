@@ -1,27 +1,27 @@
 ---
 title: List
-description: Learn how to list Neosync accounts with the neosync accounts list command.
+description: Learn how to list Vydon accounts with the vydon accounts list command.
 id: list
 hide_title: false
 slug: /cli/accounts/list
 ---
 
-# neosync list
+# vydon list
 
 ## Overview
 
-Learn how to list Neosync accounts with the neosync accounts list command.
+Learn how to list Vydon accounts with the vydon accounts list command.
 
-The `neosync accounts list` command is used to list the personal and team accounts for a user or api key.
+The `vydon accounts list` command is used to list the personal and team accounts for a user or api key.
 
 ## Usage
 
 ```bash
-neosync accounts list
+vydon accounts list
 ```
 
 ### Aliases
 
 ```bash
-neosync accounts ls
+vydon accounts ls
 ```

@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 var testE164Phone = "+13782983927"
@@ -47,7 +47,12 @@ func Test_TransformE164NumberWithoutPlusSign(t *testing.T) {
 		assert.NotNil(t, res)
 		assert.True(t, len(*res) > 0, "Result should not be empty")
 		assert.Equal(t, byte('+'), (*res)[0], "Result should start with a plus sign")
-		assert.Equal(t, len(*res), len(phoneWithoutPlus)+1, "Generated phone number should be one character longer than input (due to added + sign)")
+		assert.Equal(
+			t,
+			len(*res),
+			len(phoneWithoutPlus)+1,
+			"Generated phone number should be one character longer than input (due to added + sign)",
+		)
 	})
 
 	t.Run("preserve length false", func(t *testing.T) {
@@ -57,13 +62,22 @@ func Test_TransformE164NumberWithoutPlusSign(t *testing.T) {
 		assert.NotNil(t, res)
 		assert.True(t, len(*res) > 0, "Result should not be empty")
 		assert.Equal(t, byte('+'), (*res)[0], "Result should start with a plus sign")
-		assert.GreaterOrEqual(t, len(*res), 9+1, "Should be greater than 10 characters in length. 9 for the number and 1 for the plus sign.")
+		assert.GreaterOrEqual(
+			t,
+			len(*res),
+			9+1,
+			"Should be greater than 10 characters in length. 9 for the number and 1 for the plus sign.",
+		)
 		assert.LessOrEqual(t, len(*res), 15+1, "Should be less than 16 characters in length. 15 for the number and 1 for the plus sign.")
 	})
 }
 
 func Test_TransformE164NumberTransformer(t *testing.T) {
-	mapping := fmt.Sprintf(`root = transform_e164_phone_number(value:%q,preserve_length:true,max_length:%d)`, testE164Phone, maxCharacterLimit)
+	mapping := fmt.Sprintf(
+		`root = transform_e164_phone_number(value:%q,preserve_length:true,max_length:%d)`,
+		testE164Phone,
+		maxCharacterLimit,
+	)
 	ex, err := bloblang.Parse(mapping)
 	assert.NoError(t, err, "failed to parse the phone transformer")
 
@@ -86,7 +100,11 @@ func Test_TransformE164NumberTransformer(t *testing.T) {
 
 func Test_TransformE164PhoneTransformerWithEmptyValue(t *testing.T) {
 	nilE164Phone := ""
-	mapping := fmt.Sprintf(`root = transform_e164_phone_number(value:%q,preserve_length:true,max_length:%d)`, nilE164Phone, maxCharacterLimit)
+	mapping := fmt.Sprintf(
+		`root = transform_e164_phone_number(value:%q,preserve_length:true,max_length:%d)`,
+		nilE164Phone,
+		maxCharacterLimit,
+	)
 	ex, err := bloblang.Parse(mapping)
 	assert.NoError(t, err, "failed to parse the e164 phone transformer")
 

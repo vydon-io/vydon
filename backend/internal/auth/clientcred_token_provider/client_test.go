@@ -7,9 +7,9 @@ import (
 	"testing"
 	"time"
 
-	auth_client "github.com/nucleuscloud/neosync/backend/internal/auth/client"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	auth_client "github.com/vydon-io/vydon/backend/internal/auth/client"
 	"golang.org/x/sync/errgroup"
 )
 

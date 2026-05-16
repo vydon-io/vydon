@@ -7,7 +7,7 @@ import (
 
 	mssql "github.com/microsoft/go-mssqldb"
 	"github.com/microsoft/go-mssqldb/msdsn"
-	"github.com/nucleuscloud/neosync/internal/sshtunnel"
+	"github.com/vydon-io/vydon/internal/sshtunnel"
 )
 
 type Connector struct {

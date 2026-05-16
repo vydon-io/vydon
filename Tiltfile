@@ -1,10 +1,10 @@
-allow_k8s_contexts('kind-neosync-dev')
+allow_k8s_contexts('kind-vydon-dev')
 
 backend = [
-  'neosync-api',
+  'vydon-api',
 ]
 frontend = [
-  'neosync-app',
+  'vydon-app',
 ]
 
 groups = {

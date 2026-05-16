@@ -20,7 +20,7 @@ import {
   InvalidEmailAction,
   TransformEmail,
   TransformEmailSchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { ReactElement } from 'react';
 import { TransformerConfigProps } from './util';
 

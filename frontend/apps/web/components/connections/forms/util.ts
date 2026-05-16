@@ -8,7 +8,7 @@ import {
   SqlConnectionOptions,
   SSHAuthentication,
   SSHTunnel,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 
 export function getSqlOptionsFormValues(
   input: SqlConnectionOptions | undefined

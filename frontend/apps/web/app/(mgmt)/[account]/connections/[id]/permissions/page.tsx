@@ -22,7 +22,7 @@ import {
   ConnectionConfigSchema,
   ConnectionRolePrivilege,
   ConnectionService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { UpdateIcon } from '@radix-ui/react-icons';
 import { ColumnDef } from '@tanstack/react-table';
 import Error from 'next/error';
@@ -107,7 +107,7 @@ export default function PermissionsPage(props: PageProps) {
       </div>
     );
   }
-  if (!isLoading && !data?.connection) {
+  if (!data?.connection) {
     return <Error statusCode={404} />;
   }
 
@@ -186,8 +186,8 @@ function PermissionsPageContainer(props: PermissionsPageContainerProps) {
     <div className="flex flex-col gap-4">
       <div className="flex flex-row justify-between items-center w-full">
         <div className="text-muted-foreground text-sm">
-          Review the permissions that Neosync needs for your connection.{' '}
-          <LearnMoreLink href="https://docs.neosync.dev/connections/postgres#permissions" />
+          Review the permissions that Vydon needs for your connection.{' '}
+          <LearnMoreLink href="https://docs.vydon.io/connections/postgres#permissions" />
         </div>
       </div>
 

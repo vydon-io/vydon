@@ -1,4 +1,4 @@
-package neosync_types
+package vydon_types
 
 type KeyType int
 

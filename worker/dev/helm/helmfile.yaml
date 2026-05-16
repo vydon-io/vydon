@@ -1,13 +1,13 @@
 releases:
-  - name: neosync-worker
+  - name: vydon-worker
     chart: ../../charts/worker
     version: 'v0.0.0'
-    namespace: neosync
+    namespace: vydon
     createNamespace: false
 
     values:
       - image:
-          repository: neosync-worker
+          repository: vydon-worker
         serviceAccount:
           create: true
 
@@ -20,10 +20,10 @@ releases:
         datadog:
           enabled: false
 
-        nucleusEnv: dev
+        vydonEnv: dev
 
-        neosync:
-          url: http://neosync-api:80
+        vydon:
+          url: http://vydon-api:80
         temporal:
           url: temporal.temporal:7233
           namespace: default

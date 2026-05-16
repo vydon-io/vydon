@@ -1,21 +1,21 @@
 openapi: 3.1.0
 info:
-  summary: Neosync API
+  summary: Vydon API
   version: "0.5"
-  termsOfService: "https://www.neosync.dev/terms-of-service"
+  termsOfService: "https://vydon.io/terms-of-service"
   contact:
-    name: Neosync Support
-    email: support@neosync.dev
+    name: Vydon Support
+    email: support@vydon.io
   license:
     name: MIT
-    url: https://github.com/nucleuscloud/neosync/blob/main/LICENSE.md
+    url: https://github.com/vydon-io/vydon/blob/main/LICENSE.md
   title: mgmt.v1alpha1
 externalDocs:
   description: API and SDK Documentation
-  url: https://docs.neosync.dev/api
+  url: https://docs.vydon.io/api
 servers:
-  - url: https://neosync-api.svcs.neosync.dev
-    description: Neosync Cloud
+  - url: https://vydon-api.svcs.vydon.io
+    description: Vydon Cloud
   - url: http://localhost:{port}
     description: Development
     variables:
@@ -679,7 +679,7 @@ components:
           description: Configures a Microsoft SQL Server (mssql) Connection
       title: ConnectionConfig
       additionalProperties: false
-      description: Configuration for all of the supported Neosync connection types
+      description: Configuration for all of the supported Vydon connection types
     mgmt.v1alpha1.ConnectionRolePrivilege:
       type: object
       properties:
@@ -1915,4 +1915,4 @@ tags:
   - name: mgmt.v1alpha1.ConnectionService
     description: |-
       Service for managing datasource connections.
-       This is a primary data model in Neosync and is used in reference when hooking up Jobs to synchronize and generate data.
+       This is a primary data model in Vydon and is used in reference when hooking up Jobs to synchronize and generate data.

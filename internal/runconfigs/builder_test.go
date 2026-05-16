@@ -3,8 +3,8 @@ package runconfigs
 import (
 	"testing"
 
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
 	"github.com/stretchr/testify/assert"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 )
 
 func TestNewTableConfigsBuilder(t *testing.T) {

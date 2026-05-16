@@ -5,7 +5,7 @@ package sqlmanager
 import (
 	context "context"
 
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
 
 	mock "github.com/stretchr/testify/mock"
 
@@ -65,7 +65,7 @@ type MockSqlManagerClient_NewSqlConnection_Call struct {
 //   - session connectionmanager.SessionInterface
 //   - connection connectionmanager.ConnectionInput
 //   - slogger *slog.Logger
-func (_e *MockSqlManagerClient_Expecter) NewSqlConnection(ctx interface{}, session interface{}, connection interface{}, slogger interface{}) *MockSqlManagerClient_NewSqlConnection_Call {
+func (_e *MockSqlManagerClient_Expecter) NewSqlConnection(ctx any, session any, connection any, slogger any) *MockSqlManagerClient_NewSqlConnection_Call {
 	return &MockSqlManagerClient_NewSqlConnection_Call{Call: _e.mock.On("NewSqlConnection", ctx, session, connection, slogger)}
 }
 

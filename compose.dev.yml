@@ -1,4 +1,4 @@
-name: neosync
+name: vydon
 
 include:
   - path: ./compose/temporal/compose.yml
@@ -12,7 +12,7 @@ include:
 
 services:
   app:
-    container_name: neosync-app
+    container_name: vydon-app
     build:
       context: ./
       dockerfile: ./frontend/apps/web/dev/build/Dockerfile.dev
@@ -20,10 +20,10 @@ services:
       - 3000:3000
     environment:
       - HOSTNAME=0.0.0.0
-      - NUCLEUS_ENV=dev
+      - VYDON_ENV=dev
       - NEXTAUTH_SECRET=foo
       - NEXTAUTH_URL=http://localhost:3000
-      - NEOSYNC_API_BASE_URL=http://api:8080
+      - VYDON_API_BASE_URL=http://api:8080
       - NEXT_PUBLIC_APP_BASE_URL=http://localhost:3000
 
       - POSTHOG_KEY=phc_qju45RhNvCDwYVdRyUjtWuWsOmLFaQZi3fmztMBaJip
@@ -34,21 +34,21 @@ services:
       - path: ./.env.app.local
         required: false
     networks:
-      - neosync-network
+      - vydon-network
     volumes:
       - ./frontend:/app/:rw
-      - neosync_app_nodemodules:/app/node_modules
-      - neosync_web_nodemodules:/app/apps/web/node_modules
-      - neosync_sdk_nodemodules:/app/packages/sdk/node_modules
-      - neosync_next_cache:/app/apps/web/.next
+      - vydon_app_nodemodules:/app/node_modules
+      - vydon_web_nodemodules:/app/apps/web/node_modules
+      - vydon_sdk_nodemodules:/app/packages/sdk/node_modules
+      - vydon_next_cache:/app/apps/web/.next
 
   db:
-    container_name: neosync-db
+    container_name: vydon-db
     image: postgres:15
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB=nucleus
+      - POSTGRES_DB=vydon
       - POSTGRES_PASSWORD=foofar
       - PGUSER=postgres
     healthcheck:
@@ -57,13 +57,13 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - neosync-network
+      - vydon-network
     volumes:
-      - neosync_pg_data:/var/lib/postgresql/data
+      - vydon_pg_data:/var/lib/postgresql/data
       - ./scripts/pg-init:/docker-entrypoint-initdb.d
 
   api:
-    container_name: neosync-api
+    container_name: vydon-api
     build:
       context: ./
       dockerfile: ./backend/dev/build/Dockerfile.dev
@@ -72,18 +72,18 @@ services:
     environment:
       - HOST=0.0.0.0
       - PORT=8080
-      - NUCLEUS_ENV=dev
+      - VYDON_ENV=dev
       - APP_BASEURL=http://localhost:3000
       - TEMPORAL_URL=temporal:7233
       - DB_AUTO_MIGRATE=true
       - DB_SCHEMA_DIR=/workspace/backend/sql/postgresql/schema
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_NAME=nucleus
+      - DB_NAME=vydon
       - DB_USER=postgres
       - DB_PASS=foofar
       - DB_SSL_DISABLE=true
-      - DB_MIGRATIONS_TABLE=neosync_api_schema_migrations
+      - DB_MIGRATIONS_TABLE=vydon_api_schema_migrations
       - DB_MIGRATIONS_TABLE_QUOTED=false
       - LOG_LEVEL=DEBUG
 
@@ -95,7 +95,7 @@ services:
       - path: ./.env.api.local
         required: false
     networks:
-      - neosync-network
+      - vydon-network
       - temporal-network
     depends_on:
       db:
@@ -107,22 +107,22 @@ services:
       - ./internal:/workspace/internal:rw
       - ./go.mod:/workspace/go.mod:rw
       - ./go.sum:/workspace/go.sum:rw
-      - neosync_api_tmp:/workspace/tmp
-      - neosync_go_mod_cache:/go/pkg/mod
-      - neosync_backend_build_cache:/root/.cache/go-build
+      - vydon_api_tmp:/workspace/tmp
+      - vydon_go_mod_cache:/go/pkg/mod
+      - vydon_backend_build_cache:/root/.cache/go-build
     restart: on-failure
 
   worker:
-    container_name: neosync-worker
+    container_name: vydon-worker
     build:
       context: ./
       dockerfile: ./worker/dev/build/Dockerfile.dev
     environment:
-      - NUCLEUS_ENV=dev
+      - VYDON_ENV=dev
       - TEMPORAL_URL=temporal:7233
       - TEMPORAL_NAMESPACE=default
       - TEMPORAL_TASK_QUEUE=sync-job
-      - NEOSYNC_URL=http://api:8080
+      - VYDON_URL=http://api:8080
       - REDIS_URL=redis://default:foofar@redis:6379
       - TABLESYNC_MAX_CONCURRENCY=3
       - LOG_LEVEL=DEBUG
@@ -131,7 +131,7 @@ services:
       - path: ./.env.worker.local
         required: false
     networks:
-      - neosync-network
+      - vydon-network
       - temporal-network
     depends_on:
       temporal:
@@ -143,35 +143,35 @@ services:
       - ./internal:/workspace/internal:rw
       - ./go.mod:/workspace/go.mod:rw
       - ./go.sum:/workspace/go.sum:rw
-      - neosync_worker_tmp:/workspace/tmp
-      - neosync_go_mod_cache:/go/pkg/mod
-      - neosync_worker_build_cache:/root/.cache/go-build
+      - vydon_worker_tmp:/workspace/tmp
+      - vydon_go_mod_cache:/go/pkg/mod
+      - vydon_worker_build_cache:/root/.cache/go-build
     restart: on-failure
 
   redis:
-    container_name: neosync-redis
+    container_name: vydon-redis
     image: redis:7.2.4
     ports:
       - 6379:6379
     command: redis-server --save 20 1 --loglevel warning --requirepass foofar
     networks:
-      - neosync-network
+      - vydon-network
     volumes:
-      - neosync_redis_cache:/data
+      - vydon_redis_cache:/data
 
 volumes:
-  neosync_redis_cache:
-  neosync_pg_data:
-  neosync_api_tmp:
-  neosync_backend_build_cache:
-  neosync_worker_tmp:
-  neosync_worker_build_cache:
-  neosync_go_mod_cache:
-  neosync_app_nodemodules:
-  neosync_web_nodemodules:
-  neosync_sdk_nodemodules:
-  neosync_next_cache:
+  vydon_redis_cache:
+  vydon_pg_data:
+  vydon_api_tmp:
+  vydon_backend_build_cache:
+  vydon_worker_tmp:
+  vydon_worker_build_cache:
+  vydon_go_mod_cache:
+  vydon_app_nodemodules:
+  vydon_web_nodemodules:
+  vydon_sdk_nodemodules:
+  vydon_next_cache:
 
 networks:
-  neosync-network:
-    name: neosync-network
+  vydon-network:
+    name: vydon-network

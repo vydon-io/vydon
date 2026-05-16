@@ -7,10 +7,10 @@ import (
 	"sync"
 
 	"github.com/dop251/goja"
-	"github.com/nucleuscloud/neosync/internal/benthos_slogger"
-	"github.com/nucleuscloud/neosync/internal/javascript"
-	javascript_vm "github.com/nucleuscloud/neosync/internal/javascript/vm"
-	"github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers"
+	"github.com/vydon-io/vydon/internal/benthos_slogger"
+	"github.com/vydon-io/vydon/internal/javascript"
+	javascript_vm "github.com/vydon-io/vydon/internal/javascript/vm"
+	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 
 	"github.com/redpanda-data/benthos/v4/public/service"
 )
@@ -24,12 +24,12 @@ func javascriptProcessorConfig() *service.ConfigSpec {
 		Field(service.NewInterpolatedStringField(codeField))
 }
 
-func RegisterNeosyncJavascriptProcessor(
+func RegisterVydonJavascriptProcessor(
 	env *service.Environment,
 	transformPiiTextApi transformers.TransformPiiTextApi,
 ) error {
 	return env.RegisterBatchProcessor(
-		"neosync_javascript", javascriptProcessorConfig(),
+		"vydon_javascript", javascriptProcessorConfig(),
 		func(conf *service.ParsedConfig, mgr *service.Resources) (service.BatchProcessor, error) {
 			return newJavascriptProcessorFromConfig(conf, mgr, transformPiiTextApi)
 		})
@@ -108,12 +108,12 @@ func (j *javascriptProcessor) ProcessBatch(
 	defer func() {
 		if r := recover(); r != nil {
 			j.slogger.Error(
-				"recovered from panic in neosync_javascript batch processor",
+				"recovered from panic in vydon_javascript batch processor",
 				"error",
 				fmt.Sprintf("%v", r),
 			)
 			// Set the named return value 'err'
-			err = fmt.Errorf("neosync_javascript batch processor panic recovered: %v", r)
+			err = fmt.Errorf("vydon_javascript batch processor panic recovered: %v", r)
 			return
 		}
 	}()

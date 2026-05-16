@@ -44,7 +44,7 @@ import {
   SSHPrivateKeySchema,
   SSHTunnel,
   SSHTunnelSchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 
 export interface ConnectionMeta {
   name: string;

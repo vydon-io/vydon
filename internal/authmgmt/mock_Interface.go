@@ -59,7 +59,7 @@ type MockInterface_GetUserBySub_Call struct {
 // GetUserBySub is a helper method to define mock.On call
 //   - ctx context.Context
 //   - sub string
-func (_e *MockInterface_Expecter) GetUserBySub(ctx interface{}, sub interface{}) *MockInterface_GetUserBySub_Call {
+func (_e *MockInterface_Expecter) GetUserBySub(ctx any, sub any) *MockInterface_GetUserBySub_Call {
 	return &MockInterface_GetUserBySub_Call{Call: _e.mock.On("GetUserBySub", ctx, sub)}
 }
 

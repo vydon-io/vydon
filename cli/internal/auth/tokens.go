@@ -7,18 +7,18 @@ import (
 	"net/http"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/cli/internal/userconfig"
-	"github.com/nucleuscloud/neosync/cli/internal/version"
-	http_client "github.com/nucleuscloud/neosync/internal/http/client"
 	"github.com/spf13/viper"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/cli/internal/userconfig"
+	"github.com/vydon-io/vydon/cli/internal/version"
+	http_client "github.com/vydon-io/vydon/internal/http/client"
 )
 
 // Light wrapper for GetAuthEnabled that instantiates an auth client
 func IsAuthEnabled(ctx context.Context) (bool, error) {
 	httpclient := http_client.NewWithHeaders(version.Get().Headers())
-	authclient := mgmtv1alpha1connect.NewAuthServiceClient(httpclient, GetNeosyncUrl())
+	authclient := mgmtv1alpha1connect.NewAuthServiceClient(httpclient, GetVydonUrl())
 	return GetAuthEnabled(ctx, authclient)
 }
 
@@ -39,9 +39,9 @@ func GetAuthEnabled(
 // This variable is replaced at build time
 var defaultBaseUrl string = "http://localhost:8080"
 
-// Returns the neosync url found in the environment, otherwise defaults to localhost
-func GetNeosyncUrl() string {
-	baseurl := viper.GetString("NEOSYNC_API_URL")
+// Returns the vydon url found in the environment, otherwise defaults to localhost
+func GetVydonUrl() string {
+	baseurl := viper.GetString("VYDON_API_URL")
 	if baseurl == "" {
 		return defaultBaseUrl
 	}
@@ -62,15 +62,15 @@ func WithApiKey(apiKey *string) HttpOption {
 }
 
 // If desired, append any extra headers.
-// Note: version headers are already appended to the client when calling GetNeosyncHttpClient
+// Note: version headers are already appended to the client when calling GetVydonHttpClient
 func WithExtraHeaders(headers map[string]string) HttpOption {
 	return func(cfg *httpClientConfig) {
 		cfg.extraHeaders = headers
 	}
 }
 
-// Returns an instance of *http.Client that includes the Neosync API Token if one was found in the environment
-func GetNeosyncHttpClient(
+// Returns an instance of *http.Client that includes the Vydon API Token if one was found in the environment
+func GetVydonHttpClient(
 	ctx context.Context,
 	logger *slog.Logger,
 	opts ...HttpOption,
@@ -110,8 +110,8 @@ func getAccessToken(
 	logger *slog.Logger,
 ) (string, error) {
 	httpclient := http_client.NewWithHeaders(headers)
-	neosyncurl := GetNeosyncUrl()
-	authclient := mgmtv1alpha1connect.NewAuthServiceClient(httpclient, neosyncurl)
+	vydonurl := GetVydonUrl()
+	authclient := mgmtv1alpha1connect.NewAuthServiceClient(httpclient, vydonurl)
 
 	accessToken, err := userconfig.GetAccessToken()
 	if err != nil {
@@ -121,7 +121,7 @@ func getAccessToken(
 		http_client.NewWithHeaders(
 			http_client.MergeMaps(headers, http_client.GetBearerAuthHeaders(&accessToken)),
 		),
-		neosyncurl,
+		vydonurl,
 	)
 	logger.Debug("found existing access token, checking if still valid")
 	// TODO: NEOS-566 - allow token refreshing if only refresh token exists, but no access token

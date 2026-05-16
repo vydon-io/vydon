@@ -3,7 +3,7 @@ import {
   JobMappingFormValues,
 } from '@/yup-validations/jobs';
 import { create, toJson } from '@bufbuild/protobuf';
-import { JobMappingSchema } from '@neosync/sdk';
+import { JobMappingSchema } from '@vydon/sdk';
 import { Row } from '@tanstack/react-table';
 import { toast } from 'sonner';
 import { useJsonFileDownload } from '../../useJsonFileDownload';

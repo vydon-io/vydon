@@ -5,15 +5,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
 	"reflect"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/nucleuscloud/neosync/internal/database-record-mapper/builder"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
-	neosync_types "github.com/nucleuscloud/neosync/internal/types"
+	"github.com/vydon-io/vydon/internal/database-record-mapper/builder"
+	vydon_types "github.com/vydon-io/vydon/internal/types"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 type PostgresMapper struct{}
@@ -26,7 +27,7 @@ func NewPostgresBuilder() *builder.Builder[*sql.Rows] {
 
 func (m *PostgresMapper) MapRecordWithKeyType(
 	rows *sql.Rows,
-) (valuemap map[string]any, typemap map[string]neosync_types.KeyType, err error) {
+) (valuemap map[string]any, typemap map[string]vydon_types.KeyType, err error) {
 	return nil, nil, errors.ErrUnsupported
 }
 
@@ -99,7 +100,7 @@ func parsePgRowValues(values []any, columnNames, columnTypes []string) (map[stri
 		case nil:
 			jObj[col] = t
 		case time.Time:
-			dt, err := neosynctypes.NewDateTimeFromPgx(t)
+			dt, err := vydontypes.NewDateTimeFromPgx(t)
 			if err != nil {
 				return nil, fmt.Errorf("failed to convert time.Time to DateTime: %w", err)
 			}
@@ -149,7 +150,7 @@ func parsePgRowValues(values []any, columnNames, columnTypes []string) (map[stri
 				jObj[col] = nil
 				continue
 			}
-			neoInterval, err := neosynctypes.NewIntervalFromPgx(t)
+			neoInterval, err := vydontypes.NewIntervalFromPgx(t)
 			if err != nil {
 				return nil, fmt.Errorf("failed to convert interval: %w", err)
 			}
@@ -159,7 +160,7 @@ func parsePgRowValues(values []any, columnNames, columnTypes []string) (map[stri
 				jObj[col] = nil
 				continue
 			}
-			bits, err := neosynctypes.NewBitsFromPgx(t)
+			bits, err := vydontypes.NewBitsFromPgx(t)
 			if err != nil {
 				return nil, fmt.Errorf("failed to convert bits: %w", err)
 			}
@@ -167,7 +168,7 @@ func parsePgRowValues(values []any, columnNames, columnTypes []string) (map[stri
 		default:
 			switch {
 			case strings.EqualFold(colType, "bytea"):
-				binary, err := neosynctypes.NewBinaryFromPgx(t)
+				binary, err := vydontypes.NewBinaryFromPgx(t)
 				if err != nil {
 					return nil, fmt.Errorf("failed to convert binary: %w", err)
 				}
@@ -268,8 +269,8 @@ func (a *PgxArray[T]) Scan(src any) error {
 	var pgt *pgtype.Type
 	var ok bool
 
-	if oid, err := strconv.Atoi(a.colDataType); err == nil {
-		pgt, ok = m.TypeForOID(uint32(oid)) //nolint:gosec
+	if oid, err := strconv.Atoi(a.colDataType); err == nil && oid >= 0 && oid <= math.MaxUint32 {
+		pgt, ok = m.TypeForOID(uint32(oid))
 	} else {
 		pgt, ok = m.TypeForName(strings.ToLower(a.colDataType))
 	}
@@ -332,7 +333,7 @@ func (n *NullableJSON) Unmarshal() (any, error) {
 	return js, nil
 }
 
-func toBinaryArray(array *PgxArray[[]byte]) (*neosynctypes.NeosyncArray, error) {
+func toBinaryArray(array *PgxArray[[]byte]) (*vydontypes.VydonArray, error) {
 	if array.Elements == nil {
 		return nil, nil
 	}
@@ -342,9 +343,9 @@ func toBinaryArray(array *PgxArray[[]byte]) (*neosynctypes.NeosyncArray, error) 
 		return nil, errors.ErrUnsupported
 	}
 
-	binaryArray, err := neosynctypes.NewBinaryArrayFromPgx(
+	binaryArray, err := vydontypes.NewBinaryArrayFromPgx(
 		array.Elements,
-		[]neosynctypes.NeosyncTypeOption{},
+		[]vydontypes.VydonTypeOption{},
 	)
 	if err != nil {
 		return nil, err
@@ -352,7 +353,7 @@ func toBinaryArray(array *PgxArray[[]byte]) (*neosynctypes.NeosyncArray, error) 
 	return binaryArray, nil
 }
 
-func toBitsArray(array *PgxArray[*pgtype.Bits]) (*neosynctypes.NeosyncArray, error) {
+func toBitsArray(array *PgxArray[*pgtype.Bits]) (*vydontypes.VydonArray, error) {
 	if array.Elements == nil {
 		return nil, nil
 	}
@@ -362,9 +363,9 @@ func toBitsArray(array *PgxArray[*pgtype.Bits]) (*neosynctypes.NeosyncArray, err
 		return nil, errors.ErrUnsupported
 	}
 
-	bitsArray, err := neosynctypes.NewBitsArrayFromPgx(
+	bitsArray, err := vydontypes.NewBitsArrayFromPgx(
 		array.Elements,
-		[]neosynctypes.NeosyncTypeOption{},
+		[]vydontypes.VydonTypeOption{},
 	)
 	if err != nil {
 		return nil, err
@@ -372,7 +373,7 @@ func toBitsArray(array *PgxArray[*pgtype.Bits]) (*neosynctypes.NeosyncArray, err
 	return bitsArray, nil
 }
 
-func toIntervalArray(array *PgxArray[*pgtype.Interval]) (*neosynctypes.NeosyncArray, error) {
+func toIntervalArray(array *PgxArray[*pgtype.Interval]) (*vydontypes.VydonArray, error) {
 	if array.Elements == nil {
 		return nil, nil
 	}
@@ -382,9 +383,9 @@ func toIntervalArray(array *PgxArray[*pgtype.Interval]) (*neosynctypes.NeosyncAr
 		return nil, errors.ErrUnsupported
 	}
 
-	neoIntervalArray, err := neosynctypes.NewIntervalArrayFromPgx(
+	neoIntervalArray, err := vydontypes.NewIntervalArrayFromPgx(
 		array.Elements,
-		[]neosynctypes.NeosyncTypeOption{},
+		[]vydontypes.VydonTypeOption{},
 	)
 	if err != nil {
 		return nil, err
@@ -417,9 +418,9 @@ func pgArrayToGoSlice(array *PgxArray[any]) (any, error) {
 				return nil, fmt.Errorf("expected time.Time, got %T", elem)
 			}
 		}
-		dtArray, err := neosynctypes.NewDateTimeArrayFromPgx(
+		dtArray, err := vydontypes.NewDateTimeArrayFromPgx(
 			timeArray,
-			[]neosynctypes.NeosyncTypeOption{},
+			[]vydontypes.VydonTypeOption{},
 		)
 		if err != nil {
 			return nil, err

@@ -1,52 +1,72 @@
 version: 2
+
+# ---------------------------------------------------------------------------
+# Dependabot configuration for Vydon.
+#
+# - Commit messages follow Conventional Commits (build(deps): ...).
+# - Labels: every PR gets `dependencies` and the ecosystem-specific label so
+#   maintainers can filter at a glance.
+# - Reviewer assignment is handled via CODEOWNERS (the deprecated `reviewers`
+#   key has been removed).
+# - Minor + patch bumps are grouped per-ecosystem to reduce PR noise; majors
+#   ship as individual PRs so each can get a focused review.
+# - open-pull-requests-limit is raised to 10 to fit the broader bump surface.
+# ---------------------------------------------------------------------------
+
 updates:
-  # Enable version updates for go
-  - package-ecosystem: "gomod"
+  # Backend / worker / cli / internal Go modules
+  - package-ecosystem: gomod
+    directory: /
     schedule:
-      interval: "daily"
+      interval: daily
+    open-pull-requests-limit: 10
     labels:
       - dependencies
-    directory: "/"
+      - go
     commit-message:
-      prefix: "build"
-      prefix-development: "build"
-      include: "scope"
+      prefix: build
+      prefix-development: build
+      include: scope
     groups:
-      golang-minor:
+      go-minor-patch:
         update-types:
           - minor
           - patch
-    reviewers:
-      - nickzelei
-  - package-ecosystem: "gomod"
+
+  # tools/ Go module (sqlc, mockery, buf, etc.)
+  - package-ecosystem: gomod
+    directory: /tools
     schedule:
-      interval: "daily"
+      interval: daily
+    open-pull-requests-limit: 10
     labels:
       - dependencies
-    directory: "tools"
+      - go
+      - tooling
     commit-message:
-      prefix: "build"
-      prefix-development: "build"
-      include: "scope"
+      prefix: build
+      prefix-development: build
+      include: scope
     groups:
-      golang-minor:
+      go-tools-minor-patch:
         update-types:
           - minor
           - patch
-    reviewers:
-      - nickzelei
 
   # Root npm tooling (commitlint, lefthook)
-  - package-ecosystem: "npm"
-    directory: "/"
+  - package-ecosystem: npm
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: weekly
+    open-pull-requests-limit: 10
     labels:
       - dependencies
+      - npm
+      - tooling
     commit-message:
-      prefix: "build"
-      prefix-development: "build"
-      include: "scope"
+      prefix: build
+      prefix-development: build
+      include: scope
     groups:
       npm-tooling:
         patterns:
@@ -56,66 +76,70 @@ updates:
           - patch
     versioning-strategy: increase
 
-  - package-ecosystem: "npm"
-    directory: "frontend"
+  # Frontend monorepo
+  - package-ecosystem: npm
+    directory: /frontend
     schedule:
-      interval: "weekly"
+      interval: weekly
+    open-pull-requests-limit: 10
     labels:
       - dependencies
+      - npm
+      - frontend
     commit-message:
-      prefix: "build"
-      prefix-development: "build"
-      include: "scope"
+      prefix: build
+      prefix-development: build
+      include: scope
     groups:
-      npm-development:
+      frontend-dev:
         dependency-type: development
         update-types:
           - minor
           - patch
-      npm-production:
+      frontend-prod:
         dependency-type: production
         update-types:
           - minor
           - patch
-    reviewers:
-      - nickzelei
     versioning-strategy: increase
 
-  - package-ecosystem: "npm"
-    directory: "docs"
+  # Documentation (Docusaurus)
+  - package-ecosystem: npm
+    directory: /docs
     schedule:
-      interval: "weekly"
+      interval: weekly
+    open-pull-requests-limit: 5
     labels:
       - dependencies
+      - npm
+      - docs
     commit-message:
-      prefix: "build"
-      prefix-development: "build"
-      include: "scope"
+      prefix: build
+      prefix-development: build
+      include: scope
     groups:
-      npm-all-dependencies:
+      docs:
         patterns:
           - "*"
         update-types:
           - minor
           - patch
-    reviewers:
-      - nickzelei
 
-  # Maintain dependencies for GitHub Actions
-  - package-ecosystem: "github-actions"
-    directory: "/"
+  # GitHub Actions workflows
+  - package-ecosystem: github-actions
+    directory: /
     schedule:
-      interval: "weekly"
+      interval: weekly
+    open-pull-requests-limit: 5
     labels:
       - dependencies
+      - ci
     commit-message:
-      prefix: "build"
-      prefix-development: "build"
-      include: "scope"
+      prefix: build
+      prefix-development: build
+      include: scope
     groups:
-      actions-minor:
+      actions-minor-patch:
         update-types:
           - minor
           - patch
-    reviewers:
-      - nickzelei

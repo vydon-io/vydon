@@ -3,15 +3,15 @@ package genbenthosconfigs_activity
 import (
 	"testing"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	sqlmanager_mssql "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/mssql"
-	sqlmanager_postgres "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/postgres"
-	benthosbuilder "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder"
-	runconfigs "github.com/nucleuscloud/neosync/internal/runconfigs"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
 	"github.com/stretchr/testify/require"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	sqlmanager_mssql "github.com/vydon-io/vydon/backend/pkg/sqlmanager/mssql"
+	sqlmanager_postgres "github.com/vydon-io/vydon/backend/pkg/sqlmanager/postgres"
+	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
+	runconfigs "github.com/vydon-io/vydon/internal/runconfigs"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 func Test_buildPostTableSyncRunCtx(t *testing.T) {
@@ -44,7 +44,7 @@ func Test_buildPostTableSyncRunCtx(t *testing.T) {
 			{
 				Name:    "config1",
 				RunType: runconfigs.RunTypeInsert,
-				ColumnDefaultProperties: map[string]*neosync_benthos.ColumnDefaultProperties{
+				ColumnDefaultProperties: map[string]*vydon_benthos.ColumnDefaultProperties{
 					"col1": {NeedsReset: true, HasDefaultTransformer: false},
 				},
 				TableSchema: "public",
@@ -53,7 +53,7 @@ func Test_buildPostTableSyncRunCtx(t *testing.T) {
 			{
 				Name:    "config2",
 				RunType: runconfigs.RunTypeInsert,
-				ColumnDefaultProperties: map[string]*neosync_benthos.ColumnDefaultProperties{
+				ColumnDefaultProperties: map[string]*vydon_benthos.ColumnDefaultProperties{
 					"col1": {NeedsOverride: true},
 				},
 				TableSchema: "dbo",
@@ -114,7 +114,7 @@ func Test_BuildPgPostTableSyncStatement(t *testing.T) {
 	t.Run("No columns need reset", func(t *testing.T) {
 		bcNoReset := &benthosbuilder.BenthosConfigResponse{
 			RunType: runconfigs.RunTypeInsert,
-			ColumnDefaultProperties: map[string]*neosync_benthos.ColumnDefaultProperties{
+			ColumnDefaultProperties: map[string]*vydon_benthos.ColumnDefaultProperties{
 				"col1": {NeedsReset: false, HasDefaultTransformer: false},
 				"col2": {NeedsReset: false, HasDefaultTransformer: true},
 			},
@@ -128,7 +128,7 @@ func Test_BuildPgPostTableSyncStatement(t *testing.T) {
 	t.Run("Some columns need reset", func(t *testing.T) {
 		bcSomeReset := &benthosbuilder.BenthosConfigResponse{
 			RunType: runconfigs.RunTypeInsert,
-			ColumnDefaultProperties: map[string]*neosync_benthos.ColumnDefaultProperties{
+			ColumnDefaultProperties: map[string]*vydon_benthos.ColumnDefaultProperties{
 				"col1": {NeedsReset: true, HasDefaultTransformer: false},
 				"col2": {NeedsReset: false, HasDefaultTransformer: true},
 				"col3": {NeedsReset: true, HasDefaultTransformer: false},
@@ -157,7 +157,7 @@ func Test_BuildMssqlPostTableSyncStatement(t *testing.T) {
 	t.Run("No columns need override", func(t *testing.T) {
 		bcNoOverride := &benthosbuilder.BenthosConfigResponse{
 			RunType: runconfigs.RunTypeInsert,
-			ColumnDefaultProperties: map[string]*neosync_benthos.ColumnDefaultProperties{
+			ColumnDefaultProperties: map[string]*vydon_benthos.ColumnDefaultProperties{
 				"col1": {NeedsOverride: false},
 				"col2": {NeedsOverride: false},
 			},
@@ -171,7 +171,7 @@ func Test_BuildMssqlPostTableSyncStatement(t *testing.T) {
 	t.Run("Some columns need override", func(t *testing.T) {
 		bcSomeOverride := &benthosbuilder.BenthosConfigResponse{
 			RunType: runconfigs.RunTypeInsert,
-			ColumnDefaultProperties: map[string]*neosync_benthos.ColumnDefaultProperties{
+			ColumnDefaultProperties: map[string]*vydon_benthos.ColumnDefaultProperties{
 				"col1": {NeedsOverride: true},
 				"col2": {NeedsOverride: false},
 			},

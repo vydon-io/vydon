@@ -6,15 +6,15 @@ import (
 	"log/slog"
 
 	"connectrpc.com/connect"
-	mysql_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/mysql"
-	pg_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/postgresql"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/mongoconnect"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlconnect"
-	sql_manager "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	aws_manager "github.com/nucleuscloud/neosync/internal/aws"
-	neosync_gcp "github.com/nucleuscloud/neosync/internal/gcp"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
+	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
+	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/mongoconnect"
+	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
+	sql_manager "github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	aws_manager "github.com/vydon-io/vydon/internal/aws"
+	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 type SampleDataStream interface {
@@ -67,14 +67,14 @@ type ConnectionDataBuilder interface {
 }
 
 type DefaultConnectionDataBuilder struct {
-	sqlconnector        sqlconnect.SqlConnector
-	sqlmanager          sql_manager.SqlManagerClient
-	pgquerier           pg_queries.Querier
-	mysqlquerier        mysql_queries.Querier
-	awsmanager          aws_manager.NeosyncAwsManagerClient
-	gcpmanager          neosync_gcp.ManagerInterface
-	mongoconnector      mongoconnect.Interface
-	neosynctyperegistry neosynctypes.NeosyncTypeRegistry
+	sqlconnector      sqlconnect.SqlConnector
+	sqlmanager        sql_manager.SqlManagerClient
+	pgquerier         pg_queries.Querier
+	mysqlquerier      mysql_queries.Querier
+	awsmanager        aws_manager.VydonAwsManagerClient
+	gcpmanager        vydon_gcp.ManagerInterface
+	mongoconnector    mongoconnect.Interface
+	vydontyperegistry vydontypes.VydonTypeRegistry
 }
 
 func NewConnectionDataBuilder(
@@ -82,20 +82,20 @@ func NewConnectionDataBuilder(
 	sqlmanager sql_manager.SqlManagerClient,
 	pgquerier pg_queries.Querier,
 	mysqlquerier mysql_queries.Querier,
-	awsmanager aws_manager.NeosyncAwsManagerClient,
-	gcpmanager neosync_gcp.ManagerInterface,
+	awsmanager aws_manager.VydonAwsManagerClient,
+	gcpmanager vydon_gcp.ManagerInterface,
 	mongoconnector mongoconnect.Interface,
-	neosynctyperegistry neosynctypes.NeosyncTypeRegistry,
+	vydontyperegistry vydontypes.VydonTypeRegistry,
 ) ConnectionDataBuilder {
 	return &DefaultConnectionDataBuilder{
-		sqlconnector:        sqlconnector,
-		sqlmanager:          sqlmanager,
-		pgquerier:           pgquerier,
-		mysqlquerier:        mysqlquerier,
-		awsmanager:          awsmanager,
-		gcpmanager:          gcpmanager,
-		mongoconnector:      mongoconnector,
-		neosynctyperegistry: neosynctyperegistry,
+		sqlconnector:      sqlconnector,
+		sqlmanager:        sqlmanager,
+		pgquerier:         pgquerier,
+		mysqlquerier:      mysqlquerier,
+		awsmanager:        awsmanager,
+		gcpmanager:        gcpmanager,
+		mongoconnector:    mongoconnector,
+		vydontyperegistry: vydontyperegistry,
 	}
 }
 
@@ -109,7 +109,7 @@ func (b *DefaultConnectionDataBuilder) NewDataConnection(
 		*mgmtv1alpha1.ConnectionConfig_MssqlConfig:
 		return NewSQLConnectionDataService(logger, b.sqlconnector, b.sqlmanager, connection), nil
 	case *mgmtv1alpha1.ConnectionConfig_AwsS3Config:
-		return NewAwsS3ConnectionDataService(logger, b.awsmanager, b.neosynctyperegistry, connection), nil
+		return NewAwsS3ConnectionDataService(logger, b.awsmanager, b.vydontyperegistry, connection), nil
 	case *mgmtv1alpha1.ConnectionConfig_GcpCloudstorageConfig:
 		return NewGcpConnectionDataService(logger, b.gcpmanager, connection), nil
 	case *mgmtv1alpha1.ConnectionConfig_DynamodbConfig:

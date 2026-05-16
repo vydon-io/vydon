@@ -3,8 +3,8 @@
 package sqlconnect
 
 import (
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
 	mock "github.com/stretchr/testify/mock"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 
 	slog "log/slog"
 )
@@ -24,11 +24,11 @@ func (_m *MockSqlConnector) EXPECT() *MockSqlConnector_Expecter {
 
 // NewDbFromConnectionConfig provides a mock function with given fields: connectionConfig, logger, opts
 func (_m *MockSqlConnector) NewDbFromConnectionConfig(connectionConfig *mgmtv1alpha1.ConnectionConfig, logger *slog.Logger, opts ...SqlConnectorOption) (SqlDbContainer, error) {
-	_va := make([]interface{}, len(opts))
+	_va := make([]any, len(opts))
 	for _i := range opts {
 		_va[_i] = opts[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, connectionConfig, logger)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -68,9 +68,9 @@ type MockSqlConnector_NewDbFromConnectionConfig_Call struct {
 //   - connectionConfig *mgmtv1alpha1.ConnectionConfig
 //   - logger *slog.Logger
 //   - opts ...SqlConnectorOption
-func (_e *MockSqlConnector_Expecter) NewDbFromConnectionConfig(connectionConfig interface{}, logger interface{}, opts ...interface{}) *MockSqlConnector_NewDbFromConnectionConfig_Call {
+func (_e *MockSqlConnector_Expecter) NewDbFromConnectionConfig(connectionConfig any, logger any, opts ...any) *MockSqlConnector_NewDbFromConnectionConfig_Call {
 	return &MockSqlConnector_NewDbFromConnectionConfig_Call{Call: _e.mock.On("NewDbFromConnectionConfig",
-		append([]interface{}{connectionConfig, logger}, opts...)...)}
+		append([]any{connectionConfig, logger}, opts...)...)}
 }
 
 func (_c *MockSqlConnector_NewDbFromConnectionConfig_Call) Run(run func(connectionConfig *mgmtv1alpha1.ConnectionConfig, logger *slog.Logger, opts ...SqlConnectorOption)) *MockSqlConnector_NewDbFromConnectionConfig_Call {

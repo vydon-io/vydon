@@ -1,10 +1,10 @@
 apiVersion: v2
 name: api
-description: A Helm chart for the Neosync Backend API
-home: https://www.neosync.dev
+description: A Helm chart for the Vydon Backend API
+home: https://vydon.io
 sources:
-  - https://github.com/nucleuscloud/neosync
-icon: https://assets.nucleuscloud.com/neosync/newbrand/logo_small.png
+  - https://github.com/vydon-io/vydon
+icon: https://assets.vydon.io/vydon/newbrand/logo_small.png
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives

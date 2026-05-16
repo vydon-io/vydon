@@ -9,9 +9,9 @@ import (
 	"time"
 
 	"github.com/go-sql-driver/mysql"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
 	"github.com/spf13/viper"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 const (
@@ -63,7 +63,12 @@ func NewFromMysqlConnection(
 			mysqlurl = config.MysqlConfig.GetUrl()
 		} else if config.MysqlConfig.GetUrlFromEnv() != "" {
 			if !strings.HasPrefix(config.MysqlConfig.GetUrlFromEnv(), userDefinedEnvPrefix) {
-				return nil, nucleuserrors.NewBadRequest(fmt.Sprintf("to source a url from an environment variable, the variable must have a prefix of %s", userDefinedEnvPrefix))
+				return nil, vydonerrors.NewBadRequest(
+					fmt.Sprintf(
+						"to source a url from an environment variable, the variable must have a prefix of %s",
+						userDefinedEnvPrefix,
+					),
+				)
 			}
 			mysqlurl = viper.GetString(config.MysqlConfig.GetUrlFromEnv())
 		}

@@ -8,7 +8,7 @@ import (
 	"os"
 	"path/filepath"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -53,7 +53,11 @@ func UpsertClientTlsFileSingleClient(
 			if err != nil && !os.IsNotExist(err) {
 				return err
 			} else if err != nil && os.IsNotExist(err) {
-				if err := os.WriteFile(*filenames.ClientKey, []byte(fmt.Sprintf("%s\n%s", config.GetClientKey(), config.GetClientCert())), 0600); err != nil {
+				if err := os.WriteFile(
+					*filenames.ClientKey,
+					[]byte(fmt.Sprintf("%s\n%s", config.GetClientKey(), config.GetClientCert())),
+					0600,
+				); err != nil {
 					return err
 				}
 			}

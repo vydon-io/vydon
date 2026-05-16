@@ -4,16 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	temporalclient "go.temporal.io/sdk/client"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func ToJobDto(
-	inputJob *db_queries.NeosyncApiJob,
-	inputDestConnections []db_queries.NeosyncApiJobDestinationConnectionAssociation,
+	inputJob *db_queries.VydonApiJob,
+	inputDestConnections []db_queries.VydonApiJobDestinationConnectionAssociation,
 ) (*mgmtv1alpha1.Job, error) {
 	mappings := []*mgmtv1alpha1.JobMapping{}
 	for _, mapping := range inputJob.Mappings {
@@ -60,20 +60,20 @@ func ToJobDto(
 	}
 
 	return &mgmtv1alpha1.Job{
-		Id:                 neosyncdb.UUIDString(inputJob.ID),
+		Id:                 vydondb.UUIDString(inputJob.ID),
 		Name:               inputJob.Name,
 		CreatedAt:          timestamppb.New(inputJob.CreatedAt.Time),
 		UpdatedAt:          timestamppb.New(inputJob.UpdatedAt.Time),
-		CreatedByUserId:    neosyncdb.UUIDString(inputJob.CreatedByID),
-		UpdatedByUserId:    neosyncdb.UUIDString(inputJob.UpdatedByID),
-		CronSchedule:       neosyncdb.ToNullableString(inputJob.CronSchedule),
+		CreatedByUserId:    vydondb.UUIDString(inputJob.CreatedByID),
+		UpdatedByUserId:    vydondb.UUIDString(inputJob.UpdatedByID),
+		CronSchedule:       vydondb.ToNullableString(inputJob.CronSchedule),
 		Mappings:           mappings,
 		VirtualForeignKeys: virtualForeignKeys,
 		Source: &mgmtv1alpha1.JobSource{
 			Options: sourceOptions,
 		},
 		Destinations:    destinations,
-		AccountId:       neosyncdb.UUIDString(inputJob.AccountID),
+		AccountId:       vydondb.UUIDString(inputJob.AccountID),
 		SyncOptions:     syncOptions,
 		WorkflowOptions: workflowOptions,
 		JobType:         jobTypeConfig,
@@ -81,12 +81,12 @@ func ToJobDto(
 }
 
 func toDestinationDto(
-	input *db_queries.NeosyncApiJobDestinationConnectionAssociation,
+	input *db_queries.VydonApiJobDestinationConnectionAssociation,
 ) *mgmtv1alpha1.JobDestination {
 	return &mgmtv1alpha1.JobDestination{
-		ConnectionId: neosyncdb.UUIDString(input.ConnectionID),
+		ConnectionId: vydondb.UUIDString(input.ConnectionID),
 		Options:      input.Options.ToDto(),
-		Id:           neosyncdb.UUIDString(input.ID),
+		Id:           vydondb.UUIDString(input.ID),
 	}
 }
 

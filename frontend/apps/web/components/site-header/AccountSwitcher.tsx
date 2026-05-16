@@ -12,7 +12,7 @@ import { getErrorMessage } from '@/util/util';
 import { CreateTeamFormValues } from '@/yup-validations/account-switcher';
 import { useMutation, useQuery } from '@connectrpc/connect-query';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { UserAccount, UserAccountService, UserAccountType } from '@neosync/sdk';
+import { UserAccount, UserAccountService, UserAccountType } from '@vydon/sdk';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -83,14 +83,14 @@ export default function AccountSwitcher(_: Props): ReactElement | null {
             setShowNewTeamDialog(true);
           }}
           showCreateTeamDialog={
-            !systemAppConfigData?.isNeosyncCloud ||
-            (systemAppConfigData.isNeosyncCloud &&
+            !systemAppConfigData?.isVydonCloud ||
+            (systemAppConfigData.isVydonCloud &&
               systemAppConfigData.isStripeEnabled)
           }
         />
       }
       showSubscriptionInfo={
-        (systemAppConfigData?.isNeosyncCloud ?? false) &&
+        (systemAppConfigData?.isVydonCloud ?? false) &&
         (systemAppConfigData?.isStripeEnabled ?? false)
       }
       showConvertPersonalToTeamOption={

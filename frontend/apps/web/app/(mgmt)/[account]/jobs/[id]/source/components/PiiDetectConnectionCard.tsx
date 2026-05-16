@@ -13,7 +13,7 @@ import { useAccount } from '@/components/providers/account-provider';
 import Spinner from '@/components/Spinner';
 import { Button } from '@/components/ui/button';
 import { useMutation, useQuery } from '@connectrpc/connect-query';
-import { Connection, ConnectionService, JobService } from '@neosync/sdk';
+import { Connection, ConnectionService, JobService } from '@vydon/sdk';
 import {
   FormEvent,
   ReactElement,

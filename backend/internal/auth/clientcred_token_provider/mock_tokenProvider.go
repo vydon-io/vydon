@@ -5,7 +5,7 @@ package clientcredtokenprovider
 import (
 	context "context"
 
-	auth_client "github.com/nucleuscloud/neosync/backend/internal/auth/client"
+	auth_client "github.com/vydon-io/vydon/backend/internal/auth/client"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -60,7 +60,7 @@ type MocktokenProvider_GetToken_Call struct {
 
 // GetToken is a helper method to define mock.On call
 //   - _a0 context.Context
-func (_e *MocktokenProvider_Expecter) GetToken(_a0 interface{}) *MocktokenProvider_GetToken_Call {
+func (_e *MocktokenProvider_Expecter) GetToken(_a0 any) *MocktokenProvider_GetToken_Call {
 	return &MocktokenProvider_GetToken_Call{Call: _e.mock.On("GetToken", _a0)}
 }
 

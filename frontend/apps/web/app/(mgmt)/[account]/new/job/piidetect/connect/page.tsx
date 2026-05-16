@@ -24,7 +24,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { getSingleOrUndefined, splitConnections } from '@/libs/utils';
 import { useQuery } from '@connectrpc/connect-query';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ConnectionService } from '@neosync/sdk';
+import { ConnectionService } from '@vydon/sdk';
 import { useRouter } from 'next/navigation';
 import { usePostHog } from 'posthog-js/react';
 import { ReactElement, use, useEffect } from 'react';

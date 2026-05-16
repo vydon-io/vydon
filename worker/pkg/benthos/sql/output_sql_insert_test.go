@@ -1,12 +1,12 @@
-package neosync_benthos_sql
+package vydon_benthos_sql
 
 import (
 	"context"
 	"testing"
 
-	"github.com/nucleuscloud/neosync/internal/testutil"
 	"github.com/redpanda-data/benthos/v4/public/service"
 	"github.com/stretchr/testify/require"
+	"github.com/vydon-io/vydon/internal/testutil"
 )
 
 func Test_SqlInsertOutputEmptyShutdown(t *testing.T) {

@@ -64,7 +64,7 @@ type MockAuthClient_InjectTokenCtx_Call struct {
 //   - ctx context.Context
 //   - header http.Header
 //   - spec connect.Spec
-func (_e *MockAuthClient_Expecter) InjectTokenCtx(ctx interface{}, header interface{}, spec interface{}) *MockAuthClient_InjectTokenCtx_Call {
+func (_e *MockAuthClient_Expecter) InjectTokenCtx(ctx any, header any, spec any) *MockAuthClient_InjectTokenCtx_Call {
 	return &MockAuthClient_InjectTokenCtx_Call{Call: _e.mock.On("InjectTokenCtx", ctx, header, spec)}
 }
 

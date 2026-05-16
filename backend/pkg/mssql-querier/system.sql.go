@@ -7,7 +7,7 @@ import (
 	"strings"
 	"text/template"
 
-	mysql_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/mysql"
+	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
 )
 
 var getDatabaseSchemaTmpl = `-- name: GetDatabaseSchema :many

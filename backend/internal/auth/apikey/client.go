@@ -8,24 +8,24 @@ import (
 	"time"
 
 	"connectrpc.com/connect"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	"github.com/nucleuscloud/neosync/backend/internal/utils"
-	pkg_utils "github.com/nucleuscloud/neosync/backend/pkg/utils"
-	"github.com/nucleuscloud/neosync/internal/apikey"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	"github.com/vydon-io/vydon/backend/internal/utils"
+	pkg_utils "github.com/vydon-io/vydon/backend/pkg/utils"
+	"github.com/vydon-io/vydon/internal/apikey"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type TokenContextKey struct{}
 type TokenContextData struct {
 	RawToken   string
-	ApiKey     *db_queries.NeosyncApiAccountApiKey
+	ApiKey     *db_queries.VydonApiAccountApiKey
 	ApiKeyType apikey.ApiKeyType
 }
 
 var (
-	ErrInvalidApiKey = errors.New("token is not a valid neosync api key")
-	ErrApiKeyExpired = nucleuserrors.NewUnauthenticated("token is expired")
+	ErrInvalidApiKey = errors.New("token is not a valid vydon api key")
+	ErrApiKeyExpired = vydonerrors.NewUnauthenticated("token is expired")
 )
 
 type Queries interface {
@@ -33,7 +33,7 @@ type Queries interface {
 		ctx context.Context,
 		db db_queries.DBTX,
 		apiKey string,
-	) (db_queries.NeosyncApiAccountApiKey, error)
+	) (db_queries.VydonApiAccountApiKey, error)
 }
 
 type Client struct {
@@ -76,9 +76,9 @@ func (c *Client) InjectTokenCtx(
 			token,
 		)
 		apiKey, err := c.q.GetAccountApiKeyByKeyValue(ctx, c.db, hashedKeyValue)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return nil, err
-		} else if err != nil && neosyncdb.IsNoRows(err) {
+		} else if err != nil && vydondb.IsNoRows(err) {
 			return nil, ErrInvalidApiKey
 		}
 
@@ -106,7 +106,7 @@ func (c *Client) InjectTokenCtx(
 func GetTokenDataFromCtx(ctx context.Context) (*TokenContextData, error) {
 	data, ok := ctx.Value(TokenContextKey{}).(*TokenContextData)
 	if !ok {
-		return nil, nucleuserrors.NewUnauthenticated(
+		return nil, vydonerrors.NewUnauthenticated(
 			"ctx does not contain TokenContextData or unable to cast struct",
 		)
 	}

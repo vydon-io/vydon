@@ -1,4 +1,4 @@
-package nucleuserrors
+package vydonerrors
 
 import (
 	"errors"

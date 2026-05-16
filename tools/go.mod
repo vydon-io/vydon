@@ -1,14 +1,14 @@
-module github.com/nucleuscloud/neosync/tools
+module github.com/vydon-io/vydon/tools
 
-go 1.24.1
+go 1.24.13
 
-replace github.com/nucleuscloud/neosync => ../
+replace github.com/vydon-io/vydon => ../
 
 require (
 	github.com/antlr4-go/antlr/v4 v4.13.1
-	github.com/nucleuscloud/go-antlrv4-parser v0.0.0-20240830015744-041b46c70aa5
-	github.com/nucleuscloud/neosync v0.5.1
 	github.com/pganalyze/pg_query_go/v5 v5.1.0
+	github.com/vydon-io/go-antlrv4-parser v0.0.0-20260515121122-35ca9c3d1ebe
+	github.com/vydon-io/vydon v0.5.1
 )
 
 require (
@@ -34,7 +34,7 @@ require (
 	github.com/robfig/cron v1.2.0 // indirect
 	github.com/segmentio/ksuid v1.0.4 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
-	github.com/stretchr/testify v1.10.0 // indirect
+	github.com/stretchr/testify v1.11.1 // indirect
 	github.com/tilinna/z85 v1.0.0 // indirect
 	github.com/xeipuuv/gojsonpointer v0.0.0-20190905194746-02993c407bfb // indirect
 	github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415 // indirect
@@ -46,10 +46,10 @@ require (
 	go.temporal.io/api v1.45.0 // indirect
 	go.temporal.io/sdk v1.33.0 // indirect
 	golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8 // indirect
-	golang.org/x/net v0.37.0 // indirect
-	golang.org/x/sync v0.12.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
-	golang.org/x/text v0.23.0 // indirect
+	golang.org/x/net v0.50.0 // indirect
+	golang.org/x/sync v0.19.0 // indirect
+	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/text v0.34.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20250303144028-a0af3efb3deb // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20250303144028-a0af3efb3deb // indirect

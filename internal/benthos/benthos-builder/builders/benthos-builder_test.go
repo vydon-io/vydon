@@ -7,20 +7,20 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
-	rc "github.com/nucleuscloud/neosync/internal/runconfigs"
-	"github.com/nucleuscloud/neosync/internal/testutil"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
+	rc "github.com/vydon-io/vydon/internal/runconfigs"
+	"github.com/vydon-io/vydon/internal/testutil"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
-	neosync_benthos_transformers "github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	vydon_benthos_transformers "github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 )
 
 const (
@@ -95,7 +95,17 @@ func Test_ProcessorConfigEmpty(t *testing.T) {
 		"public.users.insert": {Query: ""},
 	}
 	runconfigs := []*rc.RunConfig{
-		rc.NewRunConfig(runconfigId, sqlmanager_shared.SchemaTable{Schema: "public", Table: "users"}, rc.RunTypeInsert, []string{"id"}, nil, []string{"id", "name"}, []string{"id", "name"}, []*rc.DependsOn{}, false),
+		rc.NewRunConfig(
+			runconfigId,
+			sqlmanager_shared.SchemaTable{Schema: "public", Table: "users"},
+			rc.RunTypeInsert,
+			[]string{"id"},
+			nil,
+			[]string{"id", "name"},
+			[]string{"id", "name"},
+			[]*rc.DependsOn{},
+			false,
+		),
 	}
 	logger := testutil.GetTestLogger(t)
 	connectionId := uuid.NewString()
@@ -185,7 +195,17 @@ func Test_ProcessorConfigEmptyJavascript(t *testing.T) {
 
 	schemaTable := sqlmanager_shared.SchemaTable{Schema: "public", Table: "users"}
 	runconfigs := []*rc.RunConfig{
-		rc.NewRunConfig(schemaTable.String(), schemaTable, rc.RunTypeInsert, []string{"id"}, nil, []string{"id", "name"}, []string{"id", "name"}, []*rc.DependsOn{}, false),
+		rc.NewRunConfig(
+			schemaTable.String(),
+			schemaTable,
+			rc.RunTypeInsert,
+			[]string{"id"},
+			nil,
+			[]string{"id", "name"},
+			[]string{"id", "name"},
+			[]*rc.DependsOn{},
+			false,
+		),
 	}
 
 	queryMap := map[string]*sqlmanager_shared.SelectQuery{
@@ -234,7 +254,7 @@ func TestShouldHaltOnSchemaAddition(t *testing.T) {
 				"id":         &sqlmanager_shared.DatabaseSchemaRow{},
 				"created_by": &sqlmanager_shared.DatabaseSchemaRow{},
 			},
-			"neosync_api.accounts": {
+			"vydon_api.accounts": {
 				"id":   &sqlmanager_shared.DatabaseSchemaRow{},
 				"name": &sqlmanager_shared.DatabaseSchemaRow{},
 			},
@@ -282,16 +302,60 @@ func Test_buildProcessorConfigsMutation(t *testing.T) {
 	ctx := context.Background()
 
 	schemaTable := sqlmanager_shared.SchemaTable{Schema: "public", Table: "users"}
-	runconfig := rc.NewRunConfig(schemaTable.String(), schemaTable, rc.RunTypeInsert, []string{}, nil, []string{}, []string{}, []*rc.DependsOn{}, false)
-	output, err := buildProcessorConfigs(ctx, mockTransformerClient, []*mgmtv1alpha1.JobMapping{}, map[string]*sqlmanager_shared.DatabaseSchemaRow{}, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId, runconfig, nil, []string{})
+	runconfig := rc.NewRunConfig(
+		schemaTable.String(),
+		schemaTable,
+		rc.RunTypeInsert,
+		[]string{},
+		nil,
+		[]string{},
+		[]string{},
+		[]*rc.DependsOn{},
+		false,
+	)
+	output, err := buildProcessorConfigs(
+		ctx,
+		mockTransformerClient,
+		[]*mgmtv1alpha1.JobMapping{},
+		map[string]*sqlmanager_shared.DatabaseSchemaRow{},
+		map[string][]*bb_internal.ReferenceKey{},
+		[]string{},
+		mockJobId,
+		mockRunId,
+		runconfig,
+		nil,
+		[]string{},
+	)
 	require.Nil(t, err)
 	require.Empty(t, output)
 
-	output, err = buildProcessorConfigs(ctx, mockTransformerClient, []*mgmtv1alpha1.JobMapping{}, map[string]*sqlmanager_shared.DatabaseSchemaRow{}, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId, runconfig, nil, []string{})
+	output, err = buildProcessorConfigs(
+		ctx,
+		mockTransformerClient,
+		[]*mgmtv1alpha1.JobMapping{},
+		map[string]*sqlmanager_shared.DatabaseSchemaRow{},
+		map[string][]*bb_internal.ReferenceKey{},
+		[]string{},
+		mockJobId,
+		mockRunId,
+		runconfig,
+		nil,
+		[]string{},
+	)
 	require.Nil(t, err)
 	require.Empty(t, output)
 
-	runconfig = rc.NewRunConfig(schemaTable.String(), schemaTable, rc.RunTypeInsert, []string{}, nil, []string{}, []string{"id"}, []*rc.DependsOn{}, false)
+	runconfig = rc.NewRunConfig(
+		schemaTable.String(),
+		schemaTable,
+		rc.RunTypeInsert,
+		[]string{},
+		nil,
+		[]string{},
+		[]string{"id"},
+		[]*rc.DependsOn{},
+		false,
+	)
 	output, err = buildProcessorConfigs(ctx, mockTransformerClient, []*mgmtv1alpha1.JobMapping{
 		{Schema: "public", Table: "users", Column: "id"},
 	}, map[string]*sqlmanager_shared.DatabaseSchemaRow{}, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId, runconfig, nil, []string{})
@@ -305,25 +369,50 @@ func Test_buildProcessorConfigsMutation(t *testing.T) {
 	require.Empty(t, output)
 
 	output, err = buildProcessorConfigs(ctx, mockTransformerClient, []*mgmtv1alpha1.JobMapping{
-		{Schema: "public", Table: "users", Column: "id", Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{
-			Config: &mgmtv1alpha1.TransformerConfig_PassthroughConfig{},
-		}}},
+		{
+			Schema: "public",
+			Table:  "users",
+			Column: "id",
+			Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{
+				Config: &mgmtv1alpha1.TransformerConfig_PassthroughConfig{},
+			}},
+		},
 	}, map[string]*sqlmanager_shared.DatabaseSchemaRow{}, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId, runconfig, nil, []string{})
 	require.Nil(t, err)
 	require.Empty(t, output)
 
-	runconfig = rc.NewRunConfig(schemaTable.String(), schemaTable, rc.RunTypeInsert, []string{}, nil, []string{}, []string{"id", "name"}, []*rc.DependsOn{}, false)
+	runconfig = rc.NewRunConfig(
+		schemaTable.String(),
+		schemaTable,
+		rc.RunTypeInsert,
+		[]string{},
+		nil,
+		[]string{},
+		[]string{"id", "name"},
+		[]*rc.DependsOn{},
+		false,
+	)
 	output, err = buildProcessorConfigs(ctx, mockTransformerClient, []*mgmtv1alpha1.JobMapping{
-		{Schema: "public", Table: "users", Column: "id", Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{
-			Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{
-				Nullconfig: &mgmtv1alpha1.Null{},
-			},
-		}}},
-		{Schema: "public", Table: "users", Column: "name", Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{
-			Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{
-				Nullconfig: &mgmtv1alpha1.Null{},
-			},
-		}}},
+		{
+			Schema: "public",
+			Table:  "users",
+			Column: "id",
+			Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{
+				Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{
+					Nullconfig: &mgmtv1alpha1.Null{},
+				},
+			}},
+		},
+		{
+			Schema: "public",
+			Table:  "users",
+			Column: "name",
+			Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: &mgmtv1alpha1.TransformerConfig{
+				Config: &mgmtv1alpha1.TransformerConfig_Nullconfig{
+					Nullconfig: &mgmtv1alpha1.Null{},
+				},
+			}},
+		},
 	}, map[string]*sqlmanager_shared.DatabaseSchemaRow{}, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId, runconfig, nil, []string{})
 
 	require.Nil(t, err)
@@ -357,12 +446,31 @@ func Test_buildProcessorConfigsMutation(t *testing.T) {
 		},
 	}
 
-	runconfig = rc.NewRunConfig(schemaTable.String(), schemaTable, rc.RunTypeInsert, []string{"id"}, nil, []string{"email"}, []string{"email"}, []*rc.DependsOn{}, false)
+	runconfig = rc.NewRunConfig(
+		schemaTable.String(),
+		schemaTable,
+		rc.RunTypeInsert,
+		[]string{"id"},
+		nil,
+		[]string{"email"},
+		[]string{"email"},
+		[]*rc.DependsOn{},
+		false,
+	)
 	output, err = buildProcessorConfigs(ctx, mockTransformerClient, []*mgmtv1alpha1.JobMapping{
-		{Schema: "public", Table: "users", Column: "email", Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT.Config}}}, groupedSchemas, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId, runconfig, nil, []string{})
+		{
+			Schema:      "public",
+			Table:       "users",
+			Column:      "email",
+			Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT.Config},
+		}}, groupedSchemas, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId, runconfig, nil, []string{})
 
 	require.Nil(t, err)
-	require.Equal(t, `root."email" = transform_email(value:this."email",preserve_length:false,preserve_domain:true,excluded_domains:[],max_length:40,email_type:"uuidv4",invalid_email_action:"reject")`, *output[0].Mutation)
+	require.Equal(
+		t,
+		`root."email" = transform_email(value:this."email",preserve_length:false,preserve_domain:true,excluded_domains:[],max_length:40,email_type:"uuidv4",invalid_email_action:"reject")`,
+		*output[0].Mutation,
+	)
 }
 
 func Test_ShouldProcessColumnTrue(t *testing.T) {
@@ -406,9 +514,24 @@ func Test_buildProcessorConfigsJavascriptEmpty(t *testing.T) {
 	}
 
 	schemaTable := sqlmanager_shared.SchemaTable{Schema: "public", Table: "users"}
-	runconfig := rc.NewRunConfig(schemaTable.String(), schemaTable, rc.RunTypeInsert, []string{"id"}, nil, []string{"id"}, []string{"id"}, []*rc.DependsOn{}, false)
+	runconfig := rc.NewRunConfig(
+		schemaTable.String(),
+		schemaTable,
+		rc.RunTypeInsert,
+		[]string{"id"},
+		nil,
+		[]string{"id"},
+		[]string{"id"},
+		[]*rc.DependsOn{},
+		false,
+	)
 	resp, err := buildProcessorConfigs(ctx, mockTransformerClient, []*mgmtv1alpha1.JobMapping{
-		{Schema: "public", Table: "users", Column: "id", Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT.Config}}}, map[string]*sqlmanager_shared.DatabaseSchemaRow{}, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId, runconfig, nil, []string{})
+		{
+			Schema:      "public",
+			Table:       "users",
+			Column:      "id",
+			Transformer: &mgmtv1alpha1.JobMappingTransformer{Config: jsT.Config},
+		}}, map[string]*sqlmanager_shared.DatabaseSchemaRow{}, map[string][]*bb_internal.ReferenceKey{}, []string{}, mockJobId, mockRunId, runconfig, nil, []string{})
 
 	require.NoError(t, err)
 	require.Empty(t, resp)
@@ -491,42 +614,42 @@ func Test_buildBenthosS3Credentials(t *testing.T) {
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{}),
-		&neosync_benthos.AwsCredentials{},
+		&vydon_benthos.AwsCredentials{},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{Profile: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Profile: "foo"},
+		&vydon_benthos.AwsCredentials{Profile: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{AccessKeyId: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Id: "foo"},
+		&vydon_benthos.AwsCredentials{Id: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{SecretAccessKey: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Secret: "foo"},
+		&vydon_benthos.AwsCredentials{Secret: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{SessionToken: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Token: "foo"},
+		&vydon_benthos.AwsCredentials{Token: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{FromEc2Role: shared.Ptr(true)}),
-		&neosync_benthos.AwsCredentials{FromEc2Role: true},
+		&vydon_benthos.AwsCredentials{FromEc2Role: true},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{RoleArn: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{Role: "foo"},
+		&vydon_benthos.AwsCredentials{Role: "foo"},
 	)
 	require.Equal(
 		t,
 		buildBenthosS3Credentials(&mgmtv1alpha1.AwsS3Credentials{RoleExternalId: shared.Ptr("foo")}),
-		&neosync_benthos.AwsCredentials{RoleExternalId: "foo"},
+		&vydon_benthos.AwsCredentials{RoleExternalId: "foo"},
 	)
 	require.Equal(
 		t,
@@ -539,7 +662,7 @@ func Test_buildBenthosS3Credentials(t *testing.T) {
 			RoleArn:         shared.Ptr("role"),
 			RoleExternalId:  shared.Ptr("foo"),
 		}),
-		&neosync_benthos.AwsCredentials{
+		&vydon_benthos.AwsCredentials{
 			Profile:        "profile",
 			Id:             "access-key",
 			Secret:         "secret",
@@ -967,8 +1090,8 @@ func Test_computeMutationFunction_Validate_Bloblang_Output(t *testing.T) {
 	}
 
 	blobenv := bloblang.NewEnvironment()
-	neosync_benthos_transformers.RegisterTransformIdentityScramble(blobenv, nil)
-	neosync_benthos_transformers.RegisterTransformPiiText(blobenv, nil)
+	vydon_benthos_transformers.RegisterTransformIdentityScramble(blobenv, nil)
+	vydon_benthos_transformers.RegisterTransformPiiText(blobenv, nil)
 
 	for _, transformer := range transformers {
 		t.Run(fmt.Sprintf("%s_%T_lint", t.Name(), transformer.Config.Config), func(t *testing.T) {
@@ -981,7 +1104,14 @@ func Test_computeMutationFunction_Validate_Bloblang_Output(t *testing.T) {
 				}, emailColInfo, false)
 			require.NoError(t, err)
 			ex, err := blobenv.Parse(val)
-			require.NoError(t, err, fmt.Sprintf("transformer lint failed, check that the transformer string is being constructed correctly. Failing Config: %T", transformer.Config.Config))
+			require.NoError(
+				t,
+				err,
+				fmt.Sprintf(
+					"transformer lint failed, check that the transformer string is being constructed correctly. Failing Config: %T",
+					transformer.Config.Config,
+				),
+			)
 			_, err = ex.Query(nil)
 			require.NoError(t, err)
 		})
@@ -1126,8 +1256,8 @@ func Test_computeMutationFunction_Validate_Bloblang_Output_EmptyConfigs(t *testi
 	}
 
 	blobenv := bloblang.NewEnvironment()
-	neosync_benthos_transformers.RegisterTransformIdentityScramble(blobenv, nil)
-	neosync_benthos_transformers.RegisterTransformPiiText(blobenv, nil)
+	vydon_benthos_transformers.RegisterTransformIdentityScramble(blobenv, nil)
+	vydon_benthos_transformers.RegisterTransformPiiText(blobenv, nil)
 
 	for _, transformer := range transformers {
 		t.Run(fmt.Sprintf("%s_%T_lint", t.Name(), transformer.Config.Config), func(t *testing.T) {
@@ -1140,7 +1270,14 @@ func Test_computeMutationFunction_Validate_Bloblang_Output_EmptyConfigs(t *testi
 				}, emailColInfo, false)
 			require.NoError(t, err)
 			ex, err := blobenv.Parse(val)
-			require.NoError(t, err, fmt.Sprintf("transformer lint failed, check that the transformer string is being constructed correctly. Failing Config: %T", transformer.Config.Config))
+			require.NoError(
+				t,
+				err,
+				fmt.Sprintf(
+					"transformer lint failed, check that the transformer string is being constructed correctly. Failing Config: %T",
+					transformer.Config.Config,
+				),
+			)
 			_, err = ex.Query(nil)
 			require.NoError(t, err)
 		})

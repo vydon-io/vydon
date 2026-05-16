@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 func Test_TranformLastNameEmptyName(t *testing.T) {

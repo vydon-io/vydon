@@ -5,24 +5,24 @@ import (
 	"fmt"
 	"log/slog"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	neosync_benthos_sql "github.com/nucleuscloud/neosync/worker/pkg/benthos/sql"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	vydon_benthos_sql "github.com/vydon-io/vydon/worker/pkg/benthos/sql"
 )
 
 // wrapper used for benthos sql-based connections to retrieve the connection they need
 type Provider struct {
-	connmanager   connectionmanager.Interface[neosync_benthos_sql.SqlDbtx]
+	connmanager   connectionmanager.Interface[vydon_benthos_sql.SqlDbtx]
 	getConnection func(connectionId string) (connectionmanager.ConnectionInput, error)
 	logger        *slog.Logger
 	session       connectionmanager.SessionInterface
 }
 
-var _ neosync_benthos_sql.ConnectionProvider = (*Provider)(nil)
+var _ vydon_benthos_sql.ConnectionProvider = (*Provider)(nil)
 
 func NewConnectionProvider(
-	connmanager connectionmanager.Interface[neosync_benthos_sql.SqlDbtx],
+	connmanager connectionmanager.Interface[vydon_benthos_sql.SqlDbtx],
 	getConnection func(connectionId string) (connectionmanager.ConnectionInput, error),
 	session connectionmanager.SessionInterface,
 	logger *slog.Logger,
@@ -38,7 +38,7 @@ func NewConnectionProvider(
 func (p *Provider) GetDb(
 	ctx context.Context,
 	connectionId string,
-) (neosync_benthos_sql.SqlDbtx, error) {
+) (vydon_benthos_sql.SqlDbtx, error) {
 	conn, err := p.getConnection(connectionId)
 	if err != nil {
 		return nil, err

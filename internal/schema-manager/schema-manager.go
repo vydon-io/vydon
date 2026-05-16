@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"log/slog"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlmanager"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
-	schema_mssql "github.com/nucleuscloud/neosync/internal/schema-manager/mssql"
-	schema_mysql "github.com/nucleuscloud/neosync/internal/schema-manager/mysql"
-	schema_notsupported "github.com/nucleuscloud/neosync/internal/schema-manager/not-supported"
-	schema_postgres "github.com/nucleuscloud/neosync/internal/schema-manager/postgres"
-	schema_shared "github.com/nucleuscloud/neosync/internal/schema-manager/shared"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/pkg/sqlmanager"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	"github.com/vydon-io/vydon/internal/license"
+	schema_mssql "github.com/vydon-io/vydon/internal/schema-manager/mssql"
+	schema_mysql "github.com/vydon-io/vydon/internal/schema-manager/mysql"
+	schema_notsupported "github.com/vydon-io/vydon/internal/schema-manager/not-supported"
+	schema_postgres "github.com/vydon-io/vydon/internal/schema-manager/postgres"
+	schema_shared "github.com/vydon-io/vydon/internal/schema-manager/shared"
 )
 
 type SchemaManagerService interface {
@@ -92,7 +92,10 @@ func (d *DefaultSchemaManager) New(
 	case *mgmtv1alpha1.JobDestinationOptions_MssqlOptions:
 		opts := cfg.MssqlOptions
 		return schema_mssql.NewMssqlSchemaManager(ctx, d.logger, d.eelicense, d.session, d.sqlmanagerclient, sourceConnection, destinationConnection, opts)
-	case *mgmtv1alpha1.JobDestinationOptions_DynamodbOptions, *mgmtv1alpha1.JobDestinationOptions_MongodbOptions, *mgmtv1alpha1.JobDestinationOptions_AwsS3Options, *mgmtv1alpha1.JobDestinationOptions_GcpCloudstorageOptions:
+	case *mgmtv1alpha1.JobDestinationOptions_DynamodbOptions,
+		*mgmtv1alpha1.JobDestinationOptions_MongodbOptions,
+		*mgmtv1alpha1.JobDestinationOptions_AwsS3Options,
+		*mgmtv1alpha1.JobDestinationOptions_GcpCloudstorageOptions:
 		// For destinations like DynamoDB, MongoDB, S3, and GCP Cloud Storage, we use a no-op implementation
 		// since schema initialization and data truncation don't apply to these data stores
 		return schema_notsupported.NewNotSupportedSchemaManager()

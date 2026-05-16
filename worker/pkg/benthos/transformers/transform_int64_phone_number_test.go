@@ -7,10 +7,10 @@ import (
 	"testing"
 	"time"
 
-	transformer_utils "github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers/utils"
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
+	transformer_utils "github.com/vydon-io/vydon/worker/pkg/benthos/transformers/utils"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 var testValue = int64(8384928322)
@@ -20,7 +20,12 @@ func Test_GenerateIntPhoneNumberPreserveLengthTrue(t *testing.T) {
 	assert.NoError(t, err)
 
 	numStr := strconv.FormatInt(*res, 10)
-	assert.Equal(t, int64(len(numStr)), transformer_utils.GetInt64Length(testValue), "The length of the output phone number should be the same as the input phone number")
+	assert.Equal(
+		t,
+		int64(len(numStr)),
+		transformer_utils.GetInt64Length(testValue),
+		"The length of the output phone number should be the same as the input phone number",
+	)
 }
 
 func Test_GenerateIntPhoneNumberPreserveLengthFalse(t *testing.T) {
@@ -28,7 +33,12 @@ func Test_GenerateIntPhoneNumberPreserveLengthFalse(t *testing.T) {
 	assert.NoError(t, err)
 
 	numStr := strconv.FormatInt(*res, 10)
-	assert.Equal(t, int64(len(numStr)), transformer_utils.GetInt64Length(testValue), "The length of the output phone number should be the same as the input phone number")
+	assert.Equal(
+		t,
+		int64(len(numStr)),
+		transformer_utils.GetInt64Length(testValue),
+		"The length of the output phone number should be the same as the input phone number",
+	)
 }
 
 func Test_GenerateIntPhoneNumberPreserveLengthFunction(t *testing.T) {
@@ -36,7 +46,11 @@ func Test_GenerateIntPhoneNumberPreserveLengthFunction(t *testing.T) {
 	assert.NoError(t, err)
 
 	numStr := strconv.FormatInt(res, 10)
-	assert.False(t, strings.Contains(numStr, "-"), "The output int phone number should not contain hyphens and may not be the same length as the input")
+	assert.False(
+		t,
+		strings.Contains(numStr, "-"),
+		"The output int phone number should not contain hyphens and may not be the same length as the input",
+	)
 }
 
 func Test_IntPhoneNumberTransformer(t *testing.T) {

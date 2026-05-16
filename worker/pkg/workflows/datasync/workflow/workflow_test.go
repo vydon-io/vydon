@@ -9,24 +9,24 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	benthosbuilder "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder"
-	benthosbuilder_shared "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/shared"
-	runconfigs "github.com/nucleuscloud/neosync/internal/runconfigs"
-	"github.com/nucleuscloud/neosync/internal/testutil"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
-	accountstatus_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/account-status"
-	genbenthosconfigs_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/gen-benthos-configs"
-	jobhooks_by_timing_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/jobhooks-by-timing"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
-	syncrediscleanup_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/sync-redis-clean-up"
-	accounthook_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/ee/account_hooks/workflow"
-	tablesync_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/workflow"
+	benthosbuilder "github.com/vydon-io/vydon/internal/benthos/benthos-builder"
+	benthosbuilder_shared "github.com/vydon-io/vydon/internal/benthos/benthos-builder/shared"
+	runconfigs "github.com/vydon-io/vydon/internal/runconfigs"
+	"github.com/vydon-io/vydon/internal/testutil"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	accounthook_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/account_hooks/workflow"
+	accountstatus_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/account-status"
+	genbenthosconfigs_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/gen-benthos-configs"
+	jobhooks_by_timing_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/jobhooks-by-timing"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
+	syncrediscleanup_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-redis-clean-up"
+	tablesync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/workflow"
 	"go.uber.org/atomic"
 
-	syncactivityopts_activity "github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/sync-activity-opts"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	syncactivityopts_activity "github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/sync-activity-opts"
 	"go.temporal.io/sdk/temporal"
 	"go.temporal.io/sdk/testsuite"
 	"go.temporal.io/sdk/workflow"
@@ -130,7 +130,7 @@ func Test_Workflow_Succeeds_SingleSync(t *testing.T) {
 			{
 				Name:      "public.users",
 				DependsOn: []*runconfigs.DependsOn{},
-				Config:    &neosync_benthos.BenthosConfig{},
+				Config:    &vydon_benthos.BenthosConfig{},
 			},
 		}}, nil)
 
@@ -174,11 +174,11 @@ func Test_Workflow_Follows_Synchronous_DependentFlow(t *testing.T) {
 			{
 				Name:      "public.users",
 				DependsOn: []*runconfigs.DependsOn{},
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -192,11 +192,11 @@ func Test_Workflow_Follows_Synchronous_DependentFlow(t *testing.T) {
 			{
 				Name:      "public.foo",
 				DependsOn: []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}},
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -272,11 +272,11 @@ func Test_Workflow_Follows_Multiple_Dependents(t *testing.T) {
 				TableSchema: "public",
 				TableName:   "users",
 				Columns:     []string{"id"},
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -290,11 +290,11 @@ func Test_Workflow_Follows_Multiple_Dependents(t *testing.T) {
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "accounts",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -303,16 +303,19 @@ func Test_Workflow_Follows_Multiple_Dependents(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -386,11 +389,11 @@ func Test_Workflow_Follows_Multiple_Dependent_Redis_Cleanup(t *testing.T) {
 				TableSchema: "public",
 				TableName:   "users",
 				Columns:     []string{"id"},
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -411,11 +414,11 @@ func Test_Workflow_Follows_Multiple_Dependent_Redis_Cleanup(t *testing.T) {
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "accounts",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -431,16 +434,19 @@ func Test_Workflow_Follows_Multiple_Dependent_Redis_Cleanup(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -518,11 +524,11 @@ func Test_Workflow_Halts_Activities_OnError(t *testing.T) {
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "users",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -536,11 +542,11 @@ func Test_Workflow_Halts_Activities_OnError(t *testing.T) {
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "accounts",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -549,16 +555,19 @@ func Test_Workflow_Halts_Activities_OnError(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -620,11 +629,11 @@ func Test_Workflow_Halts_Activities_On_InvalidAccountStatus(t *testing.T) {
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "users",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -638,11 +647,11 @@ func Test_Workflow_Halts_Activities_On_InvalidAccountStatus(t *testing.T) {
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "accounts",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -651,16 +660,19 @@ func Test_Workflow_Halts_Activities_On_InvalidAccountStatus(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -724,11 +736,11 @@ func Test_Workflow_Cleans_Up_Redis_OnError(t *testing.T) {
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "users",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -749,11 +761,11 @@ func Test_Workflow_Cleans_Up_Redis_OnError(t *testing.T) {
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "accounts",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -762,16 +774,19 @@ func Test_Workflow_Cleans_Up_Redis_OnError(t *testing.T) {
 				},
 			},
 			{
-				Name:        "public.foo",
-				DependsOn:   []*runconfigs.DependsOn{{Table: "public.users", Columns: []string{"id"}}, {Table: "public.accounts", Columns: []string{"id"}}},
+				Name: "public.foo",
+				DependsOn: []*runconfigs.DependsOn{
+					{Table: "public.users", Columns: []string{"id"}},
+					{Table: "public.accounts", Columns: []string{"id"}},
+				},
 				Columns:     []string{"id"},
 				TableSchema: "public",
 				TableName:   "foo",
-				Config: &neosync_benthos.BenthosConfig{
-					StreamConfig: neosync_benthos.StreamConfig{
-						Input: &neosync_benthos.InputConfig{
-							Inputs: neosync_benthos.Inputs{
-								PooledSqlRaw: &neosync_benthos.InputPooledSqlRaw{
+				Config: &vydon_benthos.BenthosConfig{
+					StreamConfig: vydon_benthos.StreamConfig{
+						Input: &vydon_benthos.InputConfig{
+							Inputs: vydon_benthos.Inputs{
+								PooledSqlRaw: &vydon_benthos.InputPooledSqlRaw{
 									OrderByColumns: []string{"id"},
 								},
 							},
@@ -865,7 +880,7 @@ func Test_Workflow_Max_InFlight(t *testing.T) {
 			TableSchema: "public",
 			TableName:   fmt.Sprintf("table%d", i),
 			Columns:     []string{"id"},
-			Config:      &neosync_benthos.BenthosConfig{},
+			Config:      &vydon_benthos.BenthosConfig{},
 		}
 	}
 	env.OnActivity(genact.GenerateBenthosConfigs, mock.Anything, mock.Anything).

@@ -4,26 +4,26 @@ import (
 	"context"
 	"log/slog"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	ee_transformer_fns "github.com/nucleuscloud/neosync/internal/ee/transformers/functions"
-	"github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	ee_transformer_fns "github.com/vydon-io/vydon/internal/transformers/functions"
+	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 )
 
 type piiTextApi struct {
-	execConfig         *transformPiiTextConfig
-	neosyncOperatorApi ee_transformer_fns.NeosyncOperatorApi
-	logger             *slog.Logger
+	execConfig       *transformPiiTextConfig
+	vydonOperatorApi ee_transformer_fns.VydonOperatorApi
+	logger           *slog.Logger
 }
 
 func newFromExecConfig(
 	execConfig *transformPiiTextConfig,
-	neosyncOperatorApi ee_transformer_fns.NeosyncOperatorApi,
+	vydonOperatorApi ee_transformer_fns.VydonOperatorApi,
 	logger *slog.Logger,
 ) transformers.TransformPiiTextApi {
 	return &piiTextApi{
-		execConfig:         execConfig,
-		neosyncOperatorApi: neosyncOperatorApi,
-		logger:             logger,
+		execConfig:       execConfig,
+		vydonOperatorApi: vydonOperatorApi,
+		logger:           logger,
 	}
 }
 
@@ -32,7 +32,7 @@ func (p *piiTextApi) Transform(ctx context.Context, config *mgmtv1alpha1.Transfo
 		ctx,
 		p.execConfig.analyze,
 		p.execConfig.anonymize,
-		p.neosyncOperatorApi,
+		p.vydonOperatorApi,
 		config,
 		value,
 		p.logger,

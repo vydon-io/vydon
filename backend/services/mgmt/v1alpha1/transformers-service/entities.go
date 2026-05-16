@@ -6,12 +6,12 @@ import (
 	"strings"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	presidioapi "github.com/nucleuscloud/neosync/internal/ee/presidio"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
+	"github.com/vydon-io/vydon/internal/rbac"
 )
 
 var (
@@ -23,7 +23,7 @@ func (s *Service) GetTransformPiiEntities(
 	req *connect.Request[mgmtv1alpha1.GetTransformPiiEntitiesRequest],
 ) (*connect.Response[mgmtv1alpha1.GetTransformPiiEntitiesResponse], error) {
 	if !s.cfg.IsPresidioEnabled {
-		return nil, nucleuserrors.NewNotImplemented(
+		return nil, vydonerrors.NewNotImplemented(
 			fmt.Sprintf(
 				"%s is not implemented",
 				strings.TrimPrefix(
@@ -34,7 +34,7 @@ func (s *Service) GetTransformPiiEntities(
 		)
 	}
 	if s.entityclient == nil {
-		return nil, nucleuserrors.NewInternalError("entity service is enabled but client was nil.")
+		return nil, vydonerrors.NewInternalError("entity service is enabled but client was nil.")
 	}
 	user, err := s.userdataclient.GetUser(ctx)
 	if err != nil {

@@ -1,1 +1,1 @@
-DROP TABLE IF EXISTS neosync_api.connections;
+DROP TABLE IF EXISTS vydon_api.connections;

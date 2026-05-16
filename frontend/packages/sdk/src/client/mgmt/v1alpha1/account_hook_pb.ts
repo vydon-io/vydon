@@ -933,7 +933,7 @@ export const AccountHookService: GenService<{
     output: typeof GetActiveAccountHooksByEventResponseSchema;
   },
   /**
-   * Retrieves the Slack connection url that allows a user to connect their Slack workspace to Neosync.
+   * Retrieves the Slack connection url that allows a user to connect their Slack workspace to Vydon.
    *
    * @generated from rpc mgmt.v1alpha1.AccountHookService.GetSlackConnectionUrl
    */

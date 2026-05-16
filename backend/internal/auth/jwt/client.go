@@ -11,8 +11,8 @@ import (
 	"connectrpc.com/connect"
 	"github.com/auth0/go-jwt-middleware/v2/jwks"
 	"github.com/auth0/go-jwt-middleware/v2/validator"
-	"github.com/nucleuscloud/neosync/backend/internal/utils"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
+	"github.com/vydon-io/vydon/backend/internal/utils"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
 )
 
 type ClientConfig struct {
@@ -79,11 +79,11 @@ func (j *Client) validateToken(
 ) (*validator.ValidatedClaims, error) {
 	rawParsedToken, err := j.jwtValidator.ValidateToken(ctx, accessToken)
 	if err != nil {
-		return nil, nucleuserrors.NewUnauthenticated(err.Error())
+		return nil, vydonerrors.NewUnauthenticated(err.Error())
 	}
 	validatedClaims, ok := rawParsedToken.(*validator.ValidatedClaims)
 	if !ok {
-		return nil, nucleuserrors.NewInternalError(
+		return nil, vydonerrors.NewInternalError(
 			"unable to convert token claims what was expected",
 		)
 	}
@@ -133,7 +133,7 @@ func (j *Client) InjectTokenCtx(
 
 	claims, ok := parsedToken.CustomClaims.(*CustomClaims)
 	if !ok {
-		return nil, nucleuserrors.NewInternalError(
+		return nil, vydonerrors.NewInternalError(
 			"unable to cast custom token claims to CustomClaims struct",
 		)
 	}
@@ -172,7 +172,7 @@ func GetTokenDataFromCtx(ctx context.Context) (*TokenContextData, error) {
 	val := ctx.Value(TokenContextKey{})
 	data, ok := val.(*TokenContextData)
 	if !ok {
-		return nil, nucleuserrors.NewUnauthenticated(
+		return nil, vydonerrors.NewUnauthenticated(
 			fmt.Sprintf("ctx does not contain TokenContextData or unable to cast struct: %T", val),
 		)
 	}

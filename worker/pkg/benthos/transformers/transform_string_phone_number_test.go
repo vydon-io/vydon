@@ -5,9 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 var testPhone = "1234567890"

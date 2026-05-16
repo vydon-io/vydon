@@ -1,4 +1,4 @@
-import { SystemTransformer, UserDefinedTransformer } from '@neosync/sdk';
+import { SystemTransformer, UserDefinedTransformer } from '@vydon/sdk';
 
 export type Transformer = SystemTransformer | UserDefinedTransformer;
 

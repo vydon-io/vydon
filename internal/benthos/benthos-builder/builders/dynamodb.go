@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"slices"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/pkg/metrics"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	awsmanager "github.com/nucleuscloud/neosync/internal/aws"
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/pkg/metrics"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	awsmanager "github.com/vydon-io/vydon/internal/aws"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	"github.com/vydon-io/vydon/internal/runconfigs"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
 )
 
 type dyanmodbSyncBuilder struct {
@@ -56,11 +56,11 @@ func (b *dyanmodbSyncBuilder) BuildSourceConfigs(
 	benthosConfigs := []*bb_internal.BenthosSourceConfig{}
 	// todo: may need to filter here based on the destination config mappings if there is no source->destination table map
 	for _, tableMapping := range groupedMappings {
-		bc := &neosync_benthos.BenthosConfig{
-			StreamConfig: neosync_benthos.StreamConfig{
-				Input: &neosync_benthos.InputConfig{
-					Inputs: neosync_benthos.Inputs{
-						AwsDynamoDB: &neosync_benthos.InputAwsDynamoDB{
+		bc := &vydon_benthos.BenthosConfig{
+			StreamConfig: vydon_benthos.StreamConfig{
+				Input: &vydon_benthos.InputConfig{
+					Inputs: vydon_benthos.Inputs{
+						AwsDynamoDB: &vydon_benthos.InputAwsDynamoDB{
 							Table: tableMapping.Table,
 							Where: getWhereFromSourceTableOption(
 								tableOptsMap[tableMapping.Table],
@@ -74,15 +74,15 @@ func (b *dyanmodbSyncBuilder) BuildSourceConfigs(
 						},
 					},
 				},
-				Pipeline: &neosync_benthos.PipelineConfig{
+				Pipeline: &vydon_benthos.PipelineConfig{
 					Threads:    -1,
-					Processors: []neosync_benthos.ProcessorConfig{},
+					Processors: []vydon_benthos.ProcessorConfig{},
 				},
-				Output: &neosync_benthos.OutputConfig{
-					Outputs: neosync_benthos.Outputs{
-						Broker: &neosync_benthos.OutputBrokerConfig{
+				Output: &vydon_benthos.OutputConfig{
+					Outputs: vydon_benthos.Outputs{
+						Broker: &vydon_benthos.OutputBrokerConfig{
 							Pattern: "fan_out",
-							Outputs: []neosync_benthos.Outputs{},
+							Outputs: []vydon_benthos.Outputs{},
 						},
 					},
 				},
@@ -190,14 +190,14 @@ func (b *dyanmodbSyncBuilder) BuildDestinationConfig(
 			benthosConfig.TableName,
 		)
 	}
-	config.Outputs = append(config.Outputs, neosync_benthos.Outputs{
-		AwsDynamoDB: &neosync_benthos.OutputAwsDynamoDB{
+	config.Outputs = append(config.Outputs, vydon_benthos.Outputs{
+		AwsDynamoDB: &vydon_benthos.OutputAwsDynamoDB{
 			Table: mappedTable,
 			JsonMapColumns: map[string]string{
 				"": ".",
 			},
 
-			Batching: &neosync_benthos.Batching{
+			Batching: &vydon_benthos.Batching{
 				// https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_BatchWriteItem.html
 				// A single call to BatchWriteItem can transmit up to 16MB of data over the network, consisting of up to 25 item put or delete operations
 				// Specifying the count here may not be enough if the overall data is above 16MB.
@@ -234,11 +234,11 @@ func toDynamoDbSourceTableOptionMap(
 
 func buildBenthosS3Credentials(
 	mgmtCreds *mgmtv1alpha1.AwsS3Credentials,
-) *neosync_benthos.AwsCredentials {
+) *vydon_benthos.AwsCredentials {
 	if mgmtCreds == nil {
 		return nil
 	}
-	creds := &neosync_benthos.AwsCredentials{}
+	creds := &vydon_benthos.AwsCredentials{}
 	if mgmtCreds.Profile != nil {
 		creds.Profile = *mgmtCreds.Profile
 	}

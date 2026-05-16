@@ -6,12 +6,12 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5/pgtype"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	auth_apikey "github.com/nucleuscloud/neosync/backend/internal/auth/apikey"
-	"github.com/nucleuscloud/neosync/internal/apikey"
-	"github.com/nucleuscloud/neosync/internal/ee/license"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
+	"github.com/vydon-io/vydon/internal/apikey"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/license"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 type UserAccountServiceClient interface {
@@ -34,7 +34,7 @@ type User struct {
 }
 
 func (u *User) Id() string {
-	return neosyncdb.UUIDString(u.id)
+	return vydondb.UUIDString(u.id)
 }
 func (u *User) PgId() pgtype.UUID {
 	return u.id
@@ -58,7 +58,7 @@ func (u *User) EnforceLicense(ctx context.Context, accountId string) error {
 		return err
 	}
 	if !ok {
-		return nucleuserrors.NewUnauthorized("account does not have an active license")
+		return vydonerrors.NewUnauthorized("account does not have an active license")
 	}
 	return nil
 }
@@ -68,7 +68,7 @@ func (u *User) IsLicensed(ctx context.Context, accountId string) (bool, error) {
 		return false, err
 	}
 
-	// todo: check account type for Neosync Cloud Cloud?
+	// todo: check account type for Vydon Cloud Cloud?
 	// if: personal, then check if free trial is active
 	// if: pro, then no? or maybe still do a trial check?
 	// if: enterprise, then check for valid license
@@ -88,8 +88,8 @@ func enforceAccountAccess(ctx context.Context, user *User, accountId string) err
 		// We first want to check to make sure the api key is valid and that it says it's in the account
 		// However, we still want to make a DB request to ensure the DB still says it's in the account
 		if user.apiKeyData.ApiKey == nil ||
-			neosyncdb.UUIDString(user.apiKeyData.ApiKey.AccountID) != accountId {
-			return nucleuserrors.NewUnauthorized("api key is not valid for account")
+			vydondb.UUIDString(user.apiKeyData.ApiKey.AccountID) != accountId {
+			return vydonerrors.NewUnauthorized("api key is not valid for account")
 		}
 	}
 
@@ -102,7 +102,7 @@ func enforceAccountAccess(ctx context.Context, user *User, accountId string) err
 		return fmt.Errorf("unable to check if user is in account: %w", err)
 	}
 	if !inAccountResp.Msg.GetOk() {
-		return nucleuserrors.NewUnauthorized("user is not in account")
+		return vydonerrors.NewUnauthorized("user is not in account")
 	}
 	return nil
 }

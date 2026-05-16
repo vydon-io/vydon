@@ -8,16 +8,16 @@ import (
 	"testing"
 
 	"connectrpc.com/connect"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	tcneosyncapi "github.com/nucleuscloud/neosync/backend/pkg/integration-test"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	tcmssql "github.com/nucleuscloud/neosync/internal/testutil/testcontainers/sqlserver"
-	testutil_testdata "github.com/nucleuscloud/neosync/internal/testutil/testdata"
-	mssql_alltypes "github.com/nucleuscloud/neosync/internal/testutil/testdata/mssql/alltypes"
-	mssql_commerce "github.com/nucleuscloud/neosync/internal/testutil/testdata/mssql/commerce"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	tcvydonapi "github.com/vydon-io/vydon/backend/pkg/integration-test"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	tcmssql "github.com/vydon-io/vydon/internal/testutil/testcontainers/sqlserver"
+	testutil_testdata "github.com/vydon-io/vydon/internal/testutil/testdata"
+	mssql_alltypes "github.com/vydon-io/vydon/internal/testutil/testdata/mssql/alltypes"
+	mssql_commerce "github.com/vydon-io/vydon/internal/testutil/testdata/mssql/commerce"
 )
 
 const (
@@ -106,18 +106,18 @@ func test_mssql_types(
 	t *testing.T,
 	ctx context.Context,
 	mssql *tcmssql.MssqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	schema := "alltypes"
 	err := mssql.Source.RunCreateStmtsInSchema(ctx, mssqlTestdataFolder, []string{"alltypes/create-tables.sql"}, schema)
 	require.NoError(t, err)
 	err = mssql.Target.CreateSchemas(ctx, []string{schema})
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-mssql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mssql-sync")
 
 	alltypesMappings := mssql_alltypes.GetDefaultSyncJobMappings(schema)
 	for _, mapping := range alltypesMappings {
@@ -138,7 +138,7 @@ func test_mssql_types(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithValidEELicense())
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithValidEELicense())
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mssql_all_types")
@@ -159,7 +159,16 @@ func test_mssql_types(
 		require.Equalf(t, expected.rowCount, rowCount, fmt.Sprintf("Test: mssql_all_types Table: %s", expected.table))
 	}
 
-	testutil_testdata.VerifySQLTableColumnValues(t, ctx, mssql.Source.DB, mssql.Target.DB, schema, "alldatatypes", sqlmanager_shared.MssqlDriver, []string{"id"})
+	testutil_testdata.VerifySQLTableColumnValues(
+		t,
+		ctx,
+		mssql.Source.DB,
+		mssql.Target.DB,
+		schema,
+		"alldatatypes",
+		sqlmanager_shared.MssqlDriver,
+		[]string{"id"},
+	)
 
 	// TODO: Tear down, fix schema dropping issue. No way to force drop schemas in MSSQL.
 	// err = mssql.Source.DropSchemas(ctx, []string{schema})
@@ -172,20 +181,20 @@ func test_mssql_cross_schema_foreign_keys(
 	t *testing.T,
 	ctx context.Context,
 	mssql *tcmssql.MssqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
 	testdataFolder := mssqlTestdataFolder + "/commerce"
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	err := mssql.Source.CreateSchemas(ctx, []string{"sales", "production"})
 	require.NoError(t, err)
 	err = mssql.Source.RunSqlFiles(ctx, &testdataFolder, []string{"create-tables.sql"})
 	require.NoError(t, err)
 	err = mssql.Target.CreateSchemas(ctx, []string{"sales", "production"})
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-mssql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mssql-sync")
 
 	mappings := mssql_commerce.GetDefaultSyncJobMappings()
 
@@ -201,7 +210,7 @@ func test_mssql_cross_schema_foreign_keys(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithValidEELicense())
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithValidEELicense())
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mssql_cross_schema_foreign_keys")
@@ -242,20 +251,20 @@ func test_mssql_subset(
 	t *testing.T,
 	ctx context.Context,
 	mssql *tcmssql.MssqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
 	testdataFolder := mssqlTestdataFolder + "/commerce"
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	err := mssql.Source.CreateSchemas(ctx, []string{"sales_subset", "production_subset"})
 	require.NoError(t, err)
 	err = createCommerceTables(ctx, mssql.Source, &testdataFolder, []string{"create-tables.sql"}, "subset")
 	require.NoError(t, err)
 	err = mssql.Target.CreateSchemas(ctx, []string{"sales_subset", "production_subset"})
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-mssql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mssql-sync")
 
 	mappings := mssql_commerce.GetDefaultSyncJobMappings()
 	updatedMappings := []*mgmtv1alpha1.JobMapping{}
@@ -287,7 +296,7 @@ func test_mssql_subset(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithValidEELicense())
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithValidEELicense())
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mssql_subset")
@@ -328,20 +337,20 @@ func test_mssql_identity_columns(
 	t *testing.T,
 	ctx context.Context,
 	mssql *tcmssql.MssqlTestSyncContainer,
-	neosyncApi *tcneosyncapi.NeosyncApiTestClient,
+	vydonApi *tcvydonapi.VydonApiTestClient,
 	dbManagers *TestDatabaseManagers,
 	accountId string,
 	sourceConn, destConn *mgmtv1alpha1.Connection,
 ) {
 	testdataFolder := mssqlTestdataFolder + "/commerce"
-	jobclient := neosyncApi.OSSUnauthenticatedLicensedClients.Jobs()
+	jobclient := vydonApi.OSSUnauthenticatedLicensedClients.Jobs()
 	err := mssql.Source.CreateSchemas(ctx, []string{"sales_identity", "production_identity"})
 	require.NoError(t, err)
 	err = createCommerceTables(ctx, mssql.Source, &testdataFolder, []string{"create-tables.sql"}, "identity")
 	require.NoError(t, err)
 	err = mssql.Target.CreateSchemas(ctx, []string{"sales_identity", "production_identity"})
 	require.NoError(t, err)
-	neosyncApi.MockTemporalForCreateJob("test-mssql-sync")
+	vydonApi.MockTemporalForCreateJob("test-mssql-sync")
 
 	mappings := mssql_commerce.GetDefaultSyncJobMappings()
 	tableColTypeMap := mssql_commerce.GetTableColumnTypeMap()
@@ -376,7 +385,7 @@ func test_mssql_identity_columns(
 		},
 	})
 
-	testworkflow := NewTestDataSyncWorkflowEnv(t, neosyncApi, dbManagers, WithValidEELicense())
+	testworkflow := NewTestDataSyncWorkflowEnv(t, vydonApi, dbManagers, WithValidEELicense())
 	testworkflow.RequireActivitiesCompletedSuccessfully(t)
 	testworkflow.ExecuteTestDataSyncWorkflow(job.GetId())
 	require.Truef(t, testworkflow.TestEnv.IsWorkflowCompleted(), "Workflow did not complete. Test: mssql_identity_columns")
@@ -423,7 +432,13 @@ func getDefaultTransformerConfig() *mgmtv1alpha1.JobMappingTransformer {
 	}
 }
 
-func createCommerceTables(ctx context.Context, mssql *tcmssql.MssqlTestContainer, folder *string, files []string, schemaSuffix string) error {
+func createCommerceTables(
+	ctx context.Context,
+	mssql *tcmssql.MssqlTestContainer,
+	folder *string,
+	files []string,
+	schemaSuffix string,
+) error {
 	for _, file := range files {
 		filePath := file
 		if folder != nil && *folder != "" {

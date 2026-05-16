@@ -3,7 +3,7 @@ import {
   GetJobRunEventsResponse,
   GetJobRunResponse,
   JobRunStatus,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 

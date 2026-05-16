@@ -8,9 +8,9 @@ import (
 	"sync"
 
 	"github.com/doug-martin/goqu/v9"
-	pg_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/postgresql"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -28,9 +28,9 @@ func (p *PostgresManager) GetDatabaseSchema(
 	ctx context.Context,
 ) ([]*sqlmanager_shared.DatabaseSchemaRow, error) {
 	dbSchemas, err := p.querier.GetDatabaseSchema(ctx, p.db)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.DatabaseSchemaRow{}, nil
 	}
 	result := []*sqlmanager_shared.DatabaseSchemaRow{}
@@ -361,9 +361,9 @@ func (p *PostgresManager) GetDataTypesByTables(
 				Schema: schema,
 				Tables: tables,
 			})
-			if err != nil && !neosyncdb.IsNoRows(err) {
+			if err != nil && !vydondb.IsNoRows(err) {
 				return err
-			} else if err != nil && neosyncdb.IsNoRows(err) {
+			} else if err != nil && vydondb.IsNoRows(err) {
 				return nil
 			}
 			for _, row := range rows {
@@ -445,9 +445,9 @@ func (p *PostgresManager) GetTableConstraintsBySchema(
 	nonFkConstraints := []*pg_queries.GetNonForeignKeyTableConstraintsBySchemaRow{}
 	errgrp.Go(func() error {
 		rows, err := p.querier.GetNonForeignKeyTableConstraintsBySchema(ctx, p.db, schemas)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return err
-		} else if err != nil && neosyncdb.IsNoRows(err) {
+		} else if err != nil && vydondb.IsNoRows(err) {
 			return nil
 		}
 		nonFkConstraints = rows
@@ -545,9 +545,9 @@ func (p *PostgresManager) GetTableConstraintsBySchema(
 
 func (p *PostgresManager) GetRolePermissionsMap(ctx context.Context) (map[string][]string, error) {
 	rows, err := p.querier.GetPostgresRolePermissions(ctx, p.db)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return map[string][]string{}, nil
 	}
 
@@ -573,9 +573,9 @@ func (p *PostgresManager) GetSchemaTableTriggers(
 	}
 
 	rows, err := p.querier.GetCustomTriggersBySchemaAndTables(ctx, p.db, combined)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.TableTrigger{}, nil
 	}
 
@@ -675,9 +675,9 @@ func (p *PostgresManager) GetSequencesByTables(
 			Tables: tables,
 		},
 	)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.DataType{}, nil
 	}
 
@@ -699,9 +699,9 @@ func (p *PostgresManager) getExtensionsBySchemas(
 	schemas []string,
 ) ([]*sqlmanager_shared.ExtensionDataType, error) {
 	rows, err := p.querier.GetExtensionsBySchemas(ctx, p.db, schemas)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.ExtensionDataType{}, nil
 	}
 
@@ -732,9 +732,9 @@ func (p *PostgresManager) getFunctionsByTables(
 			Tables: tables,
 		},
 	)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return []*sqlmanager_shared.DataType{}, nil
 	}
 
@@ -779,9 +779,9 @@ func (p *PostgresManager) getDataTypesByTables(
 			Tables: tables,
 		},
 	)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return &datatypes{}, nil
 	}
 

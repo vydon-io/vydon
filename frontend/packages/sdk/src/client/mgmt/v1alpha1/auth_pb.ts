@@ -265,14 +265,14 @@ export const CheckTokenResponseSchema: GenMessage<CheckTokenResponse> = /*@__PUR
   messageDesc(file_mgmt_v1alpha1_auth, 10);
 
 /**
- * Service that handles generic Authentication for Neosync
+ * Service that handles generic Authentication for Vydon
  * Today this is mostly used by the CLI to receive authentication information
  *
  * @generated from service mgmt.v1alpha1.AuthService
  */
 export const AuthService: GenService<{
   /**
-   * Used by the CLI to login to Neosync with OAuth.
+   * Used by the CLI to login to Vydon with OAuth.
    *
    * @generated from rpc mgmt.v1alpha1.AuthService.LoginCli
    */
@@ -282,7 +282,7 @@ export const AuthService: GenService<{
     output: typeof LoginCliResponseSchema;
   },
   /**
-   * Used by the CLI to refresh an expired Neosync accesss token.
+   * Used by the CLI to refresh an expired Vydon accesss token.
    * This should only be used if an access token was previously retrieved from the `LoginCli` or `RefreshCli` methods.
    *
    * @generated from rpc mgmt.v1alpha1.AuthService.RefreshCli

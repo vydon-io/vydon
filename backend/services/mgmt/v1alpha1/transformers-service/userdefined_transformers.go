@@ -7,15 +7,15 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/dop251/goja"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	logger_interceptor "github.com/nucleuscloud/neosync/backend/internal/connect/interceptors/logger"
-	"github.com/nucleuscloud/neosync/backend/internal/dtomaps"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
+	"github.com/vydon-io/vydon/backend/internal/dtomaps"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 func (s *Service) GetUserDefinedTransformers(
@@ -34,7 +34,7 @@ func (s *Service) GetUserDefinedTransformers(
 	if err != nil {
 		return nil, err
 	}
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -54,7 +54,7 @@ func (s *Service) GetUserDefinedTransformers(
 		if err != nil {
 			return nil, fmt.Errorf(
 				"failed to map user defined transformer %s with source %d: %w",
-				neosyncdb.UUIDString(transformer.ID),
+				vydondb.UUIDString(transformer.ID),
 				transformer.Source,
 				err,
 			)
@@ -71,23 +71,23 @@ func (s *Service) GetUserDefinedTransformerById(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.GetUserDefinedTransformerByIdRequest],
 ) (*connect.Response[mgmtv1alpha1.GetUserDefinedTransformerByIdResponse], error) {
-	tId, err := neosyncdb.ToUuid(req.Msg.GetTransformerId())
+	tId, err := vydondb.ToUuid(req.Msg.GetTransformerId())
 	if err != nil {
 		return nil, err
 	}
 
 	transformer, err := s.db.Q.GetUserDefinedTransformerById(ctx, s.db.Db, tId)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find transformer by id")
+	} else if err != nil && vydondb.IsNoRows(err) {
+		return nil, vydonerrors.NewNotFound("unable to find transformer by id")
 	}
 
 	dto, err := dtomaps.ToUserDefinedTransformerDto(&transformer, s.getSystemTransformerSourceMap())
 	if err != nil {
 		return nil, fmt.Errorf(
 			"failed to map user defined transformer %s with source %d: %w",
-			neosyncdb.UUIDString(transformer.ID),
+			vydondb.UUIDString(transformer.ID),
 			transformer.Source,
 			err,
 		)
@@ -127,7 +127,7 @@ func (s *Service) CreateUserDefinedTransformer(
 	if err != nil {
 		return nil, err
 	}
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -158,7 +158,7 @@ func (s *Service) CreateUserDefinedTransformer(
 	if err != nil {
 		return nil, fmt.Errorf(
 			"failed to map user defined transformer %s with source %d: %w",
-			neosyncdb.UUIDString(ct.ID),
+			vydondb.UUIDString(ct.ID),
 			ct.Source,
 			err,
 		)
@@ -176,15 +176,15 @@ func (s *Service) DeleteUserDefinedTransformer(
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
 	logger = logger.With("transformerId", req.Msg.GetTransformerId())
 
-	tId, err := neosyncdb.ToUuid(req.Msg.GetTransformerId())
+	tId, err := vydondb.ToUuid(req.Msg.GetTransformerId())
 	if err != nil {
 		return nil, err
 	}
 
 	transformer, err := s.db.Q.GetUserDefinedTransformerById(ctx, s.db.Db, tId)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return connect.NewResponse(&mgmtv1alpha1.DeleteUserDefinedTransformerResponse{}), nil
 	}
 
@@ -194,7 +194,7 @@ func (s *Service) DeleteUserDefinedTransformer(
 	}
 	err = user.EnforceJob(
 		ctx,
-		userdata.NewWildcardDomainEntity(neosyncdb.UUIDString(transformer.AccountID)),
+		userdata.NewWildcardDomainEntity(vydondb.UUIDString(transformer.AccountID)),
 		rbac.JobAction_Delete,
 	)
 	if err != nil {
@@ -202,9 +202,9 @@ func (s *Service) DeleteUserDefinedTransformer(
 	}
 
 	err = s.db.Q.DeleteUserDefinedTransformerById(ctx, s.db.Db, transformer.ID)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		logger.Debug("transformer not found or has already been removed")
 	}
 
@@ -215,15 +215,15 @@ func (s *Service) UpdateUserDefinedTransformer(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.UpdateUserDefinedTransformerRequest],
 ) (*connect.Response[mgmtv1alpha1.UpdateUserDefinedTransformerResponse], error) {
-	tUuid, err := neosyncdb.ToUuid(req.Msg.TransformerId)
+	tUuid, err := vydondb.ToUuid(req.Msg.TransformerId)
 	if err != nil {
 		return nil, err
 	}
 	transformer, err := s.db.Q.GetUserDefinedTransformerById(ctx, s.db.Db, tUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("unable to find transformer by id")
+	} else if err != nil && vydondb.IsNoRows(err) {
+		return nil, vydonerrors.NewNotFound("unable to find transformer by id")
 	}
 
 	user, err := s.userdataclient.GetUser(ctx)
@@ -232,7 +232,7 @@ func (s *Service) UpdateUserDefinedTransformer(
 	}
 	err = user.EnforceJob(
 		ctx,
-		userdata.NewWildcardDomainEntity(neosyncdb.UUIDString(transformer.AccountID)),
+		userdata.NewWildcardDomainEntity(vydondb.UUIDString(transformer.AccountID)),
 		rbac.JobAction_Edit,
 	)
 	if err != nil {
@@ -264,7 +264,7 @@ func (s *Service) UpdateUserDefinedTransformer(
 	if err != nil {
 		return nil, fmt.Errorf(
 			"failed to map user defined transformer %s with source %d: %w",
-			neosyncdb.UUIDString(updatedTransformer.ID),
+			vydondb.UUIDString(updatedTransformer.ID),
 			updatedTransformer.Source,
 			err,
 		)
@@ -291,7 +291,7 @@ func (s *Service) IsTransformerNameAvailable(
 	if err != nil {
 		return nil, err
 	}
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}

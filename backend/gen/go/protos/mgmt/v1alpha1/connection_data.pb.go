@@ -1947,7 +1947,7 @@ type GetAiGeneratedDataRequest struct {
 	Count int64 `protobuf:"varint,2,opt,name=count,proto3" json:"count,omitempty"`
 	// The LLM model name to use that works with the configured connection id.
 	ModelName string `protobuf:"bytes,3,opt,name=model_name,json=modelName,proto3" json:"model_name,omitempty"`
-	// The prompt that will be used to further refine the data generation. This is appended to the prompt that Neosync generates that includes schema information.
+	// The prompt that will be used to further refine the data generation. This is appended to the prompt that Vydon generates that includes schema information.
 	UserPrompt *string `protobuf:"bytes,4,opt,name=user_prompt,json=userPrompt,proto3,oneof" json:"user_prompt,omitempty"`
 	// The unique identifier of a connection that the AI generated data would be inserted into. This is used to generate and send schema information to the LLM to help shape the generated data.
 	DataConnectionId string `protobuf:"bytes,5,opt,name=data_connection_id,json=dataConnectionId,proto3" json:"data_connection_id,omitempty"`

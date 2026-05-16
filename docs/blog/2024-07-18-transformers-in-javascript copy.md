@@ -1,7 +1,7 @@
 ---
 title: 7/18 - Base Transformers in Custom Transformers
 hide_table_of_contents: false
-slug: /neosync-js-modules
+slug: /vydon-js-modules
 authors:
   - evis
 ---

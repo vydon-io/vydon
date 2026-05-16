@@ -3,18 +3,18 @@ repositories:
     url: https://charts.bitnami.com/bitnami
 
 releases:
-  - name: neosync-postgresql
+  - name: vydon-postgresql
     chart: bitnami/postgresql
     version: 12.10.0
-    namespace: neosync
+    namespace: vydon
     createNamespace: false
 
     values:
       - auth:
           postgresPassword: foofar
-          database: nucleus
+          database: vydon
         primary:
           persistence:
-            mountPath: "/neosync/neosync-postgres"
-            existingClaim: neosync-postgres # see pvc in ../yaml/neosync-postgres-pvc.yaml
-        postgresqlDataDir: "/neosync/neosync-postgres/data"
+            mountPath: "/vydon/vydon-postgres"
+            existingClaim: vydon-postgres # see pvc in ../yaml/vydon-postgres-pvc.yaml
+        postgresqlDataDir: "/vydon/vydon-postgres/data"

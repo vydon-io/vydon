@@ -10,16 +10,16 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5/pgtype"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	logger_interceptor "github.com/nucleuscloud/neosync/backend/internal/connect/interceptors/logger"
-	"github.com/nucleuscloud/neosync/backend/internal/dtomaps"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	"github.com/nucleuscloud/neosync/internal/billing"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
 	"github.com/stripe/stripe-go/v81"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
+	"github.com/vydon-io/vydon/backend/internal/dtomaps"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	"github.com/vydon-io/vydon/internal/billing"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/vydondb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -51,13 +51,13 @@ func (s *Service) GetAccountStatus(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
 
 	logger = logger.With("accountId", req.Msg.GetAccountId())
-	if !s.cfg.IsNeosyncCloud || s.billingclient == nil {
+	if !s.cfg.IsVydonCloud || s.billingclient == nil {
 		return connect.NewResponse(&mgmtv1alpha1.GetAccountStatusResponse{}), nil
 	}
 
@@ -68,7 +68,7 @@ func (s *Service) GetAccountStatus(
 
 	trialStatus := getTrialStatus(account.CreatedAt)
 
-	if account.AccountType == int16(neosyncdb.AccountType_Personal) {
+	if account.AccountType == int16(vydondb.AccountType_Personal) {
 		return connect.NewResponse(&mgmtv1alpha1.GetAccountStatusResponse{
 			SubscriptionStatus: trialStatus,
 		}), nil
@@ -191,7 +191,7 @@ func (s *Service) IsAccountStatusValid(
 		return nil, err
 	}
 
-	if !s.cfg.IsNeosyncCloud || s.billingclient == nil {
+	if !s.cfg.IsVydonCloud || s.billingclient == nil {
 		return connect.NewResponse(&mgmtv1alpha1.IsAccountStatusValidResponse{IsValid: true}), nil
 	}
 
@@ -212,7 +212,7 @@ func (s *Service) IsAccountStatusValid(
 		accountStatus = mgmtv1alpha1.AccountStatus_ACCOUNT_STATUS_ACCOUNT_TRIAL_ACTIVE
 		isValid = true
 
-		accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+		accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 		if err != nil {
 			return nil, err
 		}
@@ -241,8 +241,8 @@ func (s *Service) GetAccountBillingCheckoutSession(
 	req *connect.Request[mgmtv1alpha1.GetAccountBillingCheckoutSessionRequest],
 ) (*connect.Response[mgmtv1alpha1.GetAccountBillingCheckoutSessionResponse], error) {
 	logger := logger_interceptor.GetLoggerFromContextOrDefault(ctx)
-	if !s.cfg.IsNeosyncCloud || s.billingclient == nil {
-		return nil, nucleuserrors.NewNotImplemented(
+	if !s.cfg.IsVydonCloud || s.billingclient == nil {
+		return nil, vydonerrors.NewNotImplemented(
 			fmt.Sprintf(
 				"%s is not implemented",
 				strings.TrimPrefix(
@@ -259,7 +259,7 @@ func (s *Service) GetAccountBillingCheckoutSession(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -311,8 +311,8 @@ func (s *Service) GetAccountBillingPortalSession(
 	ctx context.Context,
 	req *connect.Request[mgmtv1alpha1.GetAccountBillingPortalSessionRequest],
 ) (*connect.Response[mgmtv1alpha1.GetAccountBillingPortalSessionResponse], error) {
-	if !s.cfg.IsNeosyncCloud || s.billingclient == nil {
-		return nil, nucleuserrors.NewNotImplemented(
+	if !s.cfg.IsVydonCloud || s.billingclient == nil {
+		return nil, vydonerrors.NewNotImplemented(
 			fmt.Sprintf(
 				"%s is not implemented",
 				strings.TrimPrefix(
@@ -337,7 +337,7 @@ func (s *Service) GetAccountBillingPortalSession(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -347,7 +347,7 @@ func (s *Service) GetAccountBillingPortalSession(
 		return nil, err
 	}
 	if !account.StripeCustomerID.Valid {
-		return nil, nucleuserrors.NewForbidden(
+		return nil, vydonerrors.NewForbidden(
 			"requested account does not have a valid stripe customer id",
 		)
 	}
@@ -373,15 +373,15 @@ func (s *Service) GetBillingAccounts(
 	if err != nil {
 		return nil, err
 	}
-	if s.cfg.IsNeosyncCloud && !user.IsWorkerApiKey() {
-		return nil, nucleuserrors.NewUnauthorized(
+	if s.cfg.IsVydonCloud && !user.IsWorkerApiKey() {
+		return nil, vydonerrors.NewUnauthorized(
 			"must provide valid authentication credentials for this endpoint",
 		)
 	}
 
 	accountIdsToFilter := []pgtype.UUID{}
 	for _, accountId := range req.Msg.GetAccountIds() {
-		accountUuid, err := neosyncdb.ToUuid(accountId)
+		accountUuid, err := vydondb.ToUuid(accountId)
 		if err != nil {
 			return nil, fmt.Errorf("input did not contain entirely valid uuids: %w", err)
 		}
@@ -406,15 +406,15 @@ func (s *Service) SetBillingMeterEvent(
 	req *connect.Request[mgmtv1alpha1.SetBillingMeterEventRequest],
 ) (*connect.Response[mgmtv1alpha1.SetBillingMeterEventResponse], error) {
 	if s.billingclient == nil {
-		return nil, nucleuserrors.NewUnauthorized("billing is not currently enabled")
+		return nil, vydonerrors.NewUnauthorized("billing is not currently enabled")
 	}
 	userdataclient := s.UserDataClient()
 	user, err := userdataclient.GetUser(ctx)
 	if err != nil {
 		return nil, err
 	}
-	if s.cfg.IsNeosyncCloud && !user.IsWorkerApiKey() {
-		return nil, nucleuserrors.NewUnauthorized(
+	if s.cfg.IsVydonCloud && !user.IsWorkerApiKey() {
+		return nil, vydonerrors.NewUnauthorized(
 			"must provide valid authentication credentials for this endpoint",
 		)
 	}
@@ -426,19 +426,19 @@ func (s *Service) SetBillingMeterEvent(
 			"eventName", req.Msg.GetEventName(),
 		)
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
 
 	account, err := s.db.Q.GetAccount(ctx, s.db.Db, accountUuid)
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, err
-	} else if err != nil && neosyncdb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("account does not exist")
+	} else if err != nil && vydondb.IsNoRows(err) {
+		return nil, vydonerrors.NewNotFound("account does not exist")
 	}
 	if !account.StripeCustomerID.Valid {
-		return nil, nucleuserrors.NewBadRequest("account is not an active billed customer")
+		return nil, vydonerrors.NewBadRequest("account is not an active billed customer")
 	}
 
 	var ts *int64

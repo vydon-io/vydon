@@ -5,11 +5,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 )
 
 func Test_GenerateRandomFloat(t *testing.T) {
@@ -25,11 +25,52 @@ func Test_GenerateRandomFloat(t *testing.T) {
 		ceil  float64
 	}
 	testcases := []testcase{
-		{randomizer: rng.New(time.Now().UnixNano()), randomizeSign: false, min: 0, max: 100, precision: shared.Ptr(int64(7)), floor: 0, ceil: 100},
-		{randomizer: rng.New(time.Now().UnixNano()), randomizeSign: false, min: -100, max: 100, precision: shared.Ptr(int64(7)), floor: -100, ceil: 100},
-		{randomizer: rng.New(time.Now().UnixNano()), randomizeSign: true, min: 20, max: 40, precision: shared.Ptr(int64(7)), floor: -40, ceil: 40},
-		{randomizer: rng.New(time.Now().UnixNano()), randomizeSign: false, min: 12.3, max: 19.2, precision: shared.Ptr(int64(7)), floor: 12.3, ceil: 19.2},
-		{randomizer: rng.New(time.Now().UnixNano()), randomizeSign: false, min: 12.3, max: 19.2, precision: shared.Ptr(int64(3)), scale: shared.Ptr(int64(1)), floor: 12.3, ceil: 19.2},
+		{
+			randomizer:    rng.New(time.Now().UnixNano()),
+			randomizeSign: false,
+			min:           0,
+			max:           100,
+			precision:     shared.Ptr(int64(7)),
+			floor:         0,
+			ceil:          100,
+		},
+		{
+			randomizer:    rng.New(time.Now().UnixNano()),
+			randomizeSign: false,
+			min:           -100,
+			max:           100,
+			precision:     shared.Ptr(int64(7)),
+			floor:         -100,
+			ceil:          100,
+		},
+		{
+			randomizer:    rng.New(time.Now().UnixNano()),
+			randomizeSign: true,
+			min:           20,
+			max:           40,
+			precision:     shared.Ptr(int64(7)),
+			floor:         -40,
+			ceil:          40,
+		},
+		{
+			randomizer:    rng.New(time.Now().UnixNano()),
+			randomizeSign: false,
+			min:           12.3,
+			max:           19.2,
+			precision:     shared.Ptr(int64(7)),
+			floor:         12.3,
+			ceil:          19.2,
+		},
+		{
+			randomizer:    rng.New(time.Now().UnixNano()),
+			randomizeSign: false,
+			min:           12.3,
+			max:           19.2,
+			precision:     shared.Ptr(int64(3)),
+			scale:         shared.Ptr(int64(1)),
+			floor:         12.3,
+			ceil:          19.2,
+		},
 	}
 
 	for _, tc := range testcases {
@@ -81,7 +122,14 @@ func Test_GenerateRandomFloat_Benthos(t *testing.T) {
 	precision := int64(7)
 	scale := int64(1)
 
-	mapping := fmt.Sprintf(`root = generate_float64(randomize_sign:%t, min:%f, max:%f, precision: %d, scale: %d)`, randomizeSign, minValue, maxValue, precision, scale)
+	mapping := fmt.Sprintf(
+		`root = generate_float64(randomize_sign:%t, min:%f, max:%f, precision: %d, scale: %d)`,
+		randomizeSign,
+		minValue,
+		maxValue,
+		precision,
+		scale,
+	)
 	ex, err := bloblang.Parse(mapping)
 	assert.NoError(t, err, "failed to parse the generate float transformer")
 

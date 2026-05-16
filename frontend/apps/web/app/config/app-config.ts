@@ -3,7 +3,7 @@ export interface SystemAppConfig {
   publicAppBaseUrl: string;
   posthog: PosthogConfig;
   unify: UnifyConfig;
-  isNeosyncCloud: boolean;
+  isVydonCloud: boolean;
   isStripeEnabled: boolean;
   enableRunLogs: boolean;
   signInProviderId?: string;
@@ -16,9 +16,9 @@ export interface SystemAppConfig {
   calendlyUpgradeLink: string;
   isGcpCloudStorageConnectionsEnabled: boolean;
   // server-side base url
-  neosyncApiBaseUrl: string;
+  vydonApiBaseUrl: string;
   // public (client-side) base url;
-  publicNeosyncApiBaseUrl: string;
+  publicVydonApiBaseUrl: string;
   isRbacEnabled: boolean;
   isPiiDetectionJobEnabled: boolean;
 }

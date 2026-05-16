@@ -11,20 +11,20 @@ import (
 	"connectrpc.com/connect"
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	dynamotypes "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	aws_manager "github.com/nucleuscloud/neosync/internal/aws"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	aws_manager "github.com/vydon-io/vydon/internal/aws"
 )
 
 type AwsDynamodbConnectionDataService struct {
 	logger     *slog.Logger
-	awsmanager aws_manager.NeosyncAwsManagerClient
+	awsmanager aws_manager.VydonAwsManagerClient
 	connection *mgmtv1alpha1.Connection
 	connconfig *mgmtv1alpha1.DynamoDBConnectionConfig
 }
 
 func NewAwsDynamodbConnectionDataService(
 	logger *slog.Logger,
-	awsmanager aws_manager.NeosyncAwsManagerClient,
+	awsmanager aws_manager.VydonAwsManagerClient,
 	connection *mgmtv1alpha1.Connection,
 ) *AwsDynamodbConnectionDataService {
 	return &AwsDynamodbConnectionDataService{

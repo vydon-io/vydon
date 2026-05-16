@@ -1,12 +1,12 @@
-import { withNeosyncContext } from '@/api-only/neosync-context';
+import { withVydonContext } from '@/api-only/vydon-context';
 import { getSystemAppConfig } from '@/app/api/config/config';
-import { ConnectError } from '@neosync/sdk';
+import { ConnectError } from '@vydon/sdk';
 import { NextRequest, NextResponse } from 'next/server';
 
 const SLACK_REDIRECT_URL = '/hooks/slack';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {
-  return withNeosyncContext(async (ctx) => {
+  return withVydonContext(async (ctx) => {
     const searchParams = req.nextUrl.searchParams;
     const code = searchParams.get('code') || '';
     const state = searchParams.get('state') || '';

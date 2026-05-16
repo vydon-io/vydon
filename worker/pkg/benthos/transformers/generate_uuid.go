@@ -6,11 +6,11 @@ import (
 
 	"github.com/google/uuid"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 )
 
-// +neosyncTransformerBuilder:generate:generateUUID
+// +vydonTransformerBuilder:generate:generateUUID
 
 func init() {
 	spec := bloblang.NewPluginSpec().Description("Generates a new UUIDv4 id.").

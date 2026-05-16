@@ -1,0 +1,202 @@
+# OSV Scanner configuration.
+#
+# Each entry below is a vulnerability we are aware of and have accepted for
+# the duration in `ignoreUntil`. Acceptance does not mean dismissal: it means
+# the fix is non-trivial (API breaking upstream bump, runtime version pin,
+# or transitive constraint) and we are tracking it separately.
+#
+# Process:
+#   - every entry must have an `ignoreUntil` no further than 90 days out
+#   - every entry must justify *why* it cannot be patched in-place right now
+#   - the list is reviewed before every release branch cut
+#
+# Re-run after edits:
+#   docker run --rm -v "$PWD:/src" -w /src ghcr.io/google/osv-scanner:latest \
+#     --recursive --no-call-analysis=go ./
+
+# --- Go stdlib (1.24.13) ---------------------------------------------------
+# Fixed in Go 1.25.x / 1.26.x. The runtime bump is tracked separately and
+# requires coordinated test-matrix updates.
+
+[[IgnoredVulns]]
+id = "GO-2026-4601"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4602"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4603"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4864"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4865"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4869"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4870"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4918"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4946"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4947"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4971"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4976"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4977"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4980"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4981"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4982"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+[[IgnoredVulns]]
+id = "GO-2026-4986"
+ignoreUntil = 2026-07-15
+reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+
+# --- Third party Go modules ------------------------------------------------
+# Bumps are blocked by upstream API breaks in our test harness
+# (internal/testutil/testcontainers/dynamodb) and docker 28 archive split.
+
+[[IgnoredVulns]]
+id = "GO-2026-4503"
+ignoreUntil = 2026-07-15
+reason = "filippo.io/edwards25519 1.1.0; transitive, bump path under review"
+
+[[IgnoredVulns]]
+id = "GO-2026-4883"
+ignoreUntil = 2026-07-15
+reason = "docker/docker 27.2.0+incompatible; 28.x bump breaks pkg/archive API"
+
+[[IgnoredVulns]]
+id = "GO-2026-4887"
+ignoreUntil = 2026-07-15
+reason = "docker/docker 27.2.0+incompatible; 28.x bump breaks pkg/archive API"
+
+[[IgnoredVulns]]
+id = "GO-2026-4518"
+ignoreUntil = 2026-07-15
+reason = "jackc/pgproto3/v2 2.3.3; transitive legacy dep, removal scheduled"
+
+[[IgnoredVulns]]
+id = "GO-2026-4771"
+ignoreUntil = 2026-07-15
+reason = "jackc/pgx/v5 5.7.2; bump scheduled with testcontainers upgrade"
+
+[[IgnoredVulns]]
+id = "GO-2026-4772"
+ignoreUntil = 2026-07-15
+reason = "jackc/pgx/v5 5.7.2; bump scheduled with testcontainers upgrade"
+
+[[IgnoredVulns]]
+id = "GO-2026-4394"
+ignoreUntil = 2026-07-15
+reason = "otel/sdk 1.35.0; coordinated bump to 1.43.x scheduled"
+
+[[IgnoredVulns]]
+id = "GO-2026-4559"
+ignoreUntil = 2026-07-15
+reason = "golang.org/x/net 0.50.0; resolves on next coordinated bump cycle"
+
+[[IgnoredVulns]]
+id = "GO-2026-4762"
+ignoreUntil = 2026-07-15
+reason = "grpc 1.71.0; bump to 1.81 requires otel coordinated update"
+
+# --- AWS SDKs --------------------------------------------------------------
+
+[[IgnoredVulns]]
+id = "GO-2022-0635"
+ignoreUntil = 2026-07-15
+reason = "aws-sdk-go v1 1.50.36; v1 is deprecated, migration to v2 in progress"
+
+[[IgnoredVulns]]
+id = "GO-2022-0646"
+ignoreUntil = 2026-07-15
+reason = "aws-sdk-go v1 1.50.36; v1 is deprecated, migration to v2 in progress"
+
+[[IgnoredVulns]]
+id = "GHSA-xmrv-pmrh-hhx2"
+ignoreUntil = 2026-07-15
+reason = "aws-sdk-go-v2 eventstream transitive; scheduled coordinated bump"
+
+# --- Other transitive Go advisories ----------------------------------------
+
+[[IgnoredVulns]]
+id = "GHSA-4vq8-7jfc-9cvp"
+ignoreUntil = 2026-07-15
+reason = "docker/docker 27.2.0+incompatible; tracked with main docker advisory"
+
+[[IgnoredVulns]]
+id = "GO-2025-4123"
+ignoreUntil = 2026-07-15
+reason = "dvsekhvalnov/jose2go 1.6.0; transitive from auth providers"
+
+[[IgnoredVulns]]
+id = "GO-2025-3553"
+ignoreUntil = 2026-07-15
+reason = "golang-jwt/jwt/v4 4.5.1; transitive, bump to v5 planned"
+
+[[IgnoredVulns]]
+id = "GHSA-j88v-2chj-qfwx"
+ignoreUntil = 2026-07-15
+reason = "jackc/pgx v4 + v5; covered by pgx bump tracking"
+
+[[IgnoredVulns]]
+id = "GO-2025-3650"
+ignoreUntil = 2026-07-15
+reason = "snowflakedb/gosnowflake 1.11.0; transitive, snowflake connector"
+
+[[IgnoredVulns]]
+id = "GHSA-hfvc-g4fc-pqhx"
+ignoreUntil = 2026-07-15
+reason = "otel/sdk 1.35.0; covered by otel bump tracking"

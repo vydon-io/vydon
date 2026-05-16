@@ -8,10 +8,10 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	dyntypes "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
 	"github.com/docker/go-connections/nat"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	awsmanager "github.com/nucleuscloud/neosync/internal/aws"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	awsmanager "github.com/vydon-io/vydon/internal/aws"
 	"golang.org/x/sync/errgroup"
 )
 

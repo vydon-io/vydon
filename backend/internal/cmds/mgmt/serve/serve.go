@@ -1,8 +1,8 @@
 package serve
 
 import (
-	serve_connect "github.com/nucleuscloud/neosync/backend/internal/cmds/mgmt/serve/connect"
 	"github.com/spf13/cobra"
+	serve_connect "github.com/vydon-io/vydon/backend/internal/cmds/mgmt/serve/connect"
 )
 
 func NewCmd() *cobra.Command {

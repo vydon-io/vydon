@@ -10,20 +10,20 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/google/uuid"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlconnect"
-	connectionmanager "github.com/nucleuscloud/neosync/internal/connection-manager"
-	"github.com/nucleuscloud/neosync/internal/connection-manager/providers/mongoprovider"
-	"github.com/nucleuscloud/neosync/internal/connection-manager/providers/sqlprovider"
-	continuation_token "github.com/nucleuscloud/neosync/internal/continuation-token"
-	"github.com/nucleuscloud/neosync/internal/testutil"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
+	connectionmanager "github.com/vydon-io/vydon/internal/connection-manager"
+	"github.com/vydon-io/vydon/internal/connection-manager/providers/mongoprovider"
+	"github.com/vydon-io/vydon/internal/connection-manager/providers/sqlprovider"
+	continuation_token "github.com/vydon-io/vydon/internal/continuation-token"
+	"github.com/vydon-io/vydon/internal/testutil"
 
-	benthosstream "github.com/nucleuscloud/neosync/internal/benthos-stream"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	benthosstream "github.com/vydon-io/vydon/internal/benthos-stream"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 	"go.opentelemetry.io/otel/metric"
 	metricsdk "go.opentelemetry.io/otel/sdk/metric"
 	"go.temporal.io/sdk/log"
@@ -83,7 +83,10 @@ output:
 
 	jobclient := mgmtv1alpha1connect.NewJobServiceClient(srv.Client(), srv.URL)
 	connclient := mgmtv1alpha1connect.NewConnectionServiceClient(srv.Client(), srv.URL)
-	sqlconnmanager := connectionmanager.NewConnectionManager(sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}), connectionmanager.WithCloseOnRelease())
+	sqlconnmanager := connectionmanager.NewConnectionManager(
+		sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}),
+		connectionmanager.WithCloseOnRelease(),
+	)
 	mongoconnmanager := connectionmanager.NewConnectionManager(mongoprovider.NewProvider(), connectionmanager.WithCloseOnRelease())
 	var meter metric.Meter
 	temporalclient := tmprl_mocks.NewClient(t)
@@ -275,7 +278,10 @@ metrics:
 	benthosStreamManager := benthosstream.NewBenthosStreamManager()
 	jobclient := mgmtv1alpha1connect.NewJobServiceClient(srv.Client(), srv.URL)
 	connclient := mgmtv1alpha1connect.NewConnectionServiceClient(srv.Client(), srv.URL)
-	sqlconnmanager := connectionmanager.NewConnectionManager(sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}), connectionmanager.WithCloseOnRelease())
+	sqlconnmanager := connectionmanager.NewConnectionManager(
+		sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}),
+		connectionmanager.WithCloseOnRelease(),
+	)
 	mongoconnmanager := connectionmanager.NewConnectionManager(mongoprovider.NewProvider(), connectionmanager.WithCloseOnRelease())
 	temporalclient := tmprl_mocks.NewClient(t)
 	activity := New(connclient, jobclient, sqlconnmanager, mongoconnmanager, meter, benthosStreamManager, temporalclient, nil, nil)
@@ -350,7 +356,10 @@ func Test_Sync_Run_Processor_Error(t *testing.T) {
 	benthosStreamManager := benthosstream.NewBenthosStreamManager()
 	jobclient := mgmtv1alpha1connect.NewJobServiceClient(srv.Client(), srv.URL)
 	connclient := mgmtv1alpha1connect.NewConnectionServiceClient(srv.Client(), srv.URL)
-	sqlconnmanager := connectionmanager.NewConnectionManager(sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}), connectionmanager.WithCloseOnRelease())
+	sqlconnmanager := connectionmanager.NewConnectionManager(
+		sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}),
+		connectionmanager.WithCloseOnRelease(),
+	)
 	mongoconnmanager := connectionmanager.NewConnectionManager(mongoprovider.NewProvider(), connectionmanager.WithCloseOnRelease())
 	var meter metric.Meter
 	temporalclient := tmprl_mocks.NewClient(t)
@@ -420,7 +429,10 @@ output:
 
 	jobclient := mgmtv1alpha1connect.NewJobServiceClient(srv.Client(), srv.URL)
 	connclient := mgmtv1alpha1connect.NewConnectionServiceClient(srv.Client(), srv.URL)
-	sqlconnmanager := connectionmanager.NewConnectionManager(sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}), connectionmanager.WithCloseOnRelease())
+	sqlconnmanager := connectionmanager.NewConnectionManager(
+		sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}),
+		connectionmanager.WithCloseOnRelease(),
+	)
 	mongoconnmanager := connectionmanager.NewConnectionManager(mongoprovider.NewProvider(), connectionmanager.WithCloseOnRelease())
 	var meter metric.Meter
 	temporalclient := tmprl_mocks.NewClient(t)
@@ -511,7 +523,10 @@ output:
 
 	jobclient := mgmtv1alpha1connect.NewJobServiceClient(srv.Client(), srv.URL)
 	connclient := mgmtv1alpha1connect.NewConnectionServiceClient(srv.Client(), srv.URL)
-	sqlconnmanager := connectionmanager.NewConnectionManager(sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}), connectionmanager.WithCloseOnRelease())
+	sqlconnmanager := connectionmanager.NewConnectionManager(
+		sqlprovider.NewProvider(&sqlconnect.SqlOpenConnector{}),
+		connectionmanager.WithCloseOnRelease(),
+	)
 	mongoconnmanager := connectionmanager.NewConnectionManager(mongoprovider.NewProvider(), connectionmanager.WithCloseOnRelease())
 	var meter metric.Meter
 	temporalclient := tmprl_mocks.NewClient(t)

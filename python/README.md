@@ -1,11 +1,11 @@
-# Neosync Python SDK
+# Vydon Python SDK
 
-This is the Python SDK for the Neosync API.
+This is the Python SDK for the Vydon API.
 
 ## Installation
 
 ```bash
-pip install neosync
+pip install vydon
 ```
 
-For more details and examples, see the [docs](https://docs.neosync.dev/api/python).
+For more details and examples, see the [docs](https://docs.vydon.io/api/python).

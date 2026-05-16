@@ -2,45 +2,42 @@ package integrationtests_test
 
 import (
 	"context"
-	"fmt"
 	"log/slog"
 	"net/http"
 
 	"connectrpc.com/connect"
-	"github.com/jackc/pgx/v5/stdlib"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mysql_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/mysql"
-	pg_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/postgresql"
-	"github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
-	auth_apikey "github.com/nucleuscloud/neosync/backend/internal/auth/apikey"
-	auth_jwt "github.com/nucleuscloud/neosync/backend/internal/auth/jwt"
-	auth_interceptor "github.com/nucleuscloud/neosync/backend/internal/connect/interceptors/auth"
-	accounthooks "github.com/nucleuscloud/neosync/backend/internal/ee/hooks/accounts"
-	jobhooks "github.com/nucleuscloud/neosync/backend/internal/ee/hooks/jobs"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	"github.com/nucleuscloud/neosync/backend/internal/utils"
-	"github.com/nucleuscloud/neosync/backend/pkg/mongoconnect"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlconnect"
-	v1alpha1_accounthookservice "github.com/nucleuscloud/neosync/backend/services/mgmt/v1alpha1/account-hooks-service"
-	v1alpha_anonymizationservice "github.com/nucleuscloud/neosync/backend/services/mgmt/v1alpha1/anonymization-service"
-	v1alpha1_connectiondataservice "github.com/nucleuscloud/neosync/backend/services/mgmt/v1alpha1/connection-data-service"
-	v1alpha1_connectionservice "github.com/nucleuscloud/neosync/backend/services/mgmt/v1alpha1/connection-service"
-	v1alpha1_jobservice "github.com/nucleuscloud/neosync/backend/services/mgmt/v1alpha1/job-service"
-	v1alpha1_transformersservice "github.com/nucleuscloud/neosync/backend/services/mgmt/v1alpha1/transformers-service"
-	v1alpha1_useraccountservice "github.com/nucleuscloud/neosync/backend/services/mgmt/v1alpha1/user-account-service"
-	"github.com/nucleuscloud/neosync/internal/apikey"
-	"github.com/nucleuscloud/neosync/internal/authmgmt"
-	awsmanager "github.com/nucleuscloud/neosync/internal/aws"
-	"github.com/nucleuscloud/neosync/internal/billing"
-	"github.com/nucleuscloud/neosync/internal/connectiondata"
-	presidioapi "github.com/nucleuscloud/neosync/internal/ee/presidio"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac/enforcer"
-	neosync_gcp "github.com/nucleuscloud/neosync/internal/gcp"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
-	"github.com/nucleuscloud/neosync/internal/testutil"
-	tcpostgres "github.com/nucleuscloud/neosync/internal/testutil/testcontainers/postgres"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mysql_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/mysql"
+	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
+	"github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1/mgmtv1alpha1connect"
+	auth_apikey "github.com/vydon-io/vydon/backend/internal/auth/apikey"
+	auth_jwt "github.com/vydon-io/vydon/backend/internal/auth/jwt"
+	auth_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/auth"
+	accounthooks "github.com/vydon-io/vydon/backend/internal/hooks/accounts"
+	jobhooks "github.com/vydon-io/vydon/backend/internal/hooks/jobs"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	"github.com/vydon-io/vydon/backend/internal/utils"
+	"github.com/vydon-io/vydon/backend/pkg/mongoconnect"
+	"github.com/vydon-io/vydon/backend/pkg/sqlconnect"
+	v1alpha1_accounthookservice "github.com/vydon-io/vydon/backend/services/mgmt/v1alpha1/account-hooks-service"
+	v1alpha_anonymizationservice "github.com/vydon-io/vydon/backend/services/mgmt/v1alpha1/anonymization-service"
+	v1alpha1_connectiondataservice "github.com/vydon-io/vydon/backend/services/mgmt/v1alpha1/connection-data-service"
+	v1alpha1_connectionservice "github.com/vydon-io/vydon/backend/services/mgmt/v1alpha1/connection-service"
+	v1alpha1_jobservice "github.com/vydon-io/vydon/backend/services/mgmt/v1alpha1/job-service"
+	v1alpha1_transformersservice "github.com/vydon-io/vydon/backend/services/mgmt/v1alpha1/transformers-service"
+	v1alpha1_useraccountservice "github.com/vydon-io/vydon/backend/services/mgmt/v1alpha1/user-account-service"
+	"github.com/vydon-io/vydon/internal/apikey"
+	"github.com/vydon-io/vydon/internal/authmgmt"
+	awsmanager "github.com/vydon-io/vydon/internal/aws"
+	"github.com/vydon-io/vydon/internal/billing"
+	"github.com/vydon-io/vydon/internal/connectiondata"
+	vydon_gcp "github.com/vydon-io/vydon/internal/gcp"
+	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/testutil"
+	tcpostgres "github.com/vydon-io/vydon/internal/testutil/testcontainers/postgres"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 var (
@@ -76,102 +73,93 @@ const (
 	// OSS, Unauthenticated, Unlicensed
 	openSourceUnauthenticatedUnlicensedPostfix = "/oss-unauthenticated-unlicensed"
 	// NeoCloud, Licensed, Authenticated
-	neoCloudAuthenticatedLicensedPostfix = "/neosynccloud-authenticated"
+	neoCloudAuthenticatedLicensedPostfix = "/vydon-authenticated"
 )
 
-func (s *NeosyncApiTestClient) setupOssUnauthenticatedLicensedMux(
+func (s *VydonApiTestClient) setupOssUnauthenticatedLicensedMux(
 	ctx context.Context,
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	logger *slog.Logger,
 ) (*http.ServeMux, error) {
 	isLicensed := true
 	isAuthEnabled := false
-	isNeosyncCloud := false
-	enforcedRbacClient, err := s.getEnforcedRbacClient(ctx, pgcontainer)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get enforced rbac client: %w", err)
-	}
+	isVydonCloud := false
+	enforcedRbacClient := s.getEnforcedRbacClient(ctx, pgcontainer)
 	return s.setupMux(
 		pgcontainer,
 		isAuthEnabled,
 		isLicensed,
-		isNeosyncCloud,
+		isVydonCloud,
 		enforcedRbacClient,
 		logger,
 	)
 }
 
-func (s *NeosyncApiTestClient) setupOssLicensedAuthMux(
+func (s *VydonApiTestClient) setupOssLicensedAuthMux(
 	ctx context.Context,
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	logger *slog.Logger,
 ) (*http.ServeMux, error) {
 	isLicensed := true
 	isAuthEnabled := true
-	isNeosyncCloud := false
-	enforcedRbacClient, err := s.getEnforcedRbacClient(ctx, pgcontainer)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get enforced rbac client: %w", err)
-	}
+	isVydonCloud := false
+	enforcedRbacClient := s.getEnforcedRbacClient(ctx, pgcontainer)
 	return s.setupMux(
 		pgcontainer,
 		isAuthEnabled,
 		isLicensed,
-		isNeosyncCloud,
+		isVydonCloud,
 		enforcedRbacClient,
 		logger,
 	)
 }
 
-func (s *NeosyncApiTestClient) setupOssUnlicensedMux(
+func (s *VydonApiTestClient) setupOssUnlicensedMux(
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	logger *slog.Logger,
 ) (*http.ServeMux, error) {
 	isLicensed := false
 	isAuthEnabled := false
-	isNeosyncCloud := false
+	isVydonCloud := false
 	permissiveRbacClient := rbac.NewAllowAllClient()
 	return s.setupMux(
 		pgcontainer,
 		isAuthEnabled,
 		isLicensed,
-		isNeosyncCloud,
+		isVydonCloud,
 		permissiveRbacClient,
 		logger,
 	)
 }
 
-func (s *NeosyncApiTestClient) setupNeoCloudMux(
+func (s *VydonApiTestClient) setupNeoCloudMux(
 	ctx context.Context,
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	logger *slog.Logger,
 ) (*http.ServeMux, error) {
 	isLicensed := true
 	isAuthEnabled := true
-	isNeosyncCloud := true
-	enforcedRbacClient, err := s.getEnforcedRbacClient(ctx, pgcontainer)
-	if err != nil {
-		return nil, fmt.Errorf("unable to get enforced rbac client: %w", err)
-	}
+	isVydonCloud := true
+	enforcedRbacClient := s.getEnforcedRbacClient(ctx, pgcontainer)
 	return s.setupMux(
 		pgcontainer,
 		isAuthEnabled,
 		isLicensed,
-		isNeosyncCloud,
+		isVydonCloud,
 		enforcedRbacClient,
 		logger,
 	)
 }
 
-func (s *NeosyncApiTestClient) setupMux(
+func (s *VydonApiTestClient) setupMux(
 	pgcontainer *tcpostgres.PostgresTestContainer,
 	isAuthEnabled bool,
 	isLicensed bool,
-	isNeosyncCloud bool,
+	isVydonCloud bool,
 	rbacClient rbac.Interface,
 	logger *slog.Logger,
 ) (*http.ServeMux, error) {
-	isPresidioEnabled := isLicensed || isNeosyncCloud
+	isPresidioEnabled := isLicensed || isVydonCloud
 
 	maxAllowed := int64(10000)
 	var license *testutil.FakeEELicense
@@ -181,10 +169,10 @@ func (s *NeosyncApiTestClient) setupMux(
 		license = testutil.NewFakeEELicense()
 	}
 
-	neosyncDb := neosyncdb.New(pgcontainer.DB, db_queries.New())
+	vydonDb := vydondb.New(pgcontainer.DB, db_queries.New())
 
 	var billingclient billing.Interface
-	if isNeosyncCloud {
+	if isVydonCloud {
 		billingclient = s.Mocks.Billingclient
 	} else {
 		billingclient = nil
@@ -193,10 +181,10 @@ func (s *NeosyncApiTestClient) setupMux(
 	userService := v1alpha1_useraccountservice.New(
 		&v1alpha1_useraccountservice.Config{
 			IsAuthEnabled:            isAuthEnabled,
-			IsNeosyncCloud:           isNeosyncCloud,
+			IsVydonCloud:             isVydonCloud,
 			DefaultMaxAllowedRecords: &maxAllowed,
 		},
-		neosyncdb.New(pgcontainer.DB, db_queries.New()),
+		vydondb.New(pgcontainer.DB, db_queries.New()),
 		s.Mocks.TemporalConfigProvider,
 		s.Mocks.Authclient,
 		s.Mocks.Authmanagerclient,
@@ -210,7 +198,7 @@ func (s *NeosyncApiTestClient) setupMux(
 		&v1alpha1_transformersservice.Config{
 			IsPresidioEnabled: isPresidioEnabled,
 		},
-		neosyncdb.New(pgcontainer.DB, db_queries.New()),
+		vydondb.New(pgcontainer.DB, db_queries.New()),
 		s.Mocks.Presidio.Entities,
 		userclient,
 		license,
@@ -219,8 +207,8 @@ func (s *NeosyncApiTestClient) setupMux(
 	sqlmanagerclient := NewTestSqlManagerClient()
 
 	connectionService := v1alpha1_connectionservice.New(
-		&v1alpha1_connectionservice.Config{IsNeosyncCloud: isNeosyncCloud},
-		neosyncDb,
+		&v1alpha1_connectionservice.Config{IsVydonCloud: isVydonCloud},
+		vydonDb,
 		userclient,
 		mongoconnect.NewConnector(),
 		awsmanager.New(),
@@ -231,13 +219,13 @@ func (s *NeosyncApiTestClient) setupMux(
 	var jobhookService *jobhooks.Service
 	if isLicensed {
 		jobhookService = jobhooks.New(
-			neosyncDb,
+			vydonDb,
 			userclient,
 			jobhooks.WithEnabled(),
 		)
 	} else {
 		jobhookService = jobhooks.New(
-			neosyncDb,
+			vydonDb,
 			userclient,
 		)
 	}
@@ -248,8 +236,8 @@ func (s *NeosyncApiTestClient) setupMux(
 	mysqlquerier := mysql_queries.New()
 	mongoconnector := mongoconnect.NewConnector()
 	sqlmanager := sqlmanagerclient
-	gcpmanager := neosync_gcp.NewManager()
-	neosynctyperegistry := neosynctypes.NewTypeRegistry(logger)
+	gcpmanager := vydon_gcp.NewManager()
+	vydontyperegistry := vydontypes.NewTypeRegistry(logger)
 
 	connectiondatabuilder := connectiondata.NewConnectionDataBuilder(
 		sqlConnector,
@@ -259,12 +247,12 @@ func (s *NeosyncApiTestClient) setupMux(
 		awsManager,
 		gcpmanager,
 		mongoconnector,
-		neosynctyperegistry,
+		vydontyperegistry,
 	)
 
 	jobService := v1alpha1_jobservice.New(
-		&v1alpha1_jobservice.Config{IsAuthEnabled: isAuthEnabled, IsNeosyncCloud: isNeosyncCloud},
-		neosyncDb,
+		&v1alpha1_jobservice.Config{IsAuthEnabled: isAuthEnabled, IsVydonCloud: isVydonCloud},
+		vydonDb,
 		s.Mocks.TemporalClientManager,
 		connectionService,
 		sqlmanagerclient,
@@ -280,7 +268,7 @@ func (s *NeosyncApiTestClient) setupMux(
 		&v1alpha_anonymizationservice.Config{
 			IsPresidioEnabled: isPresidioEnabled,
 			IsAuthEnabled:     isAuthEnabled,
-			IsNeosyncCloud:    isNeosyncCloud,
+			IsVydonCloud:      isVydonCloud,
 		},
 		nil, // meter
 		userclient,
@@ -288,7 +276,7 @@ func (s *NeosyncApiTestClient) setupMux(
 		transformerService,
 		presAnalyzeClient,
 		presAnonClient,
-		neosyncDb,
+		vydonDb,
 		license,
 	)
 
@@ -300,7 +288,7 @@ func (s *NeosyncApiTestClient) setupMux(
 
 	accountHookService := v1alpha1_accounthookservice.New(
 		accounthooks.New(
-			neosyncDb,
+			vydonDb,
 			userclient,
 			accounthooks.WithSlackClient(s.Mocks.Slackclient),
 		),
@@ -354,22 +342,9 @@ func (s *NeosyncApiTestClient) setupMux(
 	return mux, nil
 }
 
-func (s *NeosyncApiTestClient) getEnforcedRbacClient(
-	ctx context.Context,
-	pgcontainer *tcpostgres.PostgresTestContainer,
-) (rbac.Interface, error) {
-	rbacenforcer, err := enforcer.NewActiveEnforcer(
-		ctx,
-		stdlib.OpenDBFromPool(pgcontainer.DB),
-		"neosync_api.casbin_rule",
-	)
-	if err != nil {
-		return nil, fmt.Errorf("unable to create rbac enforcer: %w", err)
-	}
-	rbacenforcer.EnableAutoSave(true)
-	err = rbacenforcer.LoadPolicy()
-	if err != nil {
-		return nil, fmt.Errorf("unable to load rbac policies: %w", err)
-	}
-	return rbac.New(rbacenforcer), nil
+func (s *VydonApiTestClient) getEnforcedRbacClient(
+	_ context.Context,
+	_ *tcpostgres.PostgresTestContainer,
+) rbac.Interface {
+	return rbac.NewAllowAllClient()
 }

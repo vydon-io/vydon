@@ -15,10 +15,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Check Docs
+      - name: Install helm-docs
         run: |
-          make helm/docs
+          curl -sSLo helm-docs.tar.gz https://github.com/norwoodj/helm-docs/releases/download/v1.14.2/helm-docs_1.14.2_Linux_x86_64.tar.gz
+          tar -xf helm-docs.tar.gz helm-docs
+          sudo mv helm-docs /usr/local/bin/
+
+      - name: Regenerate docs
+        run: helm-docs --chart-search-root=.
+
+      - name: Check no drift
+        run: |
           if ! git diff --exit-code; then
-              echo "Documentation not up to date. Please run helm-docs and commit changes!" >&2
-              exit 1
+            echo "Helm chart README is stale. Run helm-docs locally and commit." >&2
+            exit 1
           fi

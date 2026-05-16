@@ -1,6 +1,6 @@
 package integrationtest
 
-import mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
+import mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 
 type DefaultTransformers struct {
 	Boolean *mgmtv1alpha1.JobMappingTransformer

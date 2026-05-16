@@ -70,7 +70,7 @@ export default function WelcomeRouter({
     },
     {
       name: 'Data Generation',
-      description: 'Generate synthetic data from using Neosync Transformers.',
+      description: 'Generate synthetic data from using Vydon Transformers.',
       href: `/${account?.name}/new/job/define?${dataGenParams.toString()}`,
       icon: <AiOutlineExperiment />,
       type: 'generate-table',
@@ -153,7 +153,7 @@ export default function WelcomeRouter({
           onClick={() => {
             setIsDialogOpen(false);
             completeForm();
-            onPreviousStep;
+            onPreviousStep();
             router.push(
               href ??
                 `/${account?.name}/new/job/define?${dataSyncParams.toString()}`

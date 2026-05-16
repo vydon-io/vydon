@@ -11,14 +11,14 @@ import (
 	"sync"
 	"time"
 
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	dbconnectconfig "github.com/nucleuscloud/neosync/backend/pkg/dbconnect-config"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqldbtx"
-	"github.com/nucleuscloud/neosync/backend/pkg/sqlretry"
-	tun "github.com/nucleuscloud/neosync/internal/sshtunnel"
-	"github.com/nucleuscloud/neosync/internal/sshtunnel/connectors/mssqltunconnector"
-	"github.com/nucleuscloud/neosync/internal/sshtunnel/connectors/mysqltunconnector"
-	"github.com/nucleuscloud/neosync/internal/sshtunnel/connectors/postgrestunconnector"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	dbconnectconfig "github.com/vydon-io/vydon/backend/pkg/dbconnect-config"
+	"github.com/vydon-io/vydon/backend/pkg/sqldbtx"
+	"github.com/vydon-io/vydon/backend/pkg/sqlretry"
+	tun "github.com/vydon-io/vydon/internal/sshtunnel"
+	"github.com/vydon-io/vydon/internal/sshtunnel/connectors/mssqltunconnector"
+	"github.com/vydon-io/vydon/internal/sshtunnel/connectors/mysqltunconnector"
+	"github.com/vydon-io/vydon/internal/sshtunnel/connectors/postgrestunconnector"
 )
 
 // interface used by SqlConnector to abstract away the opening and closing of a sqldb that includes tunnelingff
@@ -95,7 +95,12 @@ func (rc *SqlOpenConnector) NewDbFromConnectionConfig(
 			logger,
 		), nil
 	case *mgmtv1alpha1.ConnectionConfig_MysqlConfig:
-		connDetails, err := dbconnectconfig.NewFromMysqlConnection(config, options.connectionTimeoutSeconds, logger, options.mysqlDisableParseTime)
+		connDetails, err := dbconnectconfig.NewFromMysqlConnection(
+			config,
+			options.connectionTimeoutSeconds,
+			logger,
+			options.mysqlDisableParseTime,
+		)
 		if err != nil {
 			return nil, err
 		}

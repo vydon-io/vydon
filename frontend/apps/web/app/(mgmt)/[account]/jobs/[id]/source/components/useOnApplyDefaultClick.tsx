@@ -10,7 +10,7 @@ import {
   JobMappingTransformerSchema,
   PassthroughSchema,
   TransformerConfigSchema,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 
 interface Props {
   getMappings(): JobMappingFormValues[];

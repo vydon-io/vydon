@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/go
 {
-	"name": "neosync",
+	"name": "vydon",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	// See: https://github.com/devcontainers/ci/issues/191#issuecomment-1473518609
 	// Due to multi-platform builds docker tag fails, this is a workaround
@@ -16,7 +16,7 @@
 		/* K8s */
 		"ghcr.io/mpriscella/features/kind:1": {},
 		"ghcr.io/lentzi90/features/tilt:0": {},
-		"ghcr.io/nucleuscloud/devcontainer-features/ctlptl:0": {},
+		"ghcr.io/vydon-io/devcontainer-features/ctlptl:0": {},
 		"ghcr.io/devcontainers-contrib/features/kubectl-asdf:2": {
 			"version": "1.28.2"
 		},
@@ -28,7 +28,7 @@
 		"ghcr.io/rio/features/kustomize:1": {
 			"version": "5.1.1" // https://github.com/rio/features/issues/37
 		},
-		"ghcr.io/nucleuscloud/devcontainer-features/helmfile:0": {},
+		"ghcr.io/vydon-io/devcontainer-features/helmfile:0": {},
 		"ghcr.io/dhoeric/features/k9s:1": {},
 		/* Protobuf */
 		"ghcr.io/marcozac/devcontainer-features/buf:1": {},
@@ -36,7 +36,7 @@
 		/* Golang */
 		"ghcr.io/devcontainers/features/go:1": {},
 		"ghcr.io/guiyomh/features/golangci-lint:0": {},
-		"ghcr.io/nucleuscloud/devcontainer-features/sqlc:1": {},
+		"ghcr.io/vydon-io/devcontainer-features/sqlc:1": {},
 		"ghcr.io/brokeyourbike/devcontainer-features/mockery-go:0.2.0": {},
 		/* NodeJS/Browser */
 		"ghcr.io/devcontainers/features/node:1": {},
@@ -47,9 +47,9 @@
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	"forwardPorts": [
 		10350, // tilt
-		8080, // neosync api
-		3000, // neosync app
-		5432, // neosync db
+		8080, // vydon api
+		3000, // vydon app
+		5432, // vydon db
 		8233 // temporal ui
 	],
 	"customizations": {

@@ -20,7 +20,7 @@ import {
   Connection,
   ConnectionConfigSchema,
   ConnectionService,
-} from '@neosync/sdk';
+} from '@vydon/sdk';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { getConnectionUrlSlugName } from '../../util';

@@ -1,4 +1,4 @@
-package neosync_redis
+package vydon_redis
 
 import (
 	"crypto/tls"

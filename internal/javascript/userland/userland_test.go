@@ -50,7 +50,7 @@ func Test_GetSingleGenerateFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -71,7 +71,7 @@ func Test_GetSingleGenerateFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -93,7 +93,7 @@ func Test_GetSingleGenerateFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -115,7 +115,7 @@ func Test_GetSingleGenerateFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -137,7 +137,7 @@ func Test_GetSingleGenerateFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -159,7 +159,7 @@ func Test_GetSingleGenerateFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -180,7 +180,7 @@ func Test_GetSingleGenerateFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -205,7 +205,7 @@ func Test_GetSingleTransformFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({%q: "world"}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -227,7 +227,7 @@ func Test_GetSingleTransformFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({%q: 123}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -249,7 +249,7 @@ func Test_GetSingleTransformFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({%q: true}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -271,7 +271,7 @@ func Test_GetSingleTransformFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({%q: {a: 1, b: 2}}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -293,7 +293,7 @@ func Test_GetSingleTransformFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({%q: [1, 2]}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -315,7 +315,7 @@ func Test_GetSingleTransformFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({%q: null}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}
@@ -336,7 +336,7 @@ func Test_GetSingleTransformFunction(t *testing.T) {
 		const benthos = {
 			v0_msg_as_structured: () => ({%q: undefined}),
 		};
-		const neosync = {
+		const vydon = {
 			patchStructuredMessage: (val) => {
 				programOutput = val;
 			}

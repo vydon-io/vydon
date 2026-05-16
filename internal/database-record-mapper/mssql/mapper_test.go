@@ -5,9 +5,9 @@ import (
 	"time"
 
 	mssql "github.com/microsoft/go-mssqldb"
-	neosynctypes "github.com/nucleuscloud/neosync/internal/neosync-types"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	vydontypes "github.com/vydon-io/vydon/internal/vydon-types"
 )
 
 func Test_parseRowValues(t *testing.T) {
@@ -50,7 +50,7 @@ func Test_parseRowValues(t *testing.T) {
 	require.NoError(t, err)
 
 	// Test datetime handling
-	dt, err := neosynctypes.NewDateTimeFromMssql(testTime)
+	dt, err := vydontypes.NewDateTimeFromMssql(testTime)
 	assert.NoError(t, err)
 	assert.Equal(t, dt, result["datetime_col"])
 
@@ -58,12 +58,12 @@ func Test_parseRowValues(t *testing.T) {
 	assert.Equal(t, testUUID.String(), result["uuid_col"])
 
 	// Test binary handling
-	expectedBinary, err := neosynctypes.NewBinaryFromMssql(testBinary)
+	expectedBinary, err := vydontypes.NewBinaryFromMssql(testBinary)
 	assert.NoError(t, err)
 	assert.Equal(t, expectedBinary, result["binary_col"])
 
 	// Test varbinary handling
-	expectedBits, err := neosynctypes.NewBitsFromMssql(testVarBinary)
+	expectedBits, err := vydontypes.NewBitsFromMssql(testVarBinary)
 	assert.NoError(t, err)
 	assert.Equal(t, expectedBits, result["varbinary_col"])
 

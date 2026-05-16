@@ -61,7 +61,7 @@ type MockTx_Begin_Call struct {
 
 // Begin is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockTx_Expecter) Begin(ctx interface{}) *MockTx_Begin_Call {
+func (_e *MockTx_Expecter) Begin(ctx any) *MockTx_Begin_Call {
 	return &MockTx_Begin_Call{Call: _e.mock.On("Begin", ctx)}
 }
 
@@ -107,7 +107,7 @@ type MockTx_Commit_Call struct {
 
 // Commit is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockTx_Expecter) Commit(ctx interface{}) *MockTx_Commit_Call {
+func (_e *MockTx_Expecter) Commit(ctx any) *MockTx_Commit_Call {
 	return &MockTx_Commit_Call{Call: _e.mock.On("Commit", ctx)}
 }
 
@@ -213,7 +213,7 @@ type MockTx_CopyFrom_Call struct {
 //   - tableName pgx.Identifier
 //   - columnNames []string
 //   - rowSrc pgx.CopyFromSource
-func (_e *MockTx_Expecter) CopyFrom(ctx interface{}, tableName interface{}, columnNames interface{}, rowSrc interface{}) *MockTx_CopyFrom_Call {
+func (_e *MockTx_Expecter) CopyFrom(ctx any, tableName any, columnNames any, rowSrc any) *MockTx_CopyFrom_Call {
 	return &MockTx_CopyFrom_Call{Call: _e.mock.On("CopyFrom", ctx, tableName, columnNames, rowSrc)}
 }
 
@@ -236,7 +236,7 @@ func (_c *MockTx_CopyFrom_Call) RunAndReturn(run func(context.Context, pgx.Ident
 
 // Exec provides a mock function with given fields: ctx, sql, arguments
 func (_m *MockTx) Exec(ctx context.Context, sql string, arguments ...any) (pgconn.CommandTag, error) {
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, sql)
 	_ca = append(_ca, arguments...)
 	ret := _m.Called(_ca...)
@@ -274,9 +274,9 @@ type MockTx_Exec_Call struct {
 //   - ctx context.Context
 //   - sql string
 //   - arguments ...any
-func (_e *MockTx_Expecter) Exec(ctx interface{}, sql interface{}, arguments ...interface{}) *MockTx_Exec_Call {
+func (_e *MockTx_Expecter) Exec(ctx any, sql any, arguments ...any) *MockTx_Exec_Call {
 	return &MockTx_Exec_Call{Call: _e.mock.On("Exec",
-		append([]interface{}{ctx, sql}, arguments...)...)}
+		append([]any{ctx, sql}, arguments...)...)}
 }
 
 func (_c *MockTx_Exec_Call) Run(run func(ctx context.Context, sql string, arguments ...any)) *MockTx_Exec_Call {
@@ -386,7 +386,7 @@ type MockTx_Prepare_Call struct {
 //   - ctx context.Context
 //   - name string
 //   - sql string
-func (_e *MockTx_Expecter) Prepare(ctx interface{}, name interface{}, sql interface{}) *MockTx_Prepare_Call {
+func (_e *MockTx_Expecter) Prepare(ctx any, name any, sql any) *MockTx_Prepare_Call {
 	return &MockTx_Prepare_Call{Call: _e.mock.On("Prepare", ctx, name, sql)}
 }
 
@@ -409,7 +409,7 @@ func (_c *MockTx_Prepare_Call) RunAndReturn(run func(context.Context, string, st
 
 // Query provides a mock function with given fields: ctx, sql, args
 func (_m *MockTx) Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error) {
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, sql)
 	_ca = append(_ca, args...)
 	ret := _m.Called(_ca...)
@@ -449,9 +449,9 @@ type MockTx_Query_Call struct {
 //   - ctx context.Context
 //   - sql string
 //   - args ...any
-func (_e *MockTx_Expecter) Query(ctx interface{}, sql interface{}, args ...interface{}) *MockTx_Query_Call {
+func (_e *MockTx_Expecter) Query(ctx any, sql any, args ...any) *MockTx_Query_Call {
 	return &MockTx_Query_Call{Call: _e.mock.On("Query",
-		append([]interface{}{ctx, sql}, args...)...)}
+		append([]any{ctx, sql}, args...)...)}
 }
 
 func (_c *MockTx_Query_Call) Run(run func(ctx context.Context, sql string, args ...any)) *MockTx_Query_Call {
@@ -479,7 +479,7 @@ func (_c *MockTx_Query_Call) RunAndReturn(run func(context.Context, string, ...a
 
 // QueryRow provides a mock function with given fields: ctx, sql, args
 func (_m *MockTx) QueryRow(ctx context.Context, sql string, args ...any) pgx.Row {
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, sql)
 	_ca = append(_ca, args...)
 	ret := _m.Called(_ca...)
@@ -509,9 +509,9 @@ type MockTx_QueryRow_Call struct {
 //   - ctx context.Context
 //   - sql string
 //   - args ...any
-func (_e *MockTx_Expecter) QueryRow(ctx interface{}, sql interface{}, args ...interface{}) *MockTx_QueryRow_Call {
+func (_e *MockTx_Expecter) QueryRow(ctx any, sql any, args ...any) *MockTx_QueryRow_Call {
 	return &MockTx_QueryRow_Call{Call: _e.mock.On("QueryRow",
-		append([]interface{}{ctx, sql}, args...)...)}
+		append([]any{ctx, sql}, args...)...)}
 }
 
 func (_c *MockTx_QueryRow_Call) Run(run func(ctx context.Context, sql string, args ...any)) *MockTx_QueryRow_Call {
@@ -562,7 +562,7 @@ type MockTx_Rollback_Call struct {
 
 // Rollback is a helper method to define mock.On call
 //   - ctx context.Context
-func (_e *MockTx_Expecter) Rollback(ctx interface{}) *MockTx_Rollback_Call {
+func (_e *MockTx_Expecter) Rollback(ctx any) *MockTx_Rollback_Call {
 	return &MockTx_Rollback_Call{Call: _e.mock.On("Rollback", ctx)}
 }
 
@@ -611,7 +611,7 @@ type MockTx_SendBatch_Call struct {
 // SendBatch is a helper method to define mock.On call
 //   - ctx context.Context
 //   - b *pgx.Batch
-func (_e *MockTx_Expecter) SendBatch(ctx interface{}, b interface{}) *MockTx_SendBatch_Call {
+func (_e *MockTx_Expecter) SendBatch(ctx any, b any) *MockTx_SendBatch_Call {
 	return &MockTx_SendBatch_Call{Call: _e.mock.On("SendBatch", ctx, b)}
 }
 

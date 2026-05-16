@@ -15,19 +15,19 @@ import (
 
 	"connectrpc.com/connect"
 	"github.com/jackc/pgx/v5/pgtype"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	logger_interceptor "github.com/nucleuscloud/neosync/backend/internal/connect/interceptors/logger"
-	"github.com/nucleuscloud/neosync/backend/internal/dtomaps"
-	"github.com/nucleuscloud/neosync/backend/internal/loki"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
-	piidetect_job_activities "github.com/nucleuscloud/neosync/worker/pkg/workflows/ee/piidetect/workflows/job/activities"
-	piidetect_table_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/ee/piidetect/workflows/table"
-	piidetect_table_activities "github.com/nucleuscloud/neosync/worker/pkg/workflows/ee/piidetect/workflows/table/activities"
-	tablesync_workflow "github.com/nucleuscloud/neosync/worker/pkg/workflows/tablesync/workflow"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
+	"github.com/vydon-io/vydon/backend/internal/dtomaps"
+	"github.com/vydon-io/vydon/backend/internal/loki"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/vydondb"
+	piidetect_job_activities "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/job/activities"
+	piidetect_table_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/table"
+	piidetect_table_activities "github.com/vydon-io/vydon/worker/pkg/workflows/piidetect/table/activities"
+	tablesync_workflow "github.com/vydon-io/vydon/worker/pkg/workflows/tablesync/workflow"
 	"go.temporal.io/api/enums/v1"
 	"go.temporal.io/api/history/v1"
 	temporalclient "go.temporal.io/sdk/client"
@@ -53,7 +53,7 @@ func (s *Service) GetJobRuns(
 	jobIds := []string{}
 	switch id := req.Msg.Id.(type) {
 	case *mgmtv1alpha1.GetJobRunsRequest_JobId:
-		jobUuid, err := neosyncdb.ToUuid(id.JobId)
+		jobUuid, err := vydondb.ToUuid(id.JobId)
 		if err != nil {
 			return nil, err
 		}
@@ -62,11 +62,11 @@ func (s *Service) GetJobRuns(
 			return nil, err
 		}
 
-		accountId = neosyncdb.UUIDString(job.AccountID)
+		accountId = vydondb.UUIDString(job.AccountID)
 		jobIds = append(jobIds, id.JobId)
 	case *mgmtv1alpha1.GetJobRunsRequest_AccountId:
 		accountId = id.AccountId
-		accountPgUuid, err := neosyncdb.ToUuid(accountId)
+		accountPgUuid, err := vydondb.ToUuid(accountId)
 		if err != nil {
 			return nil, err
 		}
@@ -76,7 +76,7 @@ func (s *Service) GetJobRuns(
 		}
 		for i := range jobs {
 			job := jobs[i]
-			jobIds = append(jobIds, neosyncdb.UUIDString(job.ID))
+			jobIds = append(jobIds, vydondb.UUIDString(job.ID))
 		}
 	default:
 		return nil, fmt.Errorf("must provide jobId or accountId")
@@ -716,7 +716,7 @@ func (s *Service) streamLogs(
 ) error {
 	if s.cfg.RunLogConfig == nil || !s.cfg.RunLogConfig.IsEnabled ||
 		s.cfg.RunLogConfig.RunLogType == nil {
-		return nucleuserrors.NewNotImplemented(
+		return vydonerrors.NewNotImplemented(
 			"job run logs is not enabled. please configure or contact system administrator to enable logs.",
 		)
 	}
@@ -751,7 +751,7 @@ func (s *Service) streamLogs(
 		}
 		return nil
 	default:
-		return nucleuserrors.NewNotImplemented(
+		return vydonerrors.NewNotImplemented(
 			"streaming log pods not implemented for this container type",
 		)
 	}
@@ -785,7 +785,7 @@ func (s *Service) streamK8sWorkerPodLogs(
 	logger *slog.Logger,
 ) error {
 	if s.cfg.RunLogConfig.RunLogPodConfig == nil {
-		return nucleuserrors.NewInternalError("run logs configured but no config provided")
+		return vydonerrors.NewInternalError("run logs configured but no config provided")
 	}
 	workflowExecution, err := s.temporalmgr.GetWorkflowExecutionById(
 		ctx,
@@ -845,7 +845,7 @@ func (s *Service) streamK8sWorkerPodLogs(
 		if err != nil && !k8serrors.IsNotFound(err) {
 			return err
 		} else if err != nil && k8serrors.IsNotFound(err) {
-			return nucleuserrors.NewNotFound("pod no longer exists")
+			return vydonerrors.NewNotFound("pod no longer exists")
 		}
 
 		scanner := bufio.NewScanner(logstream)
@@ -888,10 +888,10 @@ func (s *Service) streamLokiWorkerLogs(
 ) error {
 	if s.cfg.RunLogConfig == nil || !s.cfg.RunLogConfig.IsEnabled ||
 		s.cfg.RunLogConfig.LokiRunLogConfig == nil {
-		return nucleuserrors.NewInternalError("run logs configured but no config provided")
+		return vydonerrors.NewInternalError("run logs configured but no config provided")
 	}
 	if s.cfg.RunLogConfig.LokiRunLogConfig.LabelsQuery == "" {
-		return nucleuserrors.NewInternalError("must provide a labels query for loki to filter by")
+		return vydonerrors.NewInternalError("must provide a labels query for loki to filter by")
 	}
 	workflowExecution, err := s.temporalmgr.GetWorkflowExecutionById(
 		ctx,
@@ -1050,7 +1050,7 @@ func (s *Service) GetRunContext(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(id.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(id.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -1060,10 +1060,10 @@ func (s *Service) GetRunContext(
 		ExternalId: id.GetExternalId(),
 		AccountId:  accountUuid,
 	})
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, fmt.Errorf("unable to retrieve run context by key: %w", err)
-	} else if err != nil && neosyncdb.IsNoRows(err) {
-		return nil, nucleuserrors.NewNotFound("no run context exists with the provided key")
+	} else if err != nil && vydondb.IsNoRows(err) {
+		return nil, vydonerrors.NewNotFound("no run context exists with the provided key")
 	}
 
 	return connect.NewResponse(&mgmtv1alpha1.GetRunContextResponse{
@@ -1085,13 +1085,13 @@ func (s *Service) SetRunContext(
 		return nil, err
 	}
 
-	if s.cfg.IsNeosyncCloud && !user.IsWorkerApiKey() {
-		return nil, nucleuserrors.NewUnauthenticated(
+	if s.cfg.IsVydonCloud && !user.IsWorkerApiKey() {
+		return nil, vydonerrors.NewUnauthenticated(
 			"must provide valid authentication credentials for this endpoint",
 		)
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(id.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(id.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -1126,13 +1126,13 @@ func (s *Service) SetRunContexts(
 			return nil, err
 		}
 
-		if s.cfg.IsNeosyncCloud && !user.IsWorkerApiKey() {
-			return nil, nucleuserrors.NewUnauthenticated(
+		if s.cfg.IsVydonCloud && !user.IsWorkerApiKey() {
+			return nil, vydonerrors.NewUnauthenticated(
 				"must provide valid authentication credentials for this endpoint",
 			)
 		}
 
-		accountUuid, err := neosyncdb.ToUuid(id.GetAccountId())
+		accountUuid, err := vydondb.ToUuid(id.GetAccountId())
 		if err != nil {
 			return nil, err
 		}
@@ -1174,7 +1174,7 @@ func (s *Service) GetPiiDetectionReport(
 
 	logger.Debug("building pii detection report")
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -1197,7 +1197,7 @@ func (s *Service) GetPiiDetectionReport(
 				AccountId:        accountUuid,
 			},
 		)
-		if err != nil && !neosyncdb.IsNoRows(err) {
+		if err != nil && !vydondb.IsNoRows(err) {
 			return nil, fmt.Errorf("unable to retrieve run contexts: %w", err)
 		}
 
@@ -1232,15 +1232,15 @@ func (s *Service) getTableRunContextsFromJobReport(
 	ctx context.Context,
 	jobRun *mgmtv1alpha1.JobRun,
 	accountUuid pgtype.UUID,
-) ([]*db_queries.NeosyncApiRuncontext, error) {
+) ([]*db_queries.VydonApiRuncontext, error) {
 	runContext, err := s.db.Q.GetRunContextByKey(ctx, s.db.Db, db_queries.GetRunContextByKeyParams{
 		WorkflowId: jobRun.GetId(),
 		ExternalId: piidetect_job_activities.BuildJobReportExternalId(jobRun.GetJobId()),
 		AccountId:  accountUuid,
 	})
-	if err != nil && !neosyncdb.IsNoRows(err) {
+	if err != nil && !vydondb.IsNoRows(err) {
 		return nil, fmt.Errorf("unable to retrieve run context: %w", err)
-	} else if err != nil && neosyncdb.IsNoRows(err) {
+	} else if err != nil && vydondb.IsNoRows(err) {
 		return nil, nil
 	}
 	var jobReport piidetect_job_activities.JobPiiDetectReport
@@ -1266,10 +1266,10 @@ func (s *Service) getTableRunContextsFromJobReport(
 func (s *Service) getDbRunContextsFromKeys(
 	ctx context.Context,
 	keys []*mgmtv1alpha1.RunContextKey,
-) ([]*db_queries.NeosyncApiRuncontext, error) {
+) ([]*db_queries.VydonApiRuncontext, error) {
 	errgrp, errctx := errgroup.WithContext(ctx)
 	errgrp.SetLimit(10)
-	runContexts := []*db_queries.NeosyncApiRuncontext{}
+	runContexts := []*db_queries.VydonApiRuncontext{}
 	mu := sync.Mutex{}
 	// this could be further optimized by fetching all the run contexts in a single query
 	// where the account id and workflow id are the same
@@ -1278,7 +1278,7 @@ func (s *Service) getDbRunContextsFromKeys(
 	for _, key := range keys {
 		key := key
 		errgrp.Go(func() error {
-			accountUuid, err := neosyncdb.ToUuid(key.GetAccountId())
+			accountUuid, err := vydondb.ToUuid(key.GetAccountId())
 			if err != nil {
 				return fmt.Errorf("unable to convert account id to uuid: %w", err)
 			}
@@ -1307,7 +1307,7 @@ func (s *Service) getDbRunContextsFromKeys(
 }
 
 func getReportsFromTableContexts(
-	tableContexts []*db_queries.NeosyncApiRuncontext,
+	tableContexts []*db_queries.VydonApiRuncontext,
 ) ([]*piidetect_table_activities.TableReport, error) {
 	reports := make([]*piidetect_table_activities.TableReport, len(tableContexts))
 	for i := range tableContexts {

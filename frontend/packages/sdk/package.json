@@ -1,7 +1,7 @@
 {
-  "name": "@neosync/sdk",
+  "name": "@vydon/sdk",
   "version": "0.0.0",
-  "description": "Neosync SDK",
+  "description": "Vydon SDK",
   "private": false,
   "files": [
     "dist/**"
@@ -40,14 +40,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nucleuscloud/neosync.git"
+    "url": "git+https://github.com/vydon-io/vydon.git"
   },
   "keywords": [
-    "neosync",
+    "vydon",
     "sdk"
   ],
   "bugs": {
-    "url": "https://github.com/nucleuscloud/neosync/issues"
+    "url": "https://github.com/vydon-io/vydon/issues"
   },
-  "homepage": "https://github.com/nucleuscloud/neosync#readme"
+  "homepage": "https://github.com/vydon-io/vydon#readme"
 }

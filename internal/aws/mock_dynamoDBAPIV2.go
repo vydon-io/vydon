@@ -24,11 +24,11 @@ func (_m *MockdynamoDBAPIV2) EXPECT() *MockdynamoDBAPIV2_Expecter {
 
 // DescribeTable provides a mock function with given fields: ctx, params, optFns
 func (_m *MockdynamoDBAPIV2) DescribeTable(ctx context.Context, params *dynamodb.DescribeTableInput, optFns ...func(*dynamodb.Options)) (*dynamodb.DescribeTableOutput, error) {
-	_va := make([]interface{}, len(optFns))
+	_va := make([]any, len(optFns))
 	for _i := range optFns {
 		_va[_i] = optFns[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -68,9 +68,9 @@ type MockdynamoDBAPIV2_DescribeTable_Call struct {
 //   - ctx context.Context
 //   - params *dynamodb.DescribeTableInput
 //   - optFns ...func(*dynamodb.Options)
-func (_e *MockdynamoDBAPIV2_Expecter) DescribeTable(ctx interface{}, params interface{}, optFns ...interface{}) *MockdynamoDBAPIV2_DescribeTable_Call {
+func (_e *MockdynamoDBAPIV2_Expecter) DescribeTable(ctx any, params any, optFns ...any) *MockdynamoDBAPIV2_DescribeTable_Call {
 	return &MockdynamoDBAPIV2_DescribeTable_Call{Call: _e.mock.On("DescribeTable",
-		append([]interface{}{ctx, params}, optFns...)...)}
+		append([]any{ctx, params}, optFns...)...)}
 }
 
 func (_c *MockdynamoDBAPIV2_DescribeTable_Call) Run(run func(ctx context.Context, params *dynamodb.DescribeTableInput, optFns ...func(*dynamodb.Options))) *MockdynamoDBAPIV2_DescribeTable_Call {
@@ -98,11 +98,11 @@ func (_c *MockdynamoDBAPIV2_DescribeTable_Call) RunAndReturn(run func(context.Co
 
 // ListTables provides a mock function with given fields: ctx, params, optFns
 func (_m *MockdynamoDBAPIV2) ListTables(ctx context.Context, params *dynamodb.ListTablesInput, optFns ...func(*dynamodb.Options)) (*dynamodb.ListTablesOutput, error) {
-	_va := make([]interface{}, len(optFns))
+	_va := make([]any, len(optFns))
 	for _i := range optFns {
 		_va[_i] = optFns[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -142,9 +142,9 @@ type MockdynamoDBAPIV2_ListTables_Call struct {
 //   - ctx context.Context
 //   - params *dynamodb.ListTablesInput
 //   - optFns ...func(*dynamodb.Options)
-func (_e *MockdynamoDBAPIV2_Expecter) ListTables(ctx interface{}, params interface{}, optFns ...interface{}) *MockdynamoDBAPIV2_ListTables_Call {
+func (_e *MockdynamoDBAPIV2_Expecter) ListTables(ctx any, params any, optFns ...any) *MockdynamoDBAPIV2_ListTables_Call {
 	return &MockdynamoDBAPIV2_ListTables_Call{Call: _e.mock.On("ListTables",
-		append([]interface{}{ctx, params}, optFns...)...)}
+		append([]any{ctx, params}, optFns...)...)}
 }
 
 func (_c *MockdynamoDBAPIV2_ListTables_Call) Run(run func(ctx context.Context, params *dynamodb.ListTablesInput, optFns ...func(*dynamodb.Options))) *MockdynamoDBAPIV2_ListTables_Call {
@@ -172,11 +172,11 @@ func (_c *MockdynamoDBAPIV2_ListTables_Call) RunAndReturn(run func(context.Conte
 
 // Scan provides a mock function with given fields: ctx, params, optFns
 func (_m *MockdynamoDBAPIV2) Scan(ctx context.Context, params *dynamodb.ScanInput, optFns ...func(*dynamodb.Options)) (*dynamodb.ScanOutput, error) {
-	_va := make([]interface{}, len(optFns))
+	_va := make([]any, len(optFns))
 	for _i := range optFns {
 		_va[_i] = optFns[_i]
 	}
-	var _ca []interface{}
+	var _ca []any
 	_ca = append(_ca, ctx, params)
 	_ca = append(_ca, _va...)
 	ret := _m.Called(_ca...)
@@ -216,9 +216,9 @@ type MockdynamoDBAPIV2_Scan_Call struct {
 //   - ctx context.Context
 //   - params *dynamodb.ScanInput
 //   - optFns ...func(*dynamodb.Options)
-func (_e *MockdynamoDBAPIV2_Expecter) Scan(ctx interface{}, params interface{}, optFns ...interface{}) *MockdynamoDBAPIV2_Scan_Call {
+func (_e *MockdynamoDBAPIV2_Expecter) Scan(ctx any, params any, optFns ...any) *MockdynamoDBAPIV2_Scan_Call {
 	return &MockdynamoDBAPIV2_Scan_Call{Call: _e.mock.On("Scan",
-		append([]interface{}{ctx, params}, optFns...)...)}
+		append([]any{ctx, params}, optFns...)...)}
 }
 
 func (_c *MockdynamoDBAPIV2_Scan_Call) Run(run func(ctx context.Context, params *dynamodb.ScanInput, optFns ...func(*dynamodb.Options))) *MockdynamoDBAPIV2_Scan_Call {

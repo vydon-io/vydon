@@ -10,18 +10,18 @@ import (
 	"connectrpc.com/connect"
 	"github.com/Azure/azure-sdk-for-go/sdk/ai/azopenai"
 	"github.com/Azure/azure-sdk-for-go/sdk/azcore"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	logger_interceptor "github.com/nucleuscloud/neosync/backend/internal/connect/interceptors/logger"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	nucleuserrors "github.com/nucleuscloud/neosync/internal/errors"
-	neosyncgob "github.com/nucleuscloud/neosync/internal/gob"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	logger_interceptor "github.com/vydon-io/vydon/backend/internal/connect/interceptors/logger"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	vydonerrors "github.com/vydon-io/vydon/internal/errors"
+	vydongob "github.com/vydon-io/vydon/internal/gob"
 
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/protobuf/types/known/structpb"
 )
 
 func init() {
-	neosyncgob.RegisterGobTypes()
+	vydongob.RegisterGobTypes()
 }
 
 // GetConnectionDataStream streams data from a connection source (e.g. MySQL, Postgres, S3, etc)
@@ -251,7 +251,7 @@ func (s *Service) GetAiGeneratedData(
 
 	openaiconfig := aiconnection.GetConnectionConfig().GetOpenaiConfig()
 	if openaiconfig == nil {
-		return nil, nucleuserrors.NewBadRequest("connection must be a valid openai connection")
+		return nil, vydonerrors.NewBadRequest("connection must be a valid openai connection")
 	}
 
 	client, err := azopenai.NewClientForOpenAI(

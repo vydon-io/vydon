@@ -1,0 +1,19 @@
+name: Vydon CodeQL config
+
+queries:
+  - uses: security-and-quality
+
+paths-ignore:
+  - "**/backend/gen/**"
+  - "**/frontend/packages/sdk/src/client/**"
+  - "**/frontend/packages/sdk/dist/**"
+  - "**/frontend/.next/**"
+  - "**/node_modules/**"
+  - "**/python/src/vydon/mgmt/**"
+  - "**/dist/**"
+
+query-filters:
+  - exclude:
+      id: js/clear-text-storage-of-sensitive-data
+  - exclude:
+      id: js/xss-through-dom

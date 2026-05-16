@@ -1,7 +1,7 @@
 {{/*
 Expand the name of the chart.
 */}}
-{{- define "neosync-app.name" -}}
+{{- define "vydon-app.name" -}}
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
@@ -10,7 +10,7 @@ Create a default fully qualified app name.
 We truncate at 63 chars because some Kubernetes name fields are limited to this (by the DNS naming spec).
 If release name contains chart name it will be used as a full name.
 */}}
-{{- define "neosync-app.fullname" -}}
+{{- define "vydon-app.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
 {{- else }}
@@ -26,16 +26,16 @@ If release name contains chart name it will be used as a full name.
 {{/*
 Create chart name and version as used by the chart label.
 */}}
-{{- define "neosync-app.chart" -}}
+{{- define "vydon-app.chart" -}}
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
 {{/*
 Common labels
 */}}
-{{- define "neosync-app.labels" -}}
-helm.sh/chart: {{ include "neosync-app.chart" . }}
-{{ include "neosync-app.selectorLabels" . }}
+{{- define "vydon-app.labels" -}}
+helm.sh/chart: {{ include "vydon-app.chart" . }}
+{{ include "vydon-app.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
@@ -45,17 +45,17 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 {{/*
 Selector labels
 */}}
-{{- define "neosync-app.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "neosync-app.name" . }}
+{{- define "vydon-app.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "vydon-app.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*
 Create the name of the service account to use
 */}}
-{{- define "neosync-app.serviceAccountName" -}}
+{{- define "vydon-app.serviceAccountName" -}}
 {{- if .Values.serviceAccount.create }}
-{{- default (include "neosync-app.fullname" .) .Values.serviceAccount.name }}
+{{- default (include "vydon-app.fullname" .) .Values.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
@@ -64,7 +64,7 @@ Create the name of the service account to use
 {{/*
 Generate the stringData section for environment variables
 */}}
-{{- define "neosync-app.env-vars" -}}
+{{- define "vydon-app.env-vars" -}}
 {{- if .Values.host }}
 HOSTNAME: {{ .Values.host | quote}}
 {{- end }}
@@ -72,11 +72,11 @@ PORT: {{ .Values.containerPort | quote }}
 {{- if .Values.otel.enabled }}
 OTEL_EXPORTER_OTLP_PORT: {{ .Values.otel.otlpPort | quote }} # sends to gRPC receiver
 {{- end }}
-{{- if .Values.nucleusEnv }}
-NUCLEUS_ENV: {{ .Values.nucleusEnv }}
+{{- if .Values.vydonEnv }}
+VYDON_ENV: {{ .Values.vydonEnv }}
 {{- end }}
-{{- if .Values.neosyncApi.url }}
-NEOSYNC_API_BASE_URL: {{ .Values.neosyncApi.url }}
+{{- if .Values.vydonApi.url }}
+VYDON_API_BASE_URL: {{ .Values.vydonApi.url }}
 {{- end }}
 NEXTAUTH_SECRET: {{ .Values.nextAuthSecret }}
 {{- if .Values.nextAuthUrl }}
@@ -123,7 +123,7 @@ NEXT_PUBLIC_APP_BASE_URL: {{ .Values.nextPublic.appBaseUrl }}
 {{- end }}
 AUTH_ENABLED: {{ .Values.auth.enabled | default "false" | quote }}
 AUTH_TRUST_HOST: {{ .Values.auth.trustHost | default "true" | quote }}
-NEOSYNC_ANALYTICS_ENABLED: {{ .Values.analytics.enabled | default "true" | quote }}
+VYDON_ANALYTICS_ENABLED: {{ .Values.analytics.enabled | default "true" | quote }}
 {{- if and .Values.posthog .Values.posthog.key }}
 POSTHOG_KEY: {{ .Values.posthog.key }}
 {{- end }}
@@ -133,7 +133,7 @@ POSTHOG_HOST: {{ .Values.posthog.host }}
 {{- if and .Values.unify .Values.unify.key }}
 UNIFY_KEY: {{ .Values.unify.key }}
 {{- end }}
-NEOSYNC_CLOUD: {{ .Values.neosyncCloud.enabled | default "false" | quote }}
+VYDON_CLOUD: {{ .Values.vydonCloud.enabled | default "false" | quote }}
 ENABLE_RUN_LOGS: {{ .Values.enableRunLogs | default "false" | quote }}
 {{- if and .Values.protometrics .Values.protometrics.enabled }}
 METRICS_SERVICE_ENABLED: {{ .Values.protometrics.enabled | default "false" | quote }}

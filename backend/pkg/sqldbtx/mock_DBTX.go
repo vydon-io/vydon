@@ -60,7 +60,7 @@ type MockDBTX_BeginTx_Call struct {
 // BeginTx is a helper method to define mock.On call
 //   - _a0 context.Context
 //   - _a1 *sql.TxOptions
-func (_e *MockDBTX_Expecter) BeginTx(_a0 interface{}, _a1 interface{}) *MockDBTX_BeginTx_Call {
+func (_e *MockDBTX_Expecter) BeginTx(_a0 any, _a1 any) *MockDBTX_BeginTx_Call {
 	return &MockDBTX_BeginTx_Call{Call: _e.mock.On("BeginTx", _a0, _a1)}
 }
 
@@ -82,8 +82,8 @@ func (_c *MockDBTX_BeginTx_Call) RunAndReturn(run func(context.Context, *sql.TxO
 }
 
 // ExecContext provides a mock function with given fields: _a0, _a1, _a2
-func (_m *MockDBTX) ExecContext(_a0 context.Context, _a1 string, _a2 ...interface{}) (sql.Result, error) {
-	var _ca []interface{}
+func (_m *MockDBTX) ExecContext(_a0 context.Context, _a1 string, _a2 ...any) (sql.Result, error) {
+	var _ca []any
 	_ca = append(_ca, _a0, _a1)
 	_ca = append(_ca, _a2...)
 	ret := _m.Called(_ca...)
@@ -94,10 +94,10 @@ func (_m *MockDBTX) ExecContext(_a0 context.Context, _a1 string, _a2 ...interfac
 
 	var r0 sql.Result
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string, ...interface{}) (sql.Result, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string, ...any) (sql.Result, error)); ok {
 		return rf(_a0, _a1, _a2...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string, ...interface{}) sql.Result); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string, ...any) sql.Result); ok {
 		r0 = rf(_a0, _a1, _a2...)
 	} else {
 		if ret.Get(0) != nil {
@@ -105,7 +105,7 @@ func (_m *MockDBTX) ExecContext(_a0 context.Context, _a1 string, _a2 ...interfac
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, string, ...interface{}) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, string, ...any) error); ok {
 		r1 = rf(_a0, _a1, _a2...)
 	} else {
 		r1 = ret.Error(1)
@@ -123,17 +123,17 @@ type MockDBTX_ExecContext_Call struct {
 //   - _a0 context.Context
 //   - _a1 string
 //   - _a2 ...interface{}
-func (_e *MockDBTX_Expecter) ExecContext(_a0 interface{}, _a1 interface{}, _a2 ...interface{}) *MockDBTX_ExecContext_Call {
+func (_e *MockDBTX_Expecter) ExecContext(_a0 any, _a1 any, _a2 ...any) *MockDBTX_ExecContext_Call {
 	return &MockDBTX_ExecContext_Call{Call: _e.mock.On("ExecContext",
-		append([]interface{}{_a0, _a1}, _a2...)...)}
+		append([]any{_a0, _a1}, _a2...)...)}
 }
 
-func (_c *MockDBTX_ExecContext_Call) Run(run func(_a0 context.Context, _a1 string, _a2 ...interface{})) *MockDBTX_ExecContext_Call {
+func (_c *MockDBTX_ExecContext_Call) Run(run func(_a0 context.Context, _a1 string, _a2 ...any)) *MockDBTX_ExecContext_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]interface{}, len(args)-2)
+		variadicArgs := make([]any, len(args)-2)
 		for i, a := range args[2:] {
 			if a != nil {
-				variadicArgs[i] = a.(interface{})
+				variadicArgs[i] = a.(any)
 			}
 		}
 		run(args[0].(context.Context), args[1].(string), variadicArgs...)
@@ -146,7 +146,7 @@ func (_c *MockDBTX_ExecContext_Call) Return(_a0 sql.Result, _a1 error) *MockDBTX
 	return _c
 }
 
-func (_c *MockDBTX_ExecContext_Call) RunAndReturn(run func(context.Context, string, ...interface{}) (sql.Result, error)) *MockDBTX_ExecContext_Call {
+func (_c *MockDBTX_ExecContext_Call) RunAndReturn(run func(context.Context, string, ...any) (sql.Result, error)) *MockDBTX_ExecContext_Call {
 	_c.Call.Return(run)
 	return _c
 }
@@ -176,7 +176,7 @@ type MockDBTX_PingContext_Call struct {
 
 // PingContext is a helper method to define mock.On call
 //   - _a0 context.Context
-func (_e *MockDBTX_Expecter) PingContext(_a0 interface{}) *MockDBTX_PingContext_Call {
+func (_e *MockDBTX_Expecter) PingContext(_a0 any) *MockDBTX_PingContext_Call {
 	return &MockDBTX_PingContext_Call{Call: _e.mock.On("PingContext", _a0)}
 }
 
@@ -235,7 +235,7 @@ type MockDBTX_PrepareContext_Call struct {
 // PrepareContext is a helper method to define mock.On call
 //   - _a0 context.Context
 //   - _a1 string
-func (_e *MockDBTX_Expecter) PrepareContext(_a0 interface{}, _a1 interface{}) *MockDBTX_PrepareContext_Call {
+func (_e *MockDBTX_Expecter) PrepareContext(_a0 any, _a1 any) *MockDBTX_PrepareContext_Call {
 	return &MockDBTX_PrepareContext_Call{Call: _e.mock.On("PrepareContext", _a0, _a1)}
 }
 
@@ -257,8 +257,8 @@ func (_c *MockDBTX_PrepareContext_Call) RunAndReturn(run func(context.Context, s
 }
 
 // QueryContext provides a mock function with given fields: _a0, _a1, _a2
-func (_m *MockDBTX) QueryContext(_a0 context.Context, _a1 string, _a2 ...interface{}) (*sql.Rows, error) {
-	var _ca []interface{}
+func (_m *MockDBTX) QueryContext(_a0 context.Context, _a1 string, _a2 ...any) (*sql.Rows, error) {
+	var _ca []any
 	_ca = append(_ca, _a0, _a1)
 	_ca = append(_ca, _a2...)
 	ret := _m.Called(_ca...)
@@ -269,10 +269,10 @@ func (_m *MockDBTX) QueryContext(_a0 context.Context, _a1 string, _a2 ...interfa
 
 	var r0 *sql.Rows
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, string, ...interface{}) (*sql.Rows, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string, ...any) (*sql.Rows, error)); ok {
 		return rf(_a0, _a1, _a2...)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string, ...interface{}) *sql.Rows); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string, ...any) *sql.Rows); ok {
 		r0 = rf(_a0, _a1, _a2...)
 	} else {
 		if ret.Get(0) != nil {
@@ -280,7 +280,7 @@ func (_m *MockDBTX) QueryContext(_a0 context.Context, _a1 string, _a2 ...interfa
 		}
 	}
 
-	if rf, ok := ret.Get(1).(func(context.Context, string, ...interface{}) error); ok {
+	if rf, ok := ret.Get(1).(func(context.Context, string, ...any) error); ok {
 		r1 = rf(_a0, _a1, _a2...)
 	} else {
 		r1 = ret.Error(1)
@@ -298,17 +298,17 @@ type MockDBTX_QueryContext_Call struct {
 //   - _a0 context.Context
 //   - _a1 string
 //   - _a2 ...interface{}
-func (_e *MockDBTX_Expecter) QueryContext(_a0 interface{}, _a1 interface{}, _a2 ...interface{}) *MockDBTX_QueryContext_Call {
+func (_e *MockDBTX_Expecter) QueryContext(_a0 any, _a1 any, _a2 ...any) *MockDBTX_QueryContext_Call {
 	return &MockDBTX_QueryContext_Call{Call: _e.mock.On("QueryContext",
-		append([]interface{}{_a0, _a1}, _a2...)...)}
+		append([]any{_a0, _a1}, _a2...)...)}
 }
 
-func (_c *MockDBTX_QueryContext_Call) Run(run func(_a0 context.Context, _a1 string, _a2 ...interface{})) *MockDBTX_QueryContext_Call {
+func (_c *MockDBTX_QueryContext_Call) Run(run func(_a0 context.Context, _a1 string, _a2 ...any)) *MockDBTX_QueryContext_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]interface{}, len(args)-2)
+		variadicArgs := make([]any, len(args)-2)
 		for i, a := range args[2:] {
 			if a != nil {
-				variadicArgs[i] = a.(interface{})
+				variadicArgs[i] = a.(any)
 			}
 		}
 		run(args[0].(context.Context), args[1].(string), variadicArgs...)
@@ -321,14 +321,14 @@ func (_c *MockDBTX_QueryContext_Call) Return(_a0 *sql.Rows, _a1 error) *MockDBTX
 	return _c
 }
 
-func (_c *MockDBTX_QueryContext_Call) RunAndReturn(run func(context.Context, string, ...interface{}) (*sql.Rows, error)) *MockDBTX_QueryContext_Call {
+func (_c *MockDBTX_QueryContext_Call) RunAndReturn(run func(context.Context, string, ...any) (*sql.Rows, error)) *MockDBTX_QueryContext_Call {
 	_c.Call.Return(run)
 	return _c
 }
 
 // QueryRowContext provides a mock function with given fields: _a0, _a1, _a2
-func (_m *MockDBTX) QueryRowContext(_a0 context.Context, _a1 string, _a2 ...interface{}) *sql.Row {
-	var _ca []interface{}
+func (_m *MockDBTX) QueryRowContext(_a0 context.Context, _a1 string, _a2 ...any) *sql.Row {
+	var _ca []any
 	_ca = append(_ca, _a0, _a1)
 	_ca = append(_ca, _a2...)
 	ret := _m.Called(_ca...)
@@ -338,7 +338,7 @@ func (_m *MockDBTX) QueryRowContext(_a0 context.Context, _a1 string, _a2 ...inte
 	}
 
 	var r0 *sql.Row
-	if rf, ok := ret.Get(0).(func(context.Context, string, ...interface{}) *sql.Row); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, string, ...any) *sql.Row); ok {
 		r0 = rf(_a0, _a1, _a2...)
 	} else {
 		if ret.Get(0) != nil {
@@ -358,17 +358,17 @@ type MockDBTX_QueryRowContext_Call struct {
 //   - _a0 context.Context
 //   - _a1 string
 //   - _a2 ...interface{}
-func (_e *MockDBTX_Expecter) QueryRowContext(_a0 interface{}, _a1 interface{}, _a2 ...interface{}) *MockDBTX_QueryRowContext_Call {
+func (_e *MockDBTX_Expecter) QueryRowContext(_a0 any, _a1 any, _a2 ...any) *MockDBTX_QueryRowContext_Call {
 	return &MockDBTX_QueryRowContext_Call{Call: _e.mock.On("QueryRowContext",
-		append([]interface{}{_a0, _a1}, _a2...)...)}
+		append([]any{_a0, _a1}, _a2...)...)}
 }
 
-func (_c *MockDBTX_QueryRowContext_Call) Run(run func(_a0 context.Context, _a1 string, _a2 ...interface{})) *MockDBTX_QueryRowContext_Call {
+func (_c *MockDBTX_QueryRowContext_Call) Run(run func(_a0 context.Context, _a1 string, _a2 ...any)) *MockDBTX_QueryRowContext_Call {
 	_c.Call.Run(func(args mock.Arguments) {
-		variadicArgs := make([]interface{}, len(args)-2)
+		variadicArgs := make([]any, len(args)-2)
 		for i, a := range args[2:] {
 			if a != nil {
-				variadicArgs[i] = a.(interface{})
+				variadicArgs[i] = a.(any)
 			}
 		}
 		run(args[0].(context.Context), args[1].(string), variadicArgs...)
@@ -381,7 +381,7 @@ func (_c *MockDBTX_QueryRowContext_Call) Return(_a0 *sql.Row) *MockDBTX_QueryRow
 	return _c
 }
 
-func (_c *MockDBTX_QueryRowContext_Call) RunAndReturn(run func(context.Context, string, ...interface{}) *sql.Row) *MockDBTX_QueryRowContext_Call {
+func (_c *MockDBTX_QueryRowContext_Call) RunAndReturn(run func(context.Context, string, ...any) *sql.Row) *MockDBTX_QueryRowContext_Call {
 	_c.Call.Return(run)
 	return _c
 }

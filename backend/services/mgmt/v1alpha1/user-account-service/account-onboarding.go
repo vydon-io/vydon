@@ -4,12 +4,12 @@ import (
 	"context"
 
 	"connectrpc.com/connect"
-	db_queries "github.com/nucleuscloud/neosync/backend/gen/go/db"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	"github.com/nucleuscloud/neosync/backend/internal/userdata"
-	pg_models "github.com/nucleuscloud/neosync/backend/sql/postgresql/models"
-	"github.com/nucleuscloud/neosync/internal/ee/rbac"
-	"github.com/nucleuscloud/neosync/internal/neosyncdb"
+	db_queries "github.com/vydon-io/vydon/backend/gen/go/db"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/backend/internal/userdata"
+	pg_models "github.com/vydon-io/vydon/backend/sql/postgresql/models"
+	"github.com/vydon-io/vydon/internal/rbac"
+	"github.com/vydon-io/vydon/internal/vydondb"
 )
 
 func (s *Service) GetAccountOnboardingConfig(
@@ -30,7 +30,7 @@ func (s *Service) GetAccountOnboardingConfig(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}
@@ -63,7 +63,7 @@ func (s *Service) SetAccountOnboardingConfig(
 		return nil, err
 	}
 
-	accountUuid, err := neosyncdb.ToUuid(req.Msg.GetAccountId())
+	accountUuid, err := vydondb.ToUuid(req.Msg.GetAccountId())
 	if err != nil {
 		return nil, err
 	}

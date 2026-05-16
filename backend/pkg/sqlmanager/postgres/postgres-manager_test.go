@@ -3,8 +3,8 @@ package sqlmanager_postgres
 import (
 	"testing"
 
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
 	"github.com/stretchr/testify/require"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
 )
 
 func Test_EscapePgColumns(t *testing.T) {
@@ -17,7 +17,9 @@ func Test_EscapePgColumns(t *testing.T) {
 }
 
 func Test_BuildPgTruncateStatement(t *testing.T) {
-	stmt, err := BuildPgTruncateStatement([]*sqlmanager_shared.SchemaTable{{Schema: "public", Table: "users"}, {Schema: "bad name", Table: "C$@111"}})
+	stmt, err := BuildPgTruncateStatement(
+		[]*sqlmanager_shared.SchemaTable{{Schema: "public", Table: "users"}, {Schema: "bad name", Table: "C$@111"}},
+	)
 	require.NoError(t, err)
 	require.Equal(
 		t,

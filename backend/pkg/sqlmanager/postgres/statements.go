@@ -7,10 +7,10 @@ import (
 	"strings"
 
 	"github.com/doug-martin/goqu/v9"
-	pg_queries "github.com/nucleuscloud/neosync/backend/gen/go/db/dbschemas/postgresql"
-	sqlmanager_shared "github.com/nucleuscloud/neosync/backend/pkg/sqlmanager/shared"
-	"github.com/nucleuscloud/neosync/internal/gotypeutil"
-	schemamanager_shared "github.com/nucleuscloud/neosync/internal/schema-manager/shared"
+	pg_queries "github.com/vydon-io/vydon/backend/gen/go/db/dbschemas/postgresql"
+	sqlmanager_shared "github.com/vydon-io/vydon/backend/pkg/sqlmanager/shared"
+	"github.com/vydon-io/vydon/internal/gotypeutil"
+	schemamanager_shared "github.com/vydon-io/vydon/internal/schema-manager/shared"
 )
 
 // Finds any schemas referenced in datatypes that don't exist in tables and returns the statements to create them

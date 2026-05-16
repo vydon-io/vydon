@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
 	"github.com/redpanda-data/benthos/v4/public/bloblang"
 	"github.com/stretchr/testify/assert"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 func Test_GenerateInternationalPhoneNumber(t *testing.T) {
@@ -45,8 +45,18 @@ func Test_GenerateInternationalPhoneNumberTransformer(t *testing.T) {
 	res, err := ex.Query(nil)
 	assert.NoError(t, err)
 	assert.Equal(t, validateE164(res.(string)), true, "The actual value should be a valid e164 number")
-	assert.GreaterOrEqual(t, len(res.(string)), 9+1, "Should be greater than 10 characters in length. 9 for the number and 1 for the plus sign.")
-	assert.LessOrEqual(t, len(res.(string)), 15+1, "Should be less than 16 characters in length. 15 for the number and 1 for the plus sign.")
+	assert.GreaterOrEqual(
+		t,
+		len(res.(string)),
+		9+1,
+		"Should be greater than 10 characters in length. 9 for the number and 1 for the plus sign.",
+	)
+	assert.LessOrEqual(
+		t,
+		len(res.(string)),
+		15+1,
+		"Should be less than 16 characters in length. 15 for the number and 1 for the plus sign.",
+	)
 }
 
 func Test_GenerateInternationalPhoneNumberTransformer_NoOptions(t *testing.T) {

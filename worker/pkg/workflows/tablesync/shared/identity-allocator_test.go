@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
 )
 
 func Test_SingleIdentityAllocator_GetIdentity(t *testing.T) {

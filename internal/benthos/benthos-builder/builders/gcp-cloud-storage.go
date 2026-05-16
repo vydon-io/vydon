@@ -5,10 +5,10 @@ import (
 	"errors"
 	"strings"
 
-	bb_internal "github.com/nucleuscloud/neosync/internal/benthos/benthos-builder/internal"
-	"github.com/nucleuscloud/neosync/internal/runconfigs"
-	neosync_benthos "github.com/nucleuscloud/neosync/worker/pkg/benthos"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
+	bb_internal "github.com/vydon-io/vydon/internal/benthos/benthos-builder/internal"
+	"github.com/vydon-io/vydon/internal/runconfigs"
+	vydon_benthos "github.com/vydon-io/vydon/worker/pkg/benthos"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 )
 
 type gcpCloudStorageSyncBuilder struct {
@@ -55,34 +55,34 @@ func (b *gcpCloudStorageSyncBuilder) BuildDestinationConfig(
 		"workflows",
 		params.JobRunId,
 		"activities",
-		neosync_benthos.BuildBenthosTable(benthosConfig.TableSchema, benthosConfig.TableName),
+		vydon_benthos.BuildBenthosTable(benthosConfig.TableSchema, benthosConfig.TableName),
 		"data",
 		`${!count("files")}.txt.gz`,
 	)
 
-	config.Outputs = append(config.Outputs, neosync_benthos.Outputs{
-		Fallback: []neosync_benthos.Outputs{
+	config.Outputs = append(config.Outputs, vydon_benthos.Outputs{
+		Fallback: []vydon_benthos.Outputs{
 			{
-				GcpCloudStorage: &neosync_benthos.GcpCloudStorageOutput{
+				GcpCloudStorage: &vydon_benthos.GcpCloudStorageOutput{
 					Bucket:          gcpCloudStorageConfig.GetBucket(),
 					MaxInFlight:     10,
 					Path:            strings.Join(pathpieces, "/"),
 					ContentType:     shared.Ptr("txt/plain"),
 					ContentEncoding: shared.Ptr("gzip"),
-					Batching: &neosync_benthos.Batching{
+					Batching: &vydon_benthos.Batching{
 						Count:  100,
 						Period: "5s",
-						Processors: []*neosync_benthos.BatchProcessor{
-							{Archive: &neosync_benthos.ArchiveProcessor{Format: "lines"}},
-							{Compress: &neosync_benthos.CompressProcessor{Algorithm: "gzip"}},
+						Processors: []*vydon_benthos.BatchProcessor{
+							{Archive: &vydon_benthos.ArchiveProcessor{Format: "lines"}},
+							{Compress: &vydon_benthos.CompressProcessor{Algorithm: "gzip"}},
 						},
 					},
 				},
 			},
 			// kills activity depending on error
-			{Error: &neosync_benthos.ErrorOutputConfig{
+			{Error: &vydon_benthos.ErrorOutputConfig{
 				ErrorMsg: `${! meta("fallback_error")}`,
-				Batching: &neosync_benthos.Batching{
+				Batching: &vydon_benthos.Batching{
 					Period: "5s",
 					Count:  100,
 				},

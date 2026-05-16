@@ -7,12 +7,12 @@ import (
 	"log/slog"
 
 	"github.com/dop251/goja"
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
-	presidioapi "github.com/nucleuscloud/neosync/internal/ee/presidio"
-	ee_transformer_fns "github.com/nucleuscloud/neosync/internal/ee/transformers/functions"
-	"github.com/nucleuscloud/neosync/internal/javascript"
-	javascript_userland "github.com/nucleuscloud/neosync/internal/javascript/userland"
-	"github.com/nucleuscloud/neosync/worker/pkg/benthos/transformers"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
+	"github.com/vydon-io/vydon/internal/javascript"
+	javascript_userland "github.com/vydon-io/vydon/internal/javascript/userland"
+	presidioapi "github.com/vydon-io/vydon/internal/piidetect/presidio"
+	ee_transformer_fns "github.com/vydon-io/vydon/internal/transformers/functions"
+	"github.com/vydon-io/vydon/worker/pkg/benthos/transformers"
 )
 
 type TransformerExecutor struct {
@@ -32,7 +32,7 @@ type transformPiiTextConfig struct {
 	analyze   presidioapi.AnalyzeInterface
 	anonymize presidioapi.AnonymizeInterface
 
-	neosyncOperatorApi ee_transformer_fns.NeosyncOperatorApi
+	vydonOperatorApi ee_transformer_fns.VydonOperatorApi
 
 	defaultLanguage *string
 }
@@ -40,15 +40,15 @@ type transformPiiTextConfig struct {
 func WithTransformPiiTextConfig(
 	analyze presidioapi.AnalyzeInterface,
 	anonymize presidioapi.AnonymizeInterface,
-	neosyncOperatorApi ee_transformer_fns.NeosyncOperatorApi,
+	vydonOperatorApi ee_transformer_fns.VydonOperatorApi,
 	defaultLanguage *string,
 ) TransformerExecutorOption {
 	return func(c *TransformerExecutorConfig) {
 		c.transformPiiText = &transformPiiTextConfig{
-			analyze:            analyze,
-			anonymize:          anonymize,
-			neosyncOperatorApi: neosyncOperatorApi,
-			defaultLanguage:    defaultLanguage,
+			analyze:          analyze,
+			anonymize:        anonymize,
+			vydonOperatorApi: vydonOperatorApi,
+			defaultLanguage:  defaultLanguage,
 		}
 	}
 }
@@ -117,7 +117,7 @@ func InitializeTransformerByConfigType(
 			execCfg.logger.Debug("configuring using transform pii text api in generate javascript")
 			transformPiiTextApi = newFromExecConfig(
 				execCfg.transformPiiText,
-				execCfg.transformPiiText.neosyncOperatorApi,
+				execCfg.transformPiiText.vydonOperatorApi,
 				execCfg.logger,
 			)
 		}
@@ -163,7 +163,7 @@ func InitializeTransformerByConfigType(
 			execCfg.logger.Debug("configuring using transform pii text api in transform javascript")
 			transformPiiTextApi = newFromExecConfig(
 				execCfg.transformPiiText,
-				execCfg.transformPiiText.neosyncOperatorApi,
+				execCfg.transformPiiText.vydonOperatorApi,
 				execCfg.logger,
 			)
 		}
@@ -752,7 +752,7 @@ func InitializeTransformerByConfigType(
 
 		transformPiiTextApi := newFromExecConfig(
 			execCfg.transformPiiText,
-			execCfg.transformPiiText.neosyncOperatorApi,
+			execCfg.transformPiiText.vydonOperatorApi,
 			execCfg.logger,
 		)
 

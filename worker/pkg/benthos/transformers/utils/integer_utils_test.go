@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/nucleuscloud/neosync/worker/pkg/rng"
-	"github.com/nucleuscloud/neosync/worker/pkg/workflows/datasync/activities/shared"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/vydon-io/vydon/worker/pkg/rng"
+	"github.com/vydon-io/vydon/worker/pkg/workflows/datasync/activities/shared"
 )
 
 func Test_GenerateRandomInt64WithFixedLength(t *testing.T) {

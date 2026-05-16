@@ -60,7 +60,7 @@ type MockAuth0MgmtClientInterface_GetUserById_Call struct {
 // GetUserById is a helper method to define mock.On call
 //   - ctx context.Context
 //   - id string
-func (_e *MockAuth0MgmtClientInterface_Expecter) GetUserById(ctx interface{}, id interface{}) *MockAuth0MgmtClientInterface_GetUserById_Call {
+func (_e *MockAuth0MgmtClientInterface_Expecter) GetUserById(ctx any, id any) *MockAuth0MgmtClientInterface_GetUserById_Call {
 	return &MockAuth0MgmtClientInterface_GetUserById_Call{Call: _e.mock.On("GetUserById", ctx, id)}
 }
 

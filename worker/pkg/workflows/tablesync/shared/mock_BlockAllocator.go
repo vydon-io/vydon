@@ -60,7 +60,7 @@ type MockBlockAllocator_GetNextBlock_Call struct {
 //   - ctx context.Context
 //   - token string
 //   - blockSize uint
-func (_e *MockBlockAllocator_Expecter) GetNextBlock(ctx interface{}, token interface{}, blockSize interface{}) *MockBlockAllocator_GetNextBlock_Call {
+func (_e *MockBlockAllocator_Expecter) GetNextBlock(ctx any, token any, blockSize any) *MockBlockAllocator_GetNextBlock_Call {
 	return &MockBlockAllocator_GetNextBlock_Call{Call: _e.mock.On("GetNextBlock", ctx, token, blockSize)}
 }
 

@@ -2,7 +2,7 @@
 package postgres_complex
 
 import (
-	mgmtv1alpha1 "github.com/nucleuscloud/neosync/backend/gen/go/protos/mgmt/v1alpha1"
+	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
 )
 
 func GetDefaultSyncJobMappings() []*mgmtv1alpha1.JobMapping {
