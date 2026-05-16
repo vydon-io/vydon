@@ -78,27 +78,67 @@ Companies use Vydon to:
 
 ## Getting started
 
-Vydon is a fully dockerized setup which makes it easy to get up and running.
+Pick the path that matches your workflow.
 
-A [compose.yml](./compose.yml) file at the root contains production image refs that allow you to get up and running with just a few commands without having to build anything on your system.
+### Docker Compose (default, < 2 min)
 
-Vydon uses the newer `docker compose` command, so be sure to have that installed on your machine.
-
-To start Vydon, clone the repo into a local directory, be sure to have docker installed and running, and then run:
-
-```sh
-make compose/up
-```
-
-To stop, run:
+The fastest way to get the full stack running. Requires Docker with the
+modern `docker compose` plugin.
 
 ```sh
-make compose/down
+git clone https://github.com/vydon-io/vydon.git
+cd vydon
+make dev
 ```
 
-Vydon will now be available on [http://localhost:3000](http://localhost:3000).
+`make dev` builds the local images and brings up Postgres, Redis, Temporal,
+the API, the worker and the frontend with hot reload enabled. Once it
+returns, the stack is reachable at:
 
-The production compose pre-seeds with connections and jobs to get you started! Simply run the generate and sync job to watch Vydon in action!
+| Service         | URL                                                 |
+| --------------- | --------------------------------------------------- |
+| Frontend        | <http://localhost:3000>                             |
+| API healthcheck | <http://localhost:8080/healthz>                     |
+| Temporal UI     | <http://localhost:8233>                             |
+
+Useful follow-up commands:
+
+```sh
+make dev/logs    # tail logs from every container
+make dev/down    # stop the stack (keeps volumes)
+make dev/clean   # stop the stack and wipe all volumes (destructive)
+```
+
+If you previously ran an older revision and the API logs report
+`database "vydon" does not exist`, run `make dev/clean` once to recreate
+the Postgres data volume.
+
+### Tilt + kind (Kubernetes path, optional)
+
+For contributors who want a Kubernetes-shaped environment closer to
+production. Requires [Tilt](https://tilt.dev) and a running
+[kind](https://kind.sigs.k8s.io) cluster named `vydon-dev`.
+
+```sh
+kind create cluster --name vydon-dev
+tilt up
+```
+
+Tilt watches the source tree and live-syncs Go and frontend changes into
+the cluster. The Tilt UI exposes per-resource logs and health.
+
+### Production-style compose
+
+The root [compose.yml](./compose.yml) pulls published images from GHCR
+(no local build) and seeds demo connections and jobs.
+
+```sh
+docker compose up -d    # start
+docker compose down     # stop
+```
+
+This path is useful for demos and CI smoke tests, not for active
+development — there is no hot reload.
 
 ## Kubernetes, Auth Mode and more
 
