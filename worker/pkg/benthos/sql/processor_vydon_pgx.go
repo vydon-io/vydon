@@ -327,5 +327,8 @@ func formatMapLiteral(m map[string]any) string {
 		return fmt.Sprintf("%v", m)
 	}
 
-	return fmt.Sprintf("'%s'", string(jsonBytes))
+	// json.Marshal already escapes embedded double quotes; only single quotes
+	// need to be doubled to stay safe as a Postgres string literal.
+	escaped := strings.ReplaceAll(string(jsonBytes), "'", "''")
+	return fmt.Sprintf("'%s'", escaped)
 }

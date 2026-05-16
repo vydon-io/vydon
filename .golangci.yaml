@@ -128,7 +128,7 @@ formatters:
         - pattern: interface{}
           replacement: any
     golines:
-      max-len: 140
+      max-len: 200
   exclusions:
     generated: lax
     paths:

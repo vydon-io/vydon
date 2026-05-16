@@ -17,7 +17,7 @@ import (
 
 func main() {
 	args := os.Args
-	if len(args) < 1 {
+	if len(args) < 2 {
 		panic("must provide necessary args")
 	}
 

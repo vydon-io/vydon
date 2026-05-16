@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
 	"reflect"
 	"strconv"
 	"strings"
@@ -268,8 +269,8 @@ func (a *PgxArray[T]) Scan(src any) error {
 	var pgt *pgtype.Type
 	var ok bool
 
-	if oid, err := strconv.Atoi(a.colDataType); err == nil {
-		pgt, ok = m.TypeForOID(uint32(oid)) //nolint:gosec
+	if oid, err := strconv.Atoi(a.colDataType); err == nil && oid >= 0 && oid <= math.MaxUint32 {
+		pgt, ok = m.TypeForOID(uint32(oid))
 	} else {
 		pgt, ok = m.TypeForName(strings.ToLower(a.colDataType))
 	}
