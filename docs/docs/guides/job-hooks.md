@@ -11,11 +11,9 @@ slug: /guides/job-hooks
 
 Job Hooks are a way to add further customization to your Vydon jobs.
 
-## Vydon Version Availability
+## Availability
 
-Job Hooks are available for all accounts in Vydon Cloud.
-
-For OSS users, Job Hooks are only available with a valid Enterprise license.
+Job Hooks were previously gated behind the enterprise build. The implementation has been removed from the OSS codebase as part of the MIT compliance work and will be reimplemented natively in a future release. This guide is kept as the target specification.
 
 ## How to configure Job Hooks
 
