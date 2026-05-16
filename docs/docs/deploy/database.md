@@ -13,7 +13,7 @@ This section provides some color to the Postgres environment that is required to
 
 Generally, the administration of the database is left as an exercise to the user, but this page details some minimum requirements needed for success.
 
-Vydon Cloud and Vydon Open Source currently run everything against Postgres 15. It may work on earlier versions and will probably work on later versions, but this is a disclaimer that as of June 2024, Vydon is currently setup for Postgres 15.
+Vydon currently runs everything against Postgres 15. It may work on earlier versions and will probably work on later versions, but this is a disclaimer that Vydon is currently set up for Postgres 15.
 
 ## Vydon Migrations
 
