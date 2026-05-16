@@ -1,6 +1,6 @@
 ---
-title: Vydon Cloud Security Overview
-description: Learn how Vydon Cloud is secured and the security principles of the Vydon Platform
+title: Security Overview
+description: Security principles of the Vydon platform
 id: cloud-security-overview
 hide_title: false
 slug: /cloud-security-overview
@@ -10,7 +10,7 @@ At Vydon, we take as many security precautions as we can to ensure that any info
 
 This section will document a few different things that we feel are worth mentioning from a security perspective.
 
-This page is mostly relevant to Vydon Cloud.
+> The hosted "Vydon Cloud" SaaS referenced in this page is no longer a publicly available offering. The OSS distribution is the only path today; the security principles below still apply to any environment you self-host.
 
 ## Code
 

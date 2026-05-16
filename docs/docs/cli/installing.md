@@ -19,13 +19,7 @@ Homebrew is the simplest way to install vydon CLI on the Mac. This can also be u
 
 ### Homebrew
 
-The easiest way to install the CLI is by using Homebrew. If you don't have Homebrew installed, follow these [instructions](https://docs.brew.sh/Installation). Next, open a new terminal window and use the following command:
-
-```console
-brew install vydon
-```
-
-You may also install directly from our brew repository:
+The easiest way to install the CLI is by using Homebrew via our official tap. If you don't have Homebrew installed, follow these [instructions](https://docs.brew.sh/Installation). Next, open a new terminal window and use the following command:
 
 ```console
 brew install vydon-io/tap/vydon
@@ -43,10 +37,10 @@ Navigate to Vydon [releases](https://github.com/vydon-io/vydon/releases) page of
 
 After you've downloaded and untarred the tarball, move it into your local bin to make it easy to run. If you're using Windows 10/11, see the Windows section below for more details.
 
-**Note: the version listed below may not be the latest. Refer to the Releases page in the link above to retrieve the latest version of the binary.**
+Replace `<VERSION>` with the tag you downloaded (for example `0.4.0`) and pick the archive matching your machine (`darwin_arm64`, `darwin_amd64`, `linux_amd64`, ...).
 
 ```console
-tar xzf vydon_0.2.14_darwin_arm64.tar.gz vydon
+tar xzf vydon_<VERSION>_darwin_arm64.tar.gz vydon
 mv vydon /usr/local/bin/vydon
 ```
 
@@ -59,15 +53,15 @@ Once you've successfully installed the CLI, verify your installation by followin
 3. If installed successfully, you will see something similar to this help menu
 
 ```console
-vydon
-
 Terminal UI that interfaces with the Vydon system.
 
 Usage:
   vydon [command]
 
 Available Commands:
+  accounts    Parent command for account
   completion  Generate the autocompletion script for the specified shell
+  connections Parent command for connections
   help        Help about any command
   jobs        Parent command for jobs
   login       Login to Vydon
@@ -77,7 +71,8 @@ Available Commands:
 
 Flags:
       --api-key string   Vydon API Key. Takes precedence over $VYDON_API_KEY
-      --config string    config file (default is $HOME/.vydon/vydon.yaml)
+      --config string    config file (default is $HOME/.vydon/config.yaml)
+      --debug            Run in debug mode
   -h, --help             help for vydon
   -v, --version          version for vydon
 
@@ -132,11 +127,11 @@ Use "vydon [command] --help" for more information about a command.
 
 ## Docker
 
-A Docker image is published that matches each official release of Vydon CLI. Each versioned image includes the Vydon CLI release with the same version number.
+Once a release is cut, a matching Docker image is published to GitHub Container Registry. Each versioned image includes the Vydon CLI release with the same version number.
 
 These images wrap the Vydon executable, allowing you to run Vydon subcommands by passing in their names and arguments as part of `docker run`.
 
-The list of images can be found on [Github](https://github.com/vydon-io/vydon/pkgs/container/vydon%2Fcli).
+The list of published images can be found on [Github](https://github.com/vydon-io/vydon/pkgs/container/vydon%2Fcli). If the package does not yet appear, the project has not cut its first tagged release yet — install via Homebrew or direct download in the meantime.
 
 ### Configuration
 

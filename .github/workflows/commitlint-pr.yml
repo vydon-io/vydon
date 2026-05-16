@@ -16,6 +16,9 @@ permissions:
 jobs:
   commitlint:
     name: Lint PR commits
+    # Dependabot writes long changelog bodies that exceed our 72-char body
+    # limit; the PR title and squash-merge subject still go through.
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
