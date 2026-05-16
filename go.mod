@@ -46,7 +46,7 @@ require (
 	github.com/microsoft/go-mssqldb v1.8.0
 	github.com/neilotoole/slogt v1.1.0
 	github.com/oapi-codegen/oapi-codegen/v2 v2.7.0
-	github.com/openai/openai-go v0.1.0-alpha.65
+	github.com/openai/openai-go v1.12.0
 	github.com/pganalyze/pg_query_go/v5 v5.1.0
 	github.com/prometheus/client_golang v1.21.1
 	github.com/prometheus/common v0.63.0
