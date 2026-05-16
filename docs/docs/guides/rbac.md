@@ -10,11 +10,9 @@ slug: /guides/rbac
 
 RBAC (Role-Based Access Control) is a system that allows you to manage user permissions in Vydon.
 
-## Vydon Version Availability
+## Availability
 
-RBAC is available for all team and enterprise accounts in Vydon Cloud.
-
-For OSS users, RBAC is only available with a valid Enterprise license.
+RBAC was previously gated behind the enterprise build. The implementation has been removed from the OSS codebase as part of the MIT compliance work and will be reimplemented natively in a future release. This guide is kept as the target specification.
 
 ## How to configure RBAC
 

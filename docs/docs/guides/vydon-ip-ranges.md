@@ -1,6 +1,6 @@
 ---
 title: Vydon IP Ranges
-description: Learn how to give Vydon Cloud access to your resources
+description: Historical IP ranges used by the former hosted Vydon offering
 id: vydon-ip-ranges
 hide_title: false
 slug: /guides/vydon-ip-ranges
@@ -9,15 +9,15 @@ slug: /guides/vydon-ip-ranges
 
 ## Introduction
 
-Vydon Cloud needs to access your data sources so that it can help you configure jobs as well as synchronize data.
+> The hosted "Vydon Cloud" SaaS referenced below is no longer a publicly available offering. If you are running Vydon self-hosted, no inbound allow-listing of the IPs below is needed — your instance reaches your databases from your own network. This page is kept for historical reference only.
+
+When self-hosting, you control the egress IPs and can allow-list them on your database firewall directly.
 
 If you need help configuring a Bastion Host, check out the [Connect Postgres via Bastion Host](/guides/connect-private-postgres-via-bastion-host) guide.
 
 Generally, it's good practice to limit inbound connections into a private network.
 
-> **NB:** If you're operating in the EU, you'll still need to include the US IP ranges at the moment as transient non-customer data still flows through this region to power the frontend app and CLI.
-
-The following IP addresses are for Vydon Cloud's available regions.
+The following IP addresses were used by the previous Vydon Cloud regions.
 
 ## AWS
 
