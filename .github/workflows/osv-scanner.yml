@@ -23,5 +23,6 @@ jobs:
       # dependency-review action on every pull request.
       scan-args: |-
         --no-call-analysis=go
+        --config=./osv-scanner.toml
         --lockfile=./go.mod
         --lockfile=./tools/go.mod

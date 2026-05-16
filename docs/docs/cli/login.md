@@ -27,10 +27,10 @@ If on success, an access token and (optionally) a refresh token will be saved to
 
 ## Environment Variables
 
-| Variable            | Description                                                                                              | Is Required | Default Value         |
-| ------------------- | -------------------------------------------------------------------------------------------------------- | ----------- | --------------------- |
-| VYDON_API_URL     | The base url of the Vydon API. This can be overridden to connect to different Vydon API environments | false       | http://localhost:8080 |
-| VYDON_API_KEY     | The api key for Vydon API.                                                                             | false       |                       |
-| LOGIN_HOST          | The http server that is booted up running `vydon login` via an oauth flow                              | false       | 127.0.0.1             |
-| LOGIN_REDIRECT_HOST | The redirect host that is sent alongside the oauth flow when running `vydon login`                     | false       | 127.0.0.1             |
-| LOGIN_PORT          | The port the http server runs on when running `vydon login`                                            | false       | 4242                  |
+| Variable            | Description                                                                                          | Is Required | Default Value         |
+| ------------------- | ---------------------------------------------------------------------------------------------------- | ----------- | --------------------- |
+| VYDON_API_URL       | The base url of the Vydon API. This can be overridden to connect to different Vydon API environments | false       | http://localhost:8080 |
+| VYDON_API_KEY       | The api key for Vydon API.                                                                           | false       |                       |
+| LOGIN_HOST          | The http server that is booted up running `vydon login` via an oauth flow                            | false       | 127.0.0.1             |
+| LOGIN_REDIRECT_HOST | The redirect host that is sent alongside the oauth flow when running `vydon login`                   | false       | 127.0.0.1             |
+| LOGIN_PORT          | The port the http server runs on when running `vydon login`                                          | false       | 4242                  |

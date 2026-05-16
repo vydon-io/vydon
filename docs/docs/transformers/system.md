@@ -68,8 +68,8 @@ Randomly selects a value from a defined set of categorical values.
 
 **Configurations**
 
-| Name       | Description                                                              | Default         | Example Output |
-| ---------- | ------------------------------------------------------------------------ | --------------- | -------------- |
+| Name       | Description                                                            | Default         | Example Output |
+| ---------- | ---------------------------------------------------------------------- | --------------- | -------------- |
 | Categories | List of comma-separated string values that Vydon will randomly sample. | `value1,value2` | `value1`       |
 
 **Examples**
@@ -529,12 +529,12 @@ Anonymizes and transforms an existing email address.
 
 **Configurations**
 
-| Name                 | Description                                                                                       | Default | Example Input   | Example Output                                 |
-| -------------------- | ------------------------------------------------------------------------------------------------- | ------- | --------------- | ---------------------------------------------- |
-| Preserve Length      | Preserve Length will ensure that the output email is the same length as the input                 | false   | john@gmail      | william@gmail.com                              |
-| Preserve Domain      | Preserve Domain will ensure that the output email domain is the same as the input email domain    | false   | john@gmail      | william@yahoo.com                              |
-| Excluded Domains     | Takes in a list of comma separated domains and excludes them from the transformer                 | []      | @gmail          | william@gmail.com                              |
-| Email Type           | Provides a way to generate unique email addresses by appending a UUID to the domain               | uuid_v4 | john@gmail      | ab6b676b-0d0e-4e38-b98a-3935a832da7d@gmail.com |
+| Name                 | Description                                                                                     | Default | Example Input   | Example Output                                 |
+| -------------------- | ----------------------------------------------------------------------------------------------- | ------- | --------------- | ---------------------------------------------- |
+| Preserve Length      | Preserve Length will ensure that the output email is the same length as the input               | false   | john@gmail      | william@gmail.com                              |
+| Preserve Domain      | Preserve Domain will ensure that the output email domain is the same as the input email domain  | false   | john@gmail      | william@yahoo.com                              |
+| Excluded Domains     | Takes in a list of comma separated domains and excludes them from the transformer               | []      | @gmail          | william@gmail.com                              |
+| Email Type           | Provides a way to generate unique email addresses by appending a UUID to the domain             | uuid_v4 | john@gmail      | ab6b676b-0d0e-4e38-b98a-3935a832da7d@gmail.com |
 | Invalid Email Action | Provide a way for Vydon to handle email strings that are not formatted as valid email addresses | reject  | john@gmail..com | null                                           |
 
 **Examples**

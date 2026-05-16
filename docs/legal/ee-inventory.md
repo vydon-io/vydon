@@ -10,17 +10,17 @@ packages.
 
 ## Summary
 
-| Category | Count |
-| --- | --- |
-| Top-level EE directories | 3 |
-| EE Go source files | 53 |
-| EE LICENSE files | 3 |
-| OSS files importing EE packages | 49 |
-| EE helper scripts | 2 |
-| Go files with `//go:build ee` tag | 0 |
-| Charts/Helm EE-only values | 0 |
-| Terraform EE modules | 0 (no `terraform/` directory in this repo) |
-| Frontend EE pages/components | 0 (UI is OSS-only; EE was server-side gated) |
+| Category                          | Count                                        |
+| --------------------------------- | -------------------------------------------- |
+| Top-level EE directories          | 3                                            |
+| EE Go source files                | 53                                           |
+| EE LICENSE files                  | 3                                            |
+| OSS files importing EE packages   | 49                                           |
+| EE helper scripts                 | 2                                            |
+| Go files with `//go:build ee` tag | 0                                            |
+| Charts/Helm EE-only values        | 0                                            |
+| Terraform EE modules              | 0 (no `terraform/` directory in this repo)   |
+| Frontend EE pages/components      | 0 (UI is OSS-only; EE was server-side gated) |
 
 ## EE directories
 
@@ -200,8 +200,8 @@ worker/pkg/workflows/schemainit/workflow/register/register.go
 
 ## EE-related environment variables (to remove)
 
-| Variable | File | Action |
-| --- | --- | --- |
+| Variable     | File                             | Action                         |
+| ------------ | -------------------------------- | ------------------------------ |
 | `EE_LICENSE` | `internal/ee/license/license.go` | Deleted with the EE directory. |
 
 ## Charts / Helm
