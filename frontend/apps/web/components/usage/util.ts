@@ -1,8 +1,5 @@
 import { create } from '@bufbuild/protobuf';
-import {
-  Date as VydonDate,
-  DateSchema as VydonDateSchema,
-} from '@vydon/sdk';
+import { Date as VydonDate, DateSchema as VydonDateSchema } from '@vydon/sdk';
 import { endOfMonth, format, startOfMonth, subMonths } from 'date-fns';
 
 export type MetricIdentifierType = 'accountId' | 'jobId' | 'runId';

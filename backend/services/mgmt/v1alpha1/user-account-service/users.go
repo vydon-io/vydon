@@ -349,7 +349,12 @@ func (s *Service) SetPersonalAccount(
 		)
 	}
 
-	if err := s.rbacClient.SetAccountRole(ctx, rbac.NewUserIdEntity(user.Msg.GetUserId()), rbac.NewAccountIdEntity(vydondb.UUIDString(account.ID)), mgmtv1alpha1.AccountRole_ACCOUNT_ROLE_ADMIN); err != nil {
+	if err := s.rbacClient.SetAccountRole(
+		ctx,
+		rbac.NewUserIdEntity(user.Msg.GetUserId()),
+		rbac.NewAccountIdEntity(vydondb.UUIDString(account.ID)),
+		mgmtv1alpha1.AccountRole_ACCOUNT_ROLE_ADMIN,
+	); err != nil {
 		// note: if this fails the account is kind of in a broken state...
 		return nil, fmt.Errorf(
 			"unable to set account role for user, please reach out to support for further assistance: %w",
@@ -474,7 +479,12 @@ func (s *Service) CreateTeamAccount(
 		)
 	}
 
-	if err := s.rbacClient.SetAccountRole(ctx, rbac.NewUserIdEntity(user.Msg.GetUserId()), rbac.NewAccountIdEntity(vydondb.UUIDString(account.ID)), mgmtv1alpha1.AccountRole_ACCOUNT_ROLE_ADMIN); err != nil {
+	if err := s.rbacClient.SetAccountRole(
+		ctx,
+		rbac.NewUserIdEntity(user.Msg.GetUserId()),
+		rbac.NewAccountIdEntity(vydondb.UUIDString(account.ID)),
+		mgmtv1alpha1.AccountRole_ACCOUNT_ROLE_ADMIN,
+	); err != nil {
 		// note: if this fails the account is kind of in a broken state...
 		return nil, fmt.Errorf(
 			"unable to set account role for user, please reach out to support for further assistance: %w",

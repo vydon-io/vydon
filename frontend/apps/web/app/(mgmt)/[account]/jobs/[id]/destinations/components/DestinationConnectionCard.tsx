@@ -23,12 +23,7 @@ import { getErrorMessage } from '@/util/util';
 import { NewDestinationFormValues } from '@/yup-validations/jobs';
 import { useMutation } from '@connectrpc/connect-query';
 import { yupResolver } from '@hookform/resolvers/yup';
-import {
-  Connection,
-  JobDestination,
-  JobMapping,
-  JobService,
-} from '@vydon/sdk';
+import { Connection, JobDestination, JobMapping, JobService } from '@vydon/sdk';
 import { TrashIcon } from '@radix-ui/react-icons';
 import { ReactElement } from 'react';
 import { Control, useForm, useWatch } from 'react-hook-form';

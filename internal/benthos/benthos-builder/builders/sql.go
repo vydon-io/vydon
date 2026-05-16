@@ -518,8 +518,13 @@ func (b *sqlSyncBuilder) BuildDestinationConfig(
 					Fallback: []vydon_benthos.Outputs{
 						{
 							RedisHashOutput: &vydon_benthos.RedisHashOutputConfig{
-								Key:            hashedKey,
-								FieldsMapping:  fmt.Sprintf(`root = {meta(%q): json(%q)}`, hashPrimaryKeyMetaKey(benthosConfig.TableSchema, benthosConfig.TableName, col), col), // map of original value to transformed value
+								Key: hashedKey,
+								// map of original value to transformed value
+								FieldsMapping: fmt.Sprintf(
+									`root = {meta(%q): json(%q)}`,
+									hashPrimaryKeyMetaKey(benthosConfig.TableSchema, benthosConfig.TableName, col),
+									col,
+								),
 								WalkMetadata:   false,
 								WalkJsonObject: false,
 							},

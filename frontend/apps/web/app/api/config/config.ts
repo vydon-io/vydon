@@ -30,8 +30,7 @@ export function getSystemAppConfig(): SystemAppConfig {
     calendlyUpgradeLink:
       process.env.CALENDLY_UPGRADE_LINK ?? 'https://calendly.com/evis1/30min',
     isGcpCloudStorageConnectionsEnabled: isGcpConnectionsEnabled(),
-    vydonApiBaseUrl:
-      process.env.VYDON_API_BASE_URL ?? 'http://localhost:8080',
+    vydonApiBaseUrl: process.env.VYDON_API_BASE_URL ?? 'http://localhost:8080',
     publicVydonApiBaseUrl: PUBLIC_PATHNAME, // ensures that this always points to the same domain
     isJobHooksEnabled: process.env.JOBHOOKS_ENABLED === 'true',
     isAccountHooksEnabled:

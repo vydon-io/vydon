@@ -24,8 +24,8 @@ export default function WelcomeOverview(props: Props): ReactElement {
         <ConnectDarkMode />
       )}
       <p className="text-sm px-12">
-        Vydon makes it easy to anonymize sensitive data, generate synthetic
-        data and sync data across environments. Click{' '}
+        Vydon makes it easy to anonymize sensitive data, generate synthetic data
+        and sync data across environments. Click{' '}
         <span className="font-semibold">Next</span> to learn how Vydon works.
       </p>
       <div className="flex flex-row justify-between w-full py-6">

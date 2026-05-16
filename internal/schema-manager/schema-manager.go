@@ -92,7 +92,10 @@ func (d *DefaultSchemaManager) New(
 	case *mgmtv1alpha1.JobDestinationOptions_MssqlOptions:
 		opts := cfg.MssqlOptions
 		return schema_mssql.NewMssqlSchemaManager(ctx, d.logger, d.eelicense, d.session, d.sqlmanagerclient, sourceConnection, destinationConnection, opts)
-	case *mgmtv1alpha1.JobDestinationOptions_DynamodbOptions, *mgmtv1alpha1.JobDestinationOptions_MongodbOptions, *mgmtv1alpha1.JobDestinationOptions_AwsS3Options, *mgmtv1alpha1.JobDestinationOptions_GcpCloudstorageOptions:
+	case *mgmtv1alpha1.JobDestinationOptions_DynamodbOptions,
+		*mgmtv1alpha1.JobDestinationOptions_MongodbOptions,
+		*mgmtv1alpha1.JobDestinationOptions_AwsS3Options,
+		*mgmtv1alpha1.JobDestinationOptions_GcpCloudstorageOptions:
 		// For destinations like DynamoDB, MongoDB, S3, and GCP Cloud Storage, we use a no-op implementation
 		// since schema initialization and data truncation don't apply to these data stores
 		return schema_notsupported.NewNotSupportedSchemaManager()
