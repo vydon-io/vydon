@@ -28,33 +28,33 @@ Public License, anything custom-restrictive.
 
 ## Summary
 
-| Ecosystem | Total deps | Compatible | Flagged | Critical |
-| --- | --- | --- | --- | --- |
-| Go (`go.mod`) | 286 | 286 | 0 | 0 |
-| Node (`frontend/package-lock.json`) | 173 | 160 | 13 | 12 |
-| Node (`docs/package-lock.json`) | 37 | 37 | 0 | 0 |
-| Node (root `package-lock.json`) | 0 (tooling-only) | n/a | 0 | 0 |
-| Python (`python/pyproject.toml`) | 2 | 2 | 0 | 0 |
-| Python (`worker/scripts/name_dataset`) | 1 | 1 | 0 | 0 |
-| **Total** | **499** | **486** | **13** | **12** |
+| Ecosystem                              | Total deps       | Compatible | Flagged | Critical |
+| -------------------------------------- | ---------------- | ---------- | ------- | -------- |
+| Go (`go.mod`)                          | 286              | 286        | 0       | 0        |
+| Node (`frontend/package-lock.json`)    | 173              | 160        | 13      | 12       |
+| Node (`docs/package-lock.json`)        | 37               | 37         | 0       | 0        |
+| Node (root `package-lock.json`)        | 0 (tooling-only) | n/a        | 0       | 0        |
+| Python (`python/pyproject.toml`)       | 2                | 2          | 0       | 0        |
+| Python (`worker/scripts/name_dataset`) | 1                | 1          | 0       | 0        |
+| **Total**                              | **499**          | **486**    | **13**  | **12**   |
 
 ## Go (`go.mod`)
 
 **Verdict: clean.** 286 dependencies, all permissive.
 
-| License | Count |
-| --- | --- |
-| Apache-2.0 | 118 |
-| MIT | 105 |
-| BSD-3-Clause | 38 |
-| BSD-2-Clause | 10 |
-| MPL-2.0 | 8 |
-| BSL-1.0 | 1 |
-| CC0-1.0 | 1 |
-| ISC | 1 |
-| OpenSSL | 1 |
-| Zlib | 1 |
-| (Apache 2.0 with extra copyright headers) | 2 |
+| License                                   | Count |
+| ----------------------------------------- | ----- |
+| Apache-2.0                                | 118   |
+| MIT                                       | 105   |
+| BSD-3-Clause                              | 38    |
+| BSD-2-Clause                              | 10    |
+| MPL-2.0                                   | 8     |
+| BSL-1.0                                   | 1     |
+| CC0-1.0                                   | 1     |
+| ISC                                       | 1     |
+| OpenSSL                                   | 1     |
+| Zlib                                      | 1     |
+| (Apache 2.0 with extra copyright headers) | 2     |
 
 **Trivy flags clarified:**
 
@@ -69,21 +69,21 @@ Public License, anything custom-restrictive.
 **Verdict: 12 packages need attention.** All are the `sharp` family (image
 optimization used by Next.js).
 
-| Package | License | Status |
-| --- | --- | --- |
-| `@img/sharp-libvips-darwin-arm64` | LGPL-3.0-or-later | flagged |
-| `@img/sharp-libvips-darwin-x64` | LGPL-3.0-or-later | flagged |
-| `@img/sharp-libvips-linux-arm` | LGPL-3.0-or-later | flagged |
-| `@img/sharp-libvips-linux-arm64` | LGPL-3.0-or-later | flagged |
-| `@img/sharp-libvips-linux-ppc64` | LGPL-3.0-or-later | flagged |
-| `@img/sharp-libvips-linux-s390x` | LGPL-3.0-or-later | flagged |
-| `@img/sharp-libvips-linux-x64` | LGPL-3.0-or-later | flagged |
-| `@img/sharp-libvips-linuxmusl-arm64` | LGPL-3.0-or-later | flagged |
-| `@img/sharp-libvips-linuxmusl-x64` | LGPL-3.0-or-later | flagged |
-| `@img/sharp-wasm32` | Apache-2.0 AND LGPL-3.0-or-later AND MIT | flagged |
-| `@img/sharp-win32-ia32` | Apache-2.0 AND LGPL-3.0-or-later | flagged |
-| `@img/sharp-win32-x64` | Apache-2.0 AND LGPL-3.0-or-later | flagged |
-| `posthog-js` | "SEE LICENSE IN LICENSE" (manually verified: **MIT**) | clarify metadata |
+| Package                              | License                                               | Status           |
+| ------------------------------------ | ----------------------------------------------------- | ---------------- |
+| `@img/sharp-libvips-darwin-arm64`    | LGPL-3.0-or-later                                     | flagged          |
+| `@img/sharp-libvips-darwin-x64`      | LGPL-3.0-or-later                                     | flagged          |
+| `@img/sharp-libvips-linux-arm`       | LGPL-3.0-or-later                                     | flagged          |
+| `@img/sharp-libvips-linux-arm64`     | LGPL-3.0-or-later                                     | flagged          |
+| `@img/sharp-libvips-linux-ppc64`     | LGPL-3.0-or-later                                     | flagged          |
+| `@img/sharp-libvips-linux-s390x`     | LGPL-3.0-or-later                                     | flagged          |
+| `@img/sharp-libvips-linux-x64`       | LGPL-3.0-or-later                                     | flagged          |
+| `@img/sharp-libvips-linuxmusl-arm64` | LGPL-3.0-or-later                                     | flagged          |
+| `@img/sharp-libvips-linuxmusl-x64`   | LGPL-3.0-or-later                                     | flagged          |
+| `@img/sharp-wasm32`                  | Apache-2.0 AND LGPL-3.0-or-later AND MIT              | flagged          |
+| `@img/sharp-win32-ia32`              | Apache-2.0 AND LGPL-3.0-or-later                      | flagged          |
+| `@img/sharp-win32-x64`               | Apache-2.0 AND LGPL-3.0-or-later                      | flagged          |
+| `posthog-js`                         | "SEE LICENSE IN LICENSE" (manually verified: **MIT**) | clarify metadata |
 
 ### `sharp` decision
 
@@ -121,16 +121,16 @@ discrepancy.
 
 `python/pyproject.toml`:
 
-| Package | Version | License | Status |
-| --- | --- | --- | --- |
-| `grpcio` | 1.69.\* | Apache-2.0 | ok |
-| `protobuf` | 5.\* | BSD-3-Clause | ok |
+| Package    | Version | License      | Status |
+| ---------- | ------- | ------------ | ------ |
+| `grpcio`   | 1.69.\* | Apache-2.0   | ok     |
+| `protobuf` | 5.\*    | BSD-3-Clause | ok     |
 
 `worker/scripts/name_dataset/requirements.txt`:
 
-| Package | Version | License | Status |
-| --- | --- | --- | --- |
-| `names-dataset` | 3.1.0 | Apache-2.0 | ok |
+| Package         | Version | License    | Status |
+| --------------- | ------- | ---------- | ------ |
+| `names-dataset` | 3.1.0   | Apache-2.0 | ok     |
 
 **Verdict: clean.**
 

@@ -28,7 +28,7 @@ The following options can be passed using the `vydon whoami` command:
 
 ## Environment Variables
 
-| Variable        | Description                                                                                              | Is Required | Default Value         |
-| --------------- | -------------------------------------------------------------------------------------------------------- | ----------- | --------------------- |
+| Variable      | Description                                                                                          | Is Required | Default Value         |
+| ------------- | ---------------------------------------------------------------------------------------------------- | ----------- | --------------------- |
 | VYDON_API_URL | The base url of the Vydon API. This can be overridden to connect to different Vydon API environments | false       | http://localhost:8080 |
-| VYDON_API_KEY | The api key for Vydon API.                                                                             | false       |                       |
+| VYDON_API_KEY | The api key for Vydon API.                                                                           | false       |                       |
