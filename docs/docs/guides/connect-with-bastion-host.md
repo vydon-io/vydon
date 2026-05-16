@@ -27,7 +27,7 @@ It's important for Bastion Hosts to have good logging and monitoring, as well as
 ## Why do we need one for Vydon?
 
 Databases are typically one of the most locked down and secured pieces of running software within a network. They for the most part are not publicly accessible to the internet.
-Therefore, Vydon Cloud will be unable to communicate with your database without the ability to tunnel into your private network in some capacity.
+Therefore, a hosted Vydon instance running outside your private network will be unable to communicate with your database without the ability to tunnel into it in some capacity. (This is not a concern when running Vydon self-hosted inside the same network as the database.)
 
 ## AWS Bastion Host Setup
 
@@ -183,8 +183,7 @@ resource "aws_security_group_rule" "egress_postgres" {
 
 I'm going to use a personal account in links going forward, which may need to change if you're configuring this for a team account.
 
-Navigate to [Create a new Postgres Connection](https://app.vydon.io/personal/new/connection/postgres).
-Otherwise, go to [Vydon Cloud](https://app.vydon.io), navigate to Connections -> New Connection -> Postgres.
+Open your Vydon UI (for example [http://localhost:3000](http://localhost:3000) when running locally) and navigate to **Connections → New Connection → Postgres**.
 
 Set a connection name and drop in your database url.
 

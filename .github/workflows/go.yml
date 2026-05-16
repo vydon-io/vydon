@@ -100,7 +100,7 @@ jobs:
           go test -race -coverprofile=unit-coverage.out -covermode=atomic ./...
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -140,7 +140,7 @@ jobs:
           TEST_S3_BUCKET: ${{ vars.INTEGRATION_TEST_BUCKET_NAME }}
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
@@ -164,7 +164,7 @@ jobs:
           WORKER_INTEGRATION_TESTS_ENABLED: 1
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}        
 
@@ -188,7 +188,7 @@ jobs:
           INTEGRATION_TESTS_ENABLED: 1
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 

@@ -10,17 +10,12 @@ slug: /guides/vydon-local-dev
 
 This section goes into detail on each tool that is used for developing with Vydon locally.
 
-## Vydon DevContainer
-
-Vydon has a pre-published [devcontainer](https://containers.dev/) that can be used to easily get a working Vydon dev environment.
-This container comes pre-packaged with all of the tools needed for developing Vydon, and works with Tilt or Compose, or Bare Metal setups.
-
 ## Setup with Compose
 
 ### Pre-requisites
 
-- Golang >=1.22
-- Docker Compose >=2.26
+- Go >= 1.24 (see [go.mod](https://github.com/vydon-io/vydon/blob/main/go.mod) for the exact minimum)
+- Docker Compose >= 2.26
 
 ### Setup
 
@@ -39,43 +34,52 @@ The docker compose environment runs entirely by itself.
 To start:
 
 ```console
-make compose/dev/up
+make dev
 ```
 
-> Note: The `backend` and `worker` containers will start but may take some time to to do their initial build.
+> Note: The `backend` and `worker` containers will start but may take some time to do their initial build.
 
 Once they have a build cache, they will come online and re-build much faster!
+
+To stream logs from every container:
+
+```console
+make dev/logs
+```
+
+To stop the stack (keeps volumes):
+
+```console
+make dev/down
+```
+
+To stop and wipe all volumes (destructive — useful when the Postgres data dir holds a stale database name):
+
+```console
+make dev/clean
+```
+
+Once everything is up and running, the app can be accessed locally at [http://localhost:3000](http://localhost:3000), the API at [http://localhost:8080](http://localhost:8080), and the Temporal UI at [http://localhost:8233](http://localhost:8233).
+
+### Running Compose with Authentication
+
+The repository ships a `compose.auth.yml` overlay that stands up Keycloak with a pre-configured realm so you can sign in with a standard username and password, completely offline.
+
+```console
+docker compose -f compose.yml -f compose.auth.yml up -d
+```
 
 To stop:
 
 ```console
-make compose/dev/down
-```
-
-Once everything is up and running, The app can be accessed locally at [http://localhost:3000](http://localhost:3000).
-
-### Running Compose with Authentication
-
-This will stand up Keycloak with a pre-configured realm that will allow logging in to Vydon with a standard username and password, completely offline!
-
-> **NB:** This requires a valid Vydon Enterprise license to be present in the API container. If you would like to try this out, please contact us.
-
-```console
-make compose/dev/auth/up
-```
-
-To stop, run:
-
-```console
-make compose/dev/auth/down
+docker compose -f compose.yml -f compose.auth.yml down
 ```
 
 ## Setup with Tilt
 
-Developing with Kubernetes via Tilt is also an option, however it is a bit more setup and is heavier. The benefits of this are that it allows you to develop more closely to what a k8s production environment could look like.
+Developing with Kubernetes via Tilt is an alternative path. It is heavier than the Compose flow but reproduces a Kubernetes environment closer to production.
 
-> Note: This was our original way of developing Vydon but we have transitioned to a docker compose setup for development.
-> If you're trying this and run into issues. please reach out to us on Discord.
+> The default Vydon contributor workflow is Compose. Tilt is kept for contributors who want a kind-based cluster.
 
 ### Docker Desktop
 
@@ -88,19 +92,21 @@ This comes at a negative of the local database not surviving restarts.
 
 ### Cluster Setup
 
-Step 1 is to ensure that the `kind` cluster is up and running along with its registry.
-This can be manually created, or done simply with `ctlptl`.
-The cluster is declaratively defined [here](https://github.com/vydon-io/vydon/tree/main//tilt/kind/cluster.yaml)
+Create a `kind` cluster named `vydon-dev` (the cluster name expected by the top-level [Tiltfile](https://github.com/vydon-io/vydon/blob/main/Tiltfile)):
 
-The below command invokes the cluster-create script that can be found [here](https://github.com/vydon-io/vydon/tree/main//tilt/scripts/cluster-create.sh)
-
-```
-make cluster/create
+```console
+kind create cluster --name vydon-dev
 ```
 
-After the cluster has been successfully created, `tilt up` can be run to start up `vydon`.
-Refer to the top-level [Tiltfile](https://github.com/vydon-io/vydon/tree/main//Tiltfile) for a clear picture of everything that runs.
-Each dependency in the `vydon` repo is split into sub Tilt files so that they can be run in isolation, or in combination with other sub-resources more easily.
+If you prefer a declarative cluster spec, the project ships one at [tilt/kind/cluster.yaml](https://github.com/vydon-io/vydon/blob/main/tilt/kind/cluster.yaml) which you can pass via `kind create cluster --config tilt/kind/cluster.yaml`.
+
+After the cluster is up, run `tilt up`. Each dependency in the `vydon` repo has its own sub-Tiltfile so it can be enabled in isolation:
+
+```console
+tilt up                # everything
+tilt up backend        # backend only
+tilt up frontend       # frontend (also brings backend)
+```
 
 Once everything is up and running, the app can be accessed locally at [http://localhost:3000](http://localhost:3000).
 
@@ -162,8 +168,12 @@ This lets us declare the versions in code and docker takes care of the rest.
 
 ## Brew Install
 
-Each tool above can be straightforwardly installed with brew if on Linux/MacOS
+Each tool above can be straightforwardly installed with brew if on Linux/MacOS. The Compose path only needs Go, Node and Docker; the Tilt path needs the full list.
 
 ```console
+# Compose path (default)
+brew install go node
+
+# Tilt + kind path (optional)
 brew install kind tilt-dev/tap/tilt tilt-dev/tap/ctlptl kubernetes-cli kustomize helm helmfile go sqlc buf golangci-lint node
 ```

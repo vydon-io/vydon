@@ -19,11 +19,19 @@ We split out the Temporal compose file to make it easier to include in other pla
 
 **This main compose.yml file is made to easily try Vydon and should not be used as-is for production deployments.**
 
-To run this you can run one of the two following commands:
+To bring it up:
 
 ```console
-make compose/up
 docker compose up -d
+```
+
+Active development with hot reload uses a different entrypoint:
+
+```console
+make dev          # build images locally and start the stack with hot reload
+make dev/logs     # tail logs
+make dev/down     # stop the stack (keeps volumes)
+make dev/clean    # stop and wipe volumes (destructive)
 ```
 
 ## Deploying Vydon with Compose
@@ -37,18 +45,15 @@ Once all of the containers come online, the app is now routable via [http://loca
 
 ## Deploy with Docker Compose and Authentication
 
-> **NB:** This requires a valid Vydon Enterprise license for OSS deployments. If you would like to try this out, please contact us.
-
-Vydon provides an auth friendly compose file that will stand up Vydon in auth-mode with Keycloak.
+Vydon ships a `compose.auth.yml` overlay that stands up Keycloak with a pre-configured realm so you can sign in with a standard username and password, completely offline.
 
 ```console
-make compose/auth/up
 docker compose -f compose.yml -f compose.auth.yml up -d
 ```
 
 Keycloak comes default with two clients that allow the app and cli to login successfully.
 
-On first boot up, Keycloak will assert itself with the provided realm Vydon realm.
+On first boot up, Keycloak will assert itself with the provided Vydon realm.
 
 When navigating to Vydon for the first time, you'll land on the Keycloak sign-in page. It is easy to create an account simply by going through the register flow.
 This will persist restarts due to the postgres volume mapping. If you wish to start over, simply delete the vydon docker volume to reset your database to a fresh state.
