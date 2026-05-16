@@ -32,25 +32,16 @@ Open Source Data Anonymization and Synthetic Data Orchestration
   <a href='https://makeapullrequest.com'>
     <img alt='PRs Welcome' src='https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shields'/>
   </a>
-  <img src="https://img.shields.io/github/license/lightdash/lightdash" />
-  <!-- <a href="https://codecov.io/gh/vydon-io/vydon">
-    <img alt="CodeCov" src="https://codecov.io/gh/vydon-io/vydon/graph/badge.svg?token=A35QDLRU04"/>
-    </a> -->
+  <a href="https://github.com/vydon-io/vydon/blob/main/LICENSE.md">
+    <img alt="License: MIT" src="https://img.shields.io/github/license/vydon-io/vydon"/>
+  </a>
   <a href="https://github.com/vydon-io/vydon/actions/workflows/go.yml/">
     <img alt="Go Tests" src="https://github.com/vydon-io/vydon/actions/workflows/go.yml/badge.svg"/>
-  </a>
-  <a href="https://x.com/vydon">
-    <img alt="Follow X" src="https://img.shields.io/twitter/follow/vydon?label=Follow"/>
   </a>
   <a href="https://artifacthub.io/packages/search?repo=vydon">
     <img alt="ArtifactHub Vydon" src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/vydon" />
   </a>
-  <a href="https://gurubase.io/g/vydon">
-    <img alt="Gurubase" src="https://img.shields.io/badge/Gurubase-Ask%20Vydon%20Guru-006BFF" />
-  </a>
 </div>
-
-> **⚠️ Disclaimer:** **Vydon has been acquired by [Grow Therapy](https://www.growtherapy.com). As a result, this repository is no longer actively maintained. Thank you to all of our OSS and Cloud supporters over the years.**
 
 ## Introduction
 
