@@ -12,100 +12,13 @@
 #
 # Re-run after edits:
 #   docker run --rm -v "$PWD:/src" -w /src ghcr.io/google/osv-scanner:latest \
-#     --recursive --no-call-analysis=go ./
-
-# --- Go stdlib (1.24.13) ---------------------------------------------------
-# Fixed in Go 1.25.x / 1.26.x. The runtime bump is tracked separately and
-# requires coordinated test-matrix updates.
-
-[[IgnoredVulns]]
-id = "GO-2026-4601"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4602"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4603"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4864"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4865"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4869"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4870"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4918"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4946"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4947"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4971"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4976"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4977"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4980"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4981"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4982"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
-
-[[IgnoredVulns]]
-id = "GO-2026-4986"
-ignoreUntil = 2026-07-15
-reason = "stdlib advisory; resolved by Go runtime bump to 1.25+"
+#     --no-call-analysis=go --config=./osv-scanner.toml \
+#     --lockfile=./go.mod --lockfile=./tools/go.mod
 
 # --- Third party Go modules ------------------------------------------------
-# Bumps are blocked by upstream API breaks in our test harness
-# (internal/testutil/testcontainers/dynamodb) and docker 28 archive split.
+# Bumps are blocked by upstream API breaks in the consumer code (azopenai
+# rewrite, testcontainers nat.Port, docker pkg/archive split, openai-go
+# alpha-to-stable, otel cascade, grpc 1.79 ripple).
 
 [[IgnoredVulns]]
 id = "GO-2026-4503"
@@ -145,12 +58,17 @@ reason = "otel/sdk 1.35.0; coordinated bump to 1.43.x scheduled"
 [[IgnoredVulns]]
 id = "GO-2026-4559"
 ignoreUntil = 2026-07-15
-reason = "golang.org/x/net 0.50.0; resolves on next coordinated bump cycle"
+reason = "golang.org/x/net 0.50.0 in tools/go.mod; bump with grpc cycle"
+
+[[IgnoredVulns]]
+id = "GO-2026-4918"
+ignoreUntil = 2026-07-15
+reason = "golang.org/x/net 0.50.0 in tools/go.mod; bump with grpc cycle"
 
 [[IgnoredVulns]]
 id = "GO-2026-4762"
 ignoreUntil = 2026-07-15
-reason = "grpc 1.71.0; bump to 1.81 requires otel coordinated update"
+reason = "grpc 1.71.0 in tools/go.mod; bump to 1.81 requires otel coordinated update"
 
 # --- AWS SDKs --------------------------------------------------------------
 
@@ -180,11 +98,6 @@ reason = "docker/docker 27.2.0+incompatible; tracked with main docker advisory"
 id = "GO-2025-4123"
 ignoreUntil = 2026-07-15
 reason = "dvsekhvalnov/jose2go 1.6.0; transitive from auth providers"
-
-[[IgnoredVulns]]
-id = "GO-2025-3553"
-ignoreUntil = 2026-07-15
-reason = "golang-jwt/jwt/v4 4.5.1; transitive, bump to v5 planned"
 
 [[IgnoredVulns]]
 id = "GHSA-j88v-2chj-qfwx"
