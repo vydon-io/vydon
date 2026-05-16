@@ -1,6 +1,6 @@
 module github.com/vydon-io/vydon
 
-go 1.24.13
+go 1.25.10
 
 require (
 	buf.build/gen/go/bufbuild/protovalidate/protocolbuffers/go v1.36.5-20250219170025-d39267d9df8f.1
