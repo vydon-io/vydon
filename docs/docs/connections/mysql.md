@@ -101,7 +101,6 @@ For a full look at query parameters available to you, check the [driver readme](
 By default, Vydon will add the following query parameters automatically to your user-provided DSN at runtime:
 
 - `multiStatements=true`
-
   - This is used to enable sending batched SQL statements to the server at once. If this is turned off, Vydon has to send single statements at a time, which really hurts performance.
 
 - `parseTime=true`

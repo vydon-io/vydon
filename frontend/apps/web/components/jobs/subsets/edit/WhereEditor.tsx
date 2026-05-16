@@ -62,7 +62,7 @@ function useAutocomplete(columns: string[]): void {
     const provider = monaco.languages.registerCompletionItemProvider('sql', {
       triggerCharacters: [' ', '.'], // Trigger autocomplete on space and dot
 
-      provideCompletionItems(model, position) {
+      provideCompletionItems(model: editor.ITextModel, position: { lineNumber: number; column: number }) {
         const textUntilPosition = model.getValueInRange({
           startLineNumber: 1,
           startColumn: 1,
