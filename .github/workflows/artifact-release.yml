@@ -23,6 +23,7 @@ jobs:
       contents: read
       id-token: write
       packages: write
+      attestations: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -83,6 +84,7 @@ jobs:
         uses: depot/setup-action@v1
 
       - name: Build and push
+        id: build
         uses: depot/build-push-action@v1
         with:
           context: .
@@ -96,6 +98,50 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Install cosign
+        if: github.event_name != 'pull_request'
+        uses: sigstore/cosign-installer@v3.7.0
+        with:
+          cosign-release: v2.4.1
+
+      - name: Sign image with cosign keyless
+        if: github.event_name != 'pull_request'
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes ${images}
+
+      - name: Generate SBOM
+        if: github.event_name != 'pull_request'
+        uses: anchore/sbom-action@v0
+        with:
+          image: ghcr.io/vydon-io/vydon/api@${{ steps.build.outputs.digest }}
+          format: spdx-json
+          output-file: sbom-backend.spdx.json
+          upload-artifact: false
+
+      - name: Attest build provenance
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ghcr.io/vydon-io/vydon/api
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
+
+      - name: Attest SBOM
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-sbom@v2
+        with:
+          subject-name: ghcr.io/vydon-io/vydon/api
+          subject-digest: ${{ steps.build.outputs.digest }}
+          sbom-path: sbom-backend.spdx.json
+          push-to-registry: true
+
   docker-frontend:
     name: Frontend Docker Image
     runs-on: ubuntu-latest
@@ -103,6 +149,7 @@ jobs:
       contents: read
       id-token: write
       packages: write
+      attestations: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -156,6 +203,7 @@ jobs:
         uses: depot/setup-action@v1
 
       - name: Build and push
+        id: build
         uses: depot/build-push-action@v1
         with:
           file: docker/Dockerfile.frontend
@@ -165,6 +213,50 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Install cosign
+        if: github.event_name != 'pull_request'
+        uses: sigstore/cosign-installer@v3.7.0
+        with:
+          cosign-release: v2.4.1
+
+      - name: Sign image with cosign keyless
+        if: github.event_name != 'pull_request'
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes ${images}
+
+      - name: Generate SBOM
+        if: github.event_name != 'pull_request'
+        uses: anchore/sbom-action@v0
+        with:
+          image: ghcr.io/vydon-io/vydon/app@${{ steps.build.outputs.digest }}
+          format: spdx-json
+          output-file: sbom-frontend.spdx.json
+          upload-artifact: false
+
+      - name: Attest build provenance
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ghcr.io/vydon-io/vydon/app
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
+
+      - name: Attest SBOM
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-sbom@v2
+        with:
+          subject-name: ghcr.io/vydon-io/vydon/app
+          subject-digest: ${{ steps.build.outputs.digest }}
+          sbom-path: sbom-frontend.spdx.json
+          push-to-registry: true
+
   docker-worker:
     name: Worker Docker Image
     runs-on: ubuntu-latest
@@ -172,6 +264,7 @@ jobs:
       contents: read
       id-token: write
       packages: write
+      attestations: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -225,6 +318,7 @@ jobs:
         uses: depot/setup-action@v1
 
       - name: Build and push
+        id: build
         uses: depot/build-push-action@v1
         with:
           context: .
@@ -234,11 +328,59 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
 
+      - name: Install cosign
+        if: github.event_name != 'pull_request'
+        uses: sigstore/cosign-installer@v3.7.0
+        with:
+          cosign-release: v2.4.1
+
+      - name: Sign image with cosign keyless
+        if: github.event_name != 'pull_request'
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          images=""
+          for tag in ${TAGS}; do
+            images+="${tag}@${DIGEST} "
+          done
+          cosign sign --yes ${images}
+
+      - name: Generate SBOM
+        if: github.event_name != 'pull_request'
+        uses: anchore/sbom-action@v0
+        with:
+          image: ghcr.io/vydon-io/vydon/worker@${{ steps.build.outputs.digest }}
+          format: spdx-json
+          output-file: sbom-worker.spdx.json
+          upload-artifact: false
+
+      - name: Attest build provenance
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ghcr.io/vydon-io/vydon/worker
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true
+
+      - name: Attest SBOM
+        if: github.event_name != 'pull_request'
+        uses: actions/attest-sbom@v2
+        with:
+          subject-name: ghcr.io/vydon-io/vydon/worker
+          subject-digest: ${{ steps.build.outputs.digest }}
+          sbom-path: sbom-worker.spdx.json
+          push-to-registry: true
+
   helm-backend:
     name: Backend Helm Chart
     runs-on: ubuntu-latest
     needs:
       - docker-backend
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -328,18 +470,53 @@ jobs:
           done
 
       - name: Helm | Publish
+        id: helm_publish
         shell: bash
         run: |
           OCI_URL="oci://ghcr.io/$GITHUB_REPOSITORY/helm"
+          refs=()
           for d in ./*.tgz ; do
-              helm push "$d" "$OCI_URL"
+              push_output=$(helm push "$d" "$OCI_URL" 2>&1)
+              echo "$push_output"
+              digest=$(echo "$push_output" | grep -oE 'sha256:[a-f0-9]+' | head -1)
+              pushed_ref=$(echo "$push_output" | grep -oE 'Pushed: \S+' | awk '{print $2}')
+              if [[ -n "$digest" && -n "$pushed_ref" ]]; then
+                  base_ref="${pushed_ref%:*}"
+                  refs+=("${base_ref}@${digest}")
+              fi
           done
+          {
+              echo "refs<<EOF"
+              printf '%s\n' "${refs[@]}"
+              echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.7.0
+        with:
+          cosign-release: v2.4.1
+
+      - name: Sign Helm charts with cosign keyless
+        if: steps.helm_publish.outputs.refs != ''
+        shell: bash
+        env:
+          REFS: ${{ steps.helm_publish.outputs.refs }}
+        run: |
+          while IFS= read -r ref; do
+              [ -z "$ref" ] && continue
+              echo "Signing $ref"
+              cosign sign --yes "$ref"
+          done <<< "$REFS"
 
   helm-frontend:
     name: Frontend Helm Chart
     runs-on: ubuntu-latest
     needs:
       - docker-frontend
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -429,18 +606,53 @@ jobs:
           done
 
       - name: Helm | Publish
+        id: helm_publish
         shell: bash
         run: |
           OCI_URL="oci://ghcr.io/$GITHUB_REPOSITORY/helm"
+          refs=()
           for d in ./*.tgz ; do
-              helm push "$d" "$OCI_URL"
+              push_output=$(helm push "$d" "$OCI_URL" 2>&1)
+              echo "$push_output"
+              digest=$(echo "$push_output" | grep -oE 'sha256:[a-f0-9]+' | head -1)
+              pushed_ref=$(echo "$push_output" | grep -oE 'Pushed: \S+' | awk '{print $2}')
+              if [[ -n "$digest" && -n "$pushed_ref" ]]; then
+                  base_ref="${pushed_ref%:*}"
+                  refs+=("${base_ref}@${digest}")
+              fi
           done
+          {
+              echo "refs<<EOF"
+              printf '%s\n' "${refs[@]}"
+              echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.7.0
+        with:
+          cosign-release: v2.4.1
+
+      - name: Sign Helm charts with cosign keyless
+        if: steps.helm_publish.outputs.refs != ''
+        shell: bash
+        env:
+          REFS: ${{ steps.helm_publish.outputs.refs }}
+        run: |
+          while IFS= read -r ref; do
+              [ -z "$ref" ] && continue
+              echo "Signing $ref"
+              cosign sign --yes "$ref"
+          done <<< "$REFS"
 
   helm-worker:
     name: Worker Helm Chart
     runs-on: ubuntu-latest
     needs:
       - docker-worker
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -531,12 +743,43 @@ jobs:
           done
 
       - name: Helm | Publish
+        id: helm_publish
         shell: bash
         run: |
           OCI_URL="oci://ghcr.io/$GITHUB_REPOSITORY/helm"
+          refs=()
           for d in ./*.tgz ; do
-              helm push "$d" "$OCI_URL"
+              push_output=$(helm push "$d" "$OCI_URL" 2>&1)
+              echo "$push_output"
+              digest=$(echo "$push_output" | grep -oE 'sha256:[a-f0-9]+' | head -1)
+              pushed_ref=$(echo "$push_output" | grep -oE 'Pushed: \S+' | awk '{print $2}')
+              if [[ -n "$digest" && -n "$pushed_ref" ]]; then
+                  base_ref="${pushed_ref%:*}"
+                  refs+=("${base_ref}@${digest}")
+              fi
           done
+          {
+              echo "refs<<EOF"
+              printf '%s\n' "${refs[@]}"
+              echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.7.0
+        with:
+          cosign-release: v2.4.1
+
+      - name: Sign Helm charts with cosign keyless
+        if: steps.helm_publish.outputs.refs != ''
+        shell: bash
+        env:
+          REFS: ${{ steps.helm_publish.outputs.refs }}
+        run: |
+          while IFS= read -r ref; do
+              [ -z "$ref" ] && continue
+              echo "Signing $ref"
+              cosign sign --yes "$ref"
+          done <<< "$REFS"
 
   helm-top:
     name: Umbrella Helm Chart
@@ -545,6 +788,10 @@ jobs:
       - helm-backend
       - helm-frontend
       - helm-worker
+    permissions:
+      contents: read
+      id-token: write
+      packages: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -636,12 +883,43 @@ jobs:
           done
 
       - name: Helm | Publish
+        id: helm_publish
         shell: bash
         run: |
           OCI_URL="oci://ghcr.io/$GITHUB_REPOSITORY/helm"
+          refs=()
           for d in ./*.tgz ; do
-              helm push "$d" "$OCI_URL"
+              push_output=$(helm push "$d" "$OCI_URL" 2>&1)
+              echo "$push_output"
+              digest=$(echo "$push_output" | grep -oE 'sha256:[a-f0-9]+' | head -1)
+              pushed_ref=$(echo "$push_output" | grep -oE 'Pushed: \S+' | awk '{print $2}')
+              if [[ -n "$digest" && -n "$pushed_ref" ]]; then
+                  base_ref="${pushed_ref%:*}"
+                  refs+=("${base_ref}@${digest}")
+              fi
           done
+          {
+              echo "refs<<EOF"
+              printf '%s\n' "${refs[@]}"
+              echo "EOF"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3.7.0
+        with:
+          cosign-release: v2.4.1
+
+      - name: Sign Helm charts with cosign keyless
+        if: steps.helm_publish.outputs.refs != ''
+        shell: bash
+        env:
+          REFS: ${{ steps.helm_publish.outputs.refs }}
+        run: |
+          while IFS= read -r ref; do
+              [ -z "$ref" ] && continue
+              echo "Signing $ref"
+              cosign sign --yes "$ref"
+          done <<< "$REFS"
 
   cli:
     name: CLI

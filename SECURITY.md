@@ -46,3 +46,9 @@ Out of scope:
 
 We follow a 90-day coordinated disclosure window. Credit is given to reporters
 in the published advisory unless you opt out.
+
+## Supply chain
+
+All container images, Helm charts, and SDK packages are signed with Sigstore
+keyless OIDC and ship SLSA build provenance plus SBOM attestations. See
+[docs/security/SIGNING.md](docs/security/SIGNING.md) for verification recipes.
