@@ -142,9 +142,9 @@ This policy will grant readwrite access to the `StageDb` table.
 }
 ```
 
-## Vydon Cloud Region
+## Region
 
-Vydon Cloud currently runs in `us-west-2` region. If you've using the cloud platform and are running your tables in a different region, be sure to fill out the region field for the Vydon Connection to ensure that Vydon looks in the right place for your DynamoDB tables.
+If your DynamoDB tables live in a region different from the one where the Vydon worker runs, fill out the region field on the Vydon connection so that Vydon looks in the right place for your tables.
 
 ## Sync Job Mapping Configuration
 

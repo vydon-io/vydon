@@ -19,11 +19,11 @@ Vydon can be deployed to Kubernetes easily with the assistance of Helm charts.
 We currently publish four different helm charts for maximum flexibility.
 This page will detail the purpose of each one and how it can be used to deploy to Kubernetes.
 
-All of our helm charts are deployed as OCI helm charts and require Helm3 to use.
-Our images are published directly to the Github Container registry at: `ghcr.io/vydon-io/vydon/helm`.
+All of our helm charts are deployed as OCI helm charts and require Helm 3 to use.
+Our images are published directly to the GitHub Container Registry at `ghcr.io/vydon-io/vydon/helm` once a release is cut. If the package does not yet appear, no tagged release has been published yet.
 
 When a release of Vydon is made, all of these resources are tagged and released at the same version.
-If using the Vydon AIO chart at version `v1.0.0`, it will use `v1.0.0` of the api, app, and worker.
+If using the Vydon umbrella chart at version `v1.0.0`, it will use `v1.0.0` of the api, app, and worker.
 
 ### API
 
@@ -37,7 +37,7 @@ The full image can be docker pulled via: `docker pull ghcr.io/vydon-io/vydon/hel
 ### App
 
 The APP Helm chart can be used to deploy just the frontend APP.
-The chart itself can be found [here](https://github.com/vydon-io/vydon/tree/main/frontend/charts/app).
+The chart itself can be found [here](https://github.com/vydon-io/vydon/tree/main/frontend/apps/web/charts/app).
 
 The local dev edition can be found in the [helmfile](https://github.com/vydon-io/vydon/blob/main/frontend/apps/web/dev/helm/app/helmfile.yaml) that is used by our dev Tilt instance.
 

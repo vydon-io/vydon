@@ -19,11 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
+        if: github.actor != 'dependabot[bot]'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Setup Node.js
+        if: github.actor != 'dependabot[bot]'
         uses: actions/setup-node@v4
         with:
           node-version: "20"
@@ -31,11 +33,21 @@ jobs:
           cache-dependency-path: package-lock.json
 
       - name: Install dependencies
+        if: github.actor != 'dependabot[bot]'
         run: npm ci --ignore-scripts
 
       - name: Lint commits
+        if: github.actor != 'dependabot[bot]'
         run: |
           npx --no -- commitlint \
             --from "${{ github.event.pull_request.base.sha }}" \
             --to "${{ github.event.pull_request.head.sha }}" \
             --verbose
+
+      - name: Skip notice for Dependabot
+        # Dependabot writes long changelog bodies that exceed our 72-char body
+        # limit. We still lint the squash-merge subject (set via the PR title)
+        # on the protected branch's status check, but skip per-commit linting
+        # here so the required check can succeed.
+        if: github.actor == 'dependabot[bot]'
+        run: echo "Skipping commitlint for dependabot pull request."
