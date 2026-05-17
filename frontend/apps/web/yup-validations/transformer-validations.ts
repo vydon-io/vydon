@@ -593,7 +593,6 @@ export type UpdateUserDefinedTransformerFormValues = Yup.InferType<
   typeof UpdateUserDefinedTransformerFormValues
 >;
 
-export interface EditUserDefinedTransformerFormContext
-  extends CreateUserDefinedTransformerFormContext {
+export interface EditUserDefinedTransformerFormContext extends CreateUserDefinedTransformerFormContext {
   name: string;
 }

@@ -10553,9 +10553,7 @@ components:
           type: string
           title: ai_connection_id
           format: uuid
-          description: >-
-            The connection id that corresponds with an AI-based Vydon
-            connection
+          description: The connection id that corresponds with an AI-based Vydon connection
         schemas:
           type: array
           items:
@@ -12240,8 +12238,8 @@ components:
           title: connection_id
           format: uuid
           description: >-
-            Unique identifier of the Vydon connection to run this hook for.
-            Must be a connection id that is present in the job.
+            Unique identifier of the Vydon connection to run this hook for. Must
+            be a connection id that is present in the job.
         timing:
           allOf:
             - $ref: >-
@@ -15653,8 +15651,8 @@ components:
           type: string
           title: checkout_session_url
           description: >-
-            If VydonCloud, will respond with a checkout session url so they
-            can setup billing
+            If VydonCloud, will respond with a checkout session url so they can
+            setup billing
         newPersonalAccountId:
           type: string
           title: new_personal_account_id
@@ -15697,8 +15695,8 @@ components:
           type: string
           title: checkout_session_url
           description: >-
-            If VydonCloud, will respond with a checkout session url so they
-            can setup billing
+            If VydonCloud, will respond with a checkout session url so they can
+            setup billing
       title: CreateTeamAccountResponse
       additionalProperties: false
     mgmt.v1alpha1.GetAccountBillingCheckoutSessionRequest:
