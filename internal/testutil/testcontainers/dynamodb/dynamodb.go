@@ -7,7 +7,6 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/service/dynamodb"
 	dyntypes "github.com/aws/aws-sdk-go-v2/service/dynamodb/types"
-	"github.com/docker/go-connections/nat"
 	"github.com/testcontainers/testcontainers-go"
 	"github.com/testcontainers/testcontainers-go/wait"
 	mgmtv1alpha1 "github.com/vydon-io/vydon/backend/gen/go/protos/mgmt/v1alpha1"
@@ -130,11 +129,11 @@ func (d *DynamoDBTestContainer) Setup(
 	ctx context.Context,
 	t *testing.T,
 ) (*DynamoDBTestContainer, error) {
-	port := nat.Port("8000/tcp")
+	const port = "8000/tcp"
 	container, err := testcontainers.GenericContainer(ctx, testcontainers.GenericContainerRequest{
 		ContainerRequest: testcontainers.ContainerRequest{
 			Image:        "amazon/dynamodb-local:2.5.2",
-			ExposedPorts: []string{string(port)},
+			ExposedPorts: []string{port},
 			WaitingFor:   wait.ForListeningPort(port),
 		},
 		Started: true,
@@ -152,7 +151,7 @@ func (d *DynamoDBTestContainer) Setup(
 		return nil, err
 	}
 
-	endpoint := fmt.Sprintf("http://%s:%d", host, mappedport.Int())
+	endpoint := fmt.Sprintf("http://%s:%d", host, mappedport.Range().Start())
 
 	awscfg, err := awsmanager.GetAwsConfig(ctx, &awsmanager.AwsCredentialsConfig{
 		Endpoint: endpoint,
