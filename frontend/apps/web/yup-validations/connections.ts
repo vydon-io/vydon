@@ -361,7 +361,8 @@ interface MssqlCreateConnectionFormContext extends CreateConnectionFormContext {
   activeTab: ActiveConnectionTab;
 }
 
-interface PostgresCreateConnectionFormContext extends CreateConnectionFormContext {
+interface PostgresCreateConnectionFormContext
+  extends CreateConnectionFormContext {
   activeTab: ActiveConnectionTab;
 }
 

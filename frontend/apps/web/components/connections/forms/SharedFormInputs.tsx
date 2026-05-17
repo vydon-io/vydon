@@ -181,7 +181,8 @@ export function SqlConnectionOptions(
   );
 }
 
-interface ClientTlsAccordionProps extends SecretRevealProps<ClientTlsFormValues> {
+interface ClientTlsAccordionProps
+  extends SecretRevealProps<ClientTlsFormValues> {
   value: ClientTlsFormValues;
   onChange(value: ClientTlsFormValues): void;
   errors: Record<string, string>;
@@ -303,7 +304,8 @@ function ClientTls(props: ClientTlsProps): ReactElement {
   );
 }
 
-interface SshTunnelAccordionProps extends SecretRevealProps<SshTunnelFormValues> {
+interface SshTunnelAccordionProps
+  extends SecretRevealProps<SshTunnelFormValues> {
   value: SshTunnelFormValues;
   onChange(value: SshTunnelFormValues): void;
   errors: Record<string, string>;
@@ -747,7 +749,8 @@ function AwsAdvancedConfig(props: AwsAdvancedConfigProps): ReactElement {
   );
 }
 
-interface AwsCredentialsFormAccordionProps extends SecretRevealProps<AwsCredentialsFormValues> {
+interface AwsCredentialsFormAccordionProps
+  extends SecretRevealProps<AwsCredentialsFormValues> {
   value: AwsCredentialsFormValues;
   onChange(value: AwsCredentialsFormValues): void;
   errors: Record<string, string>;
@@ -768,7 +771,8 @@ export function AwsCredentialsFormAccordion(
   );
 }
 
-interface AwsCredentialsFormProps extends SecretRevealProps<AwsCredentialsFormValues> {
+interface AwsCredentialsFormProps
+  extends SecretRevealProps<AwsCredentialsFormValues> {
   value: AwsCredentialsFormValues;
   onChange(value: AwsCredentialsFormValues): void;
   errors: Record<string, string>;
