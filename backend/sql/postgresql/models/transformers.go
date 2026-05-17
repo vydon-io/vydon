@@ -411,7 +411,7 @@ func (t *TransformerConfig) FromTransformerConfigDto(tr *mgmtv1alpha1.Transforme
 		}
 		t.TransformPiiText = string(bits)
 	default:
-		t = &TransformerConfig{}
+		*t = TransformerConfig{}
 	}
 
 	return nil
