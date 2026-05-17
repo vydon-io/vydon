@@ -11,7 +11,8 @@ import { create } from 'zustand';
 import FormHeader from '../../../jobs/[id]/hooks/components/FormHeader';
 import SelectAccountRole from './SelectAccountRole';
 
-interface UpdateMemberRoleFormStore extends BaseHookStore<UpdateMemberRoleFormValues> {}
+interface UpdateMemberRoleFormStore
+  extends BaseHookStore<UpdateMemberRoleFormValues> {}
 
 function getInitialFormState(): UpdateMemberRoleFormValues {
   return {
