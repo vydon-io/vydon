@@ -11,9 +11,14 @@ paths-ignore:
   - "**/node_modules/**"
   - "**/python/src/vydon/mgmt/**"
   - "**/dist/**"
+  - "**/charts/**/values.yaml"
 
 query-filters:
   - exclude:
       id: js/clear-text-storage-of-sensitive-data
   - exclude:
       id: js/xss-through-dom
+  # Helm values.yaml uses empty placeholder fields by convention; operators
+  # set real values via -f overrides or external-secret integrations.
+  - exclude:
+      id: js/empty-password-in-configuration-file
