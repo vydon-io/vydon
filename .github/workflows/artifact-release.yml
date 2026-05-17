@@ -26,13 +26,13 @@ jobs:
       attestations: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Calculate Next Pre-release version
         id: next_pre_version
         if: github.ref == 'refs/heads/main'
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${major}.${minor}.${patch}-pre.${increment}"
 
@@ -47,7 +47,7 @@ jobs:
       - name: Calculate Next Pre-release version (develop)
         id: next_pre_version_develop
         if: startsWith(github.ref, 'refs/heads/develop/v')
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${{ steps.extract_version.outputs.VERSION }}.0-dev.${increment}"
 
@@ -57,7 +57,7 @@ jobs:
 
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
         with:
           # list of Docker images to use as base name for tags
           images: |
@@ -74,18 +74,18 @@ jobs:
             type=raw,value=${{ steps.next_pre_version_develop.outputs.version }},enable=${{ startsWith(github.ref, 'refs/heads/develop/v') }}
 
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Depot CLI
-        uses: depot/setup-action@v1
+        uses: depot/setup-action@15c09a5f77a0840ad4bce955686522a257853461 # v1
 
       - name: Build and push
         id: build
-        uses: depot/build-push-action@v1
+        uses: depot/build-push-action@5f3b3c2e5a00f0093de47f657aeaefcedff27d18 # v1
         with:
           context: .
           file: docker/Dockerfile.backend
@@ -100,7 +100,7 @@ jobs:
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@v3.7.0
+        uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
         with:
           cosign-release: v2.4.1
 
@@ -118,7 +118,7 @@ jobs:
 
       - name: Generate SBOM
         if: github.event_name != 'pull_request'
-        uses: anchore/sbom-action@v0
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
         with:
           image: ghcr.io/vydon-io/vydon/api@${{ steps.build.outputs.digest }}
           format: spdx-json
@@ -127,7 +127,7 @@ jobs:
 
       - name: Attest build provenance
         if: github.event_name != 'pull_request'
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
         with:
           subject-name: ghcr.io/vydon-io/vydon/api
           subject-digest: ${{ steps.build.outputs.digest }}
@@ -135,7 +135,7 @@ jobs:
 
       - name: Attest SBOM
         if: github.event_name != 'pull_request'
-        uses: actions/attest-sbom@v2
+        uses: actions/attest-sbom@bd218ad0dbcb3e146bd073d1d9c6d78e08aa8a0b # v2
         with:
           subject-name: ghcr.io/vydon-io/vydon/api
           subject-digest: ${{ steps.build.outputs.digest }}
@@ -152,13 +152,13 @@ jobs:
       attestations: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Calculate Next Pre-release version
         id: next_pre_version
         if: github.ref == 'refs/heads/main'
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${major}.${minor}.${patch}-pre.${increment}"
       - name: Extract develop version
@@ -172,12 +172,12 @@ jobs:
       - name: Calculate Next Pre-release version (develop)
         id: next_pre_version_develop
         if: startsWith(github.ref, 'refs/heads/develop/v')
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${{ steps.extract_version.outputs.VERSION }}.0-dev.${increment}"
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
         with:
           # list of Docker images to use as base name for tags
           images: |
@@ -193,18 +193,18 @@ jobs:
             type=raw,value=${{ steps.next_pre_version.outputs.version }},enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
             type=raw,value=${{ steps.next_pre_version_develop.outputs.version }},enable=${{ startsWith(github.ref, 'refs/heads/develop/v') }}
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Depot CLI
-        uses: depot/setup-action@v1
+        uses: depot/setup-action@15c09a5f77a0840ad4bce955686522a257853461 # v1
 
       - name: Build and push
         id: build
-        uses: depot/build-push-action@v1
+        uses: depot/build-push-action@5f3b3c2e5a00f0093de47f657aeaefcedff27d18 # v1
         with:
           file: docker/Dockerfile.frontend
           context: frontend
@@ -215,7 +215,7 @@ jobs:
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@v3.7.0
+        uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
         with:
           cosign-release: v2.4.1
 
@@ -233,7 +233,7 @@ jobs:
 
       - name: Generate SBOM
         if: github.event_name != 'pull_request'
-        uses: anchore/sbom-action@v0
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
         with:
           image: ghcr.io/vydon-io/vydon/app@${{ steps.build.outputs.digest }}
           format: spdx-json
@@ -242,7 +242,7 @@ jobs:
 
       - name: Attest build provenance
         if: github.event_name != 'pull_request'
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
         with:
           subject-name: ghcr.io/vydon-io/vydon/app
           subject-digest: ${{ steps.build.outputs.digest }}
@@ -250,7 +250,7 @@ jobs:
 
       - name: Attest SBOM
         if: github.event_name != 'pull_request'
-        uses: actions/attest-sbom@v2
+        uses: actions/attest-sbom@bd218ad0dbcb3e146bd073d1d9c6d78e08aa8a0b # v2
         with:
           subject-name: ghcr.io/vydon-io/vydon/app
           subject-digest: ${{ steps.build.outputs.digest }}
@@ -267,13 +267,13 @@ jobs:
       attestations: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Calculate Next Pre-release version
         id: next_pre_version
         if: github.ref == 'refs/heads/main'
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${major}.${minor}.${patch}-pre.${increment}"
       - name: Extract develop version
@@ -287,12 +287,12 @@ jobs:
       - name: Calculate Next Pre-release version (develop)
         id: next_pre_version_develop
         if: startsWith(github.ref, 'refs/heads/develop/v')
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${{ steps.extract_version.outputs.VERSION }}.0-dev.${increment}"
       - name: Docker meta
         id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051 # v5
         with:
           # list of Docker images to use as base name for tags
           images: |
@@ -308,18 +308,18 @@ jobs:
             type=raw,value=${{ steps.next_pre_version.outputs.version }},enable=${{ github.ref == format('refs/heads/{0}', 'main') }}
             type=raw,value=${{ steps.next_pre_version_develop.outputs.version }},enable=${{ startsWith(github.ref, 'refs/heads/develop/v') }}
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Set up Depot CLI
-        uses: depot/setup-action@v1
+        uses: depot/setup-action@15c09a5f77a0840ad4bce955686522a257853461 # v1
 
       - name: Build and push
         id: build
-        uses: depot/build-push-action@v1
+        uses: depot/build-push-action@5f3b3c2e5a00f0093de47f657aeaefcedff27d18 # v1
         with:
           context: .
           file: docker/Dockerfile.worker
@@ -330,7 +330,7 @@ jobs:
 
       - name: Install cosign
         if: github.event_name != 'pull_request'
-        uses: sigstore/cosign-installer@v3.7.0
+        uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
         with:
           cosign-release: v2.4.1
 
@@ -348,7 +348,7 @@ jobs:
 
       - name: Generate SBOM
         if: github.event_name != 'pull_request'
-        uses: anchore/sbom-action@v0
+        uses: anchore/sbom-action@e22c389904149dbc22b58101806040fa8d37a610 # v0
         with:
           image: ghcr.io/vydon-io/vydon/worker@${{ steps.build.outputs.digest }}
           format: spdx-json
@@ -357,7 +357,7 @@ jobs:
 
       - name: Attest build provenance
         if: github.event_name != 'pull_request'
-        uses: actions/attest-build-provenance@v2
+        uses: actions/attest-build-provenance@e8998f949152b193b063cb0ec769d69d929409be # v2
         with:
           subject-name: ghcr.io/vydon-io/vydon/worker
           subject-digest: ${{ steps.build.outputs.digest }}
@@ -365,7 +365,7 @@ jobs:
 
       - name: Attest SBOM
         if: github.event_name != 'pull_request'
-        uses: actions/attest-sbom@v2
+        uses: actions/attest-sbom@bd218ad0dbcb3e146bd073d1d9c6d78e08aa8a0b # v2
         with:
           subject-name: ghcr.io/vydon-io/vydon/worker
           subject-digest: ${{ steps.build.outputs.digest }}
@@ -383,13 +383,13 @@ jobs:
       packages: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Calculate Next Pre-release version
         id: next_pre_version
         if: github.ref == 'refs/heads/main'
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${major}.${minor}.${patch}-pre.${increment}"
       - name: Extract develop version
@@ -403,7 +403,7 @@ jobs:
       - name: Calculate Next Pre-release version (develop)
         id: next_pre_version_develop
         if: startsWith(github.ref, 'refs/heads/develop/v')
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${{ steps.extract_version.outputs.VERSION }}.0-dev.${increment}"
 
@@ -429,7 +429,7 @@ jobs:
           fi
 
       - name: Setup Chart.yaml
-        uses: mikefarah/yq@v4.53.2
+        uses: mikefarah/yq@751d8ad57b84f1794661bc70c0afb92a22ad7b3c # v4.53.2
         with:
           cmd: |
             # Recursively finds all Chart.yaml files and sets their version and appVersion to the github ref
@@ -449,7 +449,7 @@ jobs:
             done
 
       - name: Install Helm
-        uses: azure/setup-helm@v5
+        uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # v5
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -492,7 +492,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3.7.0
+        uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
         with:
           cosign-release: v2.4.1
 
@@ -519,13 +519,13 @@ jobs:
       packages: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Calculate Next Pre-release version
         id: next_pre_version
         if: github.ref == 'refs/heads/main'
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${major}.${minor}.${patch}-pre.${increment}"
       - name: Extract develop version
@@ -539,7 +539,7 @@ jobs:
       - name: Calculate Next Pre-release version (develop)
         id: next_pre_version_develop
         if: startsWith(github.ref, 'refs/heads/develop/v')
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${{ steps.extract_version.outputs.VERSION }}.0-dev.${increment}"
 
@@ -565,7 +565,7 @@ jobs:
           fi
 
       - name: Setup Chart.yaml
-        uses: mikefarah/yq@v4.53.2
+        uses: mikefarah/yq@751d8ad57b84f1794661bc70c0afb92a22ad7b3c # v4.53.2
         with:
           cmd: |
             # Recursively finds all Chart.yaml files and sets their version and appVersion to the github ref
@@ -585,7 +585,7 @@ jobs:
             done
 
       - name: Install Helm
-        uses: azure/setup-helm@v5
+        uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # v5
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -628,7 +628,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3.7.0
+        uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
         with:
           cosign-release: v2.4.1
 
@@ -655,13 +655,13 @@ jobs:
       packages: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Calculate Next Pre-release version
         id: next_pre_version
         if: github.ref == 'refs/heads/main'
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${major}.${minor}.${patch}-pre.${increment}"
 
@@ -676,7 +676,7 @@ jobs:
       - name: Calculate Next Pre-release version (develop)
         id: next_pre_version_develop
         if: startsWith(github.ref, 'refs/heads/develop/v')
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${{ steps.extract_version.outputs.VERSION }}.0-dev.${increment}"
 
@@ -702,7 +702,7 @@ jobs:
           fi
 
       - name: Setup Chart.yaml
-        uses: mikefarah/yq@v4.53.2
+        uses: mikefarah/yq@751d8ad57b84f1794661bc70c0afb92a22ad7b3c # v4.53.2
         with:
           cmd: |
             # Recursively finds all Chart.yaml files and sets their version and appVersion to the github ref
@@ -722,7 +722,7 @@ jobs:
             done
 
       - name: Install Helm
-        uses: azure/setup-helm@v5
+        uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # v5
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -765,7 +765,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3.7.0
+        uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
         with:
           cosign-release: v2.4.1
 
@@ -794,13 +794,13 @@ jobs:
       packages: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
       - name: Calculate Next Pre-release version
         id: next_pre_version
         if: github.ref == 'refs/heads/main'
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${major}.${minor}.${patch}-pre.${increment}"
 
@@ -815,7 +815,7 @@ jobs:
       - name: Calculate Next Pre-release version (develop)
         id: next_pre_version_develop
         if: startsWith(github.ref, 'refs/heads/develop/v')
-        uses: paulhatch/semantic-version@v5.4.0
+        uses: paulhatch/semantic-version@a8f8f59fd7f0625188492e945240f12d7ad2dca3 # v5.4.0
         with:
           version_format: "${{ steps.extract_version.outputs.VERSION }}.0-dev.${increment}"
 
@@ -841,7 +841,7 @@ jobs:
           fi
 
       - name: Setup Chart.yaml
-        uses: mikefarah/yq@v4.53.2
+        uses: mikefarah/yq@751d8ad57b84f1794661bc70c0afb92a22ad7b3c # v4.53.2
         with:
           cmd: |
             # Recursively finds all Chart.yaml files and sets their version and appVersion to the github ref
@@ -862,7 +862,7 @@ jobs:
             done
 
       - name: Install Helm
-        uses: azure/setup-helm@v5
+        uses: azure/setup-helm@dda3372f752e03dde6b3237bc9431cdc2f7a02a2 # v5
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -905,7 +905,7 @@ jobs:
           } >> "$GITHUB_OUTPUT"
 
       - name: Install cosign
-        uses: sigstore/cosign-installer@v3.7.0
+        uses: sigstore/cosign-installer@dc72c7d5c4d10cd6bcb8cf6e3fd625a9e5e537da # v3.7.0
         with:
           cosign-release: v2.4.1
 
@@ -931,26 +931,26 @@ jobs:
         working-directory: cli
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
         with:
           fetch-depth: 0
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version-file: go.mod
           cache-dependency-path: go.sum
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@c7c53464625b32c7a7e944ae62b3e17d2b600130 # v3
         with:
           platforms: linux/arm64
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
+        uses: docker/setup-buildx-action@4d04d5d9486b7bd6fa91e7baf45bbb4f8b9deedd # v4
 
       - name: Login to GHCR
-        uses: docker/login-action@v3
+        uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9 # v3
         with:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
@@ -967,7 +967,7 @@ jobs:
           passphrase: ${{ secrets.GPG_PRIVATE_KEY_PASSPHRASE }}
 
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
+        uses: goreleaser/goreleaser-action@e435ccd777264be153ace6237001ef4d979d3a7a # v6
         with:
           distribution: goreleaser
           version: latest
@@ -990,7 +990,7 @@ jobs:
         working-directory: python
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Setup Package Version
         id: package_version
@@ -1002,7 +1002,7 @@ jobs:
           echo "PACKAGE_VERSION=$TRIMMED_VERSION" >> $GITHUB_OUTPUT
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
         with:
           python-version: "3.11"
       - name: Build SDK
@@ -1011,7 +1011,7 @@ jobs:
           python -m build
         env:
           SETUPTOOLS_SCM_PRETEND_VERSION: ${{ steps.package_version.outputs.PACKAGE_VERSION }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: py-package
           path: python/dist/
@@ -1025,7 +1025,7 @@ jobs:
       id-token: write
     steps:
       - name: Retrieve release distributions
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: py-package
           path: python/dist/
@@ -1048,20 +1048,20 @@ jobs:
         working-directory: frontend
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Install jq
         run: sudo apt-get install jq
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           registry-url: "https://registry.npmjs.org"
           scope: "@vydon"
 
       - name: Cache node modules
         id: cache-npm
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: |

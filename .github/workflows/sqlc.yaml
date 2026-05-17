@@ -12,14 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Retrieve SQLC Version
         run: |
           VER=$(cat SQLC_VERSION)
           echo "SQLC_VERSION=$VER" >> $GITHUB_ENV
 
-      - uses: sqlc-dev/setup-sqlc@v4
+      - uses: sqlc-dev/setup-sqlc@c0209b9199cd1cce6a14fc27cabcec491b651761 # v4
         with:
           sqlc-version: ${{ env.SQLC_VERSION }}
 
@@ -42,15 +42,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
 
       - name: Patch sqlc.yaml with db-prepare lint
-        uses: mikefarah/yq@v4.53.2
+        uses: mikefarah/yq@751d8ad57b84f1794661bc70c0afb92a22ad7b3c # v4.53.2
         with:
           cmd: sh ./backend/scripts/sqlc-prepare-patch.sh postgresql://postgres:postgres@localhost:5432/vydon ./sqlc.yaml
 
       - name: Set up Go
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
           go-version-file: go.mod
           cache-dependency-path: go.sum
@@ -68,7 +68,7 @@ jobs:
           VER=$(cat SQLC_VERSION)
           echo "SQLC_VERSION=$VER" >> $GITHUB_ENV
 
-      - uses: sqlc-dev/setup-sqlc@v4
+      - uses: sqlc-dev/setup-sqlc@c0209b9199cd1cce6a14fc27cabcec491b651761 # v4
         with:
           sqlc-version: ${{ env.SQLC_VERSION }}
 
