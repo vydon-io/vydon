@@ -4,6 +4,10 @@ on:
       - docs/**
 
 name: Docs
+
+permissions:
+  contents: read
+
 jobs:
   knip:
     name: Knip

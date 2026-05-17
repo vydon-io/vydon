@@ -6,6 +6,10 @@ on:
       - SQLC_VERSION
 
 name: SQLC
+
+permissions:
+  contents: read
+
 jobs:
   sqlcdiff:
     name: sqlc-diff

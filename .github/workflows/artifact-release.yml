@@ -15,6 +15,9 @@ on:
       - charts/**
       - docker/**
 
+permissions:
+  contents: read
+
 jobs:
   docker-backend:
     name: Backend Docker Image

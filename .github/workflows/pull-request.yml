@@ -10,6 +10,10 @@ on:
       - reopened
       - labeled
       - unlabeled
+
+permissions:
+  contents: read
+
 jobs:
   check_labels:
     runs-on: ubuntu-latest

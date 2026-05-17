@@ -4,6 +4,10 @@ on:
   push:
     tags:
       - "devcontainer/v*.*.*"
+
+permissions:
+  contents: read
+
 jobs:
   devcontainer-build-and-push:
     runs-on: ubuntu-latest

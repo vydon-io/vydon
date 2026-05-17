@@ -21,6 +21,10 @@ on:
       - go.sum
 
 name: Go
+
+permissions:
+  contents: read
+
 jobs:
   golangci:
     name: golang-lint

@@ -7,6 +7,10 @@ on:
       - frontend/apps/web/charts/**
 
 name: Helm
+
+permissions:
+  contents: read
+
 jobs:
   lint:
     name: Check Helm Readmes
