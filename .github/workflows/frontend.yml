@@ -4,6 +4,10 @@ on:
       - frontend/**
 
 name: Frontend
+
+permissions:
+  contents: read
+
 jobs:
   knip:
     name: Knip
