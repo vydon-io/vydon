@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"strings"
 	"testing"
 	"time"
 
@@ -172,13 +171,8 @@ func (s *VydonApiTestClient) Setup(ctx context.Context, t testing.TB) error {
 
 	s.httpsrv = startHTTPServer(t, rootmux)
 	rootmux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		sanitized := strings.Map(func(ch rune) rune {
-			if ch == '\n' || ch == '\r' || ch < 0x20 || ch == 0x7f {
-				return -1
-			}
-			return ch
-		}, r.URL.Path)
-		t.Logf("404 for URL: %s\n", sanitized)
+		// Log only metadata; never echo r.URL.Path (CodeQL go/log-injection).
+		t.Logf("404 path-length=%d method=%s\n", len(r.URL.Path), r.Method)
 		http.NotFound(w, r)
 	})
 
