@@ -42,8 +42,9 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and release devcontainer Multi-Platform
+        # Pin npm-installed CLI version for Scorecard PinnedDependencies.
         run: |
-          npm install -g @devcontainers/cli
+          npm install -g '@devcontainers/cli@0.84.0'
           devcontainer build \
             --workspace-folder .github \
             --image-name ghcr.io/${{ github.repository }}/devcontainer:${{ steps.meta.outputs.tag }} \

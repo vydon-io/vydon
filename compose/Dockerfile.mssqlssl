@@ -3,7 +3,7 @@
 # so files cannot be copied in permissions updated after the fact
 # Postgres and Mysql don't have this issue so we are able to chown without problem
 
-FROM mcr.microsoft.com/mssql/server:2022-latest
+FROM mcr.microsoft.com/mssql/server:2022-latest@sha256:d01cc45e6b920eff17abc60295b8748821e09b678f0fcf54959ef37406b80203
 
 USER root
 RUN mkdir -p /etc/ssl/private && \

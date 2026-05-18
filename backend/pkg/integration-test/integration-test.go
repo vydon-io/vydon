@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
-	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -172,7 +172,13 @@ func (s *VydonApiTestClient) Setup(ctx context.Context, t testing.TB) error {
 
 	s.httpsrv = startHTTPServer(t, rootmux)
 	rootmux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		t.Logf("404 for URL: %s\n", strconv.Quote(r.URL.Path))
+		sanitized := strings.Map(func(ch rune) rune {
+			if ch == '\n' || ch == '\r' || ch < 0x20 || ch == 0x7f {
+				return -1
+			}
+			return ch
+		}, r.URL.Path)
+		t.Logf("404 for URL: %s\n", sanitized)
 		http.NotFound(w, r)
 	})
 

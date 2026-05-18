@@ -264,7 +264,8 @@ jobs:
           cache-dependency-path: go.sum
 
       - name: Install benchstat
-        run: go install golang.org/x/perf/cmd/benchstat@latest
+        # Pinned by commit SHA to satisfy Scorecard PinnedDependencies.
+        run: go install golang.org/x/perf/cmd/benchstat@3cf34090a3db6bb64df2259e30021db7ff5d9595
 
       - name: Restore benchmark cache
         id: cache-restore
