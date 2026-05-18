@@ -20,10 +20,7 @@ Open Source Data Anonymization and Synthetic Data Orchestration
 <div align='center'>
  | <a href="https://vydon.io">Website</a>
  | <a href="https://docs.vydon.io">Docs</a>
- | <a href="https://discord.com/invite/MFAMgnp4HF">Discord</a>
- | <a href="https://vydon.io/blog">Blog</a>
  | <a href="https://docs.vydon.io/changelog">Changelog</a>
- | <a href="https://vydon-io.productlane.com/roadmap">Roadmap</a>
 </div>
 
  <br>
@@ -140,14 +137,11 @@ For more in-depth details on environment variables, Kubernetes deployments, and 
 Some resources to help you along the way:
 
 - [Docs](https://docs.vydon.io) for comprehensive documentation and guides
-- [Discord](https://discord.com/invite/MFAMgnp4HF) for discussion with the community and Vydon team
-- [X](https://x.com/vydon) for the latest updates
 
 ## Contributing
 
 We love contributions big and small. Here are just a few ways that you can contribute to Vydon.
 
-- Join our [Discord](https://discord.com/invite/MFAMgnp4HF) channel and ask us any questions there
 - Open a PR (see our instructions on [developing with Vydon locally](https://docs.vydon.io/guides/vydon-local-dev))
 - Submit a [feature request](https://github.com/vydon-io/vydon/issues/new?assignees=&labels=enhancement%2C+feature&template=feature_request.md) or [bug report](https://github.com/vydon-io/vydon/issues/new?assignees=&labels=bug&template=bug_report.md)
 
