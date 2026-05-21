@@ -1034,7 +1034,7 @@ jobs:
           name: py-package
           path: python/dist/
       - name: Publish release distributions to PyPi
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@6733eb7d741f0b11ec6a39b58540dab7590f9b7d # v1.14.0
         with:
           packages-dir: python/dist/
           attestations: true
