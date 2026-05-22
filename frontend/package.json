@@ -15,7 +15,7 @@
     "knip:production": "knip --production --strict"
   },
   "devDependencies": {
-    "knip": "^5.88.1",
+    "knip": "^6.14.2",
     "prettier": "^3.8.3",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
