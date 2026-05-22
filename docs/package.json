@@ -45,7 +45,7 @@
     "@redocly/cli": "^2.30.6",
     "@tsconfig/docusaurus": "^2.0.9",
     "cspell": "^10.0.0",
-    "knip": "^5.53.0",
+    "knip": "^6.14.2",
     "postcss-import": "^16.1.1",
     "postcss-nesting": "^13.0.2",
     "prettier": "^3.5.3",
