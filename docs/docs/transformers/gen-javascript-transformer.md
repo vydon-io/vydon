@@ -973,13 +973,11 @@ Generates IPv4 or IPv6 addresses with support for different network classes.
 **Example**
 
 ```javascript
-
 const newValue = vydon.generateIpAddress({
-	maxLength: 100000,
-	ipType: string(IpV4_Public),
-	seed: 1, 
+  maxLength: 100000,
+  ipType: 'IpV4_Public',
+  seed: 1,
 });
-
 ```
 <br/>
 

@@ -33,7 +33,7 @@ Vydon ships with 40+ System Transformers to give you an easy way to get started 
 | [Generate Javascript](/transformers/system#generate-javascript)                   | any     | Executes provided javascript code in the transformer for every row                                                                                                                            |
 | [Generate Int64 Phone Number](/transformers/system#generate-int64-phone-number)   | int64   | Generates a new phone number of type int64 with a default length of 10.                                                                                                                       |
 | [Generate Random Int64](/transformers/system#generate-int64)                      | int64   | Generates a random integer value with a default length of 4 unless the Integer Length or Preserve Length parameters are defined.                                                              |
-| [Generate Last Name](/transformers/system#generate-last-name)                     | int64   | Generates a random last name.                                                                                                                                                                 |
+| [Generate Last Name](/transformers/system#generate-last-name)                     | string  | Generates a random last name.                                                                                                                                                                 |
 | [Generate SHA256 Hash](/transformers/system#generate-sha256hash)                  | string  | SHA256 hashes a randomly generated value.                                                                                                                                                     |
 | [Generate SSN](/transformers/system#generate-ssn)                                 | string  | Generates a completely random social security numbers including the hyphens in the format `xxx-xx-xxxx`.                                                                                      |
 | [Generate State](/transformers/system#generate-state)                             | string  | Randomly selects a US state and returns the two-character state code.                                                                                                                         |
@@ -347,11 +347,11 @@ There are no configurations for this transformer.
 
 **Examples**
 
-| Example Output                                                    |
-| ----------------------------------------------------------------- |
-| 1b836d86806e16bd45164b9d665ce86dac9d9d55bf79d0e771265da9fbf950d1  |
-| c74f07e35232c844a6639fef0c82ad093351cfa1a1b458fd2afc44cc19211508C |
-| 18dd7ce288e5538fbdd9c736aa9951ddb317e42c0b928e2b4db672414a82f811  |
+| Example Output                                                   |
+| ---------------------------------------------------------------- |
+| 1b836d86806e16bd45164b9d665ce86dac9d9d55bf79d0e771265da9fbf950d1 |
+| c74f07e35232c844a6639fef0c82ad093351cfa1a1b458fd2afc44cc192115d8 |
+| 18dd7ce288e5538fbdd9c736aa9951ddb317e42c0b928e2b4db672414a82f811 |
 
 ### Generate SSN\{#generate-ssn}
 
@@ -451,7 +451,7 @@ Randomly generates a Unix timestamp that is in the past.
 
 There are no configurations for this transformer.
 
-**Examples**=
+**Examples**
 
 | Example Output |
 | -------------- |
@@ -624,7 +624,7 @@ Anonymizes and transforms an existing full name.
 
 Anonymizes and transforms an existing int64 phone number.
 
-**#Configurations**
+**Configurations**
 
 | Name           | Description                                                                                            | Default | Example Input | Example Output |
 | -------------- | ------------------------------------------------------------------------------------------------------ | ------- | ------------- | -------------- |
@@ -772,7 +772,17 @@ There are no configurations for this transformer at this time.
 
 ### Passthrough\{#passthrough}
 
-Passes the input data out to the output without making any modifications to it. This is useful in many circumstances but cautious of accidentally leaking sensitive data through this transformer.
+Passes the input data through to the output without modification. Useful when you want to keep a column verbatim, but be careful about leaking sensitive data through this transformer.
+
+**Configurations**
+
+There are no configurations for this transformer.
+
+**Examples**
+
+| Example Input | Example Output |
+| ------------- | -------------- |
+| any value     | (unchanged)    |
 
 ### Null\{#generate-null}
 

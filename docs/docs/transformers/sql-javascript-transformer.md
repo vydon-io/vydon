@@ -119,7 +119,7 @@ This guide provides a comprehensive overview of SQL to JavaScript type mappings 
 | smalldatetime    | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
 | datetimeoffset   | vydon.VydonDateTime | [VydonDateTime](/transformers/vydon-types#vydondatetime) |
 | binary           | vydon.Binary        | [Binary type](/transformers/vydon-types#binary)          |
-| varbinary        | vydon.Bits          | [Bits type](/transformers/vydon-types#bits)              |
+| varbinary        | vydon.Binary        | [Binary type](/transformers/vydon-types#binary)          |
 | char             | string              | "CHAR"                                                   |
 | varchar          | string              | "VARCHAR"                                                |
 | varchar(max)     | string              | "VARCHAR(MAX)"                                           |
@@ -310,20 +310,22 @@ console.log(stars); // "*****"
 ```
 
 **Padding Strings**:
-`javascript
-    var number = "42";
-    var paddedNumber = number.padStart(5, "0");
-    console.log(paddedNumber);  // "00042"
-    `
+
+```javascript
+var number = '42';
+var paddedNumber = number.padStart(5, '0');
+console.log(paddedNumber); // "00042"
+```
 
 **Extracting Characters**:
-`javascript
-    var text = "Hello";
-    var firstChar = text.charAt(0);
-    var lastChar = text.charAt(text.length - 1);
-    console.log(firstChar);  // "H"
-    console.log(lastChar);   // "o"
-    `
+
+```javascript
+var text = 'Hello';
+var firstChar = text.charAt(0);
+var lastChar = text.charAt(text.length - 1);
+console.log(firstChar); // "H"
+console.log(lastChar); // "o"
+```
 
 ## Manipulating Objects
 
@@ -401,5 +403,3 @@ let hasApple = fruits.includes('apple');
 let bananaIndex = fruits.indexOf('banana');
 let fruit = fruits.find((f) => f.startsWith('o'));
 ```
-
-\*\*
