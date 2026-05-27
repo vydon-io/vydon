@@ -11,10 +11,6 @@ slug: /guides/account-hooks
 
 Account Hooks are a way to add further customization to your Vydon account.
 
-## Availability
-
-Account Hooks were previously gated behind the enterprise build. The implementation has been removed from the OSS codebase as part of the MIT compliance work and will be reimplemented natively in a future release. This guide is kept as the target specification.
-
 ## How to configure Account Hooks
 
 This section will cover how to configure hooks in the Vydon UI.

@@ -47,10 +47,18 @@ kubectl logs -n vydon deployment/vydon-worker -f
 
 ### Vydon UI
 
-> **Note:** in-UI pod log surfacing was previously gated behind the enterprise build. It has been removed from the OSS codebase as part of the MIT compliance work and will be reimplemented natively in a future release.
+The API can surface pod logs directly in the Vydon job-run view when
+`RUN_LOGS_ENABLED=true` and either a Kubernetes pod-log config or a
+Loki config is supplied. See [api env vars](../deploy/environment-variables.md#backend-api)
+for the full list of `RUN_LOGS_*` settings.
 
 ## Persistence with Loki
 
-> **Note:** the previous Loki integration was gated behind the enterprise build and has been removed from the OSS codebase. Until a native OSS Loki path is reimplemented, you can still ship worker logs to Loki out-of-band (Promtail, Vector, the Docker logging driver, etc.) and browse them in Grafana.
+Vydon ships a first-class Loki integration. Point the API at a Loki
+endpoint via the `RUN_LOGS_LOKICONFIG_*` env vars (URL, optional
+tenant ID, optional credentials) and the job-run view will query
+historical logs from Loki instead of the live pod. The same env vars
+also drive any retention or label scoping you may need.
 
-For the current set of `RUN_LOGS_*` environment variables exposed by the API, see [api env vars](../deploy/environment-variables.md#backend-api).
+Shipping logs into Loki itself remains your choice — Promtail, Vector,
+or the Docker logging driver all work.

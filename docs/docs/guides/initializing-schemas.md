@@ -14,8 +14,6 @@ Vydon has the ability to initialize your database schema prior to running a sync
 
 Postgres, MySQL, and MS SQL Server are supported.
 
-> MS SQL Server requires an Enterprise License for OSS users.
-
 ## Option 1: Use Vydon's Initialize Schema Feature
 
 The simplest way to get started is to simply enable the feature in your job's configuration.

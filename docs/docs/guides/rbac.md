@@ -12,7 +12,13 @@ RBAC (Role-Based Access Control) is a system that allows you to manage user perm
 
 ## Availability
 
-RBAC was previously gated behind the enterprise build. The implementation has been removed from the OSS codebase as part of the MIT compliance work and will be reimplemented natively in a future release. This guide is kept as the target specification.
+The frontend Members and Invite surfaces ship in the OSS codebase and
+the Casbin role schema is present in the Postgres migrations. The
+backend enforcement service that translates these into per-request
+permission checks is still being reimplemented as a native OSS module
+and is not yet wired up in the API. Until that lands, all authenticated
+accounts behave as Account Admin. This guide is kept as the target
+specification for the upcoming enforcement layer.
 
 ## How to configure RBAC
 
