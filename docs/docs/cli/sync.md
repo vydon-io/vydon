@@ -12,9 +12,8 @@ slug: /cli/sync
 
 Learn how to sync data to a local destination with the vydon sync CLI command.
 
-The `vydon sync` command is used to sync data from a vydon connection to a local destination.
-Supported sources are currently postgres, mysql connections and AWS S3 Sync Job.
-Supported are currently postgres and mysql.
+The `vydon sync` command is used to sync data from a Vydon connection to a local destination.
+Supported sources are currently Postgres, MySQL connections and AWS S3 sync jobs. Supported destinations are currently Postgres and MySQL.
 
 ## Usage
 
