@@ -315,6 +315,16 @@ const sidebars: SidebarsConfig = {
       label: 'Microsoft SQL Server',
     },
     {
+      type: 'doc',
+      id: 'connections/gcs',
+      label: 'Google Cloud Storage',
+    },
+    {
+      type: 'doc',
+      id: 'connections/openai',
+      label: 'OpenAI',
+    },
+    {
       type: 'html',
       value: '<div>Transformers</div>',
       className: 'sidebarcategory',
