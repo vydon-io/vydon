@@ -29,6 +29,7 @@ The following options can be passed using the `vydon sync` command:
 ### General Options
 
 - `--api-key` - Vydon API Key. Takes precedence over `$VYDON_API_KEY`
+- `--account-id` - Vydon account id the sync runs against. Defaults to the currently active account from `vydon accounts switch`.
 - `--config` - Path to yaml config. Defaults to `vydon.yaml` in current directory.
 - `--connection-id` - Vydon connection id for sync data source. Takes precedence over config.
 - `--job-id` - Vydon job id for sync data source. For [AWS S3, GCP Cloud Storage] jobs only. Takes precedence over config.

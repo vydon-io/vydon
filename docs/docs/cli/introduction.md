@@ -20,9 +20,11 @@ Usage:
   vydon [command]
 
 Available Commands:
+  accounts    Parent command for account (subcommands: list, switch)
   completion  Generate the autocompletion script for the specified shell
+  connections Parent command for connections (subcommands: list)
   help        Help about any command
-  jobs        Parent command for jobs
+  jobs        Parent command for jobs (subcommands: list, trigger)
   login       Login to Vydon
   sync        One off sync job to local resource
   version     Print the client version information
@@ -30,7 +32,8 @@ Available Commands:
 
 Flags:
       --api-key string   Vydon API Key. Takes precedence over $VYDON_API_KEY
-      --config string    config file (default is $HOME/.vydon/vydon.yaml)
+      --config string    config file (default is $HOME/.vydon/config.yaml)
+      --debug            Run in debug mode
   -h, --help             help for vydon
   -v, --version          version for vydon
 
@@ -48,6 +51,12 @@ Vydon API Key. Used if logging in via a system api key.
 ### `VYDON_API_URL`
 
 The url of the Vydon API to direct the request to.
+
+### `VYDON_CONFIG_DIR`
+
+Override the directory the CLI uses for its config file and stored
+credentials. Defaults to `$XDG_CONFIG_HOME/vydon` (or `$HOME/.vydon`
+when `XDG_CONFIG_HOME` is not set).
 
 ### Persisting CLI Environment Variables
 

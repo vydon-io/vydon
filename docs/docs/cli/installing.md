@@ -19,13 +19,18 @@ Homebrew is the simplest way to install vydon CLI on the Mac. This can also be u
 
 ### Homebrew
 
-The easiest way to install the CLI is by using Homebrew via our official tap. If you don't have Homebrew installed, follow these [instructions](https://docs.brew.sh/Installation). Next, open a new terminal window and use the following command:
+Once the project cuts its first tagged release, a Homebrew formula is
+published to the [vydon-io/homebrew-tap](https://github.com/vydon-io/homebrew-tap)
+repository. If you don't have Homebrew installed, follow these
+[instructions](https://docs.brew.sh/Installation). Then run:
 
 ```console
 brew install vydon-io/tap/vydon
 ```
 
-From then on, you can let Homebrew keep Vydon up to date by running the following command.
+If the tap install fails with `404`, no tagged release is published
+yet — fall back to the direct download or the Docker image below.
+Once installed, keep Vydon up to date with:
 
 ```console
 brew upgrade
@@ -33,7 +38,11 @@ brew upgrade
 
 ## MacOS/Linux Direct Download
 
-Navigate to Vydon [releases](https://github.com/vydon-io/vydon/releases) page of the CLI repository in the Vydon Github. From there you can choose which binary to download based on your machine's architecture.
+Navigate to the Vydon [releases](https://github.com/vydon-io/vydon/releases)
+page and pick the binary that matches your machine. If the releases
+page is empty, the project has not cut its first tagged release yet —
+build the CLI from source in the meantime with `make build/cli` from a
+clone of the repo.
 
 After you've downloaded and untarred the tarball, move it into your local bin to make it easy to run. If you're using Windows 10/11, see the Windows section below for more details.
 
@@ -108,7 +117,9 @@ Usage:
   vydon [command]
 
 Available Commands:
+  accounts    Parent command for account
   completion  Generate the autocompletion script for the specified shell
+  connections Parent command for connections
   help        Help about any command
   jobs        Parent command for jobs
   login       Login to Vydon
@@ -118,7 +129,8 @@ Available Commands:
 
 Flags:
       --api-key string   Vydon API Key. Takes precedence over $VYDON_API_KEY
-      --config string    config file (default is $HOME/.vydon/vydon.yaml)
+      --config string    config file (default is $HOME/.vydon/config.yaml)
+      --debug            Run in debug mode
   -h, --help             help for vydon
   -v, --version          version for vydon
 
