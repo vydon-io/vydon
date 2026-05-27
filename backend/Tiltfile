@@ -1,93 +1,31 @@
-load('ext://restart_process', 'docker_build_with_restart')
-load('ext://configmap', 'configmap_from_dict')
 load('ext://namespace', 'namespace_create')
 
 helpers = load_dynamic("../tilt/extensions/Tiltfile")
 helmfile_with_local_chart = helpers['helmfile_with_local_chart']
 helmfile = helpers['helmfile']
 
-allow_k8s_contexts('kind-vydon-dev')
+allow_k8s_contexts(['kind-vydon-dev', 'orbstack'])
 
 base_dir = os.path.dirname(__file__)
+repo_root = os.path.dirname(base_dir)
 
-# when debugging can be handy to disable scrub
 secret_settings(disable_scrub=True)
 
 namespace_create('vydon', allow_duplicates=True)
 
-local_resource(
-  'vydon-api-gen',
-  'scripts/gen.sh',
-  deps=[
-    'protos',
-    'buf.gen.yaml',
-    'buf.work.yaml',
-    'buf-es.gen.yaml',
-    'sql/postgresql/models',
-    'sql/postgresql/queries',
-  ],
-  labels=['build']
-)
-
-# Watches and rebuilds Go code
-local_resource(
-  'vydon-api-build',
-  'scripts/build.sh',
-  deps=['.'],
-  ignore=[
-    '.git',
-    'bin',
-    '.gitignore',
-    'protos',
-    '.vscode',
-    'README.md',
-    '.github',
-    'charts',
-    'Makefile',
-    'Dockerfile',
-    'buf.gen.yaml',
-    'buf.work.yaml',
-    'buf-es.gen.yaml',
-    'sql/postgresql/schema',
-  ],
-  labels=['build']
-)
-
 k8s_yaml(kustomize('./dev/yaml'))
-k8s_yaml(helmfile('./dev/helm/db', helmfileDir=base_dir+'/dev/helm/db'))
 k8s_resource('vydon-postgresql', labels=['db'], port_forwards=5432)
 
-# for namespace in [ "vydon" ]:
-#   k8s_yaml(configmap_from_dict("dev-config", namespace=namespace, inputs = {
-#       'AWS_ACCESS_KEY_ID'         : os.getenv('AWS_ACCESS_KEY_ID'),
-#       'AWS_SECRET_ACCESS_KEY'     : os.getenv('AWS_SECRET_ACCESS_KEY'),
-#       'AWS_SESSION_TOKEN'         : os.getenv('AWS_SESSION_TOKEN'),
-#       'AWS_SECURITY_TOKEN'        : os.getenv('AWS_SECURITY_TOKEN'),
-#       'AWS_REGION'                : os.getenv('AWS_REGION'),
-#       'CUST_INGRESS_DNS_ZONE_ID' : os.getenv('VYDON_DEV_DNS_ZONE_ID'),
-#       'CUST_INGRESS_HOSTNAME'     : str(os.getenv('VYDON_DEV_DOMAIN_PREFIX')) + '.vydon-io.dev',
-#       'EVENTS_QUEUE_URL' : os.getenv('VYDON_DEV_EVENTS_QUEUE_URL'),
-#       'NOTIFICATIONS_QUEUE_URL' : os.getenv('VYDON_DEV_NOTIFICATIONS_QUEUE_URL'),
-#       'EVENTS_TOPIC_ARN' : os.getenv('VYDON_DEV_EVENTS_TOPIC_ARN'),
-# }))
-
 k8s_yaml(helmfile_with_local_chart('vydon-api', base_dir + '/charts/api', helmfileDir=base_dir + '/dev/helm/api'))
-# References the deployment
 k8s_resource(
   'vydon-api',
   resource_deps=['vydon-postgresql'],
   labels=['backend'],
   port_forwards="8080:8080",
 )
-docker_build_with_restart(
+
+docker_build(
   ref='vydon-api',
-  context='.',
-  entrypoint=['/app/mgmt'],
-  dockerfile='./dev/build/Dockerfile.dev',
-  only=['.env.dev', 'bin', 'sql'],
-  live_update=[
-    sync('bin', '/app'),
-    sync('sql/postgresql/schema', '/app/migrations'),
-    sync('.env.dev', '/app'),
-  ],
+  context=repo_root,
+  dockerfile=repo_root + '/docker/Dockerfile.backend',
 )

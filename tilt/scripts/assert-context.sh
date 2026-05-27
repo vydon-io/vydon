@@ -1,5 +1,5 @@
 #!/bin/bash
-VALID_CONTEXTS=("kind-vydon-dev")
+VALID_CONTEXTS=("kind-vydon-dev" "orbstack")
 
 assert_context()
 {

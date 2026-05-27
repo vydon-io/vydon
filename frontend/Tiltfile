@@ -1,22 +1,19 @@
-load('ext://restart_process', 'docker_build_with_restart')
-load('ext://configmap', 'configmap_from_dict')
 load('ext://namespace', 'namespace_create')
 
 helpers = load_dynamic("../tilt/extensions/Tiltfile")
 helmfile_with_local_chart = helpers['helmfile_with_local_chart']
-helmfile = helpers['helmfile']
 
-allow_k8s_contexts('kind-vydon-dev')
+allow_k8s_contexts(['kind-vydon-dev', 'orbstack'])
 
-# when debugging can be handy to disable scrub
 secret_settings(disable_scrub=True)
 
 namespace_create('vydon', allow_duplicates=True)
 
 base_dir = os.path.dirname(__file__)
+repo_root = os.path.dirname(base_dir)
 helmfileDir = base_dir + '/apps/web/dev/helm/app'
+
 k8s_yaml(helmfile_with_local_chart('vydon-app', base_dir + '/apps/web/charts/app', helmfileDir=helmfileDir))
-# References the deployment
 k8s_resource(
   'vydon-app',
   labels=['frontend'],
@@ -25,11 +22,6 @@ k8s_resource(
 
 docker_build(
   ref='vydon-app',
-  context='.',
-  dockerfile='apps/web/dev/build/Dockerfile.dev',
-  # secret='id=npmrc,src=%s' % npmrc,
-  live_update=[
-    sync('.', '/app'),
-    run('npm install', trigger=['package.json', 'package-lock.json']),
-  ],
+  context=base_dir,
+  dockerfile=repo_root + '/docker/Dockerfile.frontend',
 )

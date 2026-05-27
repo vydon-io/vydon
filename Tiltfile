@@ -1,4 +1,4 @@
-allow_k8s_contexts('kind-vydon-dev')
+allow_k8s_contexts(['kind-vydon-dev', 'orbstack'])
 
 backend = [
   'vydon-api',
