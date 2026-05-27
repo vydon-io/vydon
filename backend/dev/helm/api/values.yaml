@@ -20,7 +20,7 @@ migrations:
     username: postgres
     password: foofar
     disableSsl: true
-    schemaDir: /app/migrations
+    schemaDir: /migrations
 
 terminationGracePeriodSeconds: 300
 shutdownTimeoutSeconds: 5
@@ -41,7 +41,7 @@ auth:
   audience: https://api.vydon.io
 
 temporal:
-  url: temporal.temporal:7233
+  url: temporal.temporal.svc.cluster.local:7233
   namespace: default
   taskQueue: "sync-job"
 

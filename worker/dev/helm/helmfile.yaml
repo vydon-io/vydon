@@ -25,7 +25,7 @@ releases:
         vydon:
           url: http://vydon-api:80
         temporal:
-          url: temporal.temporal:7233
+          url: temporal.temporal.svc.cluster.local:7233
           namespace: default
           taskQueue: 'sync-job'
 

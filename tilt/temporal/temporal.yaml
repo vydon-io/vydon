@@ -146,20 +146,6 @@ items:
           restartPolicy: Always
           enableServiceLinks: false
     status: {}
-  - apiVersion: networking.k8s.io/v1
-    kind: NetworkPolicy
-    metadata:
-      creationTimestamp: null
-      name: temporal-network
-    spec:
-      ingress:
-        - from:
-            - podSelector:
-                matchLabels:
-                  io.kompose.network/temporal-network: "true"
-      podSelector:
-        matchLabels:
-          io.kompose.network/temporal-network: "true"
   - apiVersion: apps/v1
     kind: Deployment
     metadata:
