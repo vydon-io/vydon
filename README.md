@@ -1,72 +1,48 @@
-<p align="center">
-  <!-- <img alt="vydonbanner" src="https://assets.vydon.io/vydon/docs/vydon-header.svg" > -->
-  <picture>
-  <source
-    srcset="https://assets.vydon.io/vydon/docs/vydon-header.svg"
-    media="(prefers-color-scheme: light)"
-  />
-  <source
-    srcset="https://assets.vydon.io/vydon/docs/vydon-header-dark.svg"
-    media="(prefers-color-scheme: dark), (prefers-color-scheme: no-preference)"
-  />
-  <img src="https://github-readme-stats.vercel.app/api?username=anuraghazra&show_icons=true" />
-</picture>
-</p>
+# Vydon
 
-<p align="center" style="font-size: 24px;font-weight: 500;">
-Open Source Data Anonymization and Synthetic Data Orchestration
-<p>
+Open-source data anonymization and synthetic data orchestration. Anonymize
+PII, generate realistic synthetic data, and sync environments for safer
+testing, debugging, and developer experience.
 
-<div align='center'>
- | <a href="https://vydon.io">Website</a>
- | <a href="https://docs.vydon.io">Docs</a>
- | <a href="https://docs.vydon.io/changelog">Changelog</a>
-</div>
-
- <br>
-
-<div align="center">
-  <a href='https://makeapullrequest.com'>
-    <img alt='PRs Welcome' src='https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=shields'/>
-  </a>
-  <a href="https://github.com/vydon-io/vydon/blob/main/LICENSE.md">
-    <img alt="License: MIT" src="https://img.shields.io/github/license/vydon-io/vydon"/>
-  </a>
-  <a href="https://github.com/vydon-io/vydon/actions/workflows/go.yml/">
-    <img alt="Go Tests" src="https://github.com/vydon-io/vydon/actions/workflows/go.yml/badge.svg"/>
-  </a>
-  <a href="https://artifacthub.io/packages/search?repo=vydon">
-    <img alt="ArtifactHub Vydon" src="https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/vydon" />
-  </a>
-</div>
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](https://makeapullrequest.com)
+[![License: MIT](https://img.shields.io/github/license/vydon-io/vydon)](./LICENSE.md)
+[![Go Tests](https://github.com/vydon-io/vydon/actions/workflows/go.yml/badge.svg)](https://github.com/vydon-io/vydon/actions/workflows/go.yml)
 
 ## Introduction
 
-[Vydon](https://vydon.io) is an open-source, developer-first way to anonymize PII, generate synthetic data and sync environments for better testing, debugging and developer experience.
+Vydon is a developer-first toolkit for handling sensitive data in
+non-production environments. Teams use it to:
 
-Companies use Vydon to:
-
-1. **Safely test code against production data** - Anonymize sensitive production data in order to safely use it locally for a better testing and developer experience
-2. **Easily reproduce production bugs locally** - Anonymize and subset production data to get a safe, representative data set that you can use to locally reproduce production bugs quickly and efficiently
-3. **High quality data for lower-level environments** - Catch bugs before they hit production when you hydrate your staging and QA environments with production-like data
-4. **Solve GDPR, DPDP, FERPA, HIPAA and more** - Use anonymized and synthetic data to reduce your compliance scope and easily comply with laws like HIPAA, GDPR, and DPDP
-5. **Seed development databases** - Easily seed development databases with synthetic data for unit testing, demos and more
+1. **Test code safely against production-shaped data** — anonymize
+   sensitive production records and use them locally.
+2. **Reproduce production bugs locally** — anonymize and subset the
+   production database into a representative slice.
+3. **Hydrate staging and QA** with high-quality, production-like data
+   to catch bugs earlier.
+4. **Reduce compliance scope** — meet GDPR, DPDP, FERPA, HIPAA and
+   similar requirements by removing PII before it leaves production.
+5. **Seed development databases** with deterministic synthetic data for
+   unit tests and demos.
 
 ## Features
 
-- **Generate synthetic data** based on your schema
-- **Anonymize existing production-data** for a better developer experience
-- **Subset your production database** for local and CI testing using any SQL query
-- **Complete async pipeline** that automatically handles job retries, failures and playback using an event-sourcing model
-- **Referential integrity** for your data automatically
-- **Declarative, GitOps based configs** as a step in your CI pipeline to hydrate your CI DB
-- **Pre-built data transformers** for all major data types
-- **Custom data transformers** using javascript or LLMs
-- **Pre-built integrations** with Postgres, Mysql, S3
+- Generate synthetic data based on your schema
+- Anonymize existing production data
+- Subset a production database with any SQL query
+- Asynchronous pipeline with automatic retries, failure handling and
+  event-sourced playback
+- Referential integrity preserved automatically across subsetting and
+  anonymization
+- Declarative, GitOps-friendly configuration to hydrate CI databases
+- Pre-built transformers for every common data type
+- Custom transformers in JavaScript or via LLMs
+- Built-in integrations with Postgres, MySQL, MS SQL Server, MongoDB,
+  DynamoDB, S3 and Google Cloud Storage
 
 ## Getting started
 
-Pick the path that matches your workflow.
+Pick the path that matches your workflow. The full developer-environment
+guide lives in [docs/docs/guides/vydon-local-dev.md](./docs/docs/guides/vydon-local-dev.md).
 
 ### Docker Compose (default, < 2 min)
 
@@ -79,15 +55,15 @@ cd vydon
 make dev
 ```
 
-`make dev` builds the local images and brings up Postgres, Redis, Temporal,
-the API, the worker and the frontend with hot reload enabled. Once it
-returns, the stack is reachable at:
+`make dev` builds the local images and brings up Postgres, Redis,
+Temporal, the API, the worker and the frontend with hot reload enabled.
+Once it returns, the stack is reachable at:
 
-| Service         | URL                                                 |
-| --------------- | --------------------------------------------------- |
-| Frontend        | <http://localhost:3000>                             |
-| API healthcheck | <http://localhost:8080/healthz>                     |
-| Temporal UI     | <http://localhost:8233>                             |
+| Service     | URL                                |
+| ----------- | ---------------------------------- |
+| Frontend    | <http://localhost:3000>            |
+| API         | <http://localhost:8080>            |
+| Temporal UI | <http://localhost:8233>            |
 
 Useful follow-up commands:
 
@@ -97,54 +73,50 @@ make dev/down    # stop the stack (keeps volumes)
 make dev/clean   # stop the stack and wipe all volumes (destructive)
 ```
 
-If you previously ran an older revision and the API logs report
-`database "vydon" does not exist`, run `make dev/clean` once to recreate
-the Postgres data volume.
+If a previous run left the Postgres data volume in a bad state and the
+API logs report `database "vydon" does not exist`, run `make dev/clean`
+once to recreate it.
 
-### Tilt + kind (Kubernetes path, optional)
+### Tilt on Kubernetes (kind or OrbStack)
 
 For contributors who want a Kubernetes-shaped environment closer to
-production. Requires [Tilt](https://tilt.dev) and a running
-[kind](https://kind.sigs.k8s.io) cluster named `vydon-dev`.
+production. Requires [Tilt](https://tilt.dev) and either
+[kind](https://kind.sigs.k8s.io) or [OrbStack](https://orbstack.dev)
+with Kubernetes enabled.
 
 ```sh
+# kind
 kind create cluster --name vydon-dev
+tilt up
+
+# or, with OrbStack Kubernetes
+orb start k8s
+kubectl config use-context orbstack
 tilt up
 ```
 
-Tilt watches the source tree and live-syncs Go and frontend changes into
-the cluster. The Tilt UI exposes per-resource logs and health.
+Full instructions, including the Compose authentication overlay, are in
+[docs/docs/guides/vydon-local-dev.md](./docs/docs/guides/vydon-local-dev.md).
 
-### Production-style compose
+## Documentation
 
-The root [compose.yml](./compose.yml) pulls published images from GHCR
-(no local build) and seeds demo connections and jobs.
+The full documentation source lives under [docs/](./docs/). Each topic
+has a Markdown file under `docs/docs/`:
 
-```sh
-docker compose up -d    # start
-docker compose down     # stop
-```
-
-This path is useful for demos and CI smoke tests, not for active
-development — there is no hot reload.
-
-## Kubernetes, Auth Mode and more
-
-For more in-depth details on environment variables, Kubernetes deployments, and a production-ready guide, check out the [Deploy Vydon](https://docs.vydon.io/deploy/introduction) section of our Docs.
-
-## Resources
-
-Some resources to help you along the way:
-
-- [Docs](https://docs.vydon.io) for comprehensive documentation and guides
+- [Local development](./docs/docs/guides/vydon-local-dev.md)
+- [Deploy](./docs/docs/deploy/)
+- [Connections](./docs/docs/connections/)
+- [Transformers](./docs/docs/transformers/)
+- [CLI](./docs/docs/cli/)
 
 ## Contributing
 
-We love contributions big and small. Here are just a few ways that you can contribute to Vydon.
+Contributions of every size are welcome. Start by reading
+[CONTRIBUTING.md](./CONTRIBUTING.md) and opening a draft PR.
 
-- Open a PR (see our instructions on [developing with Vydon locally](https://docs.vydon.io/guides/vydon-local-dev))
-- Submit a [feature request](https://github.com/vydon-io/vydon/issues/new?assignees=&labels=enhancement%2C+feature&template=feature_request.md) or [bug report](https://github.com/vydon-io/vydon/issues/new?assignees=&labels=bug&template=bug_report.md)
+- File a [feature request](https://github.com/vydon-io/vydon/issues/new?labels=enhancement) or [bug report](https://github.com/vydon-io/vydon/issues/new?labels=bug)
+- Disclose security issues privately — see [SECURITY.md](./SECURITY.md)
 
-## Licensing
+## License
 
-We strongly believe in free and open source software and make this repo is available under the [MIT expat license](./LICENSE.md).
+Vydon is distributed under the [MIT Expat license](./LICENSE.md).
