@@ -45,7 +45,7 @@ The full image can be docker pulled via: `docker pull ghcr.io/vydon-io/vydon/hel
 
 ### Worker
 
-The APP Helm chart can be used to deploy just the worker.
+The Worker Helm chart can be used to deploy just the worker.
 The chart itself can be found [here](https://github.com/vydon-io/vydon/tree/main/worker/charts/worker).
 
 The local dev edition can be found in the [helmfile](https://github.com/vydon-io/vydon/blob/main/worker/dev/helm/helmfile.yaml) that is used by our dev Tilt instance.
