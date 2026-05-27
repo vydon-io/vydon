@@ -11,69 +11,41 @@ const (
 <!DOCTYPE html>
 <head>
     <title>{{ .Title }}</title>
-    <link rel="icon" type="image/png" href="https://assets.vydon-io.com/vydon/newbrand/favicon_transparent.ico" />
     <style>
         body {
             background-color: #101010;
-        }
-
-        .header {
-            background-color: #FBFDF4;
-        }
-
-        .logo {
-            width: 40%;
-            padding-top: 20px;
-            display: block;
-            brightness:0.75;
-            margin-left: auto;
-            margin-right: auto
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+            color: #EBECFA;
         }
 
         h1 {
-            font-family:'Inter', sans-serif;
-            font-size: 36px;
-            letter-spacing: 1px;
-            word-spacing: 2px;
-            color: #EBECFA;
-            font-weight: normal;
-            text-transform: capitalize;
+            font-size: 32px;
+            font-weight: 500;
             text-align: center;
-                  padding-top: 20px;
+            padding-top: 40px;
         }
 
         p {
-            font-family:'Inter', sans-serif;
             font-size: 16px;
-            letter-spacing: 1px;
-            word-spacing: 2px;
-                     color: #EBECFA;
-            font-weight: normal;
-            text-transform: normal;
             text-align: center;
-        }
-
-        .vydonLogo {
-            height: '40px';
-            width: 40px;
-        }
-
-        .nav {
-            border: 2px solid rgba(117, 117, 117, 1);
-            border-radius: 10px;
-            padding: 10px;
+            line-height: 1.5;
         }
 
         #content {
-            padding:10px
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 24px;
         }
 
         #footer {
             font-size: 0.8em;
+            text-align: center;
+            padding: 16px;
+            color: #888;
         }
 
         .error-text {
-            font-weight: bold;
+            font-weight: 600;
         }
     </style>
 </head>
@@ -90,27 +62,16 @@ const (
 	`
 
 	loginPageSuccess = `
-  <div class='nav'><a href="https://www.vydon.dev"><img class='vydonLogo' src="https://assets.vydon-io.com/vydon/newbrand/logo_light_mode.svg"></a></div>
-  <div class='successText'>
-      <h1>Login Success!</h1>
-      <p>You've successfully logged in to Vydon CLI.</p>
-      <p>You may now close this window and return to your terminal.</p>
-  </div>
-  <div>
-      <img class='logo' src="https://assets.vydon-io.com/vydon/app/cliImage.png">
-  </div>
+  <h1>Login Success</h1>
+  <p>You've successfully logged in to the Vydon CLI.</p>
+  <p>You may now close this window and return to your terminal.</p>
 	`
 
 	loginPageError = `
-    <div><a href="https://www.vydon.dev"><img class='vydonLogo' src="https://assets.vydon-io.com/vydon/newbrand/logo_light_mode.svg"></a></div>
-    <div class='successText'>
-        <h1>There was a problem logging you in!</h1>
-        <p class="error-text">Error Code: {{ .ErrorCode }}</p>
-        <p class="error-text">Error Description: {{ .ErrorDescription }}</p>
-    </div>
-    <div>
-        <img class='logo' src="https://assets.vydon-io.com/vydon/app/angryDarth.jpg">
-    </div>
+    <h1>There was a problem logging you in</h1>
+    <p class="error-text">Error Code: {{ .ErrorCode }}</p>
+    <p class="error-text">Error Description: {{ .ErrorDescription }}</p>
+    <p>You may close this window and try again from your terminal.</p>
 	`
 )
 
