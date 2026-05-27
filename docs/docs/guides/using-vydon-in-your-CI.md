@@ -13,12 +13,11 @@ It's easy enough to spin up a Postgres or other kind of database using Github Ac
 
 For this reason, we built the [vydon sync](../cli/sync.md) command to enable synchronizing a connection configured in Vydon to a locally hosted database, or any other database that may not otherwise be available over the internet easily.
 
-Getting the CLI installed into a Github Action is task in itself, however. This is why we are offering a first class way to install the Vydon CLI.
+Getting the CLI installed into a Github Action is a task in itself. Until the [Setup Vydon CLI Action](https://github.com/vydon-io/setup-vydon-cli-action) repository is publicly released, install the CLI from source in your workflow with a single `go install` step (see the example below).
 
 ## Vydon CLI Github Action
 
-We've built the [Setup Vydon CLI Action](https://github.com/vydon-io/setup-vydon-cli-action) Github Action that can be easily dropped into any job to immediately get setup with the Vydon CLI.
-The README for that action gives detailed instructions on how to get that set up. Afterwards, any `vydon` command can be run in subsequent jobs.
+The composite `vydon-io/setup-vydon-cli-action` Action is planned but not yet published. Until then, install the CLI in your workflow with `actions/setup-go@v5` followed by `go install github.com/vydon-io/vydon/cli/...@<tag>`; once a tagged release lands and the Action repo is published, swap to `vydon-io/setup-vydon-cli-action@v1`.
 
 ## Setup a Github Action to sync remote data to a CI Postgres Database
 

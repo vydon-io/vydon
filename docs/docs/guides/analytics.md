@@ -31,4 +31,4 @@ You can see what information is captured by checking out the [unify-provider](ht
 To fully disable analytics, set the `VYDON_ANALYTICS_ENABLED=false` environment variable on the frontend (and eventually CLI, backend).
 All analytics are keyed off of this environment variable to make it easy to disable.
 
-One can also disable analytics by removing the `POSTHOG_KEY` and `KOALA_KEY`.
+You can also disable analytics by leaving `POSTHOG_KEY` unset.

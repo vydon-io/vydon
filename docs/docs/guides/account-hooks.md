@@ -14,7 +14,7 @@ Account Hooks are a way to add further customization to your Vydon account.
 ## How to configure Account Hooks
 
 This section will cover how to configure hooks in the Vydon UI.
-They can also be configured via the API and soon the Terraform provider.
+They can also be configured via the API.
 
 ### Getting there
 

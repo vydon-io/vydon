@@ -10,15 +10,15 @@ slug: /guides/rbac
 
 RBAC (Role-Based Access Control) is a system that allows you to manage user permissions in Vydon.
 
-## Availability
-
+:::warning Not yet enforced in the OSS distribution
 The frontend Members and Invite surfaces ship in the OSS codebase and
-the Casbin role schema is present in the Postgres migrations. The
-backend enforcement service that translates these into per-request
-permission checks is still being reimplemented as a native OSS module
-and is not yet wired up in the API. Until that lands, all authenticated
-accounts behave as Account Admin. This guide is kept as the target
-specification for the upcoming enforcement layer.
+the Casbin role schema is present in the Postgres migrations, but the
+backend enforcement service that turns these into per-request
+permission checks is still being reimplemented as a native OSS module.
+Until that lands, **every authenticated account behaves as Account
+Admin** regardless of the role assigned in the UI. This guide is the
+target specification for the upcoming enforcement layer.
+:::
 
 ## How to configure RBAC
 

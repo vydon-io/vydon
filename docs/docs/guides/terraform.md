@@ -32,11 +32,16 @@ The API Key may be input as a variable to the provider, or provided in the envir
 Generally, this option is omitted as it is inferred through the API Key.
 If self-hosting Vydon and running without authentication, or simply wanting to be redundant, provide the account id to the provider or via the `VYDON_ACCOUNT_ID` environment variable to explicitly tell the provider which account id to use.
 
-## Terraform Registry Docs
+## Provider documentation
 
-To dive deeper into the provider documentation, head over to the latest docs page on the [Terraform Registry](https://registry.terraform.io/providers/vydon-io/vydon/latest/docs).
-The registry documentation provided a better look into what resources are available, as well as examples of how to use them.
+Until the provider is published to the Terraform Registry, the full
+resource and data-source reference lives directly in the
+[vydon-io/terraform-provider-vydon](https://github.com/vydon-io/terraform-provider-vydon)
+repository under `docs/`. Each resource and data source ships an HCL
+example under `examples/`.
 
 ## Bugs or Features
 
-If there is an issue with the provider, or there is a feature that is missing, please do not hesitate to log an issue or join our Discord and ask about it.
+If there is an issue with the provider, or there is a feature that is
+missing, please [open an issue](https://github.com/vydon-io/terraform-provider-vydon/issues/new)
+on the provider repository.
