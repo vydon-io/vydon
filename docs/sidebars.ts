@@ -231,11 +231,6 @@ const sidebars: SidebarsConfig = {
     },
     {
       type: 'doc',
-      id: 'guides/vydon-ip-ranges',
-      label: 'Vydon IP Ranges',
-    },
-    {
-      type: 'doc',
       id: 'guides/syncing-data-in-mongodb',
       label: 'Syncing data with MongoDB',
     },
