@@ -15,7 +15,7 @@ namespace_create('vydon', allow_duplicates=True)
 k8s_yaml(helmfile_with_local_chart('vydon-worker', base_dir + '/charts/worker', helmfileDir=base_dir + '/dev/helm'))
 k8s_resource(
   'vydon-worker',
-  resource_deps=[],
+  resource_deps=['temporal-api', 'redis'],
   labels=['backend'],
 )
 
