@@ -1,41 +1,41 @@
 ---
 title: Security Overview
-description: Security principles of the Vydon platform
+description: How Vydon handles security for self-hosted deployments
 id: cloud-security-overview
 hide_title: false
 slug: /cloud-security-overview
 ---
 
-At Vydon, we take as many security precautions as we can to ensure that any information saved on our server is safe.
-
-This section will document a few different things that we feel are worth mentioning from a security perspective.
-
-> The hosted "Vydon Cloud" SaaS referenced in this page is no longer a publicly available offering. The OSS distribution is the only path today; the security principles below still apply to any environment you self-host.
+Vydon is shipped as OSS for self-hosting. The notes below describe the
+security posture of the software itself; the security of any deployment
+is the operator's responsibility.
 
 ## Code
 
-All of the Vydon code is open source and can be found on our [Github](https://github.com/vydon-io/vydon).
-If you find a security vulnerability, please refer to our [Security.md](https://github.com/vydon-io/vydon/blob/main/SECURITY.md) for what to do.
-If all else fails, please email `security@vydon.io` directly.
+All Vydon code is open source and lives on [GitHub](https://github.com/vydon-io/vydon).
+The container images and Helm charts published by GoReleaser are built
+from the same source you can read in the repo.
 
-Otherwise, the code that is found in our repo is the same code that we deploy on our servers.
-This is done directly with the helm charts that we publish to the Github Container Registry.
+If you find a security vulnerability, please follow the disclosure
+process in [SECURITY.md](https://github.com/vydon-io/vydon/blob/main/SECURITY.md)
+— open a private security advisory on the repository.
 
-## Production DB Access
+## Connecting a production database
 
-Our production postgres instance is not accessible to the internet and is heavily locked down.
-Those that access production must go through an approval and review process and must have proper AWS access in order to SSH in and connect.
+We do not recommend pointing Vydon at a production database directly.
+Beyond the obvious security exposure, Vydon can put noticeable load on
+the source database during a sync. The recommended pattern is to
+restore a snapshot of the production database into a separate instance
+and point Vydon at that copy.
 
-## SSH Access
+## Network and credentials
 
-For access to our internal cluster we use a Bastion Host. This is an EC2 instance, but we do not directly expose port 22 to the internet.
-We use AWS SSM along with IAM Role policies to control who has access to the tunnel.
-Any access on this instance is logged.
+For self-hosted deployments we recommend:
 
-## Connecting a Production Database to Vydon
-
-We do not recommend connecting a production data directly to Vydon.
-
-This is recommended purely for security purposes, but also due to an increased load that Vydon may put on your database when invoking a sync.
-For that reason, we suggest restoring a snapshot of production periodically to another database that is then used by Vydon.
-We don't currently support providing snapshots directly, and if this is important to you, please reach out to us.
+- Running Vydon in a private network and not exposing it to the public
+  internet without an authenticating proxy or [Vydon Auth Mode](/deploy/authentication).
+- Reaching source databases via a private peering, VPN, or
+  [Bastion Host](/guides/connect-private-postgres-via-bastion-host).
+- Rotating API keys regularly. API keys created in Vydon expire after
+  at most one year, and once revealed at creation time they cannot be
+  retrieved again from the API.

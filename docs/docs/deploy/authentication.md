@@ -37,9 +37,11 @@ The API expects the standard `Authorization` header to come in via the HTTP requ
 
 ## APP Auth Configuration
 
-The app requires a bit more configuration since there is also session management that occurs with the help of `next-auth`.
-Today, the App has only been tested with Auth0, however, theoretically any auth provider credentials could be entered for the environment variable values and it should work.
-We are working towards making this more generic to allow more providers like Keycloak, Google, etc.
+The app requires a bit more configuration since session management is
+handled with the help of `next-auth`. Any OIDC-compliant provider can
+be used; Auth0 and Keycloak are the two we exercise in CI, and the
+Compose authentication overlay (`compose.auth.yml`) ships a
+pre-configured Keycloak realm out of the box.
 
 ## API Key Authentication
 
@@ -97,8 +99,8 @@ This is determined by the `AUTH_API_PROVIDER` environment variable that recogniz
 The following environment variables are as follows:
 
 - `AUTH_API_BASEURL` - This is the base url for the Admin API. Auth0 calls this the Management API, while Keycloak the Admin API.
-  - For auth0, this is almost always your raw tenant url as custom domains do not work with Auth0 management API access. Example: `https://vydon-cloud-staging.us.auth0.com`
-  - For keycloak, this url will look something like this: `https://auth.svcs.stage.vydon.io/admin/realms/vydon-stage`. The pattern is: `<baseurl>/admin/realms/<realm>`
+  - For Auth0, this is almost always your raw tenant url because custom domains do not work with the Auth0 Management API. Example: `https://<your-tenant>.<region>.auth0.com`
+  - For Keycloak, the pattern is `<baseurl>/admin/realms/<realm>`. Example: `https://auth.example.com/admin/realms/vydon`
 - `AUTH_API_CLIENT_ID` - The service account's client id
 - `AUTH_API_CLIENT_SECRET` - The client id secret
 
@@ -110,19 +112,24 @@ For Keycloak, the `view-users` scope should be added to the service account role
 
 ## Starting Vydon in Auth Mode
 
-Starting Vydon in Auth Mode is done in a similar way as starting Vydon in non-auth mode: using a compose file. A compose file is also provided that stands up [Keycloak](https://keycloak.org), an open source auth solution.
+Vydon ships a `compose.auth.yml` overlay that stands up
+[Keycloak](https://keycloak.org) alongside the dev stack, with a
+pre-configured `vydon` realm.
 
-To stand up Vydon with auth, simply run the following command from the repo root:
-
-```sh
-make compose/auth/up
-```
-
-To stop, run:
+Bring it up from the repo root:
 
 ```sh
-make compose/auth/down
+docker compose -f compose.dev.yml -f compose.auth.yml up -d
 ```
 
-Vydon will now be available on [http://localhost:3000](http://localhost:3000) with authentication pre-configured!
-Click the login with Keycloak button, register an account (locally) and you'll be logged in! -->
+Stop everything with:
+
+```sh
+docker compose -f compose.dev.yml -f compose.auth.yml down
+```
+
+The app is then available at [http://localhost:3000](http://localhost:3000)
+with authentication enabled, Keycloak is at
+[http://localhost:8083](http://localhost:8083), and the imported realm
+allows self-registration so you can create a user from the app's
+sign-in page.

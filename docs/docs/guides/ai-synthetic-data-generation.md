@@ -16,9 +16,9 @@ Let's go through a walk-through.
 
 In order to get started, you'll need the following:
 
-1. A Vydon account which you can sign up for free [here](https://vydon.io)
-2. Access to an LLM hosted at an endpoint. I'll be using OpenAI but you can use any other LLM as long as it's available at a REST endpoint.
-3. A database to store your data. I'm going to use Neon but either Postgres or Mysql works.
+1. A running Vydon instance — follow the [local development guide](/guides/vydon-local-dev) to bring one up with `make dev`.
+2. Access to an LLM hosted at an endpoint. This guide uses OpenAI but any OpenAI-compatible REST endpoint works.
+3. A database to store your data. This guide uses Neon but any Postgres or MySQL instance works.
 
 # Setting up our database
 

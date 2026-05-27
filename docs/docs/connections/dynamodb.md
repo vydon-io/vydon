@@ -21,7 +21,10 @@ There are a few different methods of giving Vydon access to your DynamoDB instan
 
 Vydon supports being given an IAM Role along with an External ID.
 
-If configuring DynamoDB via VydonCloud, this is the recommended approach over using raw Access Credentials that don't expire. Vydon will assume this role only during active syncs or any time data is requested via the frontend and does not store those credentials in any way.
+This is the recommended approach when the Vydon backend lives in a
+separate AWS account from the DynamoDB tables it needs to read. Vydon
+assumes the role only during active syncs or when data is fetched via
+the frontend and does not store the temporary credentials.
 
 ### AWS Access Credentials
 
@@ -38,10 +41,13 @@ This way the running vydon-api and vydon-worker are able to natively have necess
 For example, if hosting an EKS cluster, it's recommended to attach an IAM IRSA role to the Vydon deployments with the policies detailed below instead of configuring them directly in the application.
 You'll still need to create the DynamoDB connections inside of Vydon, but the configuration will essentially be empty.
 
-## VydonCloud Trust Policy
+## Cross-account trust policy
 
-The VydonCloud principal is: `arn:aws:iam::243317024749:root`, which will allow our cloud services to communicate with your DynamoDB instance.
-Be sure to update the `sts:ExternalId` property with the external id that you've configured with the role.
+If the Vydon backend runs in a separate AWS account from the DynamoDB
+tables, attach a trust policy on the role that allows your Vydon
+account to assume it. Replace `<vydon-aws-account-id>` with the
+account ID of the AWS account hosting the Vydon backend, and
+`<external-id>` with the external ID you configured on the role.
 
 ```json
 {
@@ -50,7 +56,7 @@ Be sure to update the `sts:ExternalId` property with the external id that you've
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::243317024749:root"
+        "AWS": "arn:aws:iam::<vydon-aws-account-id>:root"
       },
       "Action": "sts:AssumeRole",
       "Condition": {
@@ -63,7 +69,8 @@ Be sure to update the `sts:ExternalId` property with the external id that you've
 }
 ```
 
-Continue below to see what permissions are necessary for readonly access as well as readwrite.
+The sections below detail the permissions required on the assumed role
+for readonly and readwrite access.
 
 ## Configuring a Policy
 
