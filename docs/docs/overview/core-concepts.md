@@ -14,7 +14,7 @@ The best way to learn about Vydon is to understand the core concepts of the plat
 
 > Screenshot pending re-hosting (Jobs list page).
 
-Jobs are async workflows that transform data and sync it between source and destination systems. They can run on a set schedule or run ad-hoc and can be paused at any time. Under the covers, Vydon uses [Temporal](https://github.com/temporalio/temporal) as our job scheduling and execution engine and [Benthos](https://github.com/benthosdev/benthos) as our data transformation engine. Temporal handles all of the execution, retries, backoffs and the coordination of tasks within a job. While Benthos handle the data sync'ing and transformation.
+Jobs are async workflows that transform data and sync it between source and destination systems. They can run on a set schedule or run ad-hoc and can be paused at any time. Under the covers, Vydon uses [Temporal](https://github.com/temporalio/temporal) as our job scheduling and execution engine and [Benthos](https://github.com/redpanda-data/benthos) as our data transformation engine. Temporal handles all of the execution, retries, backoffs and the coordination of tasks within a job. Benthos handles the data syncing and transformation.
 
 Jobs also have <strong>types</strong>. Today, we support two types:
 
@@ -39,7 +39,7 @@ that you can track to see what jobs executed and their status.{' '}
 
 Connections are integrations with upstream and/or downstream systems such as Postgres, S3 and Mysql. Jobs use connections to move data across systems. Connections are created outside of jobs so that you can re-use connections across multiple jobs without re-creating it every time.
 
-We plan to continue to expand the number of connections we offer so that we can cover most major systems. As we mentioned above, we use Benthos for our core data sync'ing and transformation. Benthos ships with a number of pre-built [connections](https://www.benthos.dev/docs/components/inputs/about) that we will work to support.
+We plan to continue to expand the number of connections we offer so that we can cover most major systems. As mentioned above, we use Benthos for our core data syncing and transformation, and Benthos ships with a number of pre-built [connections](https://docs.redpanda.com/redpanda-connect/about/).
 
 ### Transformers
 

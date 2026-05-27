@@ -27,7 +27,7 @@ Synthetic data can be useful for testing applications and services in unsecure d
 
 Vydon can generate synthetic data from scratch, making it easy to test new features that don't already have generated data or when the current production data is to sensitive to work with. We give you different options to be able to generate synthetic data so that it fits your schema and works with your applications. These options are transformer specific and will depend on the data being generated. You can easily seed an entire database with synthetic data using Vydon to get started or create synthetic data for just a given column.
 
-Vydon also supports integrating with LLM providers such as OpenAI, Anthropic, TogetherAI and more to deliver AI-generated synthetic data.
+Vydon supports OpenAI-compatible APIs (OpenAI, Azure OpenAI, self-hosted llama.cpp servers, etc.) for LLM-driven synthetic data generation. See [the OpenAI connection](/connections/openai) and the [`Generate AI` transformer](/transformers/system) for details.
 
 ![new-trans](/img/llmprompt.png)
 
@@ -49,7 +49,7 @@ Vydon has powerful subsetting features which allow you to create smaller subsets
 
 ## Orchestration
 
-At it's core, Vydon is an orchestration platform with anonymization, synthetic data and subsetting capabilities. We rely heavily on [Temporal](https://temporal.com) for our orchestration backbone as it provide us with a lot of power out of the box.
+At its core, Vydon is an orchestration platform with anonymization, synthetic data and subsetting capabilities. We rely heavily on [Temporal](https://temporal.io) for our orchestration backbone as it provides us with a lot of power out of the box.
 
 ![anon](/img/orches.png)
 
