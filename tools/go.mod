@@ -7,7 +7,7 @@ replace github.com/vydon-io/vydon => ../
 require (
 	github.com/antlr4-go/antlr/v4 v4.13.1
 	github.com/golang-migrate/migrate/v4 v4.19.1
-	github.com/oapi-codegen/oapi-codegen/v2 v2.7.0
+	github.com/oapi-codegen/oapi-codegen/v2 v2.7.1
 	github.com/pganalyze/pg_query_go/v5 v5.1.0
 	github.com/vydon-io/go-antlrv4-parser v0.0.0-20260515121122-35ca9c3d1ebe
 	github.com/vydon-io/vydon v0.5.41
