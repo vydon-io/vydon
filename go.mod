@@ -67,7 +67,7 @@ require (
 	github.com/vydon-io/go-antlrv4-parser v0.0.0-20260515121122-35ca9c3d1ebe
 	github.com/xwb1989/sqlparser v0.0.0-20180606152119-120387863bf2
 	github.com/zeebo/assert v1.3.1
-	go.mongodb.org/mongo-driver v1.17.3
+	go.mongodb.org/mongo-driver v1.17.7
 	go.opentelemetry.io/otel v1.43.0
 	go.opentelemetry.io/otel/exporters/otlp/otlpmetric/otlpmetricgrpc v1.35.0
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.35.0
