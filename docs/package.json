@@ -42,7 +42,7 @@
   "devDependencies": {
     "@docusaurus/module-type-aliases": "^3.10.1",
     "@docusaurus/types": "^3.10.1",
-    "@redocly/cli": "^2.30.6",
+    "@redocly/cli": "^2.34.0",
     "@tsconfig/docusaurus": "^2.0.9",
     "cspell": "^10.0.0",
     "knip": "^5.53.0",
